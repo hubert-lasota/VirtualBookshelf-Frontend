@@ -3,3 +3,77 @@
   margin: 0;
   padding: 0;
 }
+
+:root {
+  --bg-color-hue: 51;
+  --bg-color-saturation: 23%;
+  --bg-color-lightness: 94%;
+  --bg-color: hsl(var(--bg-color-hue), var(--bg-color-saturation), var(--bg-color-lightness));
+
+  --bg-color-darker-hue: 51;
+  --bg-color-darker-saturation: 23%;
+  --bg-color-darker-lightness: 94%;
+  --bg-color-darker: hsl(var(--bg-color-darker-hue), var(--bg-color-darker-saturation), var(--bg-color-darker-lightness));
+
+  --body-font: "Raleway", sans-serif;
+  --heading-font: "Prata", Georgia, serif;
+
+  --font-color-hue: 0;
+  --font-color-saturation: 0%;
+  --font-color-lightness: 0%;
+  --font-color: hsl(var(--font-color-hue), var(--font-color-saturation), var(--font-color-lightness));
+
+
+  --font-color-default-hue: 0;
+  --font-color-default-saturation: 0%;
+  --font-color-default-lightness: 46%;
+  --font-color-default: hsl(var(--font-color-default-hue), var(--font-color-default-saturation), var(--font-color-default-lightness));
+
+  --font-color-on-accent-hue: 30;
+  --font-color-on-accent-saturation: 17%;
+  --font-color-on-accent-lightness: 98%;
+  --font-color-on-accent: hsl(var(--font-color-on-accent-hue), var(--font-color-on-accent-saturation), var(--font-color-on-accent-lightness));
+  
+  --danger-color: red;
+
+  --accent-primary-hue: 27;
+  --accent-primary-saturation: 20%;
+  --accent-primary-lightness: 50%;
+  --accent-primary: hsl(var(--accent-primary-hue), var(--accent-primary-saturation), var(--accent-primary-lightness));
+
+  --accent-secondary-hue: 36;
+  --accent-secondary-saturation: 64%;
+  --accent-secondary-lightness: 60%;
+  --accent-secondary: hsl(var(--accent-secondary-hue), var(--accent-secondary-saturation), var(--accent-secondary-lightness));
+}
+
+html {
+  font-family: var(--body-font);
+  color: var(--font-color-default);
+}
+
+
+input,
+button,
+textarea {
+  font-size: 1rem;
+  border: none;
+  outline: none;
+}
+
+input {
+  color: var(--font-color-default);
+  appearance: none;
+}
+
+input, button {
+  font-family: var(--body-font);
+}
+
+textarea {
+  overflow: auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: none;
+}
