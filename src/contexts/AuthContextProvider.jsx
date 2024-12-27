@@ -1,15 +1,15 @@
 import useLocalStorage from "../hooks/useLocalStorage";
-import { AuthenticationContext } from "./AuthenticationContext";
+import { AuthContext } from "./AuthContext";
 
-export default function AuthenticationContextProvider({children}) {
+export default function AuthContextProvider({children}) {
   const [jwt, setJwt] = useLocalStorage("jwt");
   const [userId, setUserId] = useLocalStorage("user_id");
   const [username, setUsername] = useLocalStorage("username");
 
   return (
-    <AuthenticationContext.Provider
+    <AuthContext.Provider
       value={{
-        jwt,
+        jwt: jwt.replaceAll("\"", ""),
         setJwt,
         userId,
         setUserId,
@@ -18,6 +18,6 @@ export default function AuthenticationContextProvider({children}) {
       }}
     >
       {children}
-    </AuthenticationContext.Provider>
+    </AuthContext.Provider>
   );
 }

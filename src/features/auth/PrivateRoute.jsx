@@ -1,12 +1,12 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import useValidateJwt from "./api/useValidateJwt";
+import useValidateJwt from "./useValidateJwt";
 import Loading from "../../components/Loading";
 
 export default function PrivateRoute() {
-  const {isValid, loading} = useValidateJwt();
+  const {isValid, isLoading} = useValidateJwt();
   const navigate = useNavigate();
 
-  if(loading) {
+  if(isLoading) {
     return <Loading />;
   }
 

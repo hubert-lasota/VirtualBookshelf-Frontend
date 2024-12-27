@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
-export default function Loading() {
-  return (
-    <div>Loading...</div>
-  )
+export default function Loading({ variant = "normal" }) {
+  return <div>Loading...</div>;
 }

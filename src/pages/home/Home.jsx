@@ -1,7 +1,12 @@
-
+import HomeBookRecommendation from "./HomeBookRecommendation";
+import HomeHeader from "./HomeHeader";
+import css from "./home.module.css";
 
 export default function Home() {
   return (
-    <div>Home</div>
-  )
+    <div className={css["home"]}>
+      <HomeHeader />
+      <HomeBookRecommendation />
+    </div>
+  );
 }

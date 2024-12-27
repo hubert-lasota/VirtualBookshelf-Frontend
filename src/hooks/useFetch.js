@@ -3,28 +3,27 @@ import { useCallback, useState } from "react";
 export default function useFetch() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const request = useCallback((url, requestInit = {}, responseDataFormat = "JSON") => {
-    setLoading(true);
-    fetch(url, requestInit)
-      .then(async (response) => {
-        if (!response.ok) {
-          const errorDetailsBody = await response.json();
-          console.log(errorDetailsBody);
-          throw new Error(JSON.stringify(errorDetailsBody));
-        }
-        return extractBodyFromResponse(response, responseDataFormat);
-      })
-      .then((data) => setData(data))
-      .catch((error) => {
-        const errorDetailsBody = JSON.parse(error.message);
-        setError(errorDetailsBody);
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  const request = useCallback(
+    (url, requestInit = {}, responseDataFormat = "JSON") => {
+      setIsLoading(true);
+      fetch(url, requestInit)
+        .then(async (response) => {
+          if (!response.ok) {
+            const errorDetailsBody = await response.json();
+            return Promise.reject(errorDetailsBody);
+          }
+          return extractBodyFromResponse(response, responseDataFormat);
+        })
+        .then((data) => setData(data))
+        .catch((error) => setError(error))
+        .finally(() => setIsLoading(false));
+    },
+    [],
+  );
 
-  return { data, error, loading, request };
+  return { data, error, isLoading, request };
 }
 
 function extractBodyFromResponse(response, dataFormat) {

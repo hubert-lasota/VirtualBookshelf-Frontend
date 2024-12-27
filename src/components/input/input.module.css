@@ -1,0 +1,16 @@
+.input {
+  --input-accent-color: transparent;
+
+  padding: 0.9rem 1rem;
+  border-radius: 6px;
+  border: 1.5px solid var(--input-accent-color);
+  box-shadow: 0 0 16px -4px var(--input-accent-color);
+}
+
+.input:focus.primary {
+  --input-accent-color: var(--accent-primary);
+}
+
+.input:focus.secondary {
+  --input-accent-color: var(--accent-secondary);
+}
