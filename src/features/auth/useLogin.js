@@ -4,6 +4,7 @@ import useFetch from "../../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { URL } from "./authRequestConfig";
+import { getRequestInitBuilder } from "../../utils/RequestInitBuilder.js";
 
 export default function useLogin() {
   const { data, isLoading, error, request } = useFetch();
@@ -12,24 +13,16 @@ export default function useLogin() {
   const finalUrl = URL + "/signIn";
 
   const login = (username, password) => {
-    const requestInit = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    };
+    const requestInit = getRequestInitBuilder()
+      .post()
+      .bodyJson({ username, password }, true)
+      .build();
 
     request(finalUrl, requestInit);
   };
 
   useEffect(() => {
     if (!data) return;
-    console.log(data)
     setUserId(data.id);
     setJwt(data.jwt);
     setUsername(data.username);

@@ -1,7 +1,7 @@
-import Loading from "../../components/Loading";
+import Loading from "../../components/loading/Loading.jsx";
 import useLogin from "../../features/auth/useLogin";
 import css from "./login.module.css";
-import LoginBookShowcase from "./LoginBookShowcase";
+import BookShowcase from "./BookShowcase.jsx";
 import LoginForm from "./LoginForm";
 
 export default function Login() {
@@ -14,7 +14,7 @@ export default function Login() {
   return (
     <div className={css["login"]}>
       <div className={css["left-column"]}>
-        <LoginBookShowcase />
+        <BookShowcase />
       </div>
       <div className={css["right-column"]}>
         <LoginForm onLogin={login} />

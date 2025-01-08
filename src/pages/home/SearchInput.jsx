@@ -2,30 +2,35 @@ import { useEffect, useRef, useState } from "react";
 import useSearchBooks from "../../features/book/useSearchBooks";
 import { FaSearch } from "react-icons/fa";
 import css from "./home.module.css";
+import { useNavigate } from "react-router-dom";
+import useDebounceValue from "../../hooks/useDebounceValue.js";
 
-export default function HomeSearchInput() {
+export default function SearchInput() {
   const [query, setQuery] = useState("");
+  const debouncedQuery = useDebounceValue(query);
   const { books, search } = useSearchBooks();
   const inputContainerRef = useRef(null);
   const inputResultRef = useRef(null);
   const inputRef = useRef(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!inputContainerRef || !inputResultRef) return;
-    const handleClickOutsideComponents = e => {
+    const handleClickOutsideComponents = (e) => {
       e.stopPropagation();
       const target = e.target;
       const inputEl = inputRef.current;
       const resultEl = inputContainerRef.current;
-      if(!(inputEl.contains(target) || resultEl.contains(target))) {
+      if (!(inputEl.contains(target) || resultEl.contains(target))) {
         setQuery("");
       }
-    }
+    };
 
     document.addEventListener("click", handleClickOutsideComponents);
     return () => {
       document.removeEventListener("click", handleClickOutsideComponents);
-    }
+    };
   }, [inputResultRef, inputContainerRef]);
 
   useEffect(() => {
@@ -47,12 +52,15 @@ export default function HomeSearchInput() {
     }
 
     inputClassList.add(css["show"]);
-    if(books.length > 0) resultClassList.add(css["show"]);
+    if (books.length > 0) resultClassList.add(css["show"]);
   }, [books, query, inputContainerRef, inputResultRef]);
 
-  const handleInputChange = (value) => {
-    setQuery(value);
-    search(value, 0, 5);
+  useEffect(() => {
+    search(debouncedQuery);
+  }, [debouncedQuery, search]);
+
+  const handleNavigateToBookPage = (id) => {
+    navigate(`/book/${id}`);
   };
 
   return (
@@ -61,18 +69,24 @@ export default function HomeSearchInput() {
         <input
           placeholder="Szukaj..."
           value={query}
-          onChange={(e) => handleInputChange(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
         />
         <FaSearch />
       </div>
 
       <div ref={inputResultRef} className={css["search-input__result"]}>
         {books?.map((book) => (
-          <div key={book.id} className={css["book-row"]}>
+          <div
+            key={book.id}
+            className={css["book-row"]}
+            onClick={() => handleNavigateToBookPage(book.id)}
+          >
             <img src={book.coverUrl} alt="cover" />
             <div>
               <div className={css["book-row__title"]}>{book.title}</div>
-              <div className={css["book-row__authors"]}>{book.authors?.join(", ")}</div>
+              <div className={css["book-row__authors"]}>
+                {book.authors?.join(", ")}
+              </div>
             </div>
           </div>
         ))}

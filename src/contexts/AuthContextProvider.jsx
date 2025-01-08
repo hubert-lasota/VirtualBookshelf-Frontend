@@ -9,7 +9,7 @@ export default function AuthContextProvider({children}) {
   return (
     <AuthContext.Provider
       value={{
-        jwt: jwt.replaceAll("\"", ""),
+        jwt,
         setJwt,
         userId,
         setUserId,

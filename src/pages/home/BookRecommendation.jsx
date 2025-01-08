@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function HomeBookRecommendation() {
+export default function BookRecommendation() {
   return (
     <div>HomeBookRecommendation</div>
   )
