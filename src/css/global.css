@@ -23,6 +23,8 @@
     var(--bg-color-darker-lightness)
   );
 
+  --bg-color-secondary: hsl(0, 0%, 95%);
+
   --body-font: "Raleway", sans-serif;
   --heading-font: "Prata", Georgia, serif;
 

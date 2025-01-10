@@ -8,7 +8,7 @@ import useDebounceValue from "../../hooks/useDebounceValue.js";
 export default function SearchInput() {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounceValue(query);
-  const { books, search } = useSearchBooks();
+  const { books } = useSearchBooks(debouncedQuery);
   const inputContainerRef = useRef(null);
   const inputResultRef = useRef(null);
   const inputRef = useRef(null);
@@ -54,10 +54,6 @@ export default function SearchInput() {
     inputClassList.add(css["show"]);
     if (books.length > 0) resultClassList.add(css["show"]);
   }, [books, query, inputContainerRef, inputResultRef]);
-
-  useEffect(() => {
-    search(debouncedQuery);
-  }, [debouncedQuery, search]);
 
   const handleNavigateToBookPage = (id) => {
     navigate(`/book/${id}`);

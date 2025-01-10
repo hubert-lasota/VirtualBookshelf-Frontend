@@ -1,7 +1,7 @@
 import useLocalStorage from "../hooks/useLocalStorage";
 import { AuthContext } from "./AuthContext";
 
-export default function AuthContextProvider({children}) {
+export default function AuthContextProvider({ children }) {
   const [jwt, setJwt] = useLocalStorage("jwt");
   const [userId, setUserId] = useLocalStorage("user_id");
   const [username, setUsername] = useLocalStorage("username");
@@ -14,7 +14,7 @@ export default function AuthContextProvider({children}) {
         userId,
         setUserId,
         username,
-        setUsername
+        setUsername,
       }}
     >
       {children}

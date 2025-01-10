@@ -27,16 +27,13 @@ export default function useFetch() {
 }
 
 function extractBodyFromResponse(response, dataFormat) {
-  switch (dataFormat) {
+  switch (dataFormat.toUpperCase()) {
     case "JSON":
       return response.json();
-
     case "BLOB":
       return response.blob();
-
     case "NONE":
       return response;
-
     default:
       throw new Error(`dataFormat = ${dataFormat} is not valid.`);
   }

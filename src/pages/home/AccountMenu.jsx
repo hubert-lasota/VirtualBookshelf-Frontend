@@ -5,5 +5,5 @@ export default function AccountMenu() {
     <div className={css["account-menu-container"]}>
       <div className={css["account-menu"]}>Acc</div>
     </div>
-  )
+  );
 }

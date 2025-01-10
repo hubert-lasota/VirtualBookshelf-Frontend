@@ -26,11 +26,9 @@
 }
 
 .account-menu-container {
-  
 }
 
 .account-menu {
-  
 }
 
 .header__first-row__right-side,
@@ -87,7 +85,6 @@
   row-gap: 0.7rem;
   box-shadow: 0 5px 14px 2px rgba(164, 164, 164, 1);
 }
-
 
 .book-row {
   cursor: pointer;

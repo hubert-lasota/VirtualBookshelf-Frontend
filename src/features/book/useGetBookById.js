@@ -6,7 +6,7 @@ import { getRequestInitBuilder } from "../../utils/RequestInitBuilder.js";
 
 export default function useGetBookById(id) {
   const { jwt } = useAuthContext();
-  const [book, setBook] = useState(null);
+  const [book, setBook] = useState({});
   const { data, isLoading, request } = useFetch();
 
   useEffect(() => {
