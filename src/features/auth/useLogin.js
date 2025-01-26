@@ -23,9 +23,10 @@ export default function useLogin() {
 
   useEffect(() => {
     if (!data) return;
-    setUserId(data.id);
-    setJwt(data.jwt);
-    setUsername(data.username);
+    const { id, jwt, username } = data;
+    setUserId(id);
+    setJwt(jwt);
+    setUsername(username);
     navigate("/home");
   }, [data, setUserId, setJwt, setUsername, navigate]);
 

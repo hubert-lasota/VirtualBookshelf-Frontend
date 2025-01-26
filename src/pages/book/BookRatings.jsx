@@ -1,4 +1,5 @@
 import css from "./book.module.css";
+import Rating from "../../components/rating/Rating.jsx";
 
 export default function BookRatings({ book }) {
   const ratings = book.ratingPage.content;
@@ -7,20 +8,7 @@ export default function BookRatings({ book }) {
       <h2 className={css["book-ratings-header"]}>Recenzje czytelników</h2>
       <div className={css["rating-list"]}>
         {ratings.map((rating) => (
-          <div key={rating.id} className={css["rating-row"]}>
-            <div className={css["rating-header"]}>
-              <div className={css["rating-user-info"]}>
-                <h3>{rating.user.username}</h3>
-                <p className={css["rating-date"]}>
-                  {new Date(rating.createdAtTimestamp).toLocaleDateString()}
-                </p>
-              </div>
-              <div>{"Star rating"}</div>
-            </div>
-            <p className={css["rating-justification"]}>
-              {rating.justification}
-            </p>
-          </div>
+          <Rating key={rating.id} rating={rating} />
         ))}
       </div>
     </section>

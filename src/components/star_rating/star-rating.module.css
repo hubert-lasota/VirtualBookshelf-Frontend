@@ -1,0 +1,36 @@
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: var(--border-color);
+}
+
+.background.filled {
+  color: var(--accent-secondary);
+}
+
+.half {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.half .filled {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  color: var(--accent-secondary);
+}

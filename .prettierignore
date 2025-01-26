@@ -1,0 +1,9 @@
+.idea
+.vscode
+node_modules
+
+.prettierrc
+.gitignore
+eslint.config.js
+package.json
+package-lock.json

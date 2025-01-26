@@ -1,0 +1,50 @@
+.page {
+  width: 100%;
+  height: 100vh;
+}
+
+.header {
+  width: 100%;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--accent-primary);
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+}
+
+.nav-btn:hover {
+  background-color: var(--border-color);
+}
+
+.active {
+  background-color: var(--accent-primary);
+  color: var(--font-color-on-accent);
+}
+
+.main {
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
