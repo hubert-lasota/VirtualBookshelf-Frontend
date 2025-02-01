@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import useValidateJwt from "./useValidateJwt";
-import Loading from "../../components/loading/Loading.jsx";
 import { useEffect } from "react";
+import LoadingPage from "../../pages/loading/LoadingPage.jsx";
 
 export default function PrivateRoute() {
   const { isValid, isLoading } = useValidateJwt();
@@ -14,7 +14,7 @@ export default function PrivateRoute() {
   }, [isValid, navigate]);
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingPage />;
   }
 
   return <Outlet />;

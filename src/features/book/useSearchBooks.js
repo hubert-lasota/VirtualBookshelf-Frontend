@@ -1,23 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/useFetch";
 import urlParamsBuilder from "../../utils/urlParamsBuilder";
 import { URL } from "./bookRequestConfig";
 import { getRequestInitBuilder } from "../../utils/RequestInitBuilder.js";
 
-export default function useSearchBooks(query, page = 0, size = 5, filter = {}) {
-  const [pageNum, setPageNum] = useState(page);
+export default function useSearchBooks(
+  query,
+  page = 0,
+  size = 5,
+  filters = {},
+) {
+  const [requestOptions, setRequestOptions] = useState({
+    page,
+    size,
+    ...filters,
+  });
   const { data: bookPage, request } = useFetch();
   const [totalCount, setTotalCount] = useState(0);
   const [books, setBooks] = useState([]);
   const { jwt } = useAuthContext();
+  const controllerRef = useRef(null);
 
   useEffect(() => {
-    const finalUrl =
-      URL + urlParamsBuilder({ q: query, page: pageNum, size, ...{ filter } });
-    const requestInit = getRequestInitBuilder().jwtHeader(jwt).build();
+    if (!query) return;
+
+    if (controllerRef.current) {
+      controllerRef.current.abort();
+    }
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
+    const finalUrl = URL + urlParamsBuilder({ q: query, ...requestOptions });
+    const requestInit = getRequestInitBuilder()
+      .jwtHeader(jwt)
+      .signal(signal)
+      .build();
+
     request(finalUrl, requestInit);
-  }, [query, pageNum, size, filter, request, jwt]);
+  }, [query, requestOptions, jwt, request]);
 
   useEffect(() => {
     if (!bookPage) return;
@@ -26,7 +46,10 @@ export default function useSearchBooks(query, page = 0, size = 5, filter = {}) {
   }, [bookPage]);
 
   const nextPage = () => {
-    setPageNum((prev) => prev + 1);
+    setRequestOptions((prev) => {
+      const newPage = prev.page + 1;
+      return { ...prev, page: newPage };
+    });
   };
 
   return { books, totalCount, nextPage };

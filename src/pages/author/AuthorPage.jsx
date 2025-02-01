@@ -27,7 +27,11 @@ export default function AuthorPage() {
     <div className={css["page"]}>
       <div className={css["container"]}>
         <header className={css["header"]}>
-          <img src={author.photoUrl} className={css["author-photo"]} alt={author.name} />
+          <img
+            src={author.photoUrl}
+            className={css["author-photo"]}
+            alt={author.name}
+          />
         </header>
         <section className={css["author-info"]}>
           <h1 className={css["author-name"]}>{author.name}</h1>

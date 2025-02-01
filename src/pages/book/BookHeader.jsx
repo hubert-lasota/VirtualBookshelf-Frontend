@@ -8,7 +8,9 @@ export default function BookHeader({ book }) {
       </div>
       <div className={css["book-info"]}>
         <h1 className={css["book-title"]}>{book.title}</h1>
-        <p className={css["book-authors"]}>{book.authors.join(", ")}</p>
+        <p className={css["book-authors"]}>
+          {book?.authors?.map((author) => author.fullName).join(", ")}
+        </p>
       </div>
       <div className={css["rating-container"]}>
         {"Ikona gwiazdki"}

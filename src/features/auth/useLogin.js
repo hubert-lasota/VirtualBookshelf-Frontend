@@ -15,7 +15,7 @@ export default function useLogin() {
   const login = (username, password) => {
     const requestInit = getRequestInitBuilder()
       .post()
-      .bodyJson({ username, password }, true)
+      .bodyJson({ username, password })
       .build();
 
     request(finalUrl, requestInit);

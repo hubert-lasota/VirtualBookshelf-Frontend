@@ -52,11 +52,16 @@ export class RequestInitBuilder {
     return this;
   }
 
-  bodyJson(bodyObj, setContentTypeHeader = false) {
+  bodyJson(bodyObj, setContentTypeHeader = true) {
     this.body(JSON.stringify(bodyObj));
     if (setContentTypeHeader) {
       this.contentType("application/json");
     }
+    return this;
+  }
+
+  signal(signal) {
+    this.#requestInit.signal = signal;
     return this;
   }
 

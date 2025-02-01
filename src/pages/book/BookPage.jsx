@@ -1,18 +1,23 @@
 import { useParams } from "react-router-dom";
 import useGetBookById from "../../features/book/useGetBookById.js";
-import Loading from "../../components/loading/Loading.jsx";
 import css from "./book.module.css";
 import BookHeader from "./BookHeader.jsx";
 import BookDetails from "./BookDetails.jsx";
 import BookTags from "./BookTags.jsx";
 import BookRatings from "./BookRatings.jsx";
+import NotFound from "../notfound/NotFound.jsx";
+import LoadingPage from "../loading/LoadingPage.jsx";
 
 export default function BookPage() {
   const { id } = useParams();
   const { book, isLoading } = useGetBookById(id);
 
-  if (isLoading) {
-    return <Loading variant="page" />;
+  if (isLoading && !book) {
+    return <LoadingPage />;
+  }
+
+  if (!book) {
+    return <NotFound />;
   }
 
   return (
