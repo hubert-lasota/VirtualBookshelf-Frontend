@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import useFetch from "../../hooks/useFetch";
-
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { URL } from "./authRequestConfig";
-import { getRequestInitBuilder } from "../../utils/RequestInitBuilder.js";
+import { getRequestInitBuilder } from "../../common/RequestInitBuilder.js";
+import useFetch from "../../common/hooks.js";
 
 export default function useLogin() {
   const { data, isLoading, error, request } = useFetch();

@@ -3,8 +3,8 @@ import useSearchBooks from "../../features/book/useSearchBooks";
 import { FaSearch } from "react-icons/fa";
 import css from "./home.module.css";
 import { useNavigate } from "react-router-dom";
-import useDebounceValue from "../../hooks/useDebounceValue.js";
 import useMessageResolver from "../../features/message/useMessageResolver.js";
+import { useDebounceValue } from "../../common/hooks.js";
 
 export default function SearchInput() {
   const [query, setQuery] = useState("");

@@ -1,5 +1,5 @@
-import useLocalStorage from "../hooks/useLocalStorage";
 import { AuthContext } from "./AuthContext";
+import { useLocalStorage } from "../common/hooks.js";
 
 export default function AuthContextProvider({ children }) {
   const [jwt, setJwt] = useLocalStorage("jwt");

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import useFetch from "../../hooks/useFetch.js";
 import { URL } from "./bookRequestConfig.js";
 import { useAuthContext } from "../../contexts/AuthContext.js";
-import { getRequestInitBuilder } from "../../utils/RequestInitBuilder.js";
+import { getRequestInitBuilder } from "../../common/RequestInitBuilder.js";
+import useFetch from "../../common/hooks.js";
 
 export default function useGetBookById(id) {
   const { jwt } = useAuthContext();

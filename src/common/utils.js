@@ -1,4 +1,4 @@
-export default function urlParamsBuilder(paramsObj) {
+export function objectToParamsString(paramsObj) {
   if (!(typeof paramsObj === "object") && !Array.isArray(paramsObj))
     throw new Error(
       "Params needs to be object with properties. It cannot be array either.",

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
-import useFetch from "../../hooks/useFetch";
-import urlParamsBuilder from "../../utils/urlParamsBuilder";
 import { URL } from "./bookRequestConfig";
-import { getRequestInitBuilder } from "../../utils/RequestInitBuilder.js";
+import { getRequestInitBuilder } from "../../common/RequestInitBuilder.js";
+import useFetch from "../../common/hooks.js";
+import { objectToParamsString } from "../../common/utils.js";
 
 export default function useSearchBooks(
   query,
@@ -30,7 +30,8 @@ export default function useSearchBooks(
     }
     controllerRef.current = new AbortController();
     const signal = controllerRef.current.signal;
-    const finalUrl = URL + urlParamsBuilder({ q: query, ...requestOptions });
+    const finalUrl =
+      URL + objectToParamsString({ q: query, ...requestOptions });
     const requestInit = getRequestInitBuilder()
       .jwtHeader(jwt)
       .signal(signal)
