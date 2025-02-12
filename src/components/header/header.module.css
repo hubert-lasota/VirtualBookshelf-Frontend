@@ -1,0 +1,16 @@
+.header {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-block: 1px solid var(--border-color-primary);
+  background-color: var(--bg-color-primary);
+  padding-inline: 1rem;
+  opacity: 100%;
+}
+
+.app-name {
+  font-family: var(--heading-font);
+  color: var(--accent-primary);
+  user-select: none;
+}

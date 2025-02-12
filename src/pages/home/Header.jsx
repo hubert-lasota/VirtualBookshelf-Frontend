@@ -1,17 +1,20 @@
 import css from "./home.module.css";
 import AccountMenu from "./AccountMenu.jsx";
-import SearchInput from "./SearchInput.jsx";
+import SearchButton from "./search/SearchButton.jsx";
+import GlobalNavHeader from "../../components/header/GlobalNavHeader.jsx";
 
 export default function Header() {
+
+
   return (
     <header className={css["header"]}>
       <div className={css["header__first-row"]}>
-        <SearchInput />
+        <SearchButton />
         <div className={css["header__first-row__right-side"]}>
           <AccountMenu />
         </div>
       </div>
-      <div className={css["header__second-row"]}></div>
+      <GlobalNavHeader renderFixed={false}/>
     </header>
   );
 }

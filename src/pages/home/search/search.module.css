@@ -1,0 +1,62 @@
+.btn-container {
+  cursor: pointer;
+  width: 30%;
+  height: 70%;
+  position: relative;
+  border: 2px solid var(--border-color-primary);
+  border-radius: var(--radius-large);
+  background-color: var(--bg-color-secondary);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-icon {
+  margin-left: 1rem;
+}
+
+.btn-text,
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+.modal-container {
+  height: 85vh;
+  width: 65vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--radius-large);
+  background-color: var(--bg-color-secondary);
+}
+
+.header {
+  padding: 1.5rem;
+  padding-bottom: 0;
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color-primary);
+}
+
+.tab-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tab {
+  cursor: pointer;
+  user-select: none;
+  height: 100%;
+  padding-inline: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.tab-active {
+  border-bottom: 1px solid var(--accent-secondary);
+  color: var(--accent-secondary);
+}

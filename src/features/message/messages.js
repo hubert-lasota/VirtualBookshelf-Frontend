@@ -54,14 +54,31 @@ export default {
 
   Home: {
     Header: {
-      SearchInput: {
+      SearchButton: {
+        "pl-PL": "Szukaj...",
+        "en-US": "Search...",
+      },
+      SearchModal: {
         input: {
           placeholder: {
             "pl-PL": "Szukaj...",
-            "en-US": "Search...",
-          },
+            "en-US": "Search..."
+          }
         },
-      },
+        TabSelector: {
+          tab: {
+            title: {
+              "pl-PL": "Tytuł",
+              "en-US": "Title",
+            },
+            author: {
+              "pl-PL": "Autor",
+              "en-US": "Author",
+            }
+          }
+        }
+
+      }
     },
   },
 };

@@ -15,8 +15,15 @@ export default function useMessageResolver(baseKey = "") {
   });
   const { languageTag } = useUserPreferencesContext();
 
-  return function (key) {
-    const fullKey = initialKey ? `${initialKey}${key}` : key;
+  return function (key = "") {
+    let fullKey = initialKey ? `${initialKey}${key}` : key;
+    if (fullKey) {
+      const lastChar = fullKey.charAt(fullKey.length - 1);
+      if (lastChar === ":") {
+        fullKey = fullKey.substring(0, fullKey.length - 1);
+      }
+    }
+
     const keys = fullKey.split(":");
     let messageObj = messages;
     for (let k of keys) {

@@ -12,7 +12,7 @@ export default function LoadingPage() {
         </div>
         <div className={css["book-page"]}></div>
       </div>
-      <h2>{message("LoadingPage")}</h2>
+      <h2 className={css["loading-text"]}>{message("LoadingPage")}</h2>
     </div>
   );
 }

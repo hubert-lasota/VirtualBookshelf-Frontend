@@ -1,4 +1,5 @@
 import css from "./input.module.css";
+import { useRef } from "react";
 
 export default function Input({
   name = "",
@@ -8,16 +9,33 @@ export default function Input({
   value,
   onChange,
   style = {},
+  startIcon = null,
+  endIcon = null,
 }) {
+  const inputRef = useRef(null);
+
+  const clickContainer = () => {
+    if (!inputRef?.current) return;
+    inputRef.current.focus();
+  };
+
   return (
-    <input
+    <div
       style={style}
-      name={name}
-      type={type}
-      placeholder={placeholder}
-      className={`${css["input"]} ${css[color]}`}
-      value={value}
-      onChange={onChange}
-    />
+      className={`${css["container"]}  ${css[color]}`}
+      onClick={clickContainer}
+    >
+      {startIcon && <div className={css[["start-icon"]]}>{startIcon}</div>}
+      <input
+        ref={inputRef}
+        className={`${css["input"]}`}
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
+      {endIcon && <div className={css[["end-icon"]]}>{endIcon}</div>}
+    </div>
   );
 }

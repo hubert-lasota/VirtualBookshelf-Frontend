@@ -23,7 +23,7 @@
 }
 
 .contained.primary:hover {
-  background-color: var(--accent-primary-darker);
+  background-color: var(--accent-primary-hover);
 }
 
 .outlined {
@@ -42,11 +42,11 @@
 }
 
 .outlined.primary:hover {
-  border-color: var(--accent-primary-darker);
-  color: var(--accent-primary-darker);
+  border-color: var(--accent-primary-hover);
+  color: var(--accent-primary-hover);
 }
 
 .outlined.secondary:hover {
-  border-color: var(--accent-secondary-darker);
-  color: var(--accent-secondary-darker);
+  border-color: var(--accent-secondary-hover);
+  color: var(--accent-secondary-hover);
 }

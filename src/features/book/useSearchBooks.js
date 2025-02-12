@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { URL } from "./bookRequestConfig";
 import { getRequestInitBuilder } from "../../common/RequestInitBuilder.js";
@@ -16,15 +16,13 @@ export default function useSearchBooks(
     size,
     ...filters,
   });
-  const { data: bookPage, request } = useFetch();
-  const [totalCount, setTotalCount] = useState(0);
   const [books, setBooks] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const { request } = useFetch();
   const { jwt } = useAuthContext();
   const controllerRef = useRef(null);
 
-  useEffect(() => {
-    if (!query) return;
-
+  const search = async () => {
     if (controllerRef.current) {
       controllerRef.current.abort();
     }
@@ -37,14 +35,12 @@ export default function useSearchBooks(
       .signal(signal)
       .build();
 
-    request(finalUrl, requestInit);
-  }, [query, requestOptions, jwt, request]);
-
-  useEffect(() => {
-    if (!bookPage) return;
-    setBooks(bookPage.content);
-    setTotalCount(bookPage.total);
-  }, [bookPage]);
+    const { data: bookPage } = await request(finalUrl, requestInit);
+    if (bookPage) {
+      setBooks(bookPage.content);
+      setTotalCount(bookPage.total);
+    }
+  };
 
   const nextPage = () => {
     setRequestOptions((prev) => {
@@ -53,5 +49,5 @@ export default function useSearchBooks(
     });
   };
 
-  return { books, totalCount, nextPage };
+  return { books, totalCount, search, nextPage };
 }

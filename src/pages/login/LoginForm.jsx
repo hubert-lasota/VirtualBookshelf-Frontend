@@ -3,6 +3,8 @@ import css from "./login.module.css";
 import Button from "../../components/button/Button.jsx";
 import Input from "../../components/input/Input.jsx";
 import useMessageResolver from "../../features/message/useMessageResolver.js";
+import { FaUser } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 export default function LoginForm({ onLogin }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -24,6 +26,7 @@ export default function LoginForm({ onLogin }) {
           value={formData.username}
           onChange={handleChange}
           style={{ width: "100%" }}
+          endIcon={<FaUser />}
         />
         <Input
           name="password"
@@ -32,11 +35,12 @@ export default function LoginForm({ onLogin }) {
           value={formData.password}
           onChange={handleChange}
           style={{ width: "100%" }}
+          endIcon={<RiLockPasswordFill />}
         />
         <div className={css["register-text"]}>
           {message("register:text")}
           <span className={css["register-link"]}>
-            {message("register:link")}
+            {" " + message("register:link")}
           </span>
         </div>
         <Button

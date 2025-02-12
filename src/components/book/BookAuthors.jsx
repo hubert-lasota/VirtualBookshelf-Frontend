@@ -1,5 +1,5 @@
 import { useBookContext } from "./BookContext.js";
-import css from "../../pages/searchbooks/search-books.module.css";
+import css from "../../pages/search_books/search-books.module.css";
 
 export default function BookAuthors() {
   const { authors } = useBookContext();

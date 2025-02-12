@@ -44,7 +44,7 @@
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--font-color-default);
+  color: var(--text-font-color-primary);
 }
 
 .search-input {
@@ -127,7 +127,7 @@
 }
 
 .sort-order-btn:hover {
-  background-color: var(--bg-color);
+  background-color: var(--bg-color-primary);
 }
 
 /*   BOOK GRID  */

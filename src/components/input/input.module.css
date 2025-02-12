@@ -1,16 +1,75 @@
-.input {
-  --input-accent-color: transparent;
+.container {
+  --input-accent-color: var(--border-color-primary);
+  --icon-color: inherit;
+  --box-shadow-color: transparent;
 
-  padding: 0.9rem 1rem;
-  border-radius: 6px;
   border: 1.5px solid var(--input-accent-color);
-  box-shadow: 0 0 16px -4px var(--input-accent-color);
+  box-shadow: 0 0 16px -4px var(--box-shadow-color);
+  position: relative;
+  background-color: var(--bg-color-secondary);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
 }
 
-.input:focus.primary {
+.container,
+.input {
+  border-radius: var(--radius-small);
+}
+
+.start-icon,
+.end-icon {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--icon-color);
+}
+
+.start-icon > *,
+.end-icon > * {
+  font-size: 1.1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.start-icon {
+  left: 0.6rem;
+}
+
+.end-icon {
+  right: 1rem;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  padding: 0.9rem 1rem;
+  background-color: inherit;
+}
+
+.container.primary:focus-within {
   --input-accent-color: var(--accent-primary);
+  --icon-color: var(--accent-primary);
+  --box-shadow-color: var(--accent-primary);
 }
 
-.input:focus.secondary {
+.container.secondary:focus-within {
   --input-accent-color: var(--accent-secondary);
+  --icon-color: var(--accent-secondary);
+  --box-shadow-color: var(--accent-secondary);
+}
+
+.container:not(:focus-within) {
+  --input-accent-color: var(--border-color-primary);
+  --icon-color: inherit;
+  --box-shadow-color: transparent;
+}
+
+.container:has(.start-icon) {
+  padding-left: 1.5rem;
+}
+
+.container:has(.end-icon) {
+  padding-right: 2rem;
 }

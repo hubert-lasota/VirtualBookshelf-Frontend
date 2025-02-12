@@ -1,7 +1,7 @@
 .login {
   height: 100vh;
-  background-color: var(--bg-color);
-
+  background-color: var(--bg-color-primary);
+  /*background: var(--bg-color-primary-gradient);*/
   display: flex;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .form-header {
-  color: var(--font-color);
+  color: var(--heading-font-color);
   font-family: var(--heading-font);
   font-size: 2rem;
 }
@@ -50,6 +50,10 @@
   font-weight: 500;
 }
 
+.register-link:hover {
+  color: var(--accent-secondary-hover);
+}
+
 .login-error {
   color: var(--danger-color);
   font-size: 1.1rem;
@@ -59,14 +63,4 @@
   border-radius: 2rem;
   height: 100%;
   width: 100%;
-  --gradient-temp-color: hsl(
-    var(--accent-hue),
-    var(--accent-saturation),
-    calc(var(--accent-lightness) + 20%)
-  );
-  background: linear-gradient(
-    to bottom right,
-    var(--accent),
-    var(--gradient-temp-color)
-  );
 }

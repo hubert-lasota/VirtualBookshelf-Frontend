@@ -5,7 +5,7 @@ import BookHeader from "./BookHeader.jsx";
 import BookDetails from "./BookDetails.jsx";
 import BookTags from "./BookTags.jsx";
 import BookRatings from "./BookRatings.jsx";
-import NotFound from "../notfound/NotFound.jsx";
+import NotFound from "../not_found/NotFound.jsx";
 import LoadingPage from "../loading/LoadingPage.jsx";
 
 export default function BookPage() {
