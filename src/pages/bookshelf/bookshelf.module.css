@@ -19,7 +19,7 @@
 .logo-icon {
   width: 2rem;
   height: 2rem;
-  color: var(--accent-primary);
+  color: var(--primary-color);
 }
 
 .nav {
@@ -34,8 +34,8 @@
 }
 
 .active {
-  background-color: var(--accent-primary);
-  color: var(--font-color-on-accent);
+  background-color: var(--primary-color);
+  color: var(--primary-color-contrast-text);
 }
 
 .main {

@@ -1,7 +1,6 @@
 .login {
   height: 100vh;
   background-color: var(--bg-color-primary);
-  /*background: var(--bg-color-primary-gradient);*/
   display: flex;
 }
 
@@ -21,22 +20,31 @@
 }
 
 .right-column,
-.form {
+.form,
+.form-fields {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
+.form {
+  width: 100%;
+  gap: 0.6rem;
+}
+
 .form-header {
-  color: var(--heading-font-color);
-  font-family: var(--heading-font);
   font-size: 2rem;
 }
 
-.form {
+.form-fields {
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.form-fields > *,
+.submit-btn {
   width: 60%;
-  row-gap: 1rem;
 }
 
 .register-text {
@@ -46,16 +54,16 @@
 
 .register-link {
   cursor: pointer;
-  color: var(--accent-secondary);
+  color: var(--primary-color);
   font-weight: 500;
 }
 
 .register-link:hover {
-  color: var(--accent-secondary-hover);
+  color: var(--primary-color-dark);
 }
 
 .login-error {
-  color: var(--danger-color);
+  color: var(--error-color);
   font-size: 1.1rem;
 }
 

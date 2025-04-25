@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import useValidateJwt from "./useValidateJwt";
+import useValidateJwt from "./services/useValidateJwt.js";
 import { useEffect } from "react";
 import LoadingPage from "../../pages/loading/LoadingPage.jsx";
 

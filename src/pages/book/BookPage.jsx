@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import useGetBookById from "../../features/book/useGetBookById.js";
+import useGetBookById from "../../features/book/services/useGetBookById.js";
 import css from "./book.module.css";
 import BookHeader from "./BookHeader.jsx";
 import BookDetails from "./BookDetails.jsx";

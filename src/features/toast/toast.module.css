@@ -1,0 +1,84 @@
+.page-position {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: var(--z-index-toast);
+  --text-color: none;
+  --icon-color: none;
+  --bg-color: none;
+  --border-color: none;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border: 1px solid var(--border-color-primary);
+  border-radius: var(--radius-small);
+  animation: slide-in 0.3s forwards;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.container.hide {
+  animation-name: slide-out;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: var(--icon-color);
+  fill: var(--icon-color);
+}
+
+.success {
+  --text-color: var(--success-color-dark);
+  --icon-color: var(--success-color);
+  --bg-color: var(--success-color-bg);
+  --border-color: var(--success-color-light);
+}
+
+.error {
+  --text-color: var(--error-color-dark);
+  --icon-color: var(--error-color);
+  --bg-color: var(--error-color-bg);
+  --border-color: var(--error-color-light);
+}
+
+.warning {
+  --text-color: var(--warning-color-dark);
+  --icon-color: var(--warning-color);
+  --bg-color: var(--warning-color-bg);
+  --border-color: var(--warning-color-light);
+}
+
+.info {
+  --text-color: var(--info-color-dark);
+  --icon-color: var(--info-color);
+  --bg-color: var(--info-color-bg);
+  --border-color: var(--info-color-light);
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}

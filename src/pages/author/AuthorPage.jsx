@@ -48,7 +48,7 @@ export default function AuthorPage() {
           ))}
         </section>
         {"book grid"}
-        {"Rating Component"}
+        {"Review Component"}
       </div>
     </div>
   );

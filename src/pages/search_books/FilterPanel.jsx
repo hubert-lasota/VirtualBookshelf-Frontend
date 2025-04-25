@@ -9,7 +9,7 @@ export default function FilterPanel({
 }) {
   // TODO this component should fetch availableGenres from API
   const sortOptions = [
-    { value: "rating", message: "Ocena" },
+    { value: "review", message: "Ocena" },
     { value: "year", message: "Rok wydania" },
     { value: "title", message: "Tytuł" },
     { value: null, message: "Brak" },
@@ -52,7 +52,7 @@ export default function FilterPanel({
           step="0.5"
           value={minRating}
           onChange={(e) => updateFilter({ minRating: Number(e.target.value) })}
-          className={css["rating-slider"]}
+          className={css["review-slider"]}
         />
         <span>{minRating} ⭐</span>
       </section>

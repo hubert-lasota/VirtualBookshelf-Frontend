@@ -1,10 +1,14 @@
 .page {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: var(--bg-color-primary);
+  width: 100vw;
+  background-color: var(--bg-color-secondary);
   font-family: Arial, sans-serif;
 }
 
@@ -20,7 +24,7 @@
   width: 100%;
   height: 100%;
   transform-origin: left;
-  background-color: var(--accent-secondary);
+  background-color: var(--primary-color);
   border-radius: 0 10px 10px 0;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
   animation: flipCover 3s infinite;
@@ -31,7 +35,7 @@
   left: 0;
   width: 20px;
   height: 100%;
-  background-color: var(--accent-secondary);
+  background-color: var(--primary-color);
   transform: rotateY(-90deg) translateX(-10px);
 }
 
@@ -69,7 +73,7 @@
 
 .loading-text {
   margin-top: 30px;
-  color: var(--accent-secondary);
+  color: var(--primary-color-dark);
   animation: pulse 1.5s ease-in-out infinite;
 }
 

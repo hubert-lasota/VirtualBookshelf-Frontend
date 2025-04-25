@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* BACKGROUND */
+  --bg-color-primary: rgb(255, 255, 255);
+  --bg-color-secondary: rgb(247, 250, 255);
+
+  /* BORDER*/
+  --border-color-primary: hsl(0, 0%, 85%);
+
+  /* RADIUS */
+  --radius-small: 6px;
+  --radius-medium: 12px;
+  --radius-large: 16px;
+
+  /*   COLORS   */
+
+  /* INPUT - COLOR */
+  --input-border-color: hsl(0, 0%, 85%);
+  --input-border-color-hover: hsl(0, 0%, 10%);
+
+  /* SUCCESS - COLOR */
+  --success-color: #009f00;
+  --success-color-light: #a7f3d0;
+  --success-color-dark: #065f46;
+  --success-color-bg: #ecfdf5;
+
+  /* ERROR - COLOR */
+  --error-color: #f80606;
+  --error-color-light: #fecaca;
+  --error-color-dark: #991b1b;
+  --error-color-bg: #fef2f2;
+
+  /* WARNING - COLOR */
+  --warning-color: #f59e0b;
+  --warning-color-light: #fef3c7;
+  --warning-color-dark: #92400e;
+  --warning-color-bg: #fffbeb;
+
+  /* INFO - COLOR */
+  --info-color: #3b82f6;
+  --info-color-light: #bfdbfe;
+  --info-color-dark: #1e40af;
+  --info-color-bg: #eff6ff;
+
+  /* PRIMARY - COLOR */
+  --primary-color: #2563eb;
+  --primary-color-dark: #1d4ed8;
+  --primary-color-light: #bfdbfe;
+  --primary-color-light-hover: #93c5fd;
+  --primary-color-contrast-text: #fff;
+
+  /* FONT */
+  --text-font: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font-color: #111827;
+  --text-font-color-primary: hsl(0, 0%, 0%);
+  --text-font-color-secondary: #4b5563;
+
+  /* SHADOW */
+  --shadow-small: 0 0 6px -4px;
+  --shadow-medium: 0 0 12px -4px;
+  --shadow-large: 0 0 16px -4px;
+  --shadow-color-small: rgba(0, 0, 0, 0.05);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Z-INDEXES */
+  --z-index-base: 1;
+  --z-index-dropdown: 10;
+  --z-index-modal: 100;
+  --z-index-toast: 1000;
+
+  /* BREAKPOINTS TODO */
+}
+
+html {
+  font-family: var(--text-font);
+  color: var(--text-font-color-primary);
+}
+
+input,
+button,
+textarea {
+  font-size: 1rem;
+  border: none;
+  outline: none;
+}
+
+input {
+  color: var(--text-font-color-primary);
+  appearance: none;
+}
+
+input,
+button {
+  font-family: var(--text-font);
+}
+
+textarea {
+  overflow: auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: none;
+}

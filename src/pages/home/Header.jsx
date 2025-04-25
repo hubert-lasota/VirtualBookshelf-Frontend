@@ -1,20 +1,18 @@
-import css from "./home.module.css";
+import css from "./header.module.css";
 import AccountMenu from "./AccountMenu.jsx";
-import SearchButton from "./search/SearchButton.jsx";
-import GlobalNavHeader from "../../components/header/GlobalNavHeader.jsx";
+import SearchButton from "../../common/components/global_header/search/SearchButton.jsx";
+import GlobalHeader from "../../common/components/global_header/GlobalHeader.jsx";
 
 export default function Header() {
-
-
   return (
-    <header className={css["header"]}>
-      <div className={css["header__first-row"]}>
+    <header className={css["container"]}>
+      <div className={css["first-row"]}>
         <SearchButton />
-        <div className={css["header__first-row__right-side"]}>
+        <div className={css["first-row__right-side"]}>
           <AccountMenu />
         </div>
       </div>
-      <GlobalNavHeader renderFixed={false}/>
+      <GlobalHeader renderFixed={false} />
     </header>
   );
 }

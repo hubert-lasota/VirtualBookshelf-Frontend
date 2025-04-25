@@ -1,6 +1,6 @@
 import { useState } from "react";
 import messages from "./messages.js";
-import { useUserPreferencesContext } from "../../contexts/UserPreferencesContext.js";
+import { useUserPreferencesContext } from "../../common/contexts/UserPreferencesContext.js";
 
 export default function useMessageResolver(baseKey = "") {
   const [initialKey] = useState(() => {
@@ -34,6 +34,11 @@ export default function useMessageResolver(baseKey = "") {
           `Could not find a message. baseKey='${baseKey}' key='${key}' error on key='${k}'`,
         );
       }
+    }
+    if (typeof messageObj === "function") {
+      return function (...args) {
+        return messageObj(languageTag, ...args);
+      };
     }
     return messageObj[languageTag] || messageObj["en-US"];
   };

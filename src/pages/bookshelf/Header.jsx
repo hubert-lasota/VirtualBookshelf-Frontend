@@ -1,6 +1,6 @@
 import css from "./bookshelf.module.css";
 import { LuLibrary } from "react-icons/lu";
-import Button from "../../components/button/Button.jsx";
+import Button from "../../common/components/button/Button.jsx";
 
 export default function Header() {
   return (

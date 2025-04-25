@@ -12,7 +12,7 @@ export default function BookHeader({ book }) {
           {book?.authors?.map((author) => author.fullName).join(", ")}
         </p>
       </div>
-      <div className={css["rating-container"]}>
+      <div className={css["review-container"]}>
         {"Ikona gwiazdki"}
         <span>{`${book.averageRating} / 5.0 (${book.ratingPage.total})`}</span>
       </div>

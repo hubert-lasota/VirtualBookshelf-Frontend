@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { isJsonParsable } from "./utils.js";
 
 export function useDebounceValue(value, delayMs = 500) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -13,61 +14,32 @@ export function useDebounceValue(value, delayMs = 500) {
   return debouncedValue;
 }
 
-export default function useFetch() {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const request = useCallback(
-    async (url, requestInit = {}, responseDataFormat = "JSON") => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(url, requestInit);
-        let data = null;
-        let error = null;
-        if (response.ok) {
-          data = await extractBodyFromResponse(response, responseDataFormat);
-          setData(data);
-        } else {
-          error = await response.json();
-          setError(error);
-        }
-        return { data, error };
-      } catch (error) {
-        console.error("Error occurred while fetching data: ", error);
-        setError(error);
-        return { data: null, error };
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [],
-  );
-
-  return { data, error, isLoading, request };
-}
-
-function extractBodyFromResponse(response, dataFormat) {
-  switch (dataFormat.toUpperCase()) {
-    case "JSON":
-      return response.json();
-    case "BLOB":
-      return response.blob();
-    case "NONE":
-      return response;
-    default:
-      throw new Error(`dataFormat = ${dataFormat} is not valid.`);
-  }
-}
-
-export function useLocalStorage(key, initValue = "") {
+export function useStorage(key, storage) {
   const [value, setValue] = useState(() => {
-    return initValue || JSON.parse(localStorage.getItem(key));
+    const storageValue = storage.getItem(key);
+    return isJsonParsable(storageValue) ? JSON.parse(storageValue) : value;
   });
 
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
+  const handleSetValue = (value) => {
+    setValue(value);
+    const storageValue =
+      typeof value === "object" ? JSON.stringify(value) : value;
+    storage.setItem(key, storageValue);
+  };
 
-  return [value, setValue];
+  return [value, handleSetValue];
+}
+
+export function useLocalStorage(key) {
+  return useStorage(key, localStorage);
+}
+
+export function useUpdateEffect(effect, deps) {
+  const didMount = useRef(false);
+  useEffect(() => {
+    if (didMount.current) {
+      return effect();
+    }
+    didMount.current = true;
+  }, deps);
 }

@@ -1,4 +1,4 @@
-import BookCard from "../../components/book/BookCard.jsx";
+import BookCard from "../../features/book/components/card/BookCard.jsx";
 import css from "./bookshelf.module.css";
 
 export default function BookGrid({ books, onClickBook }) {

@@ -1,5 +1,5 @@
 import css from "./bookshelf.module.css";
-import Button from "../../components/button/Button.jsx";
+import Button from "../../common/components/button/Button.jsx";
 
 export default function Navbar({
   bookshelves,
