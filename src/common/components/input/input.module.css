@@ -1,9 +1,0 @@
-.label {
-  padding-bottom: 4px;
-  display: block;
-  color: var(--label-color);
-}
-
-.asterisk-label {
-  color: var(--asterisk-label-color);
-}
