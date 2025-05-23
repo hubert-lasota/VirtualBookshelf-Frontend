@@ -17,7 +17,9 @@ export function useDebounceValue(value, delayMs = 500) {
 export function useStorage(key, storage) {
   const [value, setValue] = useState(() => {
     const storageValue = storage.getItem(key);
-    return isJsonParsable(storageValue) ? JSON.parse(storageValue) : value;
+    return isJsonParsable(storageValue)
+      ? JSON.parse(storageValue)
+      : storageValue;
   });
 
   const handleSetValue = (value) => {

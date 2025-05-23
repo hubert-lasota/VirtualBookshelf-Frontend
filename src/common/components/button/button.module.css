@@ -9,6 +9,11 @@
   transition-timing-function: ease-in-out;
 }
 
+.loading,
+.disabled {
+  cursor: default;
+}
+
 .contained.primary {
   background-color: var(--primary-color);
 }

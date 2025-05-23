@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import useGetBookById from "../../features/book/services/useGetBookById.js";
 import css from "./book.module.css";
 import BookHeader from "./BookHeader.jsx";
 import BookDetails from "./BookDetails.jsx";
@@ -7,25 +6,31 @@ import BookTags from "./BookTags.jsx";
 import BookRatings from "./BookRatings.jsx";
 import NotFound from "../not_found/NotFound.jsx";
 import LoadingPage from "../loading/LoadingPage.jsx";
+import { useQuery } from "@tanstack/react-query";
+import { getBookById } from "../../features/book/bookClient.js";
 
 export default function BookPage() {
   const { id } = useParams();
-  const { book, isLoading } = useGetBookById(id);
+  const { data, isLoading } = useQuery({
+    queryKey: ["books", id],
+    queryFn: () => getBookById(id),
+    enabled: !!id,
+  });
 
-  if (isLoading && !book) {
+  if (isLoading) {
     return <LoadingPage />;
   }
 
-  if (!book) {
+  if (!data) {
     return <NotFound />;
   }
 
   return (
     <div className={css["page"]}>
-      <BookHeader book={book} />
-      <BookDetails book={book} />
-      <BookTags tags={book.tags} />
-      <BookRatings book={book} />
+      <BookHeader book={data} />
+      <BookDetails book={data} />
+      <BookTags tags={data.tags} />
+      <BookRatings book={data} />
     </div>
   );
 }

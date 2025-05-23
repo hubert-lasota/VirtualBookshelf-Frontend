@@ -1,20 +1,23 @@
-import Modal from "../../modal/Modal.jsx";
-import { useDebounceValue } from "../../../hooks.js";
-import useSearchBooks from "../../../../features/book/services/useSearchBooks.js";
+import Modal from "../../../common/components/modal/Modal.jsx";
+import { useDebounceValue } from "../../../common/hooks.js";
 import css from "./search.module.css";
 import { useState } from "react";
-import TextInput from "../../input/text_input/TextInput.jsx";
+import TextInput from "../../../common/components/input/text_input/TextInput.jsx";
 import { FaSearch } from "react-icons/fa";
 import TabSelector from "./TabSelector.jsx";
 import { IoMdClose } from "react-icons/io";
-import useMessageResolver from "../../../../features/message/useMessageResolver.js";
+import useMessageResolver from "../../message/useMessageResolver.js";
 import { SearchResult } from "./SearchResult.jsx";
+import { useQuery } from "@tanstack/react-query";
 
 // TODO should search everything books, authors, users, posts
 export default function SearchModal({ isOpen, onClose }) {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounceValue(query);
-  const { books, isLoading } = useSearchBooks(debouncedQuery);
+  const { books, isLoading } = useQuery({
+    queryKey: ["search", debouncedQuery],
+    enabled: !!debouncedQuery,
+  });
   const [selectedTab, setSelectedTab] = useState("all");
   const message = useMessageResolver("Home:Header:SearchModal");
 

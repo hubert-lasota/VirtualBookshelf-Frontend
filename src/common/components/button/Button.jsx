@@ -7,16 +7,19 @@ export default function Button({
   variant = BUTTON_VARIANTS.CONTAINED,
   color = COLORS.PRIMARY,
   component: Component = "button",
+  isLoading = false,
   children,
   className = "",
+  disabled = false,
   ...rest
 }) {
   return (
     <Component
-      className={`${css["button"]} ${css[color]} ${css[variant]} ${className}`}
+      className={`${css["button"]} ${css[color]} ${css[variant]} ${isLoading ? css["loading"] : ""} ${className} ${disabled ? "disabled" : ""}`}
       {...rest}
+      disabled={disabled || isLoading}
     >
-      {children}
+      {isLoading ? "Loading..." : children}
     </Component>
   );
 }

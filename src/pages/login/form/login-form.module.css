@@ -1,50 +1,22 @@
-.login {
-  height: 100vh;
-  background-color: var(--bg-color-primary);
-  display: flex;
-}
-
-.left-column,
-.right-column {
-  width: 50%;
-  height: 100%;
-}
-
-.left-column {
-  padding: 0.3rem;
-}
-
-.right-column {
-  row-gap: 1.2rem;
-  padding-bottom: 5rem;
-}
-
-.right-column,
 .form,
 .form-fields {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-
-.form {
-  width: 100%;
   gap: 0.6rem;
 }
 
+.form {
+  width: 70%;
+}
 .form-header {
   font-size: 2rem;
 }
 
-.form-fields {
-  gap: 0.5rem;
-  width: 100%;
-}
-
 .form-fields > *,
 .submit-btn {
-  width: 60%;
+  width: 100%;
 }
 
 .register-text {
@@ -65,10 +37,4 @@
 .login-error {
   color: var(--error-color);
   font-size: 1.1rem;
-}
-
-.book-showcase {
-  border-radius: 2rem;
-  height: 100%;
-  width: 100%;
 }

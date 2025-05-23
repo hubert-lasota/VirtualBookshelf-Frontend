@@ -20,7 +20,7 @@ export default function Hero() {
           <Button onClick={() => navigate("/login")}>
             Rozpocznij za darmo
           </Button>
-          <Button rootComponent="a" color="primary-light">
+          <Button component="a" color="primary-light">
             Dowiedz się wiecej
           </Button>
         </div>

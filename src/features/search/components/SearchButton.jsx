@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import css from "./search.module.css";
-import useMessageResolver from "../../../../features/message/useMessageResolver.js";
+import useMessageResolver from "../../message/useMessageResolver.js";
 import SearchModal from "./SearchModal.jsx";
 
 export default function SearchButton() {

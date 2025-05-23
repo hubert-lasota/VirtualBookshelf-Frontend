@@ -1,6 +1,6 @@
 import css from "./search.module.css";
 import { useRef } from "react";
-import useMessageResolver from "../../../../features/message/useMessageResolver.js";
+import useMessageResolver from "../../message/useMessageResolver.js";
 
 export default function TabSelector({ selectedTab, onTabChange }) {
   const containerRef = useRef(null);

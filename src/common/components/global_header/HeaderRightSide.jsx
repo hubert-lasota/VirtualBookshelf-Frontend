@@ -1,4 +1,4 @@
-import SearchButton from "./search/SearchButton.jsx";
+import SearchButton from "../../../features/search/components/SearchButton.jsx";
 
 export default function HeaderRightSide() {
   return (

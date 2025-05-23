@@ -1,20 +1,21 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import useValidateJwt from "./services/useValidateJwt.js";
-import { useEffect } from "react";
 import LoadingPage from "../../pages/loading/LoadingPage.jsx";
+import { useVerifyJwtValidity } from "./authClient.js";
+import { useAuthContext } from "./AuthContext.js";
 
 export default function PrivateRoute() {
-  const { isValid, isLoading } = useValidateJwt();
+  const { jwt } = useAuthContext();
+  console.log("jwt", jwt);
+  const { data: { isValid } = {}, isLoading } = useVerifyJwtValidity(jwt);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isValid === false) {
-      navigate("/login");
-    }
-  }, [isValid, navigate]);
 
   if (isLoading) {
     return <LoadingPage />;
+  }
+
+  if (!isValid) {
+    navigate("/login");
+    return null;
   }
 
   return <Outlet />;

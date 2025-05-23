@@ -1,19 +1,22 @@
 .container {
   --icon-color: inherit;
+  --border-color: var(--input-border-color);
 
-  border: 1px solid var(--input-border-color);
+  border: 1px solid var(--border-color);
   position: relative;
   background-color: inherit;
-  transition: all 0.25s ease;
+  transition-property: background-color, color;
+  transition-duration: 0.25s;
+  transition-timing-function: ease;
   display: flex;
   align-items: center;
 }
 
 .container:focus-within {
-  border-width: 1.5px;
+  outline: 1px solid var(--border-color);
 }
 
-.container:hover {
+.container:hover:not(:focus-within) {
   border-color: var(--input-border-color-hover);
 }
 
@@ -55,7 +58,7 @@
 
 .container.primary:focus-within {
   --icon-color: var(--primary-color);
-  border-color: var(--primary-color);
+  --border-color: var(--primary-color);
 }
 
 .container:not(:focus-within) {

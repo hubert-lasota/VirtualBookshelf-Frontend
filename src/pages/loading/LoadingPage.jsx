@@ -2,7 +2,7 @@ import css from "./loading.module.css";
 import useMessageResolver from "../../features/message/useMessageResolver.js";
 
 export default function LoadingPage() {
-  const message = useMessageResolver();
+  const messageResolver = useMessageResolver();
 
   return (
     <div className={css["page"]}>
@@ -12,7 +12,7 @@ export default function LoadingPage() {
         </div>
         <div className={css["book-page"]}></div>
       </div>
-      <h2 className={css["loading-text"]}>{message("LoadingPage")}</h2>
+      <h2 className={css["loading-text"]}>{messageResolver("LoadingPage")}</h2>
     </div>
   );
 }

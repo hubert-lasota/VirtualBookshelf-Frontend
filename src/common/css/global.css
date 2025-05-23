@@ -7,7 +7,7 @@
 :root {
   /* BACKGROUND */
   --bg-color-primary: rgb(255, 255, 255);
-  --bg-color-secondary: rgb(247, 250, 255);
+  --bg-color-secondary: hsl(0, 0%, 99%);
 
   /* BORDER*/
   --border-color-primary: hsl(0, 0%, 85%);
@@ -17,11 +17,15 @@
   --radius-medium: 12px;
   --radius-large: 16px;
 
-  /*   COLORS   */
+  /*   COLOR   */
 
   /* INPUT - COLOR */
   --input-border-color: hsl(0, 0%, 85%);
   --input-border-color-hover: hsl(0, 0%, 10%);
+
+  /* LABEL - COLOR */
+  --label-color: rgba(0, 0, 0, 0.6);;
+  --asterisk-label-color: #fd0909;
 
   /* SUCCESS - COLOR */
   --success-color: #009f00;
@@ -68,13 +72,13 @@
   --shadow-color-small: rgba(0, 0, 0, 0.05);
   --shadow-color: rgba(0, 0, 0, 0.1);
 
-  /* Z-INDEXES */
+  /* Z-INDEX */
   --z-index-base: 1;
   --z-index-dropdown: 10;
   --z-index-modal: 100;
   --z-index-toast: 1000;
 
-  /* BREAKPOINTS TODO */
+  /* BREAKPOINT TODO */
 }
 
 html {

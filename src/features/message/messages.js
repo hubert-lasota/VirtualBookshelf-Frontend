@@ -15,6 +15,13 @@ export default {
     "en-US": "Loading...",
   },
 
+  Label: {
+    optional: {
+      "pl-PL": " (Opcjonalnie)",
+      "en-US": " (Optional)",
+    },
+  },
+
   ...loginMessages,
   ...homeMessages,
   ...searchModalMessages,

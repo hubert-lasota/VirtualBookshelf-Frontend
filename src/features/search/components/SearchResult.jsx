@@ -1,7 +1,7 @@
 import css from "./search.module.css";
 import { FaSearch } from "react-icons/fa";
-import BookCard from "../../../../features/book/components/card/BookCard.jsx";
-import useMessageResolver from "../../../../features/message/useMessageResolver.js";
+import BookCard from "../../book/components/card/BookCard.jsx";
+import useMessageResolver from "../../message/useMessageResolver.js";
 
 export function SearchResult({ books, isLoading, query }) {
   const message = useMessageResolver("Home:Header:SearchModal:Result");
