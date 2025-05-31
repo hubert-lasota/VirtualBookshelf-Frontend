@@ -1,10 +1,12 @@
 import LoginForm from "./LoginForm.js";
 import { Box, Stack } from "@mui/material";
-import { PageContainer } from "../../common/components/styled.js";
+import { PageContainer } from "../../common/components/styles.js";
+import GlobalAppBar from "../../common/components/global_app_bar/GlobalAppBar";
 
 export default function Login() {
   return (
     <PageContainer>
+      <GlobalAppBar>{"test"}</GlobalAppBar>
       <Stack
         direction={{ xs: "column", md: "row" }}
         sx={{
@@ -12,6 +14,7 @@ export default function Login() {
           height: "100%",
           padding: "4rem",
           marginInline: "auto",
+          marginTop: "3rem",
         }}
       >
         <Box sx={{ order: { xs: 2, md: 1 }, flex: 1, height: "100%" }}>

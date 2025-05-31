@@ -1,5 +1,4 @@
 import css from "./landing.module.css";
-import Button from "../../common/components/button/Button.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
@@ -17,12 +16,12 @@ export default function Hero() {
           każdym urządzeniu.
         </p>
         <div className={css["hero-buttons"]}>
-          <Button onClick={() => navigate("/login")}>
-            Rozpocznij za darmo
-          </Button>
-          <Button component="a" color="primary-light">
-            Dowiedz się wiecej
-          </Button>
+          {/*<Button onClick={() => navigate("/login")}>*/}
+          {/*  Rozpocznij za darmo*/}
+          {/*</Button>*/}
+          {/*<Button component="a" color="primary-light">*/}
+          {/*  Dowiedz się wiecej*/}
+          {/*</Button>*/}
         </div>
       </div>
     </div>

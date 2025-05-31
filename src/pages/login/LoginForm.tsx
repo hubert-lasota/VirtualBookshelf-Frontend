@@ -1,4 +1,4 @@
-import { useSignIn } from "../../features/auth/authClient.js";
+import { useSignIn } from "../../features/user/authClient.js";
 import {
   Button,
   Link,
@@ -9,20 +9,33 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import useGetLoginFormMessages from "./useGetLoginFormMessages.js";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  createUserCredentialsSchema,
+  UserCredentials,
+} from "../../features/user/schema";
+
+const fieldNames = ["username", "password"] as const;
 
 export default function LoginForm() {
-  const { handleSubmit, register, formState } = useForm({
-    mode: "all",
-  });
   const messages = useGetLoginFormMessages();
+  const schema = createUserCredentialsSchema(messages);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<UserCredentials>({
+    mode: "all",
+    resolver: zodResolver(schema),
+  });
+
   const { mutate: signInRequest, isPending, apiError } = useSignIn();
 
-  const onSubmit = (formData: any) => {
+  const onSubmit = (formData: UserCredentials) => {
     signInRequest(formData);
   };
-  console.log("formState", formState);
-  const usernameError = formState.errors.username?.message;
-  const passwordError = formState.errors.password?.message;
+
   return (
     <Paper
       component="form"
@@ -41,19 +54,16 @@ export default function LoginForm() {
         <Typography variant="h4" component="h1">
           {messages.title}
         </Typography>
-        <TextField
-          {...register("username", { required: messages.username.required })}
-          label={messages.username.label}
-          error={!!usernameError}
-          helperText={usernameError}
-        />
-        <TextField
-          {...register("password", { required: messages.password.required })}
-          label={messages.password.label}
-          error={!!passwordError}
-          helperText={passwordError}
-          type="password"
-        />
+        {fieldNames.map((name) => (
+          <TextField
+            key={`LoginFormField-${name}`}
+            {...register(name)}
+            label={messages[name].label}
+            error={!!errors[name]}
+            helperText={errors[name]?.message}
+            type={name === "password" ? "password" : "text"}
+          />
+        ))}
         <Stack direction="row" justifyContent="flex-end" spacing={1}>
           <Typography>{messages.register.linkPrefix}</Typography>
           <Link sx={{ cursor: "pointer" }}>{messages.register.linkLabel}</Link>
@@ -67,7 +77,7 @@ export default function LoginForm() {
         >
           {messages.title}
         </Button>
-        {apiError && <Typography color="error">{apiError.message}</Typography>}
+        {apiError && <Typography color="error">{apiError.detail}</Typography>}
       </Stack>
     </Paper>
   );

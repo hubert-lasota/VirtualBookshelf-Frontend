@@ -1,4 +1,4 @@
-import axiosInstance from "../../common/api/axiosInstance.js";
+import axiosInstance from "../../common/api/axiosInstance.ts";
 
 const BASE_ENDPOINT = "/books";
 
