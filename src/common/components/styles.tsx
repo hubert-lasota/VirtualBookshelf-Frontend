@@ -1,7 +1,7 @@
 import { Box, Stack, styled } from "@mui/material";
 import { ReactNode } from "react";
 
-export const PageContainer = styled(Box)(() => ({
+export const PageContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   height: "100dvh",
   width: "100%",
@@ -13,8 +13,7 @@ export const PageContainer = styled(Box)(() => ({
     position: "absolute",
     zIndex: -1,
     inset: 0,
-    backgroundImage:
-      "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
+    backgroundImage: theme.palette.background.defaultGradient,
     backgroundRepeat: "no-repeat",
   },
 }));

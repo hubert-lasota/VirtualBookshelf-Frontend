@@ -1,25 +1,23 @@
 import { ReactNode } from "react";
 import { UserContext } from "./UserContext";
 import { useLocalStorage } from "../../common/hooks";
-import { LanguageTag, User, UserPreferences } from "./types";
+import { LanguageTag, User, UserPreferences } from "./models";
 import { PaletteMode } from "@mui/material";
 
-export default function UserContextProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useLocalStorage<User>("user");
   const [preferences, setPreferences] = useLocalStorage<UserPreferences>(
     "preferences",
     {
-      languageTag: "pl".includes(navigator.language) ? "pl-PL" : "en-US",
-      themeMode: window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light",
+      initialValue: {
+        languageTag: "pl".includes(navigator.language) ? "pl-PL" : "en-US",
+        themeMode: window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light",
+      },
     },
   );
-
+  console.log("pref", preferences);
   return (
     <UserContext.Provider
       value={{

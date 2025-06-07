@@ -1,4 +1,4 @@
-import { Author } from "../author/types";
+import { Author } from "../author/models";
 
 type Publisher = {
   id: number;

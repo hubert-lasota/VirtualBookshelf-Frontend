@@ -1,5 +1,5 @@
 import css from "./loading.module.css";
-import { useUserContext } from "../../features/user/UserContext";
+import { useUserContext } from "../../../features/user/UserContext";
 
 export default function LoadingPage() {
   const {

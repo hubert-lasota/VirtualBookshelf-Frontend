@@ -11,12 +11,12 @@ function getMenuItems(
 ): { label: string; pathname: string }[] {
   const items = [
     {
-      label: isPlLanguage ? "Strona Główna" : "Home",
+      label: isPlLanguage ? "Strona Główna" : "HomePage",
       pathname: "/home",
     },
     {
-      label: isPlLanguage ? "Mój regał" : "My bookshelf",
-      pathname: "/my-bookshelf",
+      label: isPlLanguage ? "Moje regały" : "My bookshelves",
+      pathname: "/my-bookshelves",
     },
   ];
   return items.filter(({ pathname }) => pathname !== skipPathname);

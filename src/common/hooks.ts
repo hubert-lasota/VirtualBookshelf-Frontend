@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { isJsonParsable } from "./utils.js";
 
 export function useDebounceValue<T>(value: T, delayMs = 500) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -14,36 +13,47 @@ export function useDebounceValue<T>(value: T, delayMs = 500) {
   return debouncedValue;
 }
 
-export function useStorage<T>(
+type StorageOptions<T> = {
+  initialValue?: T;
+  forceInitialValue?: boolean;
+};
+
+function useStorage<T>(
   storage: Storage,
   key: string,
-  initialValue: T | null = null,
+  { initialValue, forceInitialValue = false }: StorageOptions<T> = {},
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
   const [value, setValue] = useState<T>(() => {
-    const storageValue = storage.getItem(key);
-    if (storageValue === null) {
-      return initialValue;
+    if (forceInitialValue) {
+      return initialValue as T;
     }
 
-    return isJsonParsable(storageValue)
-      ? JSON.parse(storageValue!)
-      : storageValue;
+    const storageValue = storage.getItem(key);
+    return (
+      storageValue ? JSON.parse(storageValue as string) : initialValue
+    ) as T;
   });
 
   useEffect(() => {
-    const storageValue =
-      typeof value === "object" ? JSON.stringify(value) : value;
-    storage.setItem(key, storageValue as string);
+    if (value === undefined) return;
+    storage.setItem(key, JSON.stringify(value));
   }, [value]);
 
   return [value, setValue];
 }
 
-export function useLocalStorage<T>(key: string, initialValue: T | null = null) {
-  return useStorage<T>(localStorage, key, initialValue);
+export function useLocalStorage<T>(key: string, options?: StorageOptions<T>) {
+  return useStorage<T>(localStorage, key, options);
 }
 
-export function useUpdateEffect(effect: Function, deps: []) {
+export function useSessionStorage<T>(key: string, options?: StorageOptions<T>) {
+  return useStorage(sessionStorage, key, options);
+}
+
+export function useUpdateEffect(
+  effect: React.EffectCallback,
+  deps: React.DependencyList,
+) {
   const didMount = useRef(false);
   useEffect(() => {
     if (didMount.current) {

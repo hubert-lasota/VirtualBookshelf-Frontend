@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createUserCredentialsSchema,
   UserCredentials,
-} from "../../features/user/schema";
+} from "../../features/user/models";
 
 const fieldNames = ["username", "password"] as const;
 

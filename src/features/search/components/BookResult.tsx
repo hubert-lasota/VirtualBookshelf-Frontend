@@ -1,6 +1,6 @@
 import ResultContainer from "./ResultContainer";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { Book } from "../../book/types";
+import { Book } from "../../book/models";
 
 type BookResultProps = {
   book: Book;

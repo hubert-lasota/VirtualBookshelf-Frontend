@@ -2,11 +2,14 @@ import LoginForm from "./LoginForm.js";
 import { Box, Stack } from "@mui/material";
 import { PageContainer } from "../../common/components/styles.js";
 import GlobalAppBar from "../../common/components/global_app_bar/GlobalAppBar";
+import LanguageSelect from "../../common/components/global_app_bar/LanguageSelect";
 
-export default function Login() {
+export default function LoginPage() {
   return (
     <PageContainer>
-      <GlobalAppBar>{"test"}</GlobalAppBar>
+      <GlobalAppBar>
+        <LanguageSelect />
+      </GlobalAppBar>
       <Stack
         direction={{ xs: "column", md: "row" }}
         sx={{

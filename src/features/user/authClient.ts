@@ -2,9 +2,8 @@ import axiosInstance from "../../common/api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { UserCredentials } from "./schema";
-import { ApiError } from "../../common/api/types";
-import { User } from "./types";
+import { ApiError } from "../../common/api/models";
+import { User, UserCredentials } from "./models";
 import { useUserContext } from "./UserContext";
 import { AxiosError } from "axios";
 

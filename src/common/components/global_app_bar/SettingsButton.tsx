@@ -10,7 +10,9 @@ import { useState } from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
+import LanguageIcon from "@mui/icons-material/Language";
 import { useNavigate } from "react-router-dom";
+import ChangeLanguageDialog from "./ChangeLanguageDialog";
 
 export default function SettingsButton() {
   const {
@@ -20,27 +22,32 @@ export default function SettingsButton() {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const navigate = useNavigate();
 
+  const [isChangeLanguageDialogOpen, setIsChangeLanguageDialogOpen] =
+    useState(false);
+
   const menuItems = [
     {
       text: isPlLanguage ? "Profil" : "Profile",
       icon: <PersonIcon />,
-      onClick: () => {
-        navigate("/me");
-      },
+      onClick: () => navigate("/me"),
     },
     {
       text: isPlLanguage ? "Ustawienia" : "Settings",
       icon: <SettingsIcon />,
+      onClick: () => navigate("/me/settings"),
+    },
+    {
+      text: isPlLanguage ? "Zmień język" : "Change language",
+      icon: <LanguageIcon />,
       onClick: () => {
-        navigate("/me/settings");
+        setAnchorEl(null);
+        setIsChangeLanguageDialogOpen(true);
       },
     },
     {
       text: isPlLanguage ? "Wyloguj się" : "Logout",
       icon: <LogoutIcon />,
-      onClick: () => {
-        navigate("/login");
-      },
+      onClick: () => navigate("/login"),
     },
   ];
 
@@ -64,6 +71,10 @@ export default function SettingsButton() {
           </MenuItem>
         ))}
       </Menu>
+      <ChangeLanguageDialog
+        open={isChangeLanguageDialogOpen}
+        onClose={() => setIsChangeLanguageDialogOpen(false)}
+      />
     </>
   );
 }

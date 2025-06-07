@@ -1,6 +1,6 @@
-import { MenuItem, Select } from "@mui/material";
+import { MenuItem, Select, SelectProps } from "@mui/material";
 import { useUserContext } from "../../../features/user/UserContext";
-import { LanguageTag } from "../../../features/user/types";
+import { LanguageTag } from "../../../features/user/models";
 
 type LanguageTagLabeled = {
   value: LanguageTag;
@@ -12,18 +12,20 @@ const langTags: LanguageTagLabeled[] = [
   { value: "en-US", label: "EN" },
 ];
 
-export default function LanguageSelect() {
+export default function LanguageSelect(props: Omit<SelectProps, "value">) {
   const {
     preferences: { languageTag, setLanguageTag },
   } = useUserContext();
 
   return (
-    <Select
+    // @ts-ignore
+    <Select<LanguageTagLabeled>
       variant="standard"
       disableUnderline
       value={langTags.find(({ value }) => value === languageTag)}
       renderValue={(langTag) => langTag.label}
       sx={{ fontWeight: 600 }}
+      {...props}
     >
       {langTags.map((langTag) => (
         //@ts-ignore

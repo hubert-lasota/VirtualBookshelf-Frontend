@@ -2,7 +2,7 @@ import GlobalAppBar from "./GlobalAppBar";
 import { ReactNode } from "react";
 import SettingsButton from "./SettingsButton";
 import SearchButton from "../../../features/search/components/SearchButton";
-import LanguageSelect from "./LanguageSelect";
+import AppPagesDropdown from "./AppPagesDropdown";
 
 export default function LoggedInGlobalAppBar({
   children,
@@ -13,7 +13,7 @@ export default function LoggedInGlobalAppBar({
     <GlobalAppBar>
       {children}
       <SearchButton />
-      <LanguageSelect />
+      <AppPagesDropdown />
       <SettingsButton />
     </GlobalAppBar>
   );

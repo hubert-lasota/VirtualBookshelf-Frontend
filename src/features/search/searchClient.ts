@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../common/api/axiosInstance";
-import { PaginatedResponse } from "../../common/api/types";
+import { PaginatedResponse } from "../../common/api/models";
 
 type Book = {};
 

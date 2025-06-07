@@ -16,7 +16,7 @@ export default function SearchButton() {
       <Button
         onClick={() => setIsDialogOpen(true)}
         startIcon={<SearchIcon />}
-        sx={(theme) => ({ color: theme.palette.text.primary })}
+        color="inherit"
       >
         {isPlLanguage ? "Szukaj" : "Search"}
       </Button>

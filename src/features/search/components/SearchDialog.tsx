@@ -6,19 +6,18 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  IconButton,
   TextField,
   Typography,
 } from "@mui/material";
 import { ResourceType, useSearch } from "../searchClient";
-import CloseIcon from "@mui/icons-material/Close";
 import { useUserContext } from "../../user/UserContext";
-import { Book } from "../../book/types";
+import { Book } from "../../book/models";
 import BookResult from "./BookResult";
-import { PaginatedResponse } from "../../../common/api/types";
+import { PaginatedResponse } from "../../../common/api/models";
 import SelectResourceType from "./SelectResourceType";
 import SearchIcon from "@mui/icons-material/Search";
 import { withCenteredContent } from "../../../common/components/styles";
+import DialogCloseButton from "../../../common/DialogCloseButton";
 
 type SearchDialogProps = {
   isOpen: boolean;
@@ -79,18 +78,7 @@ export default function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
           ? "Szukaj książki, autorów, użytkowników i posty"
           : "Search for books, authors, users and posts"}
       </DialogTitle>
-      <IconButton
-        aria-label="close"
-        onClick={onClose}
-        sx={(theme) => ({
-          position: "absolute",
-          right: 8,
-          top: 8,
-          color: theme.palette.text.secondary,
-        })}
-      >
-        <CloseIcon />
-      </IconButton>
+      <DialogCloseButton onClose={onClose} />
       <TextField
         value={query}
         onChange={(e) => setQuery(e.target.value)}
