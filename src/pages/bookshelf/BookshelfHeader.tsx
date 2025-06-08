@@ -1,4 +1,4 @@
-import { Stack, Tab, Tabs, TextField, Typography } from "@mui/material";
+import { Stack, Tab, Tabs, TextField } from "@mui/material";
 import { useDebounceValue } from "../../common/hooks";
 import { useEffect, useState } from "react";
 import GlobalAppBarContainer from "../../common/components/global_app_bar/GlobalAppBarContainer";

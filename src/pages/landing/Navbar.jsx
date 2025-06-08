@@ -1,7 +1,4 @@
-import css from "./landing.module.css";
 import { useNavigate } from "react-router-dom";
-
-import AppLogo from "../../common/components/global_app_bar/AppLogo.tsx";
 
 export default function Navbar() {
   const navigate = useNavigate();

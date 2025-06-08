@@ -1,13 +1,4 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogProps,
-  DialogTitle,
-  Stack,
-  Typography,
-} from "@mui/material";
-import DialogCloseButton from "../../../common/DialogCloseButton";
-import { useUserContext } from "../../../features/user/UserContext";
+import { Dialog, DialogProps, Stack } from "@mui/material";
 import ManageBookshelvesHeader from "./ManageBookshelvesHeader";
 
 export default function ManageBookshelvesDialog({
