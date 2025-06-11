@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import LoadingPage from "../../common/components/loading/LoadingPage.js";
+import LoadingPage from "../../common/components/Loading/LoadingPage.js";
 import { useVerifyJwtValidity } from "./authClient";
 import { useUserContext } from "./UserContext";
 
@@ -12,7 +12,7 @@ export default function PrivateRoute() {
   if (isLoading) {
     return <LoadingPage />;
   }
-  console.log("isValid", isValid);
+
   if (!isValid) {
     navigate("/login");
     return null;

@@ -1,6 +1,6 @@
 import { PaletteMode } from "@mui/material";
 import { z } from "zod";
-import { LoginFormMessages } from "../../pages/login/useGetLoginFormMessages";
+import { LoginFormMessages } from "../../pages/Login/useGetLoginFormMessages";
 
 export type UserProfile = {
   firstName: string;

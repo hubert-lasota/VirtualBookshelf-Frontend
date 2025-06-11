@@ -1,38 +1,79 @@
-import { Author } from "../author/models";
+import { z } from "zod";
+import { BaseResponse } from "../../common/models";
 
-type Publisher = {
-  id: number;
-  name: string;
-};
+export function createBookSchema(isPlLanguage: boolean) {
+  return z.object({
+    title: z
+      .string()
+      .min(1, isPlLanguage ? "Tytuł jest wymagany" : "Title is required"),
 
-type BookFormat = {
-  id: number;
-  name: string;
-};
+    isbn: z.string().regex(/^(?:\d{9}[\dXx]|\d{13})$/, {
+      message: isPlLanguage
+        ? "Nieprawidłowy numer ISBN (ISBN-10 lub ISBN-13)"
+        : "Invalid ISBN (ISBN-10 or ISBN-13)",
+    }),
 
-type Genre = {
-  id: number;
-  name: string;
-};
+    authors: z
+      .array(
+        z.object({
+          id: z.number().optional(),
+          fullName: z
+            .string()
+            .min(
+              1,
+              isPlLanguage ? "Autor jest wymagany" : "Author is required",
+            ),
+        }),
+      )
+      .min(1),
 
-type BookSeries = {
-  id: number;
-  name: string;
-  bookOrder: number;
-};
+    publishers: z
+      .array(
+        z.object({
+          id: z.number().optional(),
+          name: z.string().min(1),
+        }),
+      )
+      .optional(),
 
-export type Book = {
-  id: number;
-  title: string;
-  isbn: string;
-  authors: Pick<Author, "id" | "fullName">[];
-  publishers: Publisher[];
-  format: BookFormat;
-  genres: Genre[];
-  series: BookSeries[];
-  publicationYear: number;
-  languageTag: string;
-  coverUrl: string;
-  pageCount: number;
-  description?: string;
-};
+    format: z
+      .object({
+        id: z.number(),
+        name: z.string().min(1),
+      })
+      .optional(),
+
+    genres: z
+      .array(
+        z.object({
+          id: z.number().optional(),
+          name: z.string().min(1),
+        }),
+      )
+      .optional(),
+
+    series: z
+      .array(
+        z.object({
+          id: z.number().optional(),
+          name: z.string().min(1),
+          bookOrder: z.number(),
+        }),
+      )
+      .optional(),
+
+    publicationYear: z.number().optional(),
+
+    languageTag: z.string().min(1),
+
+    coverUrl: z.string().min(1).optional(),
+
+    pageCount: z.number().optional(),
+
+    description: z.string().min(1).optional(),
+  });
+}
+
+export type Book = z.infer<ReturnType<typeof createBookSchema>>;
+
+export type BookResponse = Book & BaseResponse;

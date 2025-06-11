@@ -1,4 +1,4 @@
-import css from "../../../pages/book/book.module.css";
+import css from "../../../pages/Book/book.module.css";
 
 export default function Review({ rating }) {
   return (
