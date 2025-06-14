@@ -12,3 +12,9 @@ export type PaginatedResponse<ContentType, ContentFieldName extends string> = {
   page: number;
   totalPages: number;
 };
+
+export type BaseResponse = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+};

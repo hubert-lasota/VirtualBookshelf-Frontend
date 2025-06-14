@@ -4,6 +4,7 @@ import {
   CircularProgress,
   Dialog,
   DialogContent,
+  DialogProps,
   DialogTitle,
   Divider,
   TextField,
@@ -11,20 +12,30 @@ import {
 } from "@mui/material";
 import { ResourceType, useSearch } from "../searchClient";
 import { useUserContext } from "../../user/UserContext";
-import { Book } from "../../book/models";
+import { BookResponse } from "../../book/models";
 import BookResult from "./BookResult";
 import { PaginatedResponse } from "../../../common/api/models";
 import SelectResourceType from "./SelectResourceType";
 import SearchIcon from "@mui/icons-material/Search";
-import { withCenteredContent } from "../../../common/components/styles";
 import DialogCloseButton from "../../../common/DialogCloseButton";
+import { AuthorResponse } from "../../author/models";
+import CenteredContent from "../../../common/components/CenteredContent";
 
 type SearchDialogProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
+  onClickResult?: (result: BookResponse | AuthorResponse) => void;
+  resourceType?: ResourceType;
+  disableSelectResourceType?: boolean;
+  title?: string;
+} & Pick<DialogProps, "onClose" | "open">;
 
-export default function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
+export default function SearchDialog({
+  open,
+  onClose,
+  onClickResult,
+  resourceType,
+  disableSelectResourceType,
+  title,
+}: SearchDialogProps) {
   const [query, setQuery] = useState<string>("");
   const debouncedQuery = useDebounceValue(query);
   const [selectedType, setSelectedType] = useState<ResourceType>("books");
@@ -36,13 +47,21 @@ export default function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
 
   const renderDialogContent = () => {
     if (isFetching) {
-      return withCenteredContent(<CircularProgress />);
+      return (
+        <CenteredContent>
+          <CircularProgress />
+        </CenteredContent>
+      );
     }
     if (!data && !isFetching) {
-      return withCenteredContent(
-        <Typography textAlign="center" variant="h6">
-          {isPlLanguage ? "Wpisz frazę, aby wyszukać" : "Type phrase to search"}
-        </Typography>,
+      return (
+        <CenteredContent>
+          <Typography textAlign="center" variant="h6">
+            {isPlLanguage
+              ? "Wpisz frazę, aby wyszukać"
+              : "Type phrase to search"}
+          </Typography>
+        </CenteredContent>
       );
     }
     return renderResult(data, selectedType);
@@ -51,9 +70,9 @@ export default function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
   const renderResult = (data: unknown, type: ResourceType) => {
     switch (type) {
       case "books":
-        return (data as PaginatedResponse<Book, "books">).books.map((book) => (
-          <BookResult book={book} />
-        ));
+        return (data as PaginatedResponse<BookResponse, "books">).books.map(
+          (book) => <BookResult book={book} onClick={onClickResult} />,
+        );
       default:
         return null;
     }
@@ -61,7 +80,7 @@ export default function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
 
   return (
     <Dialog
-      open={isOpen}
+      open={open}
       onClose={onClose}
       sx={(theme) => ({
         "& .MuiDialogContent-root": {
@@ -74,9 +93,10 @@ export default function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
       })}
     >
       <DialogTitle>
-        {isPlLanguage
-          ? "Szukaj książki, autorów, użytkowników i posty"
-          : "Search for books, authors, users and posts"}
+        {title ??
+          (isPlLanguage
+            ? "Szukaj książki, autorów, użytkowników i posty"
+            : "Search for books, authors, users and posts")}
       </DialogTitle>
       <DialogCloseButton onClose={onClose} />
       <TextField
@@ -91,8 +111,9 @@ export default function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
             startAdornment: <SearchIcon sx={{ marginRight: "0.3rem" }} />,
             endAdornment: (
               <SelectResourceType
-                resourceType={selectedType}
+                resourceType={resourceType ?? selectedType}
                 onResourceTypeChange={setSelectedType}
+                disabled={disableSelectResourceType}
               />
             ),
           },

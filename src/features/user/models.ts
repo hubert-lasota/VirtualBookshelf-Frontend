@@ -16,10 +16,10 @@ export type User = {
   profile: UserProfile;
 };
 
-export type LanguageTag = "pl-PL" | "en-US";
+export type AppLanguageCode = "pl" | "en";
 
 export type UserPreferences = {
-  languageTag: LanguageTag;
+  languageCode: AppLanguageCode;
   themeMode: PaletteMode;
 };
 

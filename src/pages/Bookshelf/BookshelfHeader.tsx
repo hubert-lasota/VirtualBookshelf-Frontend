@@ -3,26 +3,20 @@ import { useDebounceValue } from "../../common/hooks";
 import { useEffect, useState } from "react";
 import GlobalAppBarContainer from "../../common/components/GlobalAppBar/GlobalAppBarContainer";
 import AppLogo from "../../common/components/GlobalAppBar/AppLogo";
-import { Bookshelf } from "../../features/bookshelf/models";
 import { useUserContext } from "../../features/user/UserContext";
 import SettingsButton from "../../common/components/GlobalAppBar/SettingsButton";
 import SearchIcon from "@mui/icons-material/Search";
 import AppPagesDropdown from "../../common/components/GlobalAppBar/AppPagesDropdown";
 import { SHOW_ALL_BOOKS_INDEX } from "./BookshelfPage";
+import { useBookshelfPageContext } from "./BookshelfPageContext";
 
-type BookshelfHeaderProps = {
-  bookshelves: Bookshelf[];
-  currentBookshelfIndex: number;
-  onCurrentBookshelfIndexChange: (bookshelfIndex: number) => void;
-  onQueryChange: (query: string) => void;
-};
-
-export default function BookshelfHeader({
-  bookshelves,
-  currentBookshelfIndex,
-  onCurrentBookshelfIndexChange,
-  onQueryChange,
-}: BookshelfHeaderProps) {
+export default function BookshelfHeader() {
+  const {
+    currentBookshelfIndex,
+    setCurrentBookshelfIndex,
+    bookshelves,
+    onQueryChange,
+  } = useBookshelfPageContext();
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
@@ -39,7 +33,7 @@ export default function BookshelfHeader({
         <AppLogo />
         <Tabs
           value={currentBookshelfIndex}
-          onChange={(_, value) => onCurrentBookshelfIndexChange(value)}
+          onChange={(_, value) => setCurrentBookshelfIndex(value)}
         >
           {bookshelves.length > 1 && (
             <Tab

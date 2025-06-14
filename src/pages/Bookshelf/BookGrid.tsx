@@ -1,5 +1,5 @@
 import { Button, CardActions, Grid } from "@mui/material";
-import BookCard from "../../features/book/Card/BookCard";
+import BookCard from "../../features/book/components/Card/BookCard";
 import { useUserContext } from "../../features/user/UserContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { BookshelfBookWithId } from "../../features/bookshelf/models";

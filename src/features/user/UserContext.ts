@@ -1,4 +1,4 @@
-import { LanguageTag, User, UserPreferences } from "./models";
+import { AppLanguageCode, User, UserPreferences } from "./models";
 import { createContext, useContext } from "react";
 import { PaletteMode } from "@mui/material";
 
@@ -8,7 +8,7 @@ type UserContextValue = {
   preferences: UserPreferences & {
     isPlLanguage: boolean;
     isDarkTheme: boolean;
-    setLanguageTag: (languageTag: LanguageTag) => void;
+    setLanguageTag: (languageTag: AppLanguageCode) => void;
     setThemeMode: (themeMode: PaletteMode) => void;
   };
   setPreferences: (preferences: UserPreferences) => void;

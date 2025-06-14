@@ -5,6 +5,7 @@ import { useUserContext } from "../../user/UserContext";
 type SelectResourceTypeProps = {
   resourceType: ResourceType;
   onResourceTypeChange: (resourceType: ResourceType) => void;
+  disabled?: boolean;
 };
 
 const resourceTypes = ["books", "authors", "users", "posts"] as const;
@@ -22,6 +23,7 @@ const getRenderValue = (resourceType: ResourceType, isPlLang: boolean) => {
 export default function SelectResourceType({
   resourceType,
   onResourceTypeChange,
+  disabled,
 }: SelectResourceTypeProps) {
   const {
     preferences: { isPlLanguage },
@@ -29,6 +31,7 @@ export default function SelectResourceType({
 
   return (
     <FormControl
+      disabled={disabled}
       sx={{
         borderLeft: "2px solid",
         borderColor: "divider",

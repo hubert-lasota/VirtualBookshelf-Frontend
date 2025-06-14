@@ -1,8 +1,11 @@
-import { createContext, useContext } from "react";
-import { Bookshelf } from "../../features/bookshelf/models";
+import React, { createContext, useContext } from "react";
+import { BookshelfResponse } from "../../features/bookshelf/models";
 
 type BookshelfPageContextValue = {
-  bookshelves: Bookshelf[];
+  bookshelves: BookshelfResponse[];
+  currentBookshelfIndex: number;
+  setCurrentBookshelfIndex: React.Dispatch<React.SetStateAction<number>>;
+  onQueryChange: (query: string) => void;
 };
 
 export const BookshelfPageContext =

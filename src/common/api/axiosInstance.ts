@@ -1,18 +1,25 @@
 import axios from "axios";
+import { User, UserPreferences } from "../../features/user/models";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api",
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const jwt = localStorage.getItem("jwt");
-  if (jwt) {
-    config.headers.Authorization = `Bearer ${jwt}`;
+  const user = localStorage.getItem("user");
+  if (user) {
+    const { jwt } = JSON.parse(user) as User;
+    if (jwt) {
+      config.headers.Authorization = `Bearer ${jwt}`;
+    }
   }
 
-  const language = localStorage.getItem("languageTag");
-  if (language) {
-    config.headers.AcceptLanguage = language;
+  const preferences = localStorage.getItem("preferences");
+  if (preferences) {
+    const { languageTag } = JSON.parse(preferences) as UserPreferences;
+    if (languageTag) {
+      config.headers.AcceptLanguage = languageTag;
+    }
   }
 
   return config;

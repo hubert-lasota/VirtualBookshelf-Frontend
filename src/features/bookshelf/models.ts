@@ -1,6 +1,6 @@
 import { Book, createBookSchema } from "../book/models";
 import { z } from "zod";
-import { BaseResponse } from "../../common/models";
+import { BaseResponse } from "../../common/api/models";
 
 export type BookshelfBookNote = {
   content: string;
@@ -22,7 +22,7 @@ export enum BookshelfType {
   READ = "READ",
 }
 
-export function createBookshelfSchema(isPlLanguage: boolean) {
+export function createBookshelfDetailsSchema(isPlLanguage: boolean) {
   const requiredNameMessage = isPlLanguage
     ? "Nazwa jest wymagana"
     : "Name is required";
@@ -36,32 +36,45 @@ export function createBookshelfSchema(isPlLanguage: boolean) {
     }),
 
     description: z.string().optional(),
-
-    books: z
-      .array(
-        z.object({
-          notes: z
-            .array(
-              z.object({
-                content: z.string(),
-                startPage: z.number(),
-                endPage: z.number(),
-              }),
-            )
-            .optional(),
-
-          book: createBookSchema(isPlLanguage).extend({
-            id: z.number().optional(),
-          }),
-        }),
-      )
-      .optional(),
   });
 }
 
-export type Bookshelf = z.infer<ReturnType<typeof createBookshelfSchema>>;
+export function createBookshelfBooksSchema(isPlLanguage: boolean) {
+  return z
+    .array(
+      z.object({
+        notes: z
+          .array(
+            z.object({
+              content: z.string(),
+              startPage: z.number(),
+              endPage: z.number(),
+            }),
+          )
+          .optional(),
 
-export type BookshelfResponse = Bookshelf & BaseResponse;
+        book: createBookSchema(isPlLanguage).extend({
+          id: z.number().optional(),
+        }),
+      }),
+    )
+    .optional();
+}
+
+export type BookshelfBooks = z.infer<
+  ReturnType<typeof createBookshelfBooksSchema>
+>;
+
+export type BookshelfDetails = z.infer<
+  ReturnType<typeof createBookshelfDetailsSchema>
+>;
+
+export type Bookshelf = BookshelfDetails;
+
+export type BookshelfResponse = Bookshelf &
+  BaseResponse & {
+    books: BookshelfBooks;
+  };
 
 export type BookshelfUpdate = Pick<BookshelfResponse, "id"> &
-  Partial<Omit<Bookshelf, "id">>;
+  Partial<Bookshelf>;

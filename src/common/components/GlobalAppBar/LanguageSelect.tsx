@@ -1,9 +1,9 @@
 import { MenuItem, Select, SelectProps } from "@mui/material";
 import { useUserContext } from "../../../features/user/UserContext";
-import { LanguageTag } from "../../../features/user/models";
+import { AppLanguageCode } from "../../../features/user/models";
 
 type LanguageTagLabeled = {
-  value: LanguageTag;
+  value: AppLanguageCode;
   label: string;
 };
 

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { UserContext } from "./UserContext";
 import { useLocalStorage } from "../../common/hooks";
-import { LanguageTag, User, UserPreferences } from "./models";
+import { AppLanguageCode, User, UserPreferences } from "./models";
 import { PaletteMode } from "@mui/material";
 
 export default function UserProvider({ children }: { children: ReactNode }) {
@@ -10,14 +10,14 @@ export default function UserProvider({ children }: { children: ReactNode }) {
     "preferences",
     {
       initialValue: {
-        languageTag: "pl".includes(navigator.language) ? "pl-PL" : "en-US",
+        languageCode: "pl".includes(navigator.language) ? "pl" : "en",
         themeMode: window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "dark"
           : "light",
       },
     },
   );
-  console.log("pref", preferences);
+
   return (
     <UserContext.Provider
       value={{
@@ -26,9 +26,9 @@ export default function UserProvider({ children }: { children: ReactNode }) {
         preferences: {
           ...preferences,
           isDarkTheme: preferences.themeMode === "dark",
-          isPlLanguage: preferences.languageTag === "pl-PL",
-          setLanguageTag: (languageTag: LanguageTag) =>
-            setPreferences({ ...preferences, languageTag }),
+          isPlLanguage: preferences.languageCode === "pl",
+          setLanguageTag: (languageCode: AppLanguageCode) =>
+            setPreferences({ ...preferences, languageCode }),
           setThemeMode: (themeMode: PaletteMode) =>
             setPreferences({ ...preferences, themeMode }),
         },

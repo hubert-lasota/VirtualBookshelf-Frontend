@@ -1,14 +1,21 @@
-import ResultContainer from "./ResultContainer";
+import PaperResultContainer from "./PaperResultContainer";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { Book } from "../../book/models";
+import { BookResponse } from "../../book/models";
+import { useNavigate } from "react-router-dom";
 
 type BookResultProps = {
-  book: Book;
+  book: BookResponse;
+  onClick?: (book: BookResponse) => void;
 };
 
-export default function BookResult({ book }: BookResultProps) {
+export default function BookResult({ book, onClick }: BookResultProps) {
+  const navigate = useNavigate();
+
+  const handleClick = () =>
+    onClick ? onClick(book) : navigate(`/books/${book.id}`);
+
   return (
-    <ResultContainer>
+    <PaperResultContainer onClick={handleClick}>
       <Stack>
         <Avatar src={book.coverUrl} />
         <Stack direction="column">
@@ -18,6 +25,6 @@ export default function BookResult({ book }: BookResultProps) {
           </Typography>
         </Stack>
       </Stack>
-    </ResultContainer>
+    </PaperResultContainer>
   );
 }

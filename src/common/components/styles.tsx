@@ -1,5 +1,4 @@
-import { Box, Stack, styled } from "@mui/material";
-import { ReactNode } from "react";
+import { Box, styled } from "@mui/material";
 
 export const PageContainer = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -17,17 +16,3 @@ export const PageContainer = styled(Box)(({ theme }) => ({
     backgroundRepeat: "no-repeat",
   },
 }));
-
-export const withCenteredContent = (children: ReactNode) => (
-  <Stack
-    direction="column"
-    sx={{
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100%",
-      width: "100%",
-    }}
-  >
-    {children}
-  </Stack>
-);

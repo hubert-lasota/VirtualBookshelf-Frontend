@@ -21,7 +21,7 @@ export default function SearchButton() {
         {isPlLanguage ? "Szukaj" : "Search"}
       </Button>
       <SearchDialog
-        isOpen={isDialogOpen}
+        open={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
       />
     </>

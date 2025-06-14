@@ -1,10 +1,18 @@
 import { DialogProps, IconButton, Tooltip } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useUserContext } from "../features/user/UserContext";
+import type { Property } from "csstype";
+
+type DialogCloseButtonProps = {
+  top?: Property.Top;
+  right?: Property.Right;
+} & Pick<DialogProps, "onClose">;
 
 export default function DialogCloseButton({
   onClose,
-}: Pick<DialogProps, "onClose">) {
+  top = "8px",
+  right = "8px",
+}: DialogCloseButtonProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
@@ -16,8 +24,8 @@ export default function DialogCloseButton({
         onClick={onClose}
         sx={(theme) => ({
           position: "absolute",
-          right: 8,
-          top: 8,
+          right,
+          top,
           color: theme.palette.text.secondary,
         })}
       >
