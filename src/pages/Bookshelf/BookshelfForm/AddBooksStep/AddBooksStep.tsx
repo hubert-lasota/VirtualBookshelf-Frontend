@@ -17,11 +17,11 @@ import {
   KeyboardArrowUp as KeyboardArrowUpIcon,
 } from "@mui/icons-material";
 import { useState } from "react";
-import AddBooksFields from "./AddBooksFields";
 import AddBooksHeader from "./AddBooksHeader";
 import { createBookSchema } from "../../../../features/book/models";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
+import BookFormFields from "../../../../features/book/components/BookFormFields";
 
 export default function AddBooksStep() {
   const {
@@ -93,7 +93,7 @@ export default function AddBooksStep() {
               </Stack>
 
               <Collapse in={expandedBookIndex === index}>
-                <AddBooksFields index={index} />
+                <BookFormFields namePrefix={`books.${index}.`} />
               </Collapse>
             </CardContent>
 

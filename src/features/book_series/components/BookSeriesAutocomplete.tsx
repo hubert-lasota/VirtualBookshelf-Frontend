@@ -18,7 +18,7 @@ export default function BookSeriesAutocomplete({
 
   const {
     field: { value, onChange, ...restFieldProps },
-    fieldState: { invalid, error },
+    fieldState: { error },
   } = useController({ name });
 
   const { getValues } = useFormContext();
@@ -34,7 +34,6 @@ export default function BookSeriesAutocomplete({
       getOptionLabel={(value) => value?.name || ""}
       options={series}
       onChange={(_e, value, reason) => {
-        console.log("value", value);
         const { bookOrder } = getValues(name);
         const newValue =
           reason === "createOption" && value !== null
@@ -42,12 +41,24 @@ export default function BookSeriesAutocomplete({
             : { ...value, bookOrder };
         onChange(newValue);
       }}
+      onInputChange={(_e, value, reason) => {
+        if (reason === "input") {
+          const { bookOrder } = getValues(name);
+          const option = series.find((series) => series.name === value);
+          const newValue = option
+            ? { ...option, bookOrder, name: value }
+            : { bookOrder, name: value };
+          onChange(newValue);
+        }
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
           label={(isPlLanguage ? "Seria" : "Series") + ` (${index + 1})`}
-          error={invalid}
-          helperText={error?.message}
+          //@ts-ignore
+          error={!!error?.name?.message}
+          //@ts-ignore
+          helperText={error?.name?.message}
         />
       )}
     />

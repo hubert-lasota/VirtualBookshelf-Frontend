@@ -27,7 +27,7 @@ export default function UserProvider({ children }: { children: ReactNode }) {
           ...preferences,
           isDarkTheme: preferences.themeMode === "dark",
           isPlLanguage: preferences.languageCode === "pl",
-          setLanguageTag: (languageCode: AppLanguageCode) =>
+          setLanguageCode: (languageCode: AppLanguageCode) =>
             setPreferences({ ...preferences, languageCode }),
           setThemeMode: (themeMode: PaletteMode) =>
             setPreferences({ ...preferences, themeMode }),

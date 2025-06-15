@@ -2,6 +2,7 @@ import { useController } from "react-hook-form";
 import {
   Autocomplete,
   AutocompleteChangeReason,
+  AutocompleteInputChangeReason,
   TextField,
 } from "@mui/material";
 import { useGetPublishers } from "../publisherClient";
@@ -32,10 +33,20 @@ export default function PublisherAutocomplete({
     value: string | AutocompleteValue | null,
     reason: AutocompleteChangeReason,
   ) => {
-    console.log("value publisher", value, reason);
     const newValue =
       reason === "createOption" && value !== null ? { name: value } : value;
     onChange(newValue);
+  };
+
+  const handleInputChange = (
+    value: string,
+    reason: AutocompleteInputChangeReason,
+  ) => {
+    if (reason === "input") {
+      const publisher = publishers.find((p) => p.name === value);
+      const newValue = publisher ? publisher : { name: value };
+      onChange(newValue);
+    }
   };
 
   return (
@@ -46,6 +57,7 @@ export default function PublisherAutocomplete({
       getOptionLabel={(value) => (value as AutocompleteValue)?.name || ""}
       onChange={(_e, value, reason) => handleChange(value, reason)}
       options={publishers}
+      onInputChange={(_e, value, reason) => handleInputChange(value, reason)}
       renderInput={(params) => (
         <TextField
           {...params}

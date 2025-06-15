@@ -8,7 +8,7 @@ type UserContextValue = {
   preferences: UserPreferences & {
     isPlLanguage: boolean;
     isDarkTheme: boolean;
-    setLanguageTag: (languageTag: AppLanguageCode) => void;
+    setLanguageCode: (languageCode: AppLanguageCode) => void;
     setThemeMode: (themeMode: PaletteMode) => void;
   };
   setPreferences: (preferences: UserPreferences) => void;
