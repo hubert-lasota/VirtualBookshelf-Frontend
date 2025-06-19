@@ -2,7 +2,7 @@ import { PageContainer } from "../../common/components/styles";
 import BookshelfHeader from "./BookshelfHeader";
 import { useGetBookshelves } from "../../features/bookshelf/bookshelfClient";
 import { useMemo, useState } from "react";
-import { BookshelfBookWithId } from "../../features/bookshelf/models";
+import { BookshelfBookWithId } from "../../features/bookshelf/bookshelfModels";
 import BookGrid from "./BookGrid";
 import EmptyBookshelf from "./EmptyBookshelf";
 import { BookshelfPageContext } from "./BookshelfPageContext";
@@ -27,7 +27,7 @@ export default function BookshelfPage() {
 
     const books: BookshelfBookWithId[] = bookshelvesFiltered.flatMap(
       (bookshelf) =>
-        bookshelf?.books?.map((book) => ({
+        (bookshelf?.books ?? []).map((book) => ({
           ...book,
           bookshelfId: bookshelf.id,
         })),

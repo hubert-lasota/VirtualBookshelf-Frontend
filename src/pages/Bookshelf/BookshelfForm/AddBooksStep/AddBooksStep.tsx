@@ -18,12 +18,32 @@ import {
 } from "@mui/icons-material";
 import { useState } from "react";
 import AddBooksHeader from "./AddBooksHeader";
-import { createBookSchema } from "../../../../features/book/models";
+import { createBookSchema } from "../../../../features/book/bookModels";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import BookFormFields from "../../../../features/book/components/BookFormFields";
+import FormActionButtons from "../FormActionButtons";
+import {
+  BookshelfCreate,
+  BookshelfDetails,
+  BookshelfUpdate,
+} from "../../../../features/bookshelf/bookshelfModels";
+import {
+  useCreateBookshelf,
+  useUpdateBookshelf,
+} from "../../../../features/bookshelf/bookshelfClient";
 
-export default function AddBooksStep() {
+type AddBooksStepProps = {
+  previousStep: () => void;
+  bookshelfDetails: BookshelfDetails;
+  bookshelfId?: number;
+};
+
+export default function AddBooksStep({
+  previousStep,
+  bookshelfDetails,
+  bookshelfId,
+}: AddBooksStepProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
@@ -49,17 +69,40 @@ export default function AddBooksStep() {
     control: form.control,
     keyName: "fieldKey",
   });
-  console.log("form", form.watch());
+
   const [expandedBookIndex, setExpandedBookIndex] = useState<number | null>(
     null,
   );
 
+  const { mutate: createBookshelf, isPending: isCreating } =
+    useCreateBookshelf();
+  const { mutate: updateBookshelf, isPending: isUpdating } =
+    useUpdateBookshelf();
+
   const handleToggle = (index: number) =>
     setExpandedBookIndex(expandedBookIndex === index ? null : index);
 
+  const onSubmit = async (bookForm: BookForm) => {
+    const books = bookForm.books || [];
+    const bookshelfBooks = books.map((book) => ({ book }));
+    const bookshelf: BookshelfCreate = {
+      ...bookshelfDetails,
+      books: bookshelfBooks,
+    };
+    if (bookshelfId) {
+      updateBookshelf({ id: bookshelfId, ...bookshelf } as BookshelfUpdate);
+    } else {
+      createBookshelf(bookshelf);
+    }
+  };
+
   return (
     <FormProvider {...form}>
-      <Stack spacing={2}>
+      <Stack
+        spacing={2}
+        component="form"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <AddBooksHeader
           booksLength={fields.length}
           onClickAddBook={() => {
@@ -115,6 +158,18 @@ export default function AddBooksStep() {
             )}
           </Card>
         ))}
+        <FormActionButtons
+          cancelBtnProps={{
+            onClick: previousStep,
+            children: isPlLanguage ? "Wstecz" : "Previous",
+            disabled: isCreating || isUpdating,
+          }}
+          submitBtnProps={{
+            type: "submit",
+            children: isPlLanguage ? "Zapisz" : "Save",
+            loading: isCreating || isUpdating,
+          }}
+        />
       </Stack>
     </FormProvider>
   );

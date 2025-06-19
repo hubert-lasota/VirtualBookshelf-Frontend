@@ -1,4 +1,7 @@
-import { BookshelfResponse } from "../../../features/bookshelf/models";
+import {
+  BookshelfDetails,
+  BookshelfResponse,
+} from "../../../features/bookshelf/bookshelfModels";
 import { Dialog, DialogProps } from "@mui/material";
 import AddBooksStep from "./AddBooksStep/AddBooksStep";
 import BookshelfFormHeader from "./BookshelfFormHeader";
@@ -6,7 +9,7 @@ import { useState } from "react";
 import BookshelfDetailsStep from "./BookDetailsStep/BookshelfDetailsStep";
 
 type BookshelfFormProps = {
-  bookshelf: BookshelfResponse | null;
+  bookshelf?: BookshelfResponse;
 } & Pick<DialogProps, "open" | "onClose">;
 
 export default function BookshelfFormDialog({
@@ -15,6 +18,9 @@ export default function BookshelfFormDialog({
   bookshelf,
 }: BookshelfFormProps) {
   const [step, setStep] = useState(0);
+  const [bookshelfDetails, setBookshelfDetails] = useState<
+    BookshelfDetails | undefined
+  >();
 
   return (
     <Dialog
@@ -39,13 +45,19 @@ export default function BookshelfFormDialog({
       {step === 0 && (
         <BookshelfDetailsStep
           bookshelf={bookshelf}
+          setBookshelfDetails={setBookshelfDetails}
           nextStep={() => setStep((prev) => prev + 1)}
           // @ts-ignore
           onClose={onClose}
         />
       )}
 
-      {step === 1 && <AddBooksStep />}
+      {step === 1 && (
+        <AddBooksStep
+          previousStep={() => setStep((prev) => prev - 1)}
+          bookshelfDetails={bookshelfDetails!}
+        />
+      )}
     </Dialog>
   );
 }

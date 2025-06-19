@@ -6,7 +6,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useGetPublishers } from "../publisherClient";
-import { PublisherResponse } from "../models";
+import { PublisherResponse } from "../publisherModels";
 import { useUserContext } from "../../user/UserContext";
 import OptionalLabel from "../../../common/components/Label/OptionalLabel";
 

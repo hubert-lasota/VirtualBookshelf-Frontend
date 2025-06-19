@@ -10,6 +10,7 @@ import BookSeriesAutocompleteWithAddButton from "../../book_series/components/Bo
 import { Grid } from "@mui/material";
 import ControlledTextField from "../../../common/components/FormInput/ControlledTextField";
 import BookFormatSelect from "../../book_format/components/BookFormatSelect";
+import ImageTextFieldWithSelector from "../../../common/components/FormInput/ImageTextFieldWithSelector";
 
 type BookFormFieldsProps = {
   namePrefix?: string;
@@ -32,13 +33,28 @@ export default function BookFormFields({
     },
     {
       name: namePrefix + "isbn",
-      label: <OptionalLabel text="ISBN" />,
+      label: <RequiredLabel text="ISBN" />,
     },
     {
-      component: <PublisherAutocomplete name={namePrefix + "publisher"} />,
+      component: <LanguageAutocomplete name={namePrefix + "languageCode"} />,
+    },
+    {
+      component: (
+        <ControlledNumberField
+          name={namePrefix + "pageCount"}
+          label={
+            <RequiredLabel
+              text={isPlLanguage ? "Liczba stron" : "Page count"}
+            />
+          }
+        />
+      ),
     },
     {
       component: <GenreAutocomplete name={namePrefix + "genres"} />,
+    },
+    {
+      component: <PublisherAutocomplete name={namePrefix + "publisher"} />,
     },
     {
       component: (
@@ -53,26 +69,10 @@ export default function BookFormFields({
       ),
     },
     {
-      component: (
-        <ControlledNumberField
-          name={namePrefix + "pageCount"}
-          label={
-            <OptionalLabel
-              text={isPlLanguage ? "Liczba stron" : "Page count"}
-            />
-          }
-        />
-      ),
-    },
-    {
-      component: <LanguageAutocomplete name={namePrefix + "languageCode"} />,
-    },
-    {
       component: <BookFormatSelect name={namePrefix + "formatId"} />,
     },
     {
-      name: namePrefix + "coverUrl",
-      label: <OptionalLabel text={isPlLanguage ? "Zdjęcie" : "Image"} />,
+      component: <ImageTextFieldWithSelector name={namePrefix + "cover"} />,
     },
     {
       name: namePrefix + "description",

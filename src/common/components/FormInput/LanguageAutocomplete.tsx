@@ -3,7 +3,7 @@ import { useController } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
 import { useMemo } from "react";
 import { useUserContext } from "../../../features/user/UserContext";
-import OptionalLabel from "../Label/OptionalLabel";
+import RequiredLabel from "../Label/RequiredLabel";
 
 type LanguageAutocompleteProps = {
   name: string;
@@ -54,7 +54,7 @@ export default function LanguageAutocomplete({
           {...params}
           error={invalid}
           helperText={error?.message}
-          label={<OptionalLabel text={isPlLanguage ? "Język" : "Language"} />}
+          label={<RequiredLabel text={isPlLanguage ? "Język" : "Language"} />}
         />
       )}
       getOptionLabel={(value) => value?.label || ""}

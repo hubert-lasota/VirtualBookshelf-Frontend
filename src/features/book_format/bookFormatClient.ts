@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { BookFormat } from "./models";
+import { BookFormat } from "./bookFormatModels";
 import axiosInstance from "../../common/api/axiosInstance";
 
 const BASE_ENDPOINT = "/v1/book-formats";

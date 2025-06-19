@@ -6,12 +6,12 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { Bookshelf } from "../../../features/bookshelf/models";
+import { BookshelfResponse } from "../../../features/bookshelf/bookshelfModels";
 import { useUserContext } from "../../../features/user/UserContext";
 import DialogCloseButton from "../../../common/DialogCloseButton";
 
 type BookshelfFormHeaderProps = {
-  bookshelf: Bookshelf | null;
+  bookshelf?: BookshelfResponse;
   step: number;
 } & Pick<DialogProps, "onClose">;
 

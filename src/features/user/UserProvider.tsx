@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { UserContext } from "./UserContext";
 import { useLocalStorage } from "../../common/hooks";
-import { AppLanguageCode, User, UserPreferences } from "./models";
+import { AppLanguageCode, User, UserPreferences } from "./userModels";
 import { PaletteMode } from "@mui/material";
 
 export default function UserProvider({ children }: { children: ReactNode }) {

@@ -1,41 +1,51 @@
 import { z } from "zod";
 import { BaseResponse } from "../../common/api/models";
-import { BookFormat } from "../book_format/models";
+import { BookFormat } from "../book_format/bookFormatModels";
 
 export function createBookSchema(isPlLanguage: boolean) {
-  const authorRequiredMessage = isPlLanguage
+  const authorsRequiredMessage = isPlLanguage
     ? "Co najmniej jeden autor jest wymagany"
     : "At least one author is required";
 
   const seriesNameMinMessages = isPlLanguage
-    ? "Nazwa serii musi mieć co najmniej 1 znak"
-    : "Series names must contain at least 1 character";
+    ? "Nazwa serii musi mieć co najmniej jeden znak"
+    : "Series names must contain at least one character";
+
+  const genreRequiredMessage = isPlLanguage
+    ? "Co najmniej jeden gatunek jest wymagany"
+    : "At least one genre is required";
+
+  const titleRequiredMessage = isPlLanguage
+    ? "Tytuł jest wymagany"
+    : "Title is required";
 
   return z.object({
     title: z
-      .string()
-      .min(1, isPlLanguage ? "Tytuł jest wymagany" : "Title is required"),
+      .string({ message: titleRequiredMessage })
+      .min(1, titleRequiredMessage),
 
     isbn: z
-      .string()
+      .string({
+        message: isPlLanguage ? "ISBN jest wymagany" : "ISBN is required",
+      })
       .regex(/^(?:\d{9}[\dXx]|\d{13})$/, {
         message: isPlLanguage
           ? "Nieprawidłowy numer ISBN (ISBN-10 lub ISBN-13)"
           : "Invalid ISBN (ISBN-10 or ISBN-13)",
-      })
-      .optional(),
+      }),
 
     authors: z
       .array(
         z.object(
           {
             id: z.number().optional(),
-            fullName: z.string().min(1, authorRequiredMessage),
+            fullName: z.string().min(1, authorsRequiredMessage),
           },
-          { message: authorRequiredMessage },
+          { message: authorsRequiredMessage },
         ),
+        { message: authorsRequiredMessage },
       )
-      .min(1, authorRequiredMessage),
+      .min(1, authorsRequiredMessage),
 
     publisher: z
       .object({
@@ -52,8 +62,9 @@ export function createBookSchema(isPlLanguage: boolean) {
           id: z.number().optional(),
           name: z.string().min(1),
         }),
+        { message: genreRequiredMessage },
       )
-      .optional(),
+      .min(1, genreRequiredMessage),
 
     series: z
       .array(
@@ -91,26 +102,43 @@ export function createBookSchema(isPlLanguage: boolean) {
       )
       .optional(),
 
-    languageCode: z.string().optional(),
+    languageCode: z.string({
+      message: isPlLanguage ? "Język jest wymagany" : "Language is required",
+    }),
 
-    coverUrl: z.string().optional(),
+    cover: z
+      .union([
+        z.instanceof(File),
+        z
+          .string()
+          .url(
+            isPlLanguage
+              ? "Niepoprawny link do zdjęcia okładki"
+              : "Invalid link to cover image",
+          ),
+      ])
+      .optional(),
 
     pageCount: z
-      .number()
+      .number({
+        message: isPlLanguage
+          ? "Ilość stron jest wymagana"
+          : "Page count is required",
+      })
       .int(
         isPlLanguage
           ? "Ilość stron musi być liczbą całkowitą"
           : "Page count must be integer",
-      )
-      .optional(),
+      ),
 
     description: z.string().optional(),
   });
 }
 
-export type Book = z.infer<ReturnType<typeof createBookSchema>>;
+export type BookMutation = z.infer<ReturnType<typeof createBookSchema>>;
 
-export type BookResponse = Omit<Book, "formatId"> &
+export type BookResponse = Omit<BookMutation, "formatId" | "cover"> &
   BaseResponse & {
-    format: BookFormat;
+    format?: BookFormat;
+    coverUrl?: string;
   };

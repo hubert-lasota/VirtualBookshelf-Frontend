@@ -1,6 +1,6 @@
 import { MenuItem } from "@mui/material";
 import { useUserContext } from "../../../../features/user/UserContext";
-import { BookshelfType } from "../../../../features/bookshelf/models";
+import { BookshelfType } from "../../../../features/bookshelf/bookshelfModels";
 import ControlledSelect from "../../../../common/components/FormInput/ControlledSelect";
 import RequiredLabel from "../../../../common/components/Label/RequiredLabel";
 

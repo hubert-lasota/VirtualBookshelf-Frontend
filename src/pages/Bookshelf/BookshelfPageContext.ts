@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { BookshelfResponse } from "../../features/bookshelf/models";
+import { BookshelfResponse } from "../../features/bookshelf/bookshelfModels";
 
 type BookshelfPageContextValue = {
   bookshelves: BookshelfResponse[];

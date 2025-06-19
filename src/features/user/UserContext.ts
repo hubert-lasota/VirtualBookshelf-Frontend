@@ -1,4 +1,4 @@
-import { AppLanguageCode, User, UserPreferences } from "./models";
+import { AppLanguageCode, User, UserPreferences } from "./userModels";
 import { createContext, useContext } from "react";
 import { PaletteMode } from "@mui/material";
 

@@ -17,7 +17,6 @@ export default function LoginPage() {
           height: "100%",
           padding: "4rem",
           marginInline: "auto",
-          marginTop: "3rem",
         }}
       >
         <Box sx={{ order: { xs: 2, md: 1 }, flex: 1, height: "100%" }}>

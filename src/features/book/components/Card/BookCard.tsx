@@ -1,15 +1,20 @@
-import { Book } from "../../models";
+import { BookResponse } from "../../bookModels";
 import { Card, CardProps } from "@mui/material";
 import BookTitle from "./BookTitle";
 import BookCover from "./BookCover";
 import BookAuthors from "./BookAuthors";
+import { BookContext } from "./BookContext";
 
 type BookCardProps = {
-  book: Book;
+  book: BookResponse;
 } & CardProps;
 
 export default function BookCard({ book, children, ...props }: BookCardProps) {
-  return <Card {...props}>{children}</Card>;
+  return (
+    <BookContext.Provider value={book}>
+      <Card {...props}>{children}</Card>
+    </BookContext.Provider>
+  );
 }
 
 BookCard.Cover = BookCover;

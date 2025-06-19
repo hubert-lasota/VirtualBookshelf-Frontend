@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { ApiError } from "../../common/api/models";
-import { User, UserCredentials } from "./models";
+import { User, UserCredentials } from "./userModels";
 import { useUserContext } from "./UserContext";
 import { AxiosError } from "axios";
 

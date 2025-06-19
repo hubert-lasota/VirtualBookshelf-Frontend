@@ -4,7 +4,7 @@ import {
   AutocompleteChangeReason,
   TextField,
 } from "@mui/material";
-import { Author, AuthorResponse } from "../models";
+import { Author, AuthorResponse } from "../authorModels";
 import { useUserContext } from "../../user/UserContext";
 import { useGetAuthors } from "../authorClient";
 import RequiredLabel from "../../../common/components/Label/RequiredLabel";
@@ -46,7 +46,7 @@ export default function AuthorMultipleAutocomplete({
     <Autocomplete<AutocompleteValue, true, false, true>
       {...restFieldProps}
       freeSolo
-      value={value || ""}
+      value={value || []}
       getOptionLabel={(option) => (option as AutocompleteValue).fullName}
       options={authors}
       onChange={(_e, value, reason) => handleChange(value, reason)}

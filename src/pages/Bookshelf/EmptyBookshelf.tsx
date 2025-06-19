@@ -3,58 +3,65 @@ import ShelvesIcon from "@mui/icons-material/Shelves";
 import { useUserContext } from "../../features/user/UserContext";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
+import BookshelfFormDialog from "./BookshelfForm/BookshelfFormDialog";
 
 export default function EmptyBookshelf() {
-  const [isAddBookshelfDialogOpen, setIsAddBookshelfDialogOpen] =
-    useState(false);
+  const [openCreateBookshelf, setOpenCreateBookshelf] = useState(false);
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
   return (
-    <Stack
-      sx={{
-        width: "100%",
-        minHeight: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <>
       <Stack
-        component={Paper}
-        sx={(theme) => ({
-          padding: `${theme.spacing(20)} ${theme.spacing(10)}`,
-        })}
-        elevation={3}
-        direction="column"
+        sx={{
+          width: "100%",
+          minHeight: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <Stack direction="row">
-          <ShelvesIcon
-            color="action"
-            fontSize="large"
-            sx={(theme) => ({
-              marginRight: "1rem",
-              color: theme.palette.text.primary,
-            })}
-          />
-          <Typography variant="h4">
-            {isPlLanguage
-              ? "Dodaj pierwszy wirtualny regał"
-              : "Add your first virtual Bookshelf"}
-          </Typography>
-        </Stack>
-        <Button
-          variant="contained"
+        <Stack
+          component={Paper}
           sx={(theme) => ({
-            mt: theme.spacing(3),
-            width: "30%",
-            alignSelf: "center",
+            padding: `${theme.spacing(20)} ${theme.spacing(10)}`,
           })}
-          endIcon={<AddIcon />}
+          elevation={3}
+          direction="column"
         >
-          {isPlLanguage ? "Dodaj" : "Add"}
-        </Button>
+          <Stack direction="row">
+            <ShelvesIcon
+              color="action"
+              fontSize="large"
+              sx={(theme) => ({
+                marginRight: "1rem",
+                color: theme.palette.text.primary,
+              })}
+            />
+            <Typography variant="h4">
+              {isPlLanguage
+                ? "Dodaj pierwszy wirtualny regał"
+                : "Add your first virtual Bookshelf"}
+            </Typography>
+          </Stack>
+          <Button
+            onClick={() => setOpenCreateBookshelf(true)}
+            variant="contained"
+            sx={(theme) => ({
+              mt: theme.spacing(3),
+              width: "30%",
+              alignSelf: "center",
+            })}
+            endIcon={<AddIcon />}
+          >
+            {isPlLanguage ? "Dodaj" : "Add"}
+          </Button>
+        </Stack>
       </Stack>
-    </Stack>
+      <BookshelfFormDialog
+        open={openCreateBookshelf}
+        onClose={() => setOpenCreateBookshelf(false)}
+      />
+    </>
   );
 }

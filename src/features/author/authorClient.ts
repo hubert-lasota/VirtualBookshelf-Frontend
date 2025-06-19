@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../common/api/axiosInstance";
 import { PaginatedResponse } from "../../common/api/models";
-import { AuthorResponse } from "./models";
+import { AuthorResponse } from "./authorModels";
 
 const BASE_ENDPOINT = "/v1/authors";
 

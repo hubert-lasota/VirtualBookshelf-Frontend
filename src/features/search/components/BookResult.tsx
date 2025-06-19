@@ -1,6 +1,6 @@
 import PaperResultContainer from "./PaperResultContainer";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { BookResponse } from "../../book/models";
+import { BookResponse } from "../../book/bookModels";
 import { useNavigate } from "react-router-dom";
 
 type BookResultProps = {

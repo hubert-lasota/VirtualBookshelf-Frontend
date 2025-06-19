@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, UserPreferences } from "../../features/user/models";
+import { User, UserPreferences } from "../../features/user/userModels";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api",
@@ -16,9 +16,9 @@ axiosInstance.interceptors.request.use((config) => {
 
   const preferences = localStorage.getItem("preferences");
   if (preferences) {
-    const { languageTag } = JSON.parse(preferences) as UserPreferences;
-    if (languageTag) {
-      config.headers.AcceptLanguage = languageTag;
+    const { languageCode } = JSON.parse(preferences) as UserPreferences;
+    if (languageCode) {
+      config.headers.AcceptLanguage = languageCode;
     }
   }
 

@@ -12,13 +12,13 @@ import {
 } from "@mui/material";
 import { ResourceType, useSearch } from "../searchClient";
 import { useUserContext } from "../../user/UserContext";
-import { BookResponse } from "../../book/models";
+import { BookResponse } from "../../book/bookModels";
 import BookResult from "./BookResult";
 import { PaginatedResponse } from "../../../common/api/models";
 import SelectResourceType from "./SelectResourceType";
 import SearchIcon from "@mui/icons-material/Search";
 import DialogCloseButton from "../../../common/DialogCloseButton";
-import { AuthorResponse } from "../../author/models";
+import { AuthorResponse } from "../../author/authorModels";
 import CenteredContent from "../../../common/components/CenteredContent";
 
 type SearchDialogProps = {

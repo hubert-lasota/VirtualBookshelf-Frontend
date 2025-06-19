@@ -1,6 +1,6 @@
 import { MenuItem, Select, SelectProps } from "@mui/material";
 import { useUserContext } from "../../../features/user/UserContext";
-import { AppLanguageCode } from "../../../features/user/models";
+import { AppLanguageCode } from "../../../features/user/userModels";
 
 type LangCodeWithLabel = {
   value: AppLanguageCode;
@@ -21,6 +21,7 @@ export default function LanguageSelect(props: Omit<SelectProps, "value">) {
     // @ts-ignore
     <Select<LangCodeWithLabel>
       variant="standard"
+      disableUnderline
       value={languages.find(({ value }) => value === languageCode)}
       renderValue={(langTag) => langTag.label}
       sx={{ fontWeight: 600 }}

@@ -8,21 +8,26 @@ import {
   BookshelfDetails,
   BookshelfResponse,
   createBookshelfDetailsSchema,
-} from "../../../../features/bookshelf/models";
+} from "../../../../features/bookshelf/bookshelfModels";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ControlledTextField from "../../../../common/components/FormInput/ControlledTextField";
 import FormActionButtons from "../FormActionButtons";
+import React from "react";
 
 type BookshelfDetailsStepProps = {
-  bookshelf: BookshelfResponse | null;
+  bookshelf?: BookshelfResponse;
   nextStep: () => void;
   onClose: () => void;
+  setBookshelfDetails: React.Dispatch<
+    React.SetStateAction<BookshelfDetails | undefined>
+  >;
 };
 
 export default function BookshelfDetailsStep({
   bookshelf,
   onClose,
   nextStep,
+  setBookshelfDetails,
 }: BookshelfDetailsStepProps) {
   const {
     preferences: { isPlLanguage },
@@ -35,8 +40,8 @@ export default function BookshelfDetailsStep({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = () => {
-    console.log("here");
+  const onSubmit = (bookshelfDetails: BookshelfDetails) => {
+    setBookshelfDetails(bookshelfDetails);
     nextStep();
   };
 

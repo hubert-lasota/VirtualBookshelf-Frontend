@@ -5,9 +5,9 @@ import {
 } from "@mui/material";
 import { useUserContext } from "../../user/UserContext";
 import { useController } from "react-hook-form";
-import { GenreResponse } from "../models";
+import { GenreResponse } from "../genreModels";
 import { useGetGenres } from "../genreClient";
-import OptionalLabel from "../../../common/components/Label/OptionalLabel";
+import RequiredLabel from "../../../common/components/Label/RequiredLabel";
 
 type AutocompleteValue = Pick<GenreResponse, "name"> | GenreResponse;
 
@@ -44,7 +44,7 @@ export default function GenreAutocomplete({ name }: GenreAutocompleteProps) {
     <Autocomplete<AutocompleteValue, true, false, true>
       {...restFieldProps}
       freeSolo
-      value={value || ""}
+      value={value || []}
       getOptionLabel={(option) => (option as AutocompleteValue).name}
       options={genres}
       onChange={(_e, value, reason) => handleChange(value, reason)}
@@ -52,7 +52,7 @@ export default function GenreAutocomplete({ name }: GenreAutocompleteProps) {
         <TextField
           {...params}
           label={
-            <OptionalLabel
+            <RequiredLabel
               text={isPlLanguage ? "Gatunek (Lista)" : "Genre (List)"}
             />
           }
