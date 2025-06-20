@@ -29,9 +29,7 @@ export default function ImageSelector({ onChange }: ImageSelectorProps) {
         onChange={handleFileChange}
       />
       <label htmlFor="icon-button-file">
-        <Tooltip
-          title={isPlLanguage ? "Dodaj zdjęcie okładki" : "Add cover image"}
-        >
+        <Tooltip title={isPlLanguage ? "Dodaj zdjęcie" : "Add image"}>
           <IconButton component="span">
             <AddPhotoAlternateIcon />
           </IconButton>

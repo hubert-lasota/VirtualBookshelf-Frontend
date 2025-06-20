@@ -1,6 +1,6 @@
 import { DialogProps, IconButton, Tooltip } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useUserContext } from "../features/user/UserContext";
+import { useUserContext } from "../../../features/user/UserContext";
 import type { Property } from "csstype";
 
 type DialogCloseButtonProps = {

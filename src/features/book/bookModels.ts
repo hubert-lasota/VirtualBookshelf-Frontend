@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { BaseResponse } from "../../common/api/models";
 import { BookFormat } from "../book_format/bookFormatModels";
+import { GenreResponse } from "../genre/genreModels";
 
 export function createBookSchema(isPlLanguage: boolean) {
   const authorsRequiredMessage = isPlLanguage
@@ -56,15 +57,7 @@ export function createBookSchema(isPlLanguage: boolean) {
 
     formatId: z.number().optional(),
 
-    genres: z
-      .array(
-        z.object({
-          id: z.number().optional(),
-          name: z.string().min(1),
-        }),
-        { message: genreRequiredMessage },
-      )
-      .min(1, genreRequiredMessage),
+    genreIds: z.array(z.number()).min(1, genreRequiredMessage),
 
     series: z
       .array(
@@ -135,10 +128,14 @@ export function createBookSchema(isPlLanguage: boolean) {
   });
 }
 
-export type BookMutation = z.infer<ReturnType<typeof createBookSchema>>;
+export type BookFormValues = z.infer<ReturnType<typeof createBookSchema>>;
 
-export type BookResponse = Omit<BookMutation, "formatId" | "cover"> &
+export type BookResponse = Omit<
+  BookFormValues,
+  "formatId" | "cover" | "genreIds"
+> &
   BaseResponse & {
     format?: BookFormat;
     coverUrl?: string;
+    genres: GenreResponse[];
   };

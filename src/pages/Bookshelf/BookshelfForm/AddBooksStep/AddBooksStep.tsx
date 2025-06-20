@@ -4,6 +4,7 @@ import {
   CardActions,
   CardContent,
   Collapse,
+  DialogProps,
   IconButton,
   Stack,
   Typography,
@@ -24,9 +25,8 @@ import z from "zod";
 import BookFormFields from "../../../../features/book/components/BookFormFields";
 import FormActionButtons from "../FormActionButtons";
 import {
-  BookshelfCreate,
   BookshelfDetails,
-  BookshelfUpdate,
+  BookshelfFormValues,
 } from "../../../../features/bookshelf/bookshelfModels";
 import {
   useCreateBookshelf,
@@ -37,10 +37,11 @@ type AddBooksStepProps = {
   previousStep: () => void;
   bookshelfDetails: BookshelfDetails;
   bookshelfId?: number;
-};
+} & Pick<DialogProps, "onClose">;
 
 export default function AddBooksStep({
   previousStep,
+  onClose,
   bookshelfDetails,
   bookshelfId,
 }: AddBooksStepProps) {
@@ -83,17 +84,17 @@ export default function AddBooksStep({
     setExpandedBookIndex(expandedBookIndex === index ? null : index);
 
   const onSubmit = async (bookForm: BookForm) => {
-    const books = bookForm.books || [];
-    const bookshelfBooks = books.map((book) => ({ book }));
-    const bookshelf: BookshelfCreate = {
+    const bookshelf: BookshelfFormValues = {
       ...bookshelfDetails,
-      books: bookshelfBooks,
+      books: bookForm.books || [],
     };
     if (bookshelfId) {
-      updateBookshelf({ id: bookshelfId, ...bookshelf } as BookshelfUpdate);
+      updateBookshelf({ id: bookshelfId, ...bookshelf });
     } else {
       createBookshelf(bookshelf);
     }
+    // @ts-ignore
+    onClose();
   };
 
   return (

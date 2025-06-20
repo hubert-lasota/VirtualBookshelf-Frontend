@@ -1,16 +1,12 @@
-import { BookResponse, createBookSchema } from "../book/bookModels";
+import { BookFormValues, BookResponse } from "../book/bookModels";
 import { z } from "zod";
 import { BaseResponse } from "../../common/api/models";
+import { BookReadingStatus, BookshelfBookNote } from "./bookshelfBookModels";
 
 export enum BookshelfType {
   TO_READ = "TO_READ",
   READING = "READING",
   READ = "READ",
-}
-
-export enum BookReadingStatus {
-  READING = "READING",
-  ENDED = "ENDED",
 }
 
 export function createBookshelfDetailsSchema(isPlLanguage: boolean) {
@@ -26,78 +22,26 @@ export function createBookshelfDetailsSchema(isPlLanguage: boolean) {
       message: isPlLanguage ? "Typ jest wymagany" : "Type is required",
     }),
 
-    description: z.string().optional(),
+    description: z.string().optional().nullable(),
   });
 }
-
-const createNoteSchema = (isPlLanguage: boolean) => {
-  const contentRequired = isPlLanguage
-    ? "Treść jest wymagana"
-    : "Content is required";
-
-  return z.object({
-    content: z.string({ message: contentRequired }).min(1, contentRequired),
-    startPage: z
-      .number({
-        message: isPlLanguage
-          ? "Start od jest wymagana"
-          : "Page from is required",
-      })
-      .int(
-        isPlLanguage
-          ? "Start od musi być poprawną liczbą całkowitą"
-          : "Page from must be valid integer",
-      ),
-    endPage: z
-      .number({
-        message: isPlLanguage
-          ? "Start do jest wymagana"
-          : "Page to is required",
-      })
-      .int(
-        isPlLanguage
-          ? "Start do musi być poprawną liczbą całkowitą"
-          : "Page to must be valid integer",
-      ),
-  });
-};
-
-type Note = z.infer<ReturnType<typeof createNoteSchema>>;
-
-const createBookshelfBookSchema = (isPlLanguage: boolean) =>
-  z.object({
-    notes: z.array(createNoteSchema(isPlLanguage)).optional(),
-    book: createBookSchema(isPlLanguage).extend({
-      id: z.number().optional(),
-    }),
-  });
-
-export const createBookshelfBooksSchema = (isPlLanguage: boolean) =>
-  z.array(createBookshelfBookSchema(isPlLanguage)).optional();
-
-export type BookshelfBooks = z.infer<
-  ReturnType<typeof createBookshelfBooksSchema>
->;
 
 export type BookshelfDetails = z.infer<
   ReturnType<typeof createBookshelfDetailsSchema>
 >;
 
-export type BookshelfCreate = BookshelfDetails & { books: BookshelfBooks };
+export type BookshelfFormValues = BookshelfDetails & {
+  books: (BookFormValues | BookResponse)[];
+};
 
 export type BookshelfBookResponse = {
   book: BookResponse;
-  notes: Note[];
+  notes: BookshelfBookNote[];
+  status: BookReadingStatus;
+  progressPercentage: number;
 } & BaseResponse;
 
 export type BookshelfResponse = BookshelfDetails &
   BaseResponse & {
     books: BookshelfBookResponse[];
   };
-
-export type BookshelfUpdate = Pick<BookshelfResponse, "id"> &
-  Partial<BookshelfCreate>;
-
-export type BookshelfBookWithId = BookshelfBookResponse & {
-  bookshelfId: number;
-};

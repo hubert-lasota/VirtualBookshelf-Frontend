@@ -1,7 +1,7 @@
 import { Button, Stack } from "@mui/material";
 import { useFieldArray } from "react-hook-form";
 import { useUserContext } from "../../user/UserContext";
-import BookOrderTextField from "./BookOrderTextField";
+import BookOrderField from "./BookOrderField";
 import BookSeriesAutocomplete from "./BookSeriesAutocomplete";
 
 type BookSeriesAutocompleteProps = {
@@ -42,7 +42,7 @@ export default function BookSeriesAutocompleteWithAddButton({
             index={index}
           />
 
-          <BookOrderTextField
+          <BookOrderField
             name={namePrefix + `series.${index}.bookOrder`}
             remove={() => remove(index)}
           />

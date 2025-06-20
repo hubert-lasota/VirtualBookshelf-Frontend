@@ -1,15 +1,9 @@
-import {
-  Autocomplete,
-  AutocompleteChangeReason,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import { useUserContext } from "../../user/UserContext";
 import { useController } from "react-hook-form";
 import { GenreResponse } from "../genreModels";
 import { useGetGenres } from "../genreClient";
 import RequiredLabel from "../../../common/components/Label/RequiredLabel";
-
-type AutocompleteValue = Pick<GenreResponse, "name"> | GenreResponse;
 
 type GenreAutocompleteProps = {
   name: string;
@@ -26,28 +20,17 @@ export default function GenreAutocomplete({ name }: GenreAutocompleteProps) {
 
   const { data: { genres = [] } = {} } = useGetGenres();
 
-  const handleChange = (
-    value: (string | AutocompleteValue)[] | null,
-    reason: AutocompleteChangeReason,
-  ) => {
-    if (reason === "createOption" && value !== null) {
-      const newValues = [...value];
-      const lastIndex = newValues.length - 1;
-      newValues[lastIndex] = { name: newValues[lastIndex] as string };
-      onChange(newValues);
-    } else {
-      onChange(value);
-    }
-  };
-
   return (
-    <Autocomplete<AutocompleteValue, true, false, true>
+    <Autocomplete<GenreResponse, true, false, false>
       {...restFieldProps}
-      freeSolo
-      value={value || []}
-      getOptionLabel={(option) => (option as AutocompleteValue).name}
+      value={
+        value
+          ? value.map((id: number) => genres.find((genre) => genre.id === id))
+          : []
+      }
+      getOptionLabel={(option) => (option as GenreResponse).name}
       options={genres}
-      onChange={(_e, value, reason) => handleChange(value, reason)}
+      onChange={(_e, value) => onChange(value.map((genre) => genre.id))}
       renderInput={(params) => (
         <TextField
           {...params}

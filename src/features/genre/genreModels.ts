@@ -1,4 +1,5 @@
+import { BaseResponse } from "../../common/api/models";
+
 export type GenreResponse = {
-  id: number;
   name: string;
-};
+} & BaseResponse;

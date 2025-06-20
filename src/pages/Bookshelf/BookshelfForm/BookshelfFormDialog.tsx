@@ -54,8 +54,10 @@ export default function BookshelfFormDialog({
 
       {step === 1 && (
         <AddBooksStep
+          onClose={onClose}
           previousStep={() => setStep((prev) => prev - 1)}
           bookshelfDetails={bookshelfDetails!}
+          bookshelfId={bookshelf?.id}
         />
       )}
     </Dialog>

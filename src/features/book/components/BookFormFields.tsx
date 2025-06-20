@@ -51,7 +51,7 @@ export default function BookFormFields({
       ),
     },
     {
-      component: <GenreAutocomplete name={namePrefix + "genres"} />,
+      component: <GenreAutocomplete name={namePrefix + "genreIds"} />,
     },
     {
       component: <PublisherAutocomplete name={namePrefix + "publisher"} />,

@@ -1,13 +1,13 @@
 import { Button, Stack } from "@mui/material";
 import { useUserContext } from "../../user/UserContext";
-import ControlledTextField from "../../../common/components/FormInput/ControlledTextField";
+import ControlledNumberField from "../../../common/components/FormInput/ControlledNumberField";
 
 type BookSeriesBookOrderTextFieldProps = {
   name: string;
   remove: () => void;
 };
 
-export default function BookOrderTextField({
+export default function BookOrderField({
   name,
   remove,
 }: BookSeriesBookOrderTextFieldProps) {
@@ -17,7 +17,7 @@ export default function BookOrderTextField({
 
   return (
     <Stack direction="row" sx={{ width: "50%" }} spacing={1}>
-      <ControlledTextField
+      <ControlledNumberField
         name={name}
         fullWidth={false}
         sx={{ width: "90%" }}

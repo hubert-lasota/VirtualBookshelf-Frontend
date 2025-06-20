@@ -1,11 +1,25 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { AppBar, Box, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  AppBarProps,
+  Box,
+  SxProps,
+  Toolbar,
+  ToolbarProps,
+} from "@mui/material";
+
+type GlobalAppBarContainerProps = {
+  sx?: SxProps;
+  children: ReactNode;
+  toolbarProps?: ToolbarProps;
+} & Pick<AppBarProps, "position">;
 
 export default function GlobalAppBarContainer({
   children,
-}: {
-  children: ReactNode;
-}) {
+  sx,
+  toolbarProps,
+  position = "fixed",
+}: GlobalAppBarContainerProps) {
   const appBarRef = useRef<HTMLDivElement>(null);
   const [appBarHeight, setAppBarHeight] = useState(0);
 
@@ -28,20 +42,30 @@ export default function GlobalAppBarContainer({
     <>
       <AppBar
         ref={appBarRef}
-        position="fixed"
+        position={position}
         elevation={0}
-        sx={(theme) => ({
-          borderRadius: 0,
-          borderBottom: `1.5px solid ${theme.palette.divider}`,
-          boxShadow: `0px 1px 6px 0px rgba(0, 0, 0, 0.1)`,
-        })}
+        sx={[
+          (theme) => ({
+            borderRadius: 0,
+            paddingInline: theme.spacing(12),
+            borderBottom: `1.5px solid ${theme.palette.divider}`,
+            boxShadow: `0px 1px 6px 0px rgba(0, 0, 0, 0.1)`,
+            maxHeight: "70px",
+          }),
+          ...(Array.isArray(sx) ? sx : [sx]),
+        ]}
         color="inherit"
       >
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
+        <Toolbar
+          sx={{ justifyContent: "space-between", alignItems: "center" }}
+          {...toolbarProps}
+        >
           {children}
         </Toolbar>
       </AppBar>
-      <Box sx={{ marginBottom: `${appBarHeight}px` }} />
+      {position !== "static" && (
+        <Box sx={{ marginBottom: `${appBarHeight}px` }} />
+      )}
     </>
   );
 }

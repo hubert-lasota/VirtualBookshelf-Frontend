@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { BookshelfResponse } from "../../../features/bookshelf/bookshelfModels";
 import { useUserContext } from "../../../features/user/UserContext";
-import DialogCloseButton from "../../../common/DialogCloseButton";
+import DialogCloseButton from "../../../common/components/Dialog/DialogCloseButton";
 
 type BookshelfFormHeaderProps = {
   bookshelf?: BookshelfResponse;
@@ -43,10 +43,10 @@ export default function BookshelfFormHeader({
         {isPlLanguage
           ? isEditing
             ? `Edytuj regał: ${bookshelf!.name}`
-            : "Stwórz nowy regał"
+            : "Dodaj nowy regał"
           : isEditing
             ? `Edit bookshelf: ${bookshelf!.name}`
-            : "Create new bookshelf"}
+            : "Add new bookshelf"}
       </Typography>
       <DialogCloseButton onClose={onClose} right={theme.spacing(3)} />
       <Stepper activeStep={step}>

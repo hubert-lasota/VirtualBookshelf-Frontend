@@ -2,24 +2,26 @@ import { PageContainer } from "../../common/components/styles";
 import BookshelfHeader from "./BookshelfHeader";
 import { useGetBookshelves } from "../../features/bookshelf/bookshelfClient";
 import { useMemo, useState } from "react";
-import { BookshelfBookWithId } from "../../features/bookshelf/bookshelfModels";
 import BookGrid from "./BookGrid";
 import EmptyBookshelf from "./EmptyBookshelf";
 import { BookshelfPageContext } from "./BookshelfPageContext";
-import ManageBookshelfFab from "./ManageBookshelfFab";
-
-export const SHOW_ALL_BOOKS_INDEX = -1;
+import { Stack } from "@mui/material";
+import BookshelfSidebar from "./BookshelfSidebar/BookshelfSidebar";
+import { BookshelfBookWithId } from "../../features/bookshelf/bookshelfBookModels";
+import { ALL_BOOKS_BOOKSHELF_INDEX } from "./common";
+import BookshelfContentHeader from "./BookshelfContentHeader";
 
 export default function BookshelfPage() {
-  const { data: { bookshelves } = {} } = useGetBookshelves();
+  const { data: { bookshelves = [] } = {} } = useGetBookshelves();
   const [query, setQuery] = useState("");
-  const [currentBookshelfIndex, setCurrentBookshelfIndex] =
-    useState<number>(SHOW_ALL_BOOKS_INDEX);
+  const [currentBookshelfIndex, setCurrentBookshelfIndex] = useState<number>(
+    ALL_BOOKS_BOOKSHELF_INDEX,
+  );
 
   const booksFiltered: BookshelfBookWithId[] = useMemo(() => {
     if (!bookshelves || bookshelves.length === 0) return [];
     let bookshelvesFiltered = [...bookshelves];
-    if (currentBookshelfIndex !== SHOW_ALL_BOOKS_INDEX) {
+    if (currentBookshelfIndex !== ALL_BOOKS_BOOKSHELF_INDEX) {
       bookshelvesFiltered = bookshelvesFiltered.filter(
         (_, index) => index === currentBookshelfIndex,
       );
@@ -49,7 +51,7 @@ export default function BookshelfPage() {
   return (
     <BookshelfPageContext.Provider
       value={{
-        bookshelves: bookshelves || [],
+        bookshelves,
         currentBookshelfIndex,
         setCurrentBookshelfIndex,
         onQueryChange: setQuery,
@@ -57,9 +59,14 @@ export default function BookshelfPage() {
     >
       <PageContainer>
         <BookshelfHeader />
-        <BookGrid books={booksFiltered} />
-        {bookshelves?.length === 0 && <EmptyBookshelf />}
-        <ManageBookshelfFab />
+        <Stack direction="row" sx={{ width: "100%", height: "100%" }}>
+          <BookshelfSidebar />
+          <Stack sx={(theme) => ({ padding: theme.spacing(3) })}>
+            <BookshelfContentHeader />
+            <BookGrid books={booksFiltered} />
+          </Stack>
+          {bookshelves?.length === 0 && <EmptyBookshelf />}
+        </Stack>
       </PageContainer>
     </BookshelfPageContext.Provider>
   );
