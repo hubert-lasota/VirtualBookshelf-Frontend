@@ -3,6 +3,7 @@ import { Box, Stack } from "@mui/material";
 import { PageContainer } from "../../common/components/styles.js";
 import GlobalAppBar from "../../common/components/GlobalAppBar/GlobalAppBar";
 import LanguageSelect from "../../common/components/GlobalAppBar/LanguageSelect";
+import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalAppBar/config";
 
 export default function LoginPage() {
   return (
@@ -16,6 +17,7 @@ export default function LoginPage() {
           width: "100%",
           height: "100%",
           padding: "4rem",
+          paddingTop: `calc(${GLOBAL_APP_BAR_HEIGHT} + 4rem)`,
           marginInline: "auto",
         }}
       >

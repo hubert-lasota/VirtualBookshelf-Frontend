@@ -10,13 +10,17 @@ import BookshelfSidebar from "./BookshelfSidebar/BookshelfSidebar";
 import { BookshelfBookWithId } from "../../features/bookshelf/bookshelfBookModels";
 import { ALL_BOOKS_BOOKSHELF_INDEX } from "./common";
 import BookshelfContentHeader from "./BookshelfContentHeader";
+import BookshelfForm from "./BookshelfForm/BookshelfForm";
+import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalAppBar/config";
 
 export default function BookshelfPage() {
-  const { data: { bookshelves = [] } = {} } = useGetBookshelves();
+  const { data: { bookshelves } = {}, isLoading } = useGetBookshelves();
   const [query, setQuery] = useState("");
   const [currentBookshelfIndex, setCurrentBookshelfIndex] = useState<number>(
     ALL_BOOKS_BOOKSHELF_INDEX,
   );
+
+  const [isBookshelfFormOpen, setIsBookshelfFormOpen] = useState(false);
 
   const booksFiltered: BookshelfBookWithId[] = useMemo(() => {
     if (!bookshelves || bookshelves.length === 0) return [];
@@ -51,21 +55,37 @@ export default function BookshelfPage() {
   return (
     <BookshelfPageContext.Provider
       value={{
-        bookshelves,
+        currentBookshelf: bookshelves?.[currentBookshelfIndex],
+        bookshelves: bookshelves || [],
         currentBookshelfIndex,
         setCurrentBookshelfIndex,
+        isBookshelfFormOpen,
+        setIsBookshelfFormOpen,
         onQueryChange: setQuery,
       }}
     >
       <PageContainer>
         <BookshelfHeader />
-        <Stack direction="row" sx={{ width: "100%", height: "100%" }}>
+        <Stack
+          direction="row"
+          sx={{
+            width: "100%",
+            height: "100%",
+            paddingTop: GLOBAL_APP_BAR_HEIGHT,
+          }}
+        >
           <BookshelfSidebar />
-          <Stack sx={(theme) => ({ padding: theme.spacing(3) })}>
-            <BookshelfContentHeader />
-            <BookGrid books={booksFiltered} />
-          </Stack>
-          {bookshelves?.length === 0 && <EmptyBookshelf />}
+          {isBookshelfFormOpen ? (
+            <BookshelfForm />
+          ) : (
+            <Stack
+              sx={(theme) => ({ width: "100%", padding: theme.spacing(3) })}
+            >
+              <BookshelfContentHeader />
+              <BookGrid books={booksFiltered} />
+            </Stack>
+          )}
+          {bookshelves?.length === 0 && isLoading && <EmptyBookshelf />}
         </Stack>
       </PageContainer>
     </BookshelfPageContext.Provider>

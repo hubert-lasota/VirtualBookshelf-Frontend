@@ -24,7 +24,7 @@ export default function ControlledSelect({
   ...rest
 }: ControlledSelectProps) {
   const {
-    field: { value, ...restFieldProps },
+    field: { value, ref, ...restFieldProps },
     fieldState: { invalid, error },
   } = useController({ name });
 
@@ -36,7 +36,13 @@ export default function ControlledSelect({
       {...formControlProps}
     >
       <InputLabel>{label}</InputLabel>
-      <Select label={label} {...restFieldProps} {...rest} value={value || ""}>
+      <Select
+        inputRef={ref}
+        label={label}
+        {...restFieldProps}
+        {...rest}
+        value={value || ""}
+      >
         {children}
       </Select>
       <FormHelperText>{error?.message}</FormHelperText>

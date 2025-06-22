@@ -2,9 +2,12 @@ import React, { createContext, useContext } from "react";
 import { BookshelfResponse } from "../../features/bookshelf/bookshelfModels";
 
 type BookshelfPageContextValue = {
+  currentBookshelf?: BookshelfResponse;
   bookshelves: BookshelfResponse[];
   currentBookshelfIndex: number;
   setCurrentBookshelfIndex: React.Dispatch<React.SetStateAction<number>>;
+  isBookshelfFormOpen: boolean;
+  setIsBookshelfFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onQueryChange: (query: string) => void;
 };
 

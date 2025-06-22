@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseResponse } from "../../common/api/models";
+import { BaseResponse } from "../../common/api/apiModels";
 import { BookFormat } from "../book_format/bookFormatModels";
 import { GenreResponse } from "../genre/genreModels";
 
@@ -57,7 +57,9 @@ export function createBookSchema(isPlLanguage: boolean) {
 
     formatId: z.number().optional(),
 
-    genreIds: z.array(z.number()).min(1, genreRequiredMessage),
+    genreIds: z
+      .array(z.number(), { message: genreRequiredMessage })
+      .min(1, genreRequiredMessage),
 
     series: z
       .array(
@@ -129,6 +131,10 @@ export function createBookSchema(isPlLanguage: boolean) {
 }
 
 export type BookFormValues = z.infer<ReturnType<typeof createBookSchema>>;
+
+export type BookMutationRequest = Omit<BookFormValues, "cover"> & {
+  coverUrl?: string;
+};
 
 export type BookResponse = Omit<
   BookFormValues,

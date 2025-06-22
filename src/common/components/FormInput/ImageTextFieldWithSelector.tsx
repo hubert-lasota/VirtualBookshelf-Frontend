@@ -26,7 +26,7 @@ export default function ImageTextFieldWithSelector({
     preferences: { isPlLanguage },
   } = useUserContext();
   const {
-    field: { value, onChange, ...restFieldProps },
+    field: { value, onChange, ref, ...restFieldProps },
     fieldState: { invalid, error },
   } = useController({ name });
 
@@ -35,6 +35,7 @@ export default function ImageTextFieldWithSelector({
   return (
     <Stack spacing={1} sx={{ width: "100%" }}>
       <TextField
+        inputRef={ref}
         fullWidth
         value={(isFile ? value.name : value) || ""}
         onChange={(e) => {

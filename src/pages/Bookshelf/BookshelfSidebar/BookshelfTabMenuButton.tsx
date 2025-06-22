@@ -14,14 +14,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { useState } from "react";
-import BookshelfFormDialog from "../BookshelfForm/BookshelfFormDialog";
 import SearchBookDialog from "../SearchBookDialog";
-import DeleteBookshelfDialog from "../DeleteBookshelfDialog";
+import DeleteBookshelfDialog from "./DeleteBookshelfDialog";
 import BookFormDialog from "../BookFormDialog";
 
 export default function BookshelfTabMenuButton() {
-  const [openUpdateBookshelfDialog, setOpenUpdateBookshelfDialog] =
-    useState(false);
   const [openCreateBookDialog, setOpenCreateBookDialog] = useState(false);
   const [openSearchBookDialog, setOpenSearchBookDialog] = useState(false);
   const [openDeleteBookshelfDialog, setOpenDeleteBookshelfDialog] =
@@ -33,13 +30,14 @@ export default function BookshelfTabMenuButton() {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { bookshelves, currentBookshelfIndex } = useBookshelfPageContext();
-  const currentBookshelf = bookshelves[currentBookshelfIndex];
+  const { currentBookshelf, setIsBookshelfFormOpen } =
+    useBookshelfPageContext();
+
   const actions = [
     {
       name: isPlLanguage ? "Edytuj regał" : "Edit bookshelf",
       icon: <EditIcon />,
-      onClick: () => setOpenUpdateBookshelfDialog(true),
+      onClick: () => setIsBookshelfFormOpen(true),
     },
     {
       name: isPlLanguage ? "Dodaj książkę" : "Add book",
@@ -72,7 +70,8 @@ export default function BookshelfTabMenuButton() {
       >
         {actions.map(({ name, icon, onClick }) => (
           <MenuItem
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               onClick();
               setAnchorEl(null);
             }}
@@ -82,11 +81,6 @@ export default function BookshelfTabMenuButton() {
           </MenuItem>
         ))}
       </Menu>
-      <BookshelfFormDialog
-        open={openUpdateBookshelfDialog}
-        onClose={() => setOpenUpdateBookshelfDialog(false)}
-        bookshelf={openUpdateBookshelfDialog ? currentBookshelf : undefined}
-      />
       <SearchBookDialog
         open={openSearchBookDialog}
         onClose={() => setOpenSearchBookDialog(false)}

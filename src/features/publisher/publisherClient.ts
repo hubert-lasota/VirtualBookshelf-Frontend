@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { PaginatedResponse } from "../../common/api/models";
+import { PaginatedResponse } from "../../common/api/apiModels";
 import { PublisherResponse } from "./publisherModels";
 import axiosInstance from "../../common/api/axiosInstance";
 

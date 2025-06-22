@@ -10,12 +10,13 @@ export default function ControlledTextField({
   ...rest
 }: ControlledTextFieldProps) {
   const {
-    field: { value, ...restFieldProps },
+    field: { value, ref, ...restFieldProps },
     fieldState: { error, invalid },
   } = useController({ name });
 
   return (
     <TextField
+      inputRef={ref}
       fullWidth
       {...rest}
       {...restFieldProps}

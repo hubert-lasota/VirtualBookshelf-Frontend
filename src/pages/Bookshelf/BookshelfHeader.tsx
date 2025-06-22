@@ -8,7 +8,6 @@ import SettingsButton from "../../common/components/GlobalAppBar/SettingsButton"
 import SearchIcon from "@mui/icons-material/Search";
 import AppPagesDropdown from "../../common/components/GlobalAppBar/AppPagesDropdown";
 import { useBookshelfPageContext } from "./BookshelfPageContext";
-import BookshelfFormDialog from "./BookshelfForm/BookshelfFormDialog";
 
 export default function BookshelfHeader() {
   const { onQueryChange } = useBookshelfPageContext();
@@ -18,15 +17,13 @@ export default function BookshelfHeader() {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounceValue(query, 200);
 
-  const [openBookshelfForm, setOpenBookshelfForm] = useState(false);
-
   useEffect(() => {
     onQueryChange(debouncedQuery);
   }, [debouncedQuery]);
 
   return (
     <>
-      <GlobalAppBarContainer position={"static"}>
+      <GlobalAppBarContainer>
         <AppLogo />
         <TextField
           size="small"
@@ -49,10 +46,6 @@ export default function BookshelfHeader() {
           <SettingsButton />
         </Stack>
       </GlobalAppBarContainer>
-      <BookshelfFormDialog
-        open={openBookshelfForm}
-        onClose={() => setOpenBookshelfForm(false)}
-      />
     </>
   );
 }

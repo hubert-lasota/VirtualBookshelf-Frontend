@@ -8,9 +8,11 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { useUserContext } from "../../features/user/UserContext";
-import { useDeleteBookshelf } from "../../features/bookshelf/bookshelfClient";
-import { BookshelfResponse } from "../../features/bookshelf/bookshelfModels";
+import { useUserContext } from "../../../features/user/UserContext";
+import { useDeleteBookshelf } from "../../../features/bookshelf/bookshelfClient";
+import { BookshelfResponse } from "../../../features/bookshelf/bookshelfModels";
+import { useBookshelfPageContext } from "../BookshelfPageContext";
+import { ALL_BOOKS_BOOKSHELF_INDEX } from "../common";
 
 type DeleteBookshelfDialogProps = Pick<DialogProps, "open" | "onClose"> & {
   bookshelf: BookshelfResponse;
@@ -24,6 +26,9 @@ export default function DeleteBookshelfDialog({
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
+
+  const { currentBookshelfIndex, setCurrentBookshelfIndex } =
+    useBookshelfPageContext();
 
   const { mutate } = useDeleteBookshelf();
 
@@ -49,7 +54,13 @@ export default function DeleteBookshelfDialog({
         <Button
           variant="contained"
           color="error"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
+            const index =
+              currentBookshelfIndex === 0
+                ? ALL_BOOKS_BOOKSHELF_INDEX
+                : currentBookshelfIndex - 1;
+            setCurrentBookshelfIndex(index);
             mutate(bookshelf.id);
             // @ts-ignore
             onClose();

@@ -44,7 +44,7 @@ export default function BookFormDialog({
   }, [open]);
 
   const onSubmit = async () => {};
-  console.log("form", form.watch());
+
   return (
     <FormProvider {...form}>
       <Dialog

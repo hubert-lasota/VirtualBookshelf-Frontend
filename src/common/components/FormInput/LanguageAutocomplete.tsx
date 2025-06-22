@@ -18,7 +18,7 @@ export default function LanguageAutocomplete({
     preferences: { isPlLanguage },
   } = useUserContext();
   const {
-    field: { value, onChange, ...restFieldProps },
+    field: { value, onChange, ref, ...restFieldProps },
     fieldState: { invalid, error },
   } = useController({ name });
 
@@ -52,6 +52,7 @@ export default function LanguageAutocomplete({
       renderInput={(params) => (
         <TextField
           {...params}
+          inputRef={ref}
           error={invalid}
           helperText={error?.message}
           label={<RequiredLabel text={isPlLanguage ? "Język" : "Language"} />}

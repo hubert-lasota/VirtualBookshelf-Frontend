@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../common/api/axiosInstance";
-import { PaginatedResponse } from "../../common/api/models";
-
-type Book = {};
+import { PaginatedResponse } from "../../common/api/apiModels";
+import { BookResponse } from "../book/bookModels";
 
 type Author = {};
 
 type ResourceMap = {
-  books: PaginatedResponse<Book, "books">;
+  books: PaginatedResponse<BookResponse, "books">;
   authors: PaginatedResponse<Author, "authors">;
   users: PaginatedResponse<{}, "users">;
   posts: PaginatedResponse<{}, "posts">;

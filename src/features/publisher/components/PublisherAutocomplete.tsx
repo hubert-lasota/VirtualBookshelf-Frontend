@@ -24,7 +24,7 @@ export default function PublisherAutocomplete({
   } = useUserContext();
 
   const {
-    field: { value, onChange, ...restFieldProps },
+    field: { value, onChange, ref, ...restFieldProps },
     fieldState: { error, invalid },
   } = useController({ name });
   const { data: { publishers = [] } = {} } = useGetPublishers();
@@ -61,6 +61,7 @@ export default function PublisherAutocomplete({
       renderInput={(params) => (
         <TextField
           {...params}
+          inputRef={ref}
           error={invalid}
           helperText={invalid ? error?.message : undefined}
           label={

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseResponse } from "../../common/api/models";
+import { BaseResponse } from "../../common/api/apiModels";
 
 export const createAuthorSchema = (isPlLanguage: boolean) =>
   z.object({

@@ -19,50 +19,46 @@ import {
 } from "@mui/icons-material";
 import { useState } from "react";
 import AddBooksHeader from "./AddBooksHeader";
-import { createBookSchema } from "../../../../features/book/bookModels";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
-import BookFormFields from "../../../../features/book/components/BookFormFields";
 import FormActionButtons from "../FormActionButtons";
 import {
-  BookshelfDetails,
-  BookshelfFormValues,
+  BookshelfBooksFormValues,
+  BookshelfDetailsFormValues,
+  BookshelfMutationRequest,
+  createBookshelfBooksSchema,
 } from "../../../../features/bookshelf/bookshelfModels";
 import {
   useCreateBookshelf,
   useUpdateBookshelf,
 } from "../../../../features/bookshelf/bookshelfClient";
+import BookshelfBookFormFields from "./BookshelfBookFormFields";
+import { useBookshelfPageContext } from "../../BookshelfPageContext";
+import { toBookshelfMutationRequest } from "../../../../features/bookshelf/bookshelfMappers";
 
 type AddBooksStepProps = {
   previousStep: () => void;
-  bookshelfDetails: BookshelfDetails;
-  bookshelfId?: number;
+  bookshelfDetails: BookshelfDetailsFormValues;
 } & Pick<DialogProps, "onClose">;
 
 export default function AddBooksStep({
   previousStep,
-  onClose,
   bookshelfDetails,
-  bookshelfId,
 }: AddBooksStepProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const bookFormSchema = z.object({
-    books: z.array(createBookSchema(isPlLanguage)).optional(),
-  });
+  const { currentBookshelf, setIsBookshelfFormOpen } =
+    useBookshelfPageContext();
 
-  type BookForm = z.infer<typeof bookFormSchema>;
-
-  const form = useForm<BookForm>({
+  const form = useForm<BookshelfBooksFormValues>({
     mode: "all",
     reValidateMode: "onChange",
-    resolver: zodResolver(bookFormSchema),
+    resolver: zodResolver(createBookshelfBooksSchema(isPlLanguage)),
   });
 
   const { fields, append, remove } = useFieldArray<
-    BookForm,
+    BookshelfBooksFormValues,
     "books",
     "fieldKey"
   >({
@@ -83,20 +79,22 @@ export default function AddBooksStep({
   const handleToggle = (index: number) =>
     setExpandedBookIndex(expandedBookIndex === index ? null : index);
 
-  const onSubmit = async (bookForm: BookForm) => {
-    const bookshelf: BookshelfFormValues = {
+  const onSubmit = async (bookForm: BookshelfBooksFormValues) => {
+    const bookshelf: BookshelfMutationRequest = toBookshelfMutationRequest({
       ...bookshelfDetails,
-      books: bookForm.books || [],
-    };
-    if (bookshelfId) {
-      updateBookshelf({ id: bookshelfId, ...bookshelf });
+      books: bookForm.books,
+    });
+    if (currentBookshelf) {
+      updateBookshelf({
+        bookshelfId: currentBookshelf.id,
+        bookshelf,
+      });
     } else {
       createBookshelf(bookshelf);
     }
-    // @ts-ignore
-    onClose();
+    setIsBookshelfFormOpen(false);
   };
-
+  console.log("form", form.watch());
   return (
     <FormProvider {...form}>
       <Stack
@@ -108,7 +106,7 @@ export default function AddBooksStep({
           booksLength={fields.length}
           onClickAddBook={() => {
             // @ts-ignore
-            append({ title: "" });
+            append({ book: { title: "" } });
             setExpandedBookIndex(fields.length);
           }}
         />
@@ -124,7 +122,7 @@ export default function AddBooksStep({
               >
                 <BookIcon sx={{ mr: 1, color: "primary.main" }} />
                 <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
-                  {field?.title ||
+                  {field?.book.title ||
                     `${isPlLanguage ? "Książka" : "Book"} ${index + 1}`}
                 </Typography>
                 <IconButton size="small">
@@ -137,7 +135,7 @@ export default function AddBooksStep({
               </Stack>
 
               <Collapse in={expandedBookIndex === index}>
-                <BookFormFields namePrefix={`books.${index}.`} />
+                <BookshelfBookFormFields index={index} />
               </Collapse>
             </CardContent>
 

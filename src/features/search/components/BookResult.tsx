@@ -1,5 +1,5 @@
 import PaperResultContainer from "./PaperResultContainer";
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { BookResponse } from "../../book/bookModels";
 import { useNavigate } from "react-router-dom";
 
@@ -16,11 +16,16 @@ export default function BookResult({ book, onClick }: BookResultProps) {
 
   return (
     <PaperResultContainer onClick={handleClick}>
-      <Stack>
-        <Avatar src={book.coverUrl} />
+      <Stack direction="row" spacing={2} sx={{ width: "100%", height: "100%" }}>
+        <img
+          src={book.coverUrl || "src/assets/book_cover.jpg"}
+          alt={book.title}
+          style={{ height: 140, width: 110, objectFit: "cover" }}
+        />
+
         <Stack direction="column">
-          <Typography variant="body1">{book.title}</Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography fontSize="1.4rem">{book.title}</Typography>
+          <Typography fontSize="1rem" color="textSecondary">
             {book.authors.map((author) => author.fullName).join(", ")}
           </Typography>
         </Stack>

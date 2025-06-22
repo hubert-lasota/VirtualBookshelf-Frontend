@@ -3,7 +3,7 @@ import ShelvesIcon from "@mui/icons-material/Shelves";
 import { useUserContext } from "../../features/user/UserContext";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
-import BookshelfFormDialog from "./BookshelfForm/BookshelfFormDialog";
+import BookshelfForm from "./BookshelfForm/BookshelfForm";
 
 export default function EmptyBookshelf() {
   const [openCreateBookshelf, setOpenCreateBookshelf] = useState(false);
@@ -58,7 +58,7 @@ export default function EmptyBookshelf() {
           </Button>
         </Stack>
       </Stack>
-      <BookshelfFormDialog
+      <BookshelfForm
         open={openCreateBookshelf}
         onClose={() => setOpenCreateBookshelf(false)}
       />

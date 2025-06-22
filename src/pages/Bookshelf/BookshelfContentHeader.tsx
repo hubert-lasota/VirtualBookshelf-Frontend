@@ -13,8 +13,8 @@ export default function BookshelfContentHeader() {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { bookshelves, currentBookshelfIndex } = useBookshelfPageContext();
-  const currentBookshelf = bookshelves[currentBookshelfIndex];
+  const { bookshelves, currentBookshelfIndex, currentBookshelf } =
+    useBookshelfPageContext();
 
   const isAllBooksBookshelf =
     currentBookshelfIndex === ALL_BOOKS_BOOKSHELF_INDEX;

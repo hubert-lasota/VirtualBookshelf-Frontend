@@ -6,17 +6,16 @@ import BookTags from "./BookTags.jsx";
 import BookRatings from "./BookRatings.jsx";
 import NotFound from "../NotFound/NotFound.jsx";
 import LoadingPage from "../../common/components/Loading/LoadingPage.tsx";
-import { useQuery } from "@tanstack/react-query";
-import { getBookById } from "../../features/book/bookClient.js";
 
 export default function BookPage() {
   const { id } = useParams();
-  const { data, isLoading } = useQuery({
-    queryKey: ["books", id],
-    queryFn: () => getBookById(id),
-    enabled: !!id,
-  });
-
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ["books", id],
+  //   queryFn: () => getBookById(id),
+  //   enabled: !!id,
+  // });
+  let data;
+  let loading;
   if (isLoading) {
     return <LoadingPage />;
   }

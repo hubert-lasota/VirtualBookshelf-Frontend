@@ -2,11 +2,8 @@ import { useDebounceValue } from "../../../common/hooks";
 import { useState } from "react";
 import {
   CircularProgress,
-  Dialog,
-  DialogContent,
   DialogProps,
   DialogTitle,
-  Divider,
   TextField,
   Typography,
 } from "@mui/material";
@@ -14,12 +11,14 @@ import { ResourceType, useSearch } from "../searchClient";
 import { useUserContext } from "../../user/UserContext";
 import { BookResponse } from "../../book/bookModels";
 import BookResult from "./BookResult";
-import { PaginatedResponse } from "../../../common/api/models";
+import { PaginatedResponse } from "../../../common/api/apiModels";
 import SelectResourceType from "./SelectResourceType";
 import SearchIcon from "@mui/icons-material/Search";
 import DialogCloseButton from "../../../common/components/Dialog/DialogCloseButton";
 import { AuthorResponse } from "../../author/authorModels";
 import CenteredContent from "../../../common/components/CenteredContent";
+import SearchDialogContainer from "./SearchDialogContainer";
+import SearchContentContainer from "./SearchContentContainer";
 
 type SearchDialogProps = {
   onClickResult?: (result: BookResponse | AuthorResponse) => void;
@@ -36,7 +35,7 @@ export default function SearchDialog({
   disableSelectResourceType,
   title,
 }: SearchDialogProps) {
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
   const debouncedQuery = useDebounceValue(query);
   const [selectedType, setSelectedType] = useState<ResourceType>("books");
   const { data, isFetching } = useSearch(debouncedQuery, selectedType);
@@ -71,7 +70,9 @@ export default function SearchDialog({
     switch (type) {
       case "books":
         return (data as PaginatedResponse<BookResponse, "books">).books.map(
-          (book) => <BookResult book={book} onClick={onClickResult} />,
+          (book) => (
+            <BookResult key={book.id} book={book} onClick={onClickResult} />
+          ),
         );
       default:
         return null;
@@ -79,19 +80,7 @@ export default function SearchDialog({
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      sx={(theme) => ({
-        "& .MuiDialogContent-root": {
-          padding: theme.spacing(2),
-        },
-        "& .MuiPaper-root": {
-          width: "60%",
-          minHeight: "40%",
-        },
-      })}
-    >
+    <SearchDialogContainer open={open} onClose={onClose}>
       <DialogTitle>
         {title ??
           (isPlLanguage
@@ -104,6 +93,7 @@ export default function SearchDialog({
         onChange={(e) => setQuery(e.target.value)}
         sx={(theme) => ({
           paddingInline: theme.spacing(2),
+          marginBottom: theme.spacing(2),
         })}
         placeholder={isPlLanguage ? "Szukaj..." : "Search..."}
         slotProps={{
@@ -119,10 +109,7 @@ export default function SearchDialog({
           },
         }}
       />
-      <Divider sx={(theme) => ({ paddingTop: theme.spacing(2) })} />
-      <DialogContent sx={{ display: "flex", flex: 1 }}>
-        {renderDialogContent()}
-      </DialogContent>
-    </Dialog>
+      <SearchContentContainer>{renderDialogContent()}</SearchContentContainer>
+    </SearchDialogContainer>
   );
 }

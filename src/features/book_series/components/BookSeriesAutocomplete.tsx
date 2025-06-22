@@ -17,7 +17,7 @@ export default function BookSeriesAutocomplete({
   } = useUserContext();
 
   const {
-    field: { value, onChange, ...restFieldProps },
+    field: { value, onChange, ref, ...restFieldProps },
     fieldState: { error },
   } = useController({ name });
 
@@ -54,6 +54,7 @@ export default function BookSeriesAutocomplete({
       renderInput={(params) => (
         <TextField
           {...params}
+          inputRef={ref}
           label={(isPlLanguage ? "Seria" : "Series") + ` (${index + 1})`}
           //@ts-ignore
           error={!!error?.name?.message}

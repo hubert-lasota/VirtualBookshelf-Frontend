@@ -22,7 +22,7 @@ export default function AuthorMultipleAutocomplete({
     preferences: { isPlLanguage },
   } = useUserContext();
   const {
-    field: { value, onChange, ...restFieldProps },
+    field: { value, onChange, ref, ...restFieldProps },
     fieldState,
   } = useController({ name });
 
@@ -53,6 +53,7 @@ export default function AuthorMultipleAutocomplete({
       renderInput={(params) => (
         <TextField
           {...params}
+          inputRef={ref}
           label={
             <RequiredLabel
               text={isPlLanguage ? "Autor (Lista)" : "Author (List)"}

@@ -11,7 +11,7 @@ export default function ControlledNumberField({
   ...rest
 }: ControlledNumberFieldProps) {
   const {
-    field: { value, onChange, ...restFieldProps },
+    field: { value, onChange, ref, ...restFieldProps },
     fieldState: { error, invalid },
   } = useController({ name });
 
@@ -24,6 +24,7 @@ export default function ControlledNumberField({
   return (
     <TextField
       fullWidth
+      inputRef={ref}
       value={value ?? ""}
       onChange={handleChange}
       error={invalid}

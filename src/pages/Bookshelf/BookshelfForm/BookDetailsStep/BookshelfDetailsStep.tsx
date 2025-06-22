@@ -5,27 +5,23 @@ import { useUserContext } from "../../../../features/user/UserContext";
 import { Grid, Stack } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import {
-  BookshelfDetails,
-  BookshelfResponse,
+  BookshelfDetailsFormValues,
   createBookshelfDetailsSchema,
 } from "../../../../features/bookshelf/bookshelfModels";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ControlledTextField from "../../../../common/components/FormInput/ControlledTextField";
 import FormActionButtons from "../FormActionButtons";
 import React from "react";
+import { useBookshelfPageContext } from "../../BookshelfPageContext";
 
 type BookshelfDetailsStepProps = {
-  bookshelf?: BookshelfResponse;
   nextStep: () => void;
-  onClose: () => void;
   setBookshelfDetails: React.Dispatch<
-    React.SetStateAction<BookshelfDetails | undefined>
+    React.SetStateAction<BookshelfDetailsFormValues | undefined>
   >;
 };
 
 export default function BookshelfDetailsStep({
-  bookshelf,
-  onClose,
   nextStep,
   setBookshelfDetails,
 }: BookshelfDetailsStepProps) {
@@ -33,17 +29,21 @@ export default function BookshelfDetailsStep({
     preferences: { isPlLanguage },
   } = useUserContext();
 
+  const { currentBookshelf } = useBookshelfPageContext();
+
   const schema = createBookshelfDetailsSchema(isPlLanguage);
-  const form = useForm<BookshelfDetails>({
+  const form = useForm<BookshelfDetailsFormValues>({
     mode: "all",
-    ...(bookshelf ? { defaultValues: bookshelf } : {}),
+    ...(currentBookshelf ? { defaultValues: currentBookshelf } : {}),
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (bookshelfDetails: BookshelfDetails) => {
+  const onSubmit = (bookshelfDetails: BookshelfDetailsFormValues) => {
     setBookshelfDetails(bookshelfDetails);
     nextStep();
   };
+
+  const { setIsBookshelfFormOpen } = useBookshelfPageContext();
 
   const fields = [
     {
@@ -83,8 +83,8 @@ export default function BookshelfDetailsStep({
         </Grid>
         <FormActionButtons
           cancelBtnProps={{
-            onClick: onClose,
             children: isPlLanguage ? "Anuluj" : "Cancel",
+            onClick: () => setIsBookshelfFormOpen(false),
           }}
           submitBtnProps={{
             type: "submit",

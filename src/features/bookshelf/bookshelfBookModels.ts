@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { BookshelfBookResponse } from "./bookshelfModels";
+import { BookMutationRequest, createBookSchema } from "../book/bookModels";
 
 export enum BookReadingStatus {
   READING = "READING",
@@ -57,26 +58,47 @@ export type BookshelfBookNote = z.infer<
   ReturnType<typeof createBookshelfBookNoteSchema>
 >;
 
-// const createBookshelfBookSchema = (isPlLanguage: boolean) =>
-//   z.object({
-//     book: createBookSchema(isPlLanguage).extend({
-//       id: z.number().optional(),
-//     }),
-//     notes: z
-//       .array(createBookshelfBookNoteSchema(isPlLanguage))
-//       .optional()
-//       .nullable(),
-//     status: z.nativeEnum(BookReadingStatus),
-//     currentPage: z.number().int().min(1),
-//   });
+export const createBookshelfBookSchema = (isPlLanguage: boolean) =>
+  z.object({
+    book: createBookSchema(isPlLanguage).extend({
+      id: z.number().optional(),
+    }),
+    notes: z
+      .array(createBookshelfBookNoteSchema(isPlLanguage))
+      .optional()
+      .nullable(),
+    status: z.nativeEnum(BookReadingStatus, {
+      message: isPlLanguage
+        ? "Status czytania jest wymagany"
+        : "Reading status is required",
+    }),
+    currentPage: z
+      .number({
+        message: isPlLanguage
+          ? "Aktualna strona jest wymagana"
+          : "Current page is required",
+      })
+      .int()
+      .min(
+        1,
+        isPlLanguage
+          ? "Aktualna strona nie może być mniejsza od 1"
+          : "Current page cannot be lower than 1",
+      ),
+    startedAt: z.string({
+      message: isPlLanguage
+        ? "Data rozpoczęcia jest wymagana"
+        : "Start date is required",
+    }),
+  });
 
-// export const createBookshelfBooksSchema = (isPlLanguage: boolean) =>
-//   z.array(createBookshelfBookSchema(isPlLanguage)).optional();
+export type BookshelfBook = z.infer<
+  ReturnType<typeof createBookshelfBookSchema>
+>;
 
-//
-// export type BookshelfBooks = z.infer<
-//   ReturnType<typeof createBookshelfBooksSchema>
-// >;
+export type BookshelfBookMutationRequest = Omit<BookshelfBook, "book"> & {
+  book: BookMutationRequest;
+};
 
 export type BookshelfBookWithId = BookshelfBookResponse & {
   bookshelfId: number;

@@ -14,7 +14,7 @@ export default function GenreAutocomplete({ name }: GenreAutocompleteProps) {
     preferences: { isPlLanguage },
   } = useUserContext();
   const {
-    field: { value, onChange, ...restFieldProps },
+    field: { value, onChange, ref, ...restFieldProps },
     fieldState,
   } = useController({ name });
 
@@ -34,6 +34,7 @@ export default function GenreAutocomplete({ name }: GenreAutocompleteProps) {
       renderInput={(params) => (
         <TextField
           {...params}
+          inputRef={ref}
           label={
             <RequiredLabel
               text={isPlLanguage ? "Gatunek (Lista)" : "Genre (List)"}

@@ -89,17 +89,9 @@ export default function BookFormFields({
     },
   ];
 
-  return (
-    <Grid container spacing={2} sx={{ mt: 3 }}>
-      {fields.map(({ component, size, name, ...rest }, index) => (
-        <Grid size={size ?? 6} key={`book-form-fields-${index}`}>
-          {component ? (
-            component
-          ) : (
-            <ControlledTextField name={name!} {...rest} />
-          )}
-        </Grid>
-      ))}
+  return fields.map(({ component, size, name, ...rest }, index) => (
+    <Grid size={size ?? 6} key={`book-form-fields-${index}`}>
+      {component ? component : <ControlledTextField name={name!} {...rest} />}
     </Grid>
-  );
+  ));
 }
