@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import BookFormFields from "../../../../features/book/components/BookFormFields";
 import { useUserContext } from "../../../../features/user/UserContext";
-import BookReadingStatusSelect from "../../../../features/bookshelf/components/BookReadingStatusSelect";
+import BookReadingStatusSelect from "../../../../features/bookshelf_book/components/BookReadingStatusSelect";
 import ControlledDatePicker from "../../../../common/components/FormInput/ControlledDatePicker";
 import RequiredLabel from "../../../../common/components/Label/RequiredLabel";
 import ControlledNumberField from "../../../../common/components/FormInput/ControlledNumberField";

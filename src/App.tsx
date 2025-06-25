@@ -11,6 +11,8 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./common/config/theme.js";
 import UserProvider from "./features/user/UserProvider";
 import BookshelfPage from "./pages/Bookshelf/BookshelfPage";
+import { SnackbarProvider } from "notistack";
+import SnackbarAdapter from "./common/components/Snackbar/SnackbarAdapter";
 
 const queryClient = new QueryClient();
 
@@ -18,18 +20,28 @@ export default function App() {
   return (
     <UserProvider>
       <ThemeProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <Routes>
-            <Route path="" element={<Landing />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/my-bookshelves" element={<BookshelfPage />} />
-              <Route path="/books/:id" element={<BookPage />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </QueryClientProvider>
+        <SnackbarProvider
+          autoHideDuration={2000}
+          Components={{
+            success: SnackbarAdapter,
+            info: SnackbarAdapter,
+            warning: SnackbarAdapter,
+            error: SnackbarAdapter,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            <Routes>
+              <Route path="" element={<Landing />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route element={<PrivateRoute />}>
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/my-bookshelves" element={<BookshelfPage />} />
+                <Route path="/books/:id" element={<BookPage />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </QueryClientProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </UserProvider>
   );

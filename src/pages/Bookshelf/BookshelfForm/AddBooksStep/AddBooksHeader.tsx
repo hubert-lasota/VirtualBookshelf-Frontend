@@ -3,7 +3,7 @@ import { useUserContext } from "../../../../features/user/UserContext";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-import SearchBookDialog from "../../SearchBookDialog";
+import SearchBookDialog from "../../BookshelfSidebar/SearchBookDialog";
 
 type AddBooksHeaderProps = {
   booksLength: number;

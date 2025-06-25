@@ -4,9 +4,9 @@ import {
   getAllBooksBookshelfName,
   getAllBooksBookshelfTotalBooks,
   getTotalBooksSuffix,
-} from "./common";
-import { useUserContext } from "../../features/user/UserContext";
-import { useBookshelfPageContext } from "./BookshelfPageContext";
+} from "../common";
+import { useUserContext } from "../../../features/user/UserContext";
+import { useBookshelfPageContext } from "../BookshelfPageContext";
 
 export default function BookshelfContentHeader() {
   const {

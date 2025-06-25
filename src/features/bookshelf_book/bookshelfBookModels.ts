@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BookshelfBookResponse } from "./bookshelfModels";
+import { BookshelfBookResponse } from "../bookshelf/bookshelfModels";
 import { BookMutationRequest, createBookSchema } from "../book/bookModels";
 
 export enum BookReadingStatus {
@@ -100,6 +100,6 @@ export type BookshelfBookMutationRequest = Omit<BookshelfBook, "book"> & {
   book: BookMutationRequest;
 };
 
-export type BookshelfBookWithId = BookshelfBookResponse & {
-  bookshelfId: number;
+export type BookshelfBookWithBookshelfHeader = BookshelfBookResponse & {
+  bookshelf: { id: number; name: string };
 };

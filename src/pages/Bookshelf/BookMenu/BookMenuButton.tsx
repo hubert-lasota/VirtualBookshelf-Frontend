@@ -1,35 +1,33 @@
+import {
+  BookReadingStatus,
+  BookshelfBookWithBookshelfHeader,
+} from "../../../features/bookshelf_book/bookshelfBookModels";
+import { BookCheckIcon, BookOpenTextIcon, BookUp2Icon } from "lucide-react";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useUserContext } from "../../../features/user/UserContext";
 import {
-  Button,
-  CardActions,
+  IconButton,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
 } from "@mui/material";
-import { useState } from "react";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import NoteIcon from "@mui/icons-material/Note";
-import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  BookCheck as BookCheckIcon,
-  BookOpenText as BookOpenTextIcon,
-  BookUp2 as BookUp2Icon,
-} from "lucide-react";
-import {
-  BookReadingStatus,
-  BookshelfBookWithId,
-} from "../../../features/bookshelf/bookshelfBookModels";
+import { useState } from "react";
+import MoveBookDialog from "./MoveBookDialog";
 
 type BookMenuButtonProps = {
-  bookshelfBook: BookshelfBookWithId;
+  bookshelfBook: BookshelfBookWithBookshelfHeader;
 };
 
 export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [openMoveBook, setOpenMoveBook] = useState<boolean>(false);
+
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
-
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const items = [
     bookshelfBook.status == BookReadingStatus.READING
@@ -46,6 +44,7 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
     {
       icon: <BookUp2Icon />,
       text: isPlLanguage ? "Przenieś książkę" : "Move book",
+      onClick: () => setOpenMoveBook(true),
     },
     {
       icon: <NoteIcon />,
@@ -56,23 +55,52 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
       text: isPlLanguage ? "Usuń książkę" : "Delete book",
     },
   ];
+
   return (
-    <CardActions>
-      <Button size="small" sx={{ fontSize: "0.85rem", width: "100%" }}>
-        {isPlLanguage ? "Zarządzaj" : "Manage"}
-      </Button>
+    <>
+      <IconButton
+        onClick={(e) => setAnchorEl(e.currentTarget)}
+        sx={(theme) => ({
+          width: "30px",
+          height: "30px",
+          transition: "all 0.3s ease",
+          backgroundColor: theme.palette.background.paper,
+          "&:hover": {
+            backgroundColor: theme.palette.background.paper,
+            opacity: "90%",
+          },
+        })}
+      >
+        <MoreHorizIcon />
+      </IconButton>
+
       <Menu
         anchorEl={anchorEl}
         open={!!anchorEl}
         onClose={() => setAnchorEl(null)}
       >
-        {items.map(({ icon, text }) => (
-          <MenuItem>
+        {items.map(({ icon, text, onClick }) => (
+          <MenuItem
+            key={text}
+            onClick={() => {
+              setAnchorEl(null);
+              // @ts-ignore
+              onClick();
+            }}
+          >
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText>{text}</ListItemText>
           </MenuItem>
         ))}
       </Menu>
-    </CardActions>
+
+      {openMoveBook && (
+        <MoveBookDialog
+          bookshelfBook={bookshelfBook}
+          open={openMoveBook}
+          onClose={() => setOpenMoveBook(false)}
+        />
+      )}
+    </>
   );
 }

@@ -2,16 +2,15 @@ import { PageContainer } from "../../common/components/styles";
 import BookshelfHeader from "./BookshelfHeader";
 import { useGetBookshelves } from "../../features/bookshelf/bookshelfClient";
 import { useMemo, useState } from "react";
-import BookGrid from "./BookGrid";
 import EmptyBookshelf from "./EmptyBookshelf";
 import { BookshelfPageContext } from "./BookshelfPageContext";
 import { Stack } from "@mui/material";
 import BookshelfSidebar from "./BookshelfSidebar/BookshelfSidebar";
-import { BookshelfBookWithId } from "../../features/bookshelf/bookshelfBookModels";
+import { BookshelfBookWithBookshelfHeader } from "../../features/bookshelf_book/bookshelfBookModels";
 import { ALL_BOOKS_BOOKSHELF_INDEX } from "./common";
-import BookshelfContentHeader from "./BookshelfContentHeader";
 import BookshelfForm from "./BookshelfForm/BookshelfForm";
 import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalAppBar/config";
+import BookshelfContent from "./BookshelfContent/BookshelfContent";
 
 export default function BookshelfPage() {
   const { data: { bookshelves } = {}, isLoading } = useGetBookshelves();
@@ -22,7 +21,7 @@ export default function BookshelfPage() {
 
   const [isBookshelfFormOpen, setIsBookshelfFormOpen] = useState(false);
 
-  const booksFiltered: BookshelfBookWithId[] = useMemo(() => {
+  const booksFiltered: BookshelfBookWithBookshelfHeader[] = useMemo(() => {
     if (!bookshelves || bookshelves.length === 0) return [];
     let bookshelvesFiltered = [...bookshelves];
     if (currentBookshelfIndex !== ALL_BOOKS_BOOKSHELF_INDEX) {
@@ -31,13 +30,16 @@ export default function BookshelfPage() {
       );
     }
 
-    const books: BookshelfBookWithId[] = bookshelvesFiltered.flatMap(
-      (bookshelf) =>
+    const books: BookshelfBookWithBookshelfHeader[] =
+      bookshelvesFiltered.flatMap((bookshelf) =>
         (bookshelf?.books ?? []).map((book) => ({
           ...book,
-          bookshelfId: bookshelf.id,
+          bookshelf: {
+            id: bookshelf.id,
+            name: bookshelf.name,
+          },
         })),
-    );
+      );
 
     if (query) {
       return books.filter((bookshelfBook) => {
@@ -78,12 +80,7 @@ export default function BookshelfPage() {
           {isBookshelfFormOpen ? (
             <BookshelfForm />
           ) : (
-            <Stack
-              sx={(theme) => ({ width: "100%", padding: theme.spacing(3) })}
-            >
-              <BookshelfContentHeader />
-              <BookGrid books={booksFiltered} />
-            </Stack>
+            <BookshelfContent books={booksFiltered} />
           )}
           {bookshelves?.length === 0 && isLoading && <EmptyBookshelf />}
         </Stack>

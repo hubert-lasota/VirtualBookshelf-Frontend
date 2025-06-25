@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../common/api/axiosInstance";
 import { PaginatedResponse } from "../../common/api/apiModels";
 import { BookResponse } from "../book/bookModels";
+import { unwrapResponseData } from "../../common/api/utils";
 
 type Author = {};
 
@@ -21,6 +22,6 @@ export function useSearch<T extends ResourceType>(query: string, type: T) {
     queryFn: () =>
       axiosInstance
         .get(`/v1/${type}`, { params: { query } })
-        .then((response) => response.data),
+        .then(unwrapResponseData),
   });
 }

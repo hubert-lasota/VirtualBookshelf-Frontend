@@ -6,7 +6,7 @@ import {
   BookshelfBookMutationRequest,
   BookshelfBookNote,
   createBookshelfBookSchema,
-} from "./bookshelfBookModels";
+} from "../bookshelf_book/bookshelfBookModels";
 
 export enum BookshelfType {
   TO_READ = "TO_READ",

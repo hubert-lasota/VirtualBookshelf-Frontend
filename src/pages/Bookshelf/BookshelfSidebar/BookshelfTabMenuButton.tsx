@@ -14,9 +14,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { useState } from "react";
-import SearchBookDialog from "../SearchBookDialog";
+import SearchBookDialog from "./SearchBookDialog";
 import DeleteBookshelfDialog from "./DeleteBookshelfDialog";
-import BookFormDialog from "../BookFormDialog";
+import BookFormDialog from "./BookFormDialog";
 
 export default function BookshelfTabMenuButton() {
   const [openCreateBookDialog, setOpenCreateBookDialog] = useState(false);

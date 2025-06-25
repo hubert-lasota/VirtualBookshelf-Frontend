@@ -1,5 +1,5 @@
 import { DialogProps } from "@mui/material";
-import SearchDialogContainer from "../../features/search/components/SearchDialogContainer";
+import SearchDialogContainer from "../../../features/search/components/SearchDialogContainer";
 
 type SearchBookDialogProps = Pick<DialogProps, "open" | "onClose">;
 

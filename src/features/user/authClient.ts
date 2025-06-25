@@ -6,6 +6,7 @@ import { ApiError } from "../../common/api/apiModels";
 import { User, UserCredentials } from "./userModels";
 import { useUserContext } from "./UserContext";
 import { AxiosError } from "axios";
+import { unwrapResponseData } from "../../common/api/utils";
 
 const BASE_ENDPOINT = "/v1/auth";
 
@@ -17,7 +18,7 @@ export function useVerifyJwtValidity(jwt: string) {
         .get(BASE_ENDPOINT + "/verify-jwt-validity", {
           params: { jwt },
         })
-        .then((response) => response.data),
+        .then(unwrapResponseData),
     staleTime: 0,
   });
 }
@@ -31,15 +32,18 @@ export function useSignIn() {
     mutationFn: (credentials: UserCredentials) =>
       axiosInstance
         .post<User>(BASE_ENDPOINT + "/sign-in", credentials)
-        .then((response) => response.data),
+        .then(unwrapResponseData),
+
     onSuccess: (user: User) => {
       setUser(user);
       navigate("/home");
     },
+
     onError: (error: AxiosError<ApiError>) => {
       console.error("Error on Sign in", error);
       setApiError(error.response?.data);
     },
   });
+
   return { ...mutationReturn, apiError };
 }

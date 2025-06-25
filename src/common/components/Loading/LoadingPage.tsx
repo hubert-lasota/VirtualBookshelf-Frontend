@@ -1,5 +1,6 @@
-import css from "./loading.module.css";
+import { PageContainer } from "../styles";
 import { useUserContext } from "../../../features/user/UserContext";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 
 export default function LoadingPage() {
   const {
@@ -7,16 +8,11 @@ export default function LoadingPage() {
   } = useUserContext();
 
   return (
-    <div className={css["page"]}>
-      <div className={css["book"]}>
-        <div className={css["Book-cover"]}>
-          <div className={css["Book-spine"]}></div>
-        </div>
-        <div className={css["Book-page"]}></div>
-      </div>
-      <h2 className={css["Loading-text"]}>
-        {isPlLanguage ? "Ładowanie..." : "Loading..."}
-      </h2>
-    </div>
+    <PageContainer>
+      <Stack sx={{ width: "100%", height: "100%" }}>
+        <CircularProgress size={20} color="primary" />
+        <Typography>{isPlLanguage ? "Ładowanie..." : "Loading..."}</Typography>
+      </Stack>
+    </PageContainer>
   );
 }

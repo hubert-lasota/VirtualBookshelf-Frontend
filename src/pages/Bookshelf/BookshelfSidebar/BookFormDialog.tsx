@@ -7,14 +7,15 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import DialogCloseButton from "../../common/components/Dialog/DialogCloseButton";
-import { useUserContext } from "../../features/user/UserContext";
-import { BookshelfResponse } from "../../features/bookshelf/bookshelfModels";
-import BookFormFields from "../../features/book/components/BookFormFields";
+import DialogCloseButton from "../../../common/components/Dialog/DialogCloseButton";
+import { useUserContext } from "../../../features/user/UserContext";
+import { BookshelfResponse } from "../../../features/bookshelf/bookshelfModels";
+import BookFormFields from "../../../features/book/components/BookFormFields";
 import { FormProvider, useForm } from "react-hook-form";
-import { createBookSchema } from "../../features/book/bookModels";
+import { createBookSchema } from "../../../features/book/bookModels";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
+import { FORM_VALIDATE_MODE } from "../../../common/config/form";
 
 type BookFormDialogProps = Pick<DialogProps, "open" | "onClose"> & {
   bookshelf: BookshelfResponse;
@@ -32,7 +33,7 @@ export default function BookFormDialog({
   const bookSchema = createBookSchema(isPlLanguage);
 
   const form = useForm({
-    mode: "all",
+    mode: FORM_VALIDATE_MODE,
     reValidateMode: "onChange",
     resolver: zodResolver(bookSchema),
   });
