@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { PaginatedResponse } from "../../common/api/apiModels";
 import { BookSeriesResponse } from "./models";
 import axiosInstance from "../../common/api/axiosInstance";
-import { unwrapResponseData } from "../../common/api/utils";
+import { unwrapResponseData } from "../../common/api/apiUtils";
 
 const BASE_ENDPOINT = "/v1/book-series";
 

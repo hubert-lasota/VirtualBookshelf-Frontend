@@ -1,6 +1,6 @@
 import axiosInstance from "../../common/api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
-import { unwrapResponseData } from "../../common/api/utils";
+import { unwrapResponseData } from "../../common/api/apiUtils";
 
 const BASE_ENDPOINT = "/v1/books";
 

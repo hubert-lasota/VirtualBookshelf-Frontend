@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../common/api/axiosInstance";
 import { PaginatedResponse } from "../../common/api/apiModels";
 import { BookResponse } from "../book/bookModels";
-import { unwrapResponseData } from "../../common/api/utils";
+import { unwrapResponseData } from "../../common/api/apiUtils";
 
 type Author = {};
 

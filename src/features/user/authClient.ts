@@ -6,7 +6,7 @@ import { ApiError } from "../../common/api/apiModels";
 import { User, UserCredentials } from "./userModels";
 import { useUserContext } from "./UserContext";
 import { AxiosError } from "axios";
-import { unwrapResponseData } from "../../common/api/utils";
+import { unwrapResponseData } from "../../common/api/apiUtils";
 
 const BASE_ENDPOINT = "/v1/auth";
 

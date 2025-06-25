@@ -11,10 +11,9 @@ import {
 } from "./bookshelfModels";
 import axiosInstance from "../../common/api/axiosInstance";
 import { toBookshelfMutationFormData } from "./bookshelfMappers";
-import { unwrapResponseData } from "../../common/api/utils";
+import { unwrapResponseData } from "../../common/api/apiUtils";
 
-const BOOKSHELF_ENDPOINT = "/v1/bookshelves";
-const TEMP_ID = -1;
+const BASE_ENDPOINT = "/v1/bookshelves";
 
 export const BOOKSHELF_QUERY_KEY: [any] = ["bookshelves"];
 
@@ -24,8 +23,7 @@ export type GetBookshelvesResult = {
 export function useGetBookshelves() {
   return useQuery<undefined, unknown, GetBookshelvesResult>({
     queryKey: BOOKSHELF_QUERY_KEY,
-    queryFn: () =>
-      axiosInstance.get(BOOKSHELF_ENDPOINT).then(unwrapResponseData),
+    queryFn: () => axiosInstance.get(BASE_ENDPOINT).then(unwrapResponseData),
   });
 }
 
@@ -35,24 +33,15 @@ export function useCreateBookshelf() {
   return useMutation({
     mutationFn: async (bookshelf: BookshelfMutationRequest) =>
       axiosInstance
-        .post(BOOKSHELF_ENDPOINT, toBookshelfMutationFormData(bookshelf))
+        .post(BASE_ENDPOINT, toBookshelfMutationFormData(bookshelf))
         .then(unwrapResponseData),
 
-    onMutate: async (bookshelf: BookshelfMutationRequest) => {
-      const prev = await getPreviousBookshelves(queryClient);
-
-      queryClient.setQueryData(
-        BOOKSHELF_QUERY_KEY,
-        (oldBookshelves: GetBookshelvesResult) => ({
-          bookshelves: [
-            ...oldBookshelves.bookshelves,
-            { ...bookshelf, id: TEMP_ID },
-          ],
-        }),
-      );
-
-      return prev;
-    },
+    onMutate: async (bookshelf: BookshelfMutationRequest) =>
+      handleMutateBookshelvesCache(queryClient, (bookshelves) => {
+        // @ts-ignore
+        bookshelves.push(bookshelf);
+        return bookshelves;
+      }),
 
     onError: (error, bookshelf, context) =>
       handleError(queryClient, "creating", error, bookshelf, context),
@@ -72,23 +61,15 @@ export function useUpdateBookshelf() {
   return useMutation({
     mutationFn: async ({ bookshelf, bookshelfId }: BookshelfUpdate) =>
       axiosInstance.patch(
-        BOOKSHELF_ENDPOINT + `/${bookshelfId}`,
+        BASE_ENDPOINT + `/${bookshelfId}`,
         toBookshelfMutationFormData(bookshelf),
       ),
 
-    onMutate: async ({ bookshelf, bookshelfId }: BookshelfUpdate) => {
-      const prev = await getPreviousBookshelves(queryClient);
-      queryClient.setQueryData(
-        BOOKSHELF_QUERY_KEY,
-        (oldBookshelves: GetBookshelvesResult) => ({
-          bookshelves: oldBookshelves.bookshelves.map((oldBookshelf) =>
-            oldBookshelf.id === bookshelfId ? bookshelf : oldBookshelf,
-          ),
-        }),
-      );
-
-      return prev;
-    },
+    onMutate: async ({ bookshelf, bookshelfId }: BookshelfUpdate) =>
+      handleMutateBookshelvesCache(queryClient, (bookshelves) =>
+        //@ts-ignore
+        bookshelves.map((old) => (old.id === bookshelfId ? bookshelf : old)),
+      ),
 
     onError: (error, bookshelf, context) =>
       handleError(queryClient, "updating", error, bookshelf, context),
@@ -102,22 +83,12 @@ export function useDeleteBookshelf() {
 
   return useMutation({
     mutationFn: async (id: number) =>
-      axiosInstance.delete(BOOKSHELF_ENDPOINT + `/${id}`),
+      axiosInstance.delete(BASE_ENDPOINT + `/${id}`),
 
-    onMutate: async (id: number) => {
-      const prev = await getPreviousBookshelves(queryClient);
-
-      queryClient.setQueryData(
-        BOOKSHELF_QUERY_KEY,
-        (oldBookshelves: GetBookshelvesResult) => ({
-          bookshelves: oldBookshelves.bookshelves.filter(
-            (oldBookshelf) => oldBookshelf.id !== id,
-          ),
-        }),
-      );
-
-      return prev;
-    },
+    onMutate: async (id: number) =>
+      handleMutateBookshelvesCache(queryClient, (bookshelves) =>
+        bookshelves.filter((b) => b.id !== id),
+      ),
 
     onError: (error, id, context) =>
       handleError(queryClient, "deleting", error, id, context),
@@ -125,14 +96,6 @@ export function useDeleteBookshelf() {
     onSettled: () => handleSettled(queryClient),
   });
 }
-
-export const getPreviousBookshelves = async (queryClient: QueryClient) => {
-  await queryClient.cancelQueries({ queryKey: BOOKSHELF_QUERY_KEY });
-  return {
-    previousBookshelves:
-      queryClient.getQueryData<GetBookshelvesResult>(BOOKSHELF_QUERY_KEY),
-  };
-};
 
 const handleError = (
   queryClient: QueryClient,
@@ -151,3 +114,33 @@ const handleError = (
 
 const handleSettled = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: BOOKSHELF_QUERY_KEY });
+
+type UpdateBookshelvesFn = (
+  bookshelves: BookshelfResponse[],
+) => BookshelfResponse[];
+
+export async function handleMutateBookshelvesCache(
+  queryClient: QueryClient,
+  updateFn: UpdateBookshelvesFn,
+) {
+  await queryClient.cancelQueries({ queryKey: BOOKSHELF_QUERY_KEY });
+  const prev = {
+    previousBookshelves:
+      queryClient.getQueryData<GetBookshelvesResult>(BOOKSHELF_QUERY_KEY),
+  };
+  updateBookshelvesCache(queryClient, updateFn);
+  return prev;
+}
+
+function updateBookshelvesCache(
+  queryClient: QueryClient,
+  updateFn: UpdateBookshelvesFn,
+) {
+  queryClient.setQueryData(
+    BOOKSHELF_QUERY_KEY,
+    (bookshelfResult: GetBookshelvesResult) => {
+      const bookshelves = [...bookshelfResult.bookshelves];
+      return { bookshelves: updateFn(bookshelves) };
+    },
+  );
+}
