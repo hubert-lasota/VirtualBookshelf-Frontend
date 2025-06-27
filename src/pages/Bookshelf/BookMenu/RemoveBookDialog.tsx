@@ -9,10 +9,13 @@ import {
 } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { useDeleteBookshelfBook } from "../../../common/api/bookshelfBookClient";
-import { BookshelfBookWithBookshelfHeader } from "../../../common/models/bookshelfBookModels";
+import { BookshelfBookResponse } from "../../../common/models/bookshelfModels";
+import { findBookshelf } from "../common";
+import { useBookshelfPageContext } from "../BookshelfPageContext";
 
-type RemoveBookDialogProps = Pick<DialogProps, "open" | "onClose"> & {
-  bookshelfBook: BookshelfBookWithBookshelfHeader;
+type RemoveBookDialogProps = Pick<DialogProps, "open"> & {
+  bookshelfBook: BookshelfBookResponse;
+  onClose: () => void;
 };
 
 export default function RemoveBookDialog({
@@ -23,6 +26,8 @@ export default function RemoveBookDialog({
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
+
+  const { bookshelves } = useBookshelfPageContext();
 
   const { mutate } = useDeleteBookshelfBook();
 
@@ -37,13 +42,12 @@ export default function RemoveBookDialog({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        {/*@ts-ignore */}
         <Button onClick={onClose}>{isPlLanguage ? "Anuluj" : "Cancel"}</Button>
         <Button
           onClick={() =>
             mutate({
               bookshelfBookId: bookshelfBook.id,
-              bookshelfId: bookshelfBook.bookshelf.id,
+              bookshelfId: findBookshelf(bookshelves, bookshelfBook.id).id,
             })
           }
           variant="contained"

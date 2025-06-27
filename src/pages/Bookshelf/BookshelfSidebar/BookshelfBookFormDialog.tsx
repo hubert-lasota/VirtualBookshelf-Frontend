@@ -8,7 +8,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import DialogCloseButton from "../../../common/components/Dialog/DialogCloseButton";
+import DialogCloseButton from "../../../common/components/ui/Dialog/DialogCloseButton";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { BookshelfResponse } from "../../../common/models/bookshelfModels";
 import { FormProvider, useForm } from "react-hook-form";
@@ -17,9 +17,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
 import BookshelfBookFormFields from "../BookshelfBookFormFields";
+import CancelButton from "../../../common/components/ui/Button/CancelButton";
 
-type BookFormDialogProps = Pick<DialogProps, "open" | "onClose"> & {
+type BookFormDialogProps = Pick<DialogProps, "open"> & {
   bookshelf: BookshelfResponse;
+  onClose: () => void;
 };
 
 export default function BookshelfBookFormDialog({
@@ -75,10 +77,7 @@ export default function BookshelfBookFormDialog({
           </Grid>
         </DialogContent>
         <DialogActions>
-          {/* @ts-ignore*/}
-          <Button onClick={() => onClose()}>
-            {isPlLanguage ? "Anuluj" : "Cancel"}
-          </Button>
+          <CancelButton onClick={onClose} />
           <Button variant="contained" type="submit">
             {isPlLanguage ? "Dodaj" : "Add"}
           </Button>

@@ -1,15 +1,21 @@
 import BookCard from "../../../common/components/Book/Card/BookCard";
 import { Box, Chip, Grid, Stack } from "@mui/material";
 import BookMenuButton from "../BookMenu/BookMenuButton";
-import { BookshelfBookWithBookshelfHeader } from "../../../common/models/bookshelfBookModels";
 import { useState } from "react";
+import { BookshelfBookResponse } from "../../../common/models/bookshelfModels";
+import { findBookshelf } from "../common";
+import { useBookshelfPageContext } from "../BookshelfPageContext";
 
 type BookGridItemProps = {
-  bookshelfBook: BookshelfBookWithBookshelfHeader;
+  bookshelfBook: BookshelfBookResponse;
 };
 
 export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
   const [showMenuButton, setShowMenuButton] = useState(false);
+
+  const { bookshelves } = useBookshelfPageContext();
+
+  const bookshelf = findBookshelf(bookshelves, bookshelfBook.id);
 
   return (
     <Grid
@@ -30,7 +36,7 @@ export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
             }}
           >
             <Chip
-              label={bookshelfBook.bookshelf.name}
+              label={bookshelf.name}
               color="primary"
               sx={{ height: "30px" }}
             />

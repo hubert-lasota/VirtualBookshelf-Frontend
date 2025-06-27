@@ -1,7 +1,7 @@
 import { MenuItem } from "@mui/material";
 import { useGetBookFormats } from "../../../api/bookFormatClient";
 import ControlledSelect from "../../FormInput/ControlledSelect";
-import OptionalLabel from "../../Label/OptionalLabel";
+import OptionalLabel from "../../ui/Label/OptionalLabel";
 
 type BookFormatSelectProps = {
   name: string;

@@ -1,7 +1,4 @@
-import {
-  BookReadingStatus,
-  BookshelfBookWithBookshelfHeader,
-} from "../../../common/models/bookshelfBookModels";
+import { BookReadingStatus } from "../../../common/models/bookshelfBookModels";
 import { BookCheckIcon, BookOpenTextIcon, BookUp2Icon } from "lucide-react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useUserContext } from "../../../common/auth/UserContext";
@@ -17,9 +14,10 @@ import NoteIcon from "@mui/icons-material/Note";
 import { useState } from "react";
 import MoveBookDialog from "./MoveBookDialog";
 import RemoveBookDialog from "./RemoveBookDialog";
+import { BookshelfBookResponse } from "../../../common/models/bookshelfModels";
 
 type BookMenuButtonProps = {
-  bookshelfBook: BookshelfBookWithBookshelfHeader;
+  bookshelfBook: BookshelfBookResponse;
 };
 
 export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {

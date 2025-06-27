@@ -1,4 +1,4 @@
-import { PageContainer } from "../../common/components/styles.js";
+import { PageContainer } from "../../common/components/ui/styles.js";
 import LoggedInGlobalAppBar from "../../common/components/GlobalAppBar/LoggedInGlobalAppBar";
 
 export default function HomePage() {

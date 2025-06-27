@@ -2,8 +2,9 @@ import { Grid, Typography } from "@mui/material";
 import { useUserContext } from "../../common/auth/UserContext";
 import BookReadingStatusSelect from "./BookReadingStatusSelect";
 import ControlledDatePicker from "../../common/components/FormInput/ControlledDatePicker";
-import RequiredLabel from "../../common/components/Label/RequiredLabel";
+import RequiredLabel from "../../common/components/ui/Label/RequiredLabel";
 import ControlledNumberField from "../../common/components/FormInput/ControlledNumberField";
+import BookFormFields from "../../common/components/Book/Form/BookFormFields";
 
 type BookshelfBookFormFieldsProps = {
   namePrefix?: string;

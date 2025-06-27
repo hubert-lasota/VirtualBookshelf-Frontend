@@ -1,5 +1,5 @@
 import { PageContainer } from "../styles";
-import { useUserContext } from "../../auth/UserContext";
+import { useUserContext } from "../../../auth/UserContext";
 import { CircularProgress, Stack, Typography } from "@mui/material";
 
 export default function LoadingPage() {

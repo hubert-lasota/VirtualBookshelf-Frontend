@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,9 +12,12 @@ import { useDeleteBookshelf } from "../../../common/api/bookshelfClient";
 import { BookshelfResponse } from "../../../common/models/bookshelfModels";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { ALL_BOOKS_BOOKSHELF_INDEX } from "../common";
+import CancelButton from "../../../common/components/ui/Button/CancelButton";
+import DeleteButton from "../../../common/components/ui/Button/DeleteButton";
 
-type DeleteBookshelfDialogProps = Pick<DialogProps, "open" | "onClose"> & {
+type DeleteBookshelfDialogProps = Pick<DialogProps, "open"> & {
   bookshelf: BookshelfResponse;
+  onClose: () => void;
 };
 
 export default function DeleteBookshelfDialog({
@@ -49,11 +51,8 @@ export default function DeleteBookshelfDialog({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        {/* @ts-ignore */}
-        <Button onClick={onClose}>{isPlLanguage ? "Anuluj" : "Cancel"}</Button>
-        <Button
-          variant="contained"
-          color="error"
+        <CancelButton onClick={onClose} />
+        <DeleteButton
           onClick={(e) => {
             e.stopPropagation();
             const index =
@@ -62,12 +61,9 @@ export default function DeleteBookshelfDialog({
                 : currentBookshelfIndex - 1;
             setCurrentBookshelfIndex(index);
             mutate(bookshelf.id);
-            // @ts-ignore
             onClose();
           }}
-        >
-          {isPlLanguage ? "Usuń" : "Delete"}
-        </Button>
+        />
       </DialogActions>
     </Dialog>
   );

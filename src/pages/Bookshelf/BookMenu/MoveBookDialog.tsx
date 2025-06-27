@@ -12,13 +12,17 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
 import ControlledSelect from "../../../common/components/FormInput/ControlledSelect";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
-import { BookshelfResponse } from "../../../common/models/bookshelfModels";
-import { BookshelfBookWithBookshelfHeader } from "../../../common/models/bookshelfBookModels";
+import {
+  BookshelfBookResponse,
+  BookshelfResponse,
+} from "../../../common/models/bookshelfModels";
 import { useMoveBookshelfBook } from "../../../common/api/bookshelfBookClient";
+import { findBookshelf } from "../common";
 
 type MoveBookDialogProps = {
-  bookshelfBook: BookshelfBookWithBookshelfHeader;
-} & Pick<DialogProps, "onClose" | "open">;
+  bookshelfBook: BookshelfBookResponse;
+  onClose: () => void;
+} & Pick<DialogProps, "open">;
 
 type FormType = { bookshelf: BookshelfResponse };
 
@@ -35,11 +39,11 @@ export default function MoveBookDialog({
 
   const { mutate } = useMoveBookshelfBook();
 
+  const bookshelf = findBookshelf(bookshelves, bookshelfBook.id);
+
   const form = useForm<FormType>({
     mode: FORM_VALIDATE_MODE,
-    defaultValues: {
-      bookshelf: bookshelves.find((b) => b.id === bookshelfBook.bookshelf.id),
-    },
+    defaultValues: { bookshelf },
   });
 
   const onSubmit = ({ bookshelf }: FormType) => {
@@ -77,12 +81,7 @@ export default function MoveBookDialog({
           </ControlledSelect>
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={() => {
-              // @ts-ignore
-              onClose();
-            }}
-          >
+          <Button onClick={onClose}>
             {isPlLanguage ? "Anuluj" : "Cancel"}
           </Button>
           <Button type="submit" variant="contained">

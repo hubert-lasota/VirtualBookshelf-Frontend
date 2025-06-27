@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogProps, DialogTitle } from "@mui/material";
 import { BookshelfBookWithBookshelfHeader } from "../../../common/models/bookshelfBookModels";
-import DialogCloseButton from "../../../common/components/Dialog/DialogCloseButton";
+import DialogCloseButton from "../../../common/components/ui/Dialog/DialogCloseButton";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { useState } from "react";
 import ManageNotesActions from "./ManageNotesActions";

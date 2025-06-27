@@ -5,7 +5,7 @@ import BookDetails from "./BookDetails.jsx";
 import BookTags from "./BookTags.jsx";
 import BookRatings from "./BookRatings.jsx";
 import NotFound from "../NotFound/NotFound.jsx";
-import LoadingPage from "../../common/components/Loading/LoadingPage.tsx";
+import LoadingPage from "../../common/components/ui/Loading/LoadingPage.tsx";
 
 export default function BookPage() {
   const { id } = useParams();

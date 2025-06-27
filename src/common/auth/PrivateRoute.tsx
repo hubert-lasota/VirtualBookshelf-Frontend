@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useVerifyJwtValidity } from "../api/authClient";
 import { useUserContext } from "./UserContext";
-import LoadingPage from "../components/Loading/LoadingPage";
+import LoadingPage from "../components/ui/Loading/LoadingPage";
 
 export default function PrivateRoute() {
   const { user } = useUserContext();

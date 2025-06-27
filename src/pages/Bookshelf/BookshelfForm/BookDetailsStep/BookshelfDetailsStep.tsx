@@ -1,6 +1,6 @@
-import RequiredLabel from "../../../../common/components/Label/RequiredLabel";
+import RequiredLabel from "../../../../common/components/ui/Label/RequiredLabel";
 import BookshelfTypeSelect from "./BookshelfTypeSelect";
-import OptionalLabel from "../../../../common/components/Label/OptionalLabel";
+import OptionalLabel from "../../../../common/components/ui/Label/OptionalLabel";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import { Grid, Stack } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";

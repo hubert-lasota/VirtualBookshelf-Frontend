@@ -7,7 +7,7 @@ import {
   TextFieldProps,
   Tooltip,
 } from "@mui/material";
-import OptionalLabel from "../Label/OptionalLabel";
+import OptionalLabel from "../ui/Label/OptionalLabel";
 import ImageSelector from "./ImageSelector";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";

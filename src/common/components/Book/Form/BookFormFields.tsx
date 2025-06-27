@@ -1,16 +1,16 @@
-import OptionalLabel from "../../Label/OptionalLabel";
-import RequiredLabel from "../../Label/RequiredLabel";
-import AuthorMultipleAutocomplete from "../../author/components/AuthorMultipleAutocomplete";
-import { useUserContext } from "../../user/UserContext";
-import PublisherAutocomplete from "../../publisher/components/PublisherAutocomplete";
-import GenreAutocomplete from "../../genre/components/GenreAutocomplete";
+import OptionalLabel from "../../ui/Label/OptionalLabel";
+import RequiredLabel from "../../ui/Label/RequiredLabel";
 import ControlledNumberField from "../../FormInput/ControlledNumberField";
 import LanguageAutocomplete from "../../FormInput/LanguageAutocomplete";
-import BookSeriesAutocompleteWithAddButton from "../../book_series/components/BookSeriesAutocompleteWithAddButton";
 import { Grid } from "@mui/material";
 import ControlledTextField from "../../FormInput/ControlledTextField";
-import BookFormatSelect from "../../book_format/components/BookFormatSelect";
 import ImageTextFieldWithSelector from "../../FormInput/ImageTextFieldWithSelector";
+import { useUserContext } from "../../../auth/UserContext";
+import AuthorAutocomplete from "./AuthorAutocomplete";
+import GenreAutocomplete from "./GenreAutocomplete";
+import PublisherAutocomplete from "./PublisherAutocomplete";
+import BookFormatSelect from "./BookFormatSelect";
+import BookSeriesAutocompleteWithAddButton from "./BookSeries/BookSeriesAutocompleteWithAddButton";
 
 type BookFormFieldsProps = {
   namePrefix?: string;
@@ -29,7 +29,7 @@ export default function BookFormFields({
       label: <RequiredLabel text={isPlLanguage ? "Tytuł" : "Title"} />,
     },
     {
-      component: <AuthorMultipleAutocomplete name={namePrefix + "authors"} />,
+      component: <AuthorAutocomplete name={namePrefix + "authors"} />,
     },
     {
       name: namePrefix + "isbn",

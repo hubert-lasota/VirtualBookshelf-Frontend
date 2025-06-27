@@ -14,9 +14,9 @@ import BookResult from "./Result/BookResult";
 import { PaginatedResponse } from "../../api/apiModels";
 import SelectResourceType from "./SelectResourceType";
 import SearchIcon from "@mui/icons-material/Search";
-import DialogCloseButton from "../Dialog/DialogCloseButton";
+import DialogCloseButton from "../ui/Dialog/DialogCloseButton";
 import { AuthorResponse } from "../../models/authorModels";
-import CenteredContent from "../CenteredContent";
+import CenteredContent from "../ui/CenteredContent";
 import SearchDialogContainer from "./SearchDialogContainer";
 import SearchContentContainer from "./SearchContentContainer";
 

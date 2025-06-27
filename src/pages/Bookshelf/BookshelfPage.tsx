@@ -1,4 +1,4 @@
-import { PageContainer } from "../../common/components/styles";
+import { PageContainer } from "../../common/components/ui/styles";
 import BookshelfHeader from "./BookshelfHeader";
 import { useGetBookshelves } from "../../common/api/bookshelfClient";
 import { useMemo, useState } from "react";
@@ -6,11 +6,11 @@ import EmptyBookshelf from "./EmptyBookshelf";
 import { BookshelfPageContext } from "./BookshelfPageContext";
 import { Stack } from "@mui/material";
 import BookshelfSidebar from "./BookshelfSidebar/BookshelfSidebar";
-import { BookshelfBookWithBookshelfHeader } from "../../common/models/bookshelfBookModels";
 import { ALL_BOOKS_BOOKSHELF_INDEX } from "./common";
 import BookshelfForm from "./BookshelfForm/BookshelfForm";
 import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalAppBar/config";
 import BookshelfContent from "./BookshelfContent/BookshelfContent";
+import { BookshelfBookResponse } from "../../common/models/bookshelfModels";
 
 export default function BookshelfPage() {
   const { data: { bookshelves } = {}, isLoading } = useGetBookshelves();
@@ -20,8 +20,8 @@ export default function BookshelfPage() {
   );
 
   const [isBookshelfFormOpen, setIsBookshelfFormOpen] = useState(false);
-  // TODO chyba nie bedzie potrzebne bookshelfbook with bookshelf mozna uzyc funkcji ktora znajdzie bookshelf za pomoca bookshelfBookId
-  const booksFiltered: BookshelfBookWithBookshelfHeader[] = useMemo(() => {
+
+  const booksFiltered: BookshelfBookResponse[] = useMemo(() => {
     if (!bookshelves || bookshelves.length === 0) return [];
     let bookshelvesFiltered = [...bookshelves];
     if (currentBookshelfIndex !== ALL_BOOKS_BOOKSHELF_INDEX) {
@@ -30,16 +30,9 @@ export default function BookshelfPage() {
       );
     }
 
-    const books: BookshelfBookWithBookshelfHeader[] =
-      bookshelvesFiltered.flatMap((bookshelf) =>
-        (bookshelf?.books ?? []).map((book) => ({
-          ...book,
-          bookshelf: {
-            id: bookshelf.id,
-            name: bookshelf.name,
-          },
-        })),
-      );
+    const books: BookshelfBookResponse[] = bookshelvesFiltered.flatMap(
+      (bookshelf) => bookshelf.books,
+    );
 
     if (query) {
       return books.filter((bookshelfBook) => {

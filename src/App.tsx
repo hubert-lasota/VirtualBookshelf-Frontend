@@ -12,7 +12,7 @@ import theme from "./common/config/theme.js";
 import UserProvider from "./common/auth/UserProvider";
 import BookshelfPage from "./pages/Bookshelf/BookshelfPage";
 import { SnackbarProvider } from "notistack";
-import SnackbarAdapter from "./common/components/Snackbar/SnackbarAdapter";
+import SnackbarAdapter from "./common/components/ui/Snackbar/SnackbarAdapter";
 
 const queryClient = new QueryClient();
 
