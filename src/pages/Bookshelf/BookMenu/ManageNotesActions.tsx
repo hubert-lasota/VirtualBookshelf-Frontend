@@ -1,7 +1,9 @@
-import { Button, DialogActions, DialogProps } from "@mui/material";
+import { Button, DialogActions } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
+import CancelButton from "../../../common/components/ui/Button/CancelButton";
 
-type ManageNotesActionsProps = Pick<DialogProps, "onClose"> & {
+type ManageNotesActionsProps = {
+  onClose: () => void;
   saved: boolean;
 };
 
@@ -15,8 +17,7 @@ export default function ManageNotesActions({
 
   return (
     <DialogActions>
-      {/*@ts-ignore*/}
-      <Button onClick={onClose}>{isPlLanguage ? "Anuluj" : "Cancel"}</Button>
+      <CancelButton onClick={onClose} />
       <Button variant="contained" type="submit">
         {saved
           ? isPlLanguage

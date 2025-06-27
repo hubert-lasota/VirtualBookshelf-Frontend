@@ -1,17 +1,18 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogProps,
-  DialogTitle,
 } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { useDeleteBookshelfBook } from "../../../common/api/bookshelfBookClient";
 import { BookshelfBookResponse } from "../../../common/models/bookshelfModels";
 import { findBookshelf } from "../common";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
+import CancelButton from "../../../common/components/ui/Button/CancelButton";
+import DeleteButton from "../../../common/components/ui/Button/DeleteButton";
+import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 
 type RemoveBookDialogProps = Pick<DialogProps, "open"> & {
   bookshelfBook: BookshelfBookResponse;
@@ -33,7 +34,9 @@ export default function RemoveBookDialog({
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{isPlLanguage ? "Usuń książkę" : "Delete book"}</DialogTitle>
+      <DialogTitleWithCloseButton onClose={onClose}>
+        {isPlLanguage ? "Usuń książkę" : "Delete book"}
+      </DialogTitleWithCloseButton>
       <DialogContent>
         <DialogContentText>
           {isPlLanguage
@@ -42,19 +45,15 @@ export default function RemoveBookDialog({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>{isPlLanguage ? "Anuluj" : "Cancel"}</Button>
-        <Button
+        <CancelButton onClick={onClose} />
+        <DeleteButton
           onClick={() =>
             mutate({
               bookshelfBookId: bookshelfBook.id,
               bookshelfId: findBookshelf(bookshelves, bookshelfBook.id).id,
             })
           }
-          variant="contained"
-          color="error"
-        >
-          {isPlLanguage ? "Usuń" : "Delete"}
-        </Button>
+        />
       </DialogActions>
     </Dialog>
   );

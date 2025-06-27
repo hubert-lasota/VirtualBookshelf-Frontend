@@ -3,7 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useUserContext } from "../../../auth/UserContext";
 import type { Property } from "csstype";
 
-type DialogCloseButtonProps = {
+export type DialogCloseButtonProps = {
   top?: Property.Top;
   right?: Property.Right;
   onClose: () => void;

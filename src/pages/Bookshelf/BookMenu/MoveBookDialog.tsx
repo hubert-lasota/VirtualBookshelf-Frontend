@@ -18,6 +18,7 @@ import {
 } from "../../../common/models/bookshelfModels";
 import { useMoveBookshelfBook } from "../../../common/api/bookshelfBookClient";
 import { findBookshelf } from "../common";
+import CancelButton from "../../../common/components/ui/Button/CancelButton";
 
 type MoveBookDialogProps = {
   bookshelfBook: BookshelfBookResponse;
@@ -81,9 +82,7 @@ export default function MoveBookDialog({
           </ControlledSelect>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>
-            {isPlLanguage ? "Anuluj" : "Cancel"}
-          </Button>
+          <CancelButton onClick={onClose} />
           <Button type="submit" variant="contained">
             {isPlLanguage ? "Potwierdź" : "Confirm"}
           </Button>

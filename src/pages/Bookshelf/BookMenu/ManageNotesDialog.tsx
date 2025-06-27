@@ -7,9 +7,11 @@ import ManageNotesActions from "./ManageNotesActions";
 import { useUpdateBookshelfBook } from "../../../common/api/bookshelfBookClient";
 import { FormProvider, useForm } from "react-hook-form";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
+import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 
-type ManageNotesDialogProps = Pick<DialogProps, "open" | "onClose"> & {
+type ManageNotesDialogProps = Pick<DialogProps, "open"> & {
   bookshelfBook: BookshelfBookWithBookshelfHeader;
+  onClose: () => void;
 };
 
 export default function ManageNotesDialog({
@@ -43,9 +45,9 @@ export default function ManageNotesDialog({
   return (
     <FormProvider {...form}>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>
+        <DialogTitleWithCloseButton onClose={onClose}>
           {isPlLanguage ? "Zarządzaj notatkami" : "Manage notes"}
-        </DialogTitle>
+        </DialogTitleWithCloseButton>
         <DialogCloseButton onClose={onClose} />
         <DialogContent></DialogContent>
         <ManageNotesActions saved={saved} onClose={onClose} />
