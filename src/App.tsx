@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./index.css";
-import PrivateRoute from "./features/user/PrivateRoute";
+import PrivateRoute from "./common/auth/PrivateRoute";
 import HomePage from "./pages/Home/HomePage";
 import LoginPage from "./pages/Login/LoginPage";
 import BookPage from "./pages/Book/BookPage.jsx";
@@ -9,7 +9,7 @@ import Landing from "./pages/Landing/Landing.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@mui/material";
 import theme from "./common/config/theme.js";
-import UserProvider from "./features/user/UserProvider";
+import UserProvider from "./common/auth/UserProvider";
 import BookshelfPage from "./pages/Bookshelf/BookshelfPage";
 import { SnackbarProvider } from "notistack";
 import SnackbarAdapter from "./common/components/Snackbar/SnackbarAdapter";

@@ -8,10 +8,11 @@ type ControlledNumberFieldProps = {
 
 export default function ControlledNumberField({
   name,
+  disabled,
   ...rest
 }: ControlledNumberFieldProps) {
   const {
-    field: { value, onChange, ref, ...restFieldProps },
+    field: { value, onChange, ref, disabled: fieldDisabled, ...restFieldProps },
     fieldState: { error, invalid },
   } = useController({ name });
 
@@ -30,6 +31,7 @@ export default function ControlledNumberField({
       error={invalid}
       helperText={error?.message}
       type="number"
+      disabled={disabled || fieldDisabled}
       {...restFieldProps}
       {...rest}
     />

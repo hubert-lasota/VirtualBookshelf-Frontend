@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useUserContext } from "../../../../features/user/UserContext";
+import { useUserContext } from "../../../../common/auth/UserContext";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import {
   Book as BookIcon,
@@ -26,14 +26,14 @@ import {
   BookshelfDetailsFormValues,
   BookshelfMutationRequest,
   createBookshelfBooksSchema,
-} from "../../../../features/bookshelf/bookshelfModels";
+} from "../../../../common/models/bookshelfModels";
 import {
   useCreateBookshelf,
   useUpdateBookshelf,
-} from "../../../../features/bookshelf/bookshelfClient";
-import BookshelfBookFormFields from "./BookshelfBookFormFields";
+} from "../../../../common/api/bookshelfClient";
+import BookshelfBookFormFields from "../../BookshelfBookFormFields";
 import { useBookshelfPageContext } from "../../BookshelfPageContext";
-import { toBookshelfMutationRequest } from "../../../../features/bookshelf/bookshelfMappers";
+import { toBookshelfMutationRequest } from "../../../../common/mappers/bookshelfMappers";
 
 type AddBooksStepProps = {
   previousStep: () => void;
@@ -48,8 +48,12 @@ export default function AddBooksStep({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { currentBookshelf, setIsBookshelfFormOpen } =
-    useBookshelfPageContext();
+  const {
+    currentBookshelf,
+    setIsBookshelfFormOpen,
+    setCurrentBookshelfIndex,
+    bookshelves,
+  } = useBookshelfPageContext();
 
   const form = useForm<BookshelfBooksFormValues>({
     mode: "all",
@@ -71,8 +75,13 @@ export default function AddBooksStep({
     null,
   );
 
-  const { mutate: createBookshelf, isPending: isCreating } =
-    useCreateBookshelf();
+  const { mutate: createBookshelf, isPending: isCreating } = useCreateBookshelf(
+    {
+      onSuccess: () => {
+        setCurrentBookshelfIndex(bookshelves.length);
+      },
+    },
+  );
   const { mutate: updateBookshelf, isPending: isUpdating } =
     useUpdateBookshelf();
 
@@ -94,7 +103,7 @@ export default function AddBooksStep({
     }
     setIsBookshelfFormOpen(false);
   };
-  console.log("form", form.watch());
+
   return (
     <FormProvider {...form}>
       <Stack
@@ -135,7 +144,11 @@ export default function AddBooksStep({
               </Stack>
 
               <Collapse in={expandedBookIndex === index}>
-                <BookshelfBookFormFields index={index} />
+                <BookshelfBookFormFields
+                  namePrefix={`books.${index}.`}
+                  // @ts-ignore
+                  disableBookFields={field?.id}
+                />
               </Collapse>
             </CardContent>
 

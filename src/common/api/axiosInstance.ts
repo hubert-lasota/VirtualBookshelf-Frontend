@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, UserPreferences } from "../../features/user/userModels";
+import { User, UserPreferences } from "../models/userModels";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api",

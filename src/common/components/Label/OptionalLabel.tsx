@@ -1,4 +1,4 @@
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../auth/UserContext";
 
 export default function OptionalLabel({ text }: { text: string }) {
   const {

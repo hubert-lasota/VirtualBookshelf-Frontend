@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 
-import { BookshelfBookWithBookshelfHeader } from "../../../features/bookshelf_book/bookshelfBookModels";
+import { BookshelfBookWithBookshelfHeader } from "../../../common/models/bookshelfBookModels";
 import BookGridItem from "./BookGridItem";
 
 type BookGridProps = {

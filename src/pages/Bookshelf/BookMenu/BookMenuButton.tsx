@@ -1,10 +1,10 @@
 import {
   BookReadingStatus,
   BookshelfBookWithBookshelfHeader,
-} from "../../../features/bookshelf_book/bookshelfBookModels";
+} from "../../../common/models/bookshelfBookModels";
 import { BookCheckIcon, BookOpenTextIcon, BookUp2Icon } from "lucide-react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import {
   IconButton,
   ListItemIcon,
@@ -16,6 +16,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import NoteIcon from "@mui/icons-material/Note";
 import { useState } from "react";
 import MoveBookDialog from "./MoveBookDialog";
+import RemoveBookDialog from "./RemoveBookDialog";
 
 type BookMenuButtonProps = {
   bookshelfBook: BookshelfBookWithBookshelfHeader;
@@ -23,7 +24,8 @@ type BookMenuButtonProps = {
 
 export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [openMoveBook, setOpenMoveBook] = useState<boolean>(false);
+  const [openMoveBook, setOpenMoveBook] = useState(false);
+  const [openRemoveBook, setOpenRemoveBook] = useState(false);
 
   const {
     preferences: { isPlLanguage },
@@ -53,6 +55,7 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
     {
       icon: <DeleteIcon />,
       text: isPlLanguage ? "Usuń książkę" : "Delete book",
+      onClick: () => setOpenRemoveBook(true),
     },
   ];
 
@@ -101,6 +104,11 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
           onClose={() => setOpenMoveBook(false)}
         />
       )}
+      <RemoveBookDialog
+        open={openRemoveBook}
+        onClose={() => setOpenRemoveBook(false)}
+        bookshelfBook={bookshelfBook}
+      />
     </>
   );
 }

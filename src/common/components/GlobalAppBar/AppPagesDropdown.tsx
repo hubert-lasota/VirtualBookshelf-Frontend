@@ -2,7 +2,7 @@ import { Box, Button, Menu, MenuItem } from "@mui/material";
 
 import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../auth/UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function getMenuItems(

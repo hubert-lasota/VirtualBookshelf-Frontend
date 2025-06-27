@@ -8,9 +8,9 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { useUserContext } from "../../../features/user/UserContext";
-import { useDeleteBookshelf } from "../../../features/bookshelf/bookshelfClient";
-import { BookshelfResponse } from "../../../features/bookshelf/bookshelfModels";
+import { useUserContext } from "../../../common/auth/UserContext";
+import { useDeleteBookshelf } from "../../../common/api/bookshelfClient";
+import { BookshelfResponse } from "../../../common/models/bookshelfModels";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { ALL_BOOKS_BOOKSHELF_INDEX } from "../common";
 

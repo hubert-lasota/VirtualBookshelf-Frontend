@@ -1,6 +1,6 @@
 import { Button, Paper, Stack, Typography } from "@mui/material";
 import ShelvesIcon from "@mui/icons-material/Shelves";
-import { useUserContext } from "../../features/user/UserContext";
+import { useUserContext } from "../../common/auth/UserContext";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import BookshelfForm from "./BookshelfForm/BookshelfForm";

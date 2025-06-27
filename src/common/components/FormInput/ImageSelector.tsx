@@ -1,6 +1,6 @@
 import { IconButton, Tooltip } from "@mui/material";
 import { ChangeEvent } from "react";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../auth/UserContext";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 type ImageSelectorProps = {

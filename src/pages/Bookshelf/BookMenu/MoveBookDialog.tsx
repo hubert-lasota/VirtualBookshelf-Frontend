@@ -7,14 +7,14 @@ import {
   DialogTitle,
   MenuItem,
 } from "@mui/material";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
 import ControlledSelect from "../../../common/components/FormInput/ControlledSelect";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
-import { BookshelfResponse } from "../../../features/bookshelf/bookshelfModels";
-import { BookshelfBookWithBookshelfHeader } from "../../../features/bookshelf_book/bookshelfBookModels";
-import { useSnackbar } from "notistack";
+import { BookshelfResponse } from "../../../common/models/bookshelfModels";
+import { BookshelfBookWithBookshelfHeader } from "../../../common/models/bookshelfBookModels";
+import { useMoveBookshelfBook } from "../../../common/api/bookshelfBookClient";
 
 type MoveBookDialogProps = {
   bookshelfBook: BookshelfBookWithBookshelfHeader;
@@ -31,9 +31,9 @@ export default function MoveBookDialog({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { enqueueSnackbar } = useSnackbar();
-
   const { bookshelves } = useBookshelfPageContext();
+
+  const { mutate } = useMoveBookshelfBook();
 
   const form = useForm<FormType>({
     mode: FORM_VALIDATE_MODE,
@@ -42,13 +42,8 @@ export default function MoveBookDialog({
     },
   });
 
-  const onSubmit = () => {
-    enqueueSnackbar({
-      message: isPlLanguage
-        ? "Poprawnie przeniesiono książkę"
-        : "Successfully moved book",
-      variant: "success",
-    });
+  const onSubmit = ({ bookshelf }: FormType) => {
+    mutate({ bookshelfId: bookshelf.id, bookshelfBookId: bookshelfBook.id });
   };
 
   return (

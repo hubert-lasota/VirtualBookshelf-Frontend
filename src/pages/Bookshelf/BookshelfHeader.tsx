@@ -3,7 +3,7 @@ import { useDebounceValue } from "../../common/hooks";
 import { useEffect, useState } from "react";
 import GlobalAppBarContainer from "../../common/components/GlobalAppBar/GlobalAppBarContainer";
 import AppLogo from "../../common/components/GlobalAppBar/AppLogo";
-import { useUserContext } from "../../features/user/UserContext";
+import { useUserContext } from "../../common/auth/UserContext";
 import SettingsButton from "../../common/components/GlobalAppBar/SettingsButton";
 import SearchIcon from "@mui/icons-material/Search";
 import AppPagesDropdown from "../../common/components/GlobalAppBar/AppPagesDropdown";

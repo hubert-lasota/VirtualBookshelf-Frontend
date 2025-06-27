@@ -1,4 +1,4 @@
-import { BookshelfDetailsFormValues } from "../../../features/bookshelf/bookshelfModels";
+import { BookshelfDetailsFormValues } from "../../../common/models/bookshelfModels";
 import AddBooksStep from "./AddBooksStep/AddBooksStep";
 import { useState } from "react";
 import BookshelfDetailsStep from "./BookDetailsStep/BookshelfDetailsStep";
@@ -11,7 +11,7 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 
 export default function BookshelfForm() {

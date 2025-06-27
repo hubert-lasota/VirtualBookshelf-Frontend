@@ -1,13 +1,13 @@
 import RequiredLabel from "../../../../common/components/Label/RequiredLabel";
 import BookshelfTypeSelect from "./BookshelfTypeSelect";
 import OptionalLabel from "../../../../common/components/Label/OptionalLabel";
-import { useUserContext } from "../../../../features/user/UserContext";
+import { useUserContext } from "../../../../common/auth/UserContext";
 import { Grid, Stack } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import {
   BookshelfDetailsFormValues,
   createBookshelfDetailsSchema,
-} from "../../../../features/bookshelf/bookshelfModels";
+} from "../../../../common/models/bookshelfModels";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ControlledTextField from "../../../../common/components/FormInput/ControlledTextField";
 import FormActionButtons from "../FormActionButtons";

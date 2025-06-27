@@ -7,7 +7,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import { BookPlusIcon } from "lucide-react";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
@@ -16,7 +16,7 @@ import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { useState } from "react";
 import SearchBookDialog from "./SearchBookDialog";
 import DeleteBookshelfDialog from "./DeleteBookshelfDialog";
-import BookFormDialog from "./BookFormDialog";
+import BookshelfBookFormDialog from "./BookshelfBookFormDialog";
 
 export default function BookshelfTabMenuButton() {
   const [openCreateBookDialog, setOpenCreateBookDialog] = useState(false);
@@ -92,7 +92,7 @@ export default function BookshelfTabMenuButton() {
             onClose={() => setOpenDeleteBookshelfDialog(false)}
             bookshelf={currentBookshelf}
           />
-          <BookFormDialog
+          <BookshelfBookFormDialog
             bookshelf={currentBookshelf}
             open={openCreateBookDialog}
             onClose={() => setOpenCreateBookDialog(false)}

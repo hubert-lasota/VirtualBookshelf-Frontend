@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import BookshelfContentHeader from "./BookshelfContentHeader";
 import BookGrid from "./BookGrid";
-import { BookshelfBookWithBookshelfHeader } from "../../../features/bookshelf_book/bookshelfBookModels";
+import { BookshelfBookWithBookshelfHeader } from "../../../common/models/bookshelfBookModels";
 
 type BookshelfContentProps = {
   books: BookshelfBookWithBookshelfHeader[];

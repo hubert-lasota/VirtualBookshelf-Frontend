@@ -1,6 +1,6 @@
 import css from "./header.module.css";
 import AccountMenu from "./AccountMenu.jsx";
-import SearchButton from "../../features/search/components/SearchButton.tsx";
+import SearchButton from "../../common/components/Search/SearchButton.tsx";
 import GlobalHeaderInLoggedApp from "../../common/components/global_header/GlobalHeaderInLoggedApp.jsx";
 
 export default function Header() {

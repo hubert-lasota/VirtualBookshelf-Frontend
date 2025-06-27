@@ -1,6 +1,6 @@
 import { Stack, StackProps, Typography } from "@mui/material";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../auth/UserContext";
 
 export default function AppLogo(props: StackProps) {
   const {

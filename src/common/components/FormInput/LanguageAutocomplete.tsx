@@ -2,21 +2,24 @@ import ISO6391 from "iso-639-1";
 import { useController } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
 import { useMemo } from "react";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../auth/UserContext";
 import RequiredLabel from "../Label/RequiredLabel";
 
 type LanguageAutocompleteProps = {
   name: string;
+  disabled?: boolean;
 };
 
 const codes = ISO6391.getAllCodes();
 
 export default function LanguageAutocomplete({
   name,
+  disabled,
 }: LanguageAutocompleteProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
+
   const {
     field: { value, onChange, ref, ...restFieldProps },
     fieldState: { invalid, error },
@@ -40,6 +43,7 @@ export default function LanguageAutocomplete({
   return (
     <Autocomplete
       {...restFieldProps}
+      disabled={disabled}
       // @ts-ignore
       value={options.find((opt) => opt.code === value) || ""}
       onChange={(_e, value) => onChange(value?.code)}

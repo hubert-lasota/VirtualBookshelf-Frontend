@@ -5,7 +5,7 @@ import {
   DialogTitle,
   Divider,
 } from "@mui/material";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../auth/UserContext";
 import LanguageSelect from "./LanguageSelect";
 
 export default function ChangeLanguageDialog({

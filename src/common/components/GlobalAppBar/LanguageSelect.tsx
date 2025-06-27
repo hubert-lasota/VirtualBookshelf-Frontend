@@ -1,6 +1,6 @@
 import { MenuItem, Select, SelectProps } from "@mui/material";
-import { useUserContext } from "../../../features/user/UserContext";
-import { AppLanguageCode } from "../../../features/user/userModels";
+import { useUserContext } from "../../auth/UserContext";
+import { AppLanguageCode } from "../../models/userModels";
 
 type LangCodeWithLabel = {
   value: AppLanguageCode;

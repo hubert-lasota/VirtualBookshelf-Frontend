@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import BookshelfTab from "./BookshelfTab";
 import {
@@ -50,14 +50,22 @@ export default function BookshelfSidebar() {
         sx={(theme) => ({
           paddingTop: theme.spacing(2),
           paddingInline: theme.spacing(2),
+          overflowY: "auto",
         })}
         spacing={1}
       >
-        <Box sx={(theme) => ({ paddingBottom: theme.spacing(1) })}>
+        <Box
+          sx={(theme) => ({
+            paddingBottom: theme.spacing(1),
+          })}
+        >
           <Button
             variant="contained"
             fullWidth
-            onClick={() => setIsBookshelfFormOpen(true)}
+            onClick={() => {
+              setIsBookshelfFormOpen(true);
+              setCurrentBookshelfIndex(ALL_BOOKS_BOOKSHELF_INDEX);
+            }}
           >
             {isPlLanguage ? "Dodaj regał" : "Add bookshelf"}
           </Button>

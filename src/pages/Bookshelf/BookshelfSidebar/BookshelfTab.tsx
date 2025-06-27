@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import BookshelfTabMenuButton from "./BookshelfTabMenuButton";
 import { getTotalBooksSuffix } from "../common";
 
@@ -52,12 +52,14 @@ export default function BookshelfTab({
     >
       <Stack direction="row" spacing={2} alignItems="center">
         <Box
-          sx={{
+          sx={(theme) => ({
             width: "12px",
             height: "12px",
             borderRadius: "50%",
-            backgroundColor: "green",
-          }}
+            backgroundColor: isSelected
+              ? theme.palette.primary.main
+              : theme.palette.action.disabled,
+          })}
         />
         <Stack>
           <Typography fontSize="0.88rem">{name}</Typography>

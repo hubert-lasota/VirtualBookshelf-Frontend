@@ -1,6 +1,6 @@
 import css from "./search-books.module.css";
 import { useNavigate } from "react-router-dom";
-import BookCard from "../../features/book/components/Card/BookCard.jsx";
+import BookCard from "../../common/components/Book/Card/BookCard.tsx";
 
 export default function BookGrid({ books }) {
   const navigate = useNavigate();

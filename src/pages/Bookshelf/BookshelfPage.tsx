@@ -1,12 +1,12 @@
 import { PageContainer } from "../../common/components/styles";
 import BookshelfHeader from "./BookshelfHeader";
-import { useGetBookshelves } from "../../features/bookshelf/bookshelfClient";
+import { useGetBookshelves } from "../../common/api/bookshelfClient";
 import { useMemo, useState } from "react";
 import EmptyBookshelf from "./EmptyBookshelf";
 import { BookshelfPageContext } from "./BookshelfPageContext";
 import { Stack } from "@mui/material";
 import BookshelfSidebar from "./BookshelfSidebar/BookshelfSidebar";
-import { BookshelfBookWithBookshelfHeader } from "../../features/bookshelf_book/bookshelfBookModels";
+import { BookshelfBookWithBookshelfHeader } from "../../common/models/bookshelfBookModels";
 import { ALL_BOOKS_BOOKSHELF_INDEX } from "./common";
 import BookshelfForm from "./BookshelfForm/BookshelfForm";
 import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalAppBar/config";
@@ -20,7 +20,7 @@ export default function BookshelfPage() {
   );
 
   const [isBookshelfFormOpen, setIsBookshelfFormOpen] = useState(false);
-
+  // TODO chyba nie bedzie potrzebne bookshelfbook with bookshelf mozna uzyc funkcji ktora znajdzie bookshelf za pomoca bookshelfBookId
   const booksFiltered: BookshelfBookWithBookshelfHeader[] = useMemo(() => {
     if (!bookshelves || bookshelves.length === 0) return [];
     let bookshelvesFiltered = [...bookshelves];

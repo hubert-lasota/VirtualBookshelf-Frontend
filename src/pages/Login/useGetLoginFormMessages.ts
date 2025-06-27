@@ -1,4 +1,4 @@
-import { useUserContext } from "../../features/user/UserContext";
+import { useUserContext } from "../../common/auth/UserContext";
 
 export type LoginFormMessages = {
   title: string;

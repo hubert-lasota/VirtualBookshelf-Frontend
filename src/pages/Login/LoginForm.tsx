@@ -1,4 +1,4 @@
-import { useSignIn } from "../../features/user/authClient.js";
+import { useSignIn } from "../../common/api/authClient.js";
 import {
   Button,
   Link,
@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createUserCredentialsSchema,
   UserCredentials,
-} from "../../features/user/userModels";
+} from "../../common/models/userModels";
 
 const fieldNames = ["username", "password"] as const;
 

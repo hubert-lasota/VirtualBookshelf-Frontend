@@ -1,7 +1,7 @@
-import BookCard from "../../../features/book/components/Card/BookCard";
+import BookCard from "../../../common/components/Book/Card/BookCard";
 import { Box, Chip, Grid, Stack } from "@mui/material";
 import BookMenuButton from "../BookMenu/BookMenuButton";
-import { BookshelfBookWithBookshelfHeader } from "../../../features/bookshelf_book/bookshelfBookModels";
+import { BookshelfBookWithBookshelfHeader } from "../../../common/models/bookshelfBookModels";
 import { useState } from "react";
 
 type BookGridItemProps = {

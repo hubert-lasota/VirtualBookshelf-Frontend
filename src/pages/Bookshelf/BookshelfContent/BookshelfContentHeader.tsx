@@ -5,7 +5,7 @@ import {
   getAllBooksBookshelfTotalBooks,
   getTotalBooksSuffix,
 } from "../common";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 
 export default function BookshelfContentHeader() {

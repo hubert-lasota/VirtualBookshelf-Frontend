@@ -7,7 +7,7 @@ import {
 } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import "dayjs/locale/pl";
-import { useUserContext } from "../../../features/user/UserContext";
+import { useUserContext } from "../../auth/UserContext";
 import "dayjs/locale/en";
 
 type ControlledDatePickerProps = {
