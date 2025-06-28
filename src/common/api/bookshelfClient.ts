@@ -10,8 +10,6 @@ import {
 } from "../models/bookshelfModels";
 import axiosInstance from "./axiosInstance";
 import { unwrapResponseData } from "./apiUtils";
-import { useSnackbar } from "notistack";
-import { useUserContext } from "../auth/UserContext";
 
 const BASE_ENDPOINT = "/v1/bookshelves";
 
@@ -21,6 +19,11 @@ export type GetBookshelvesResult = {
   bookshelves: BookshelfResponse[];
 };
 
+type ShowSnackbarParams = {
+  onSuccess: () => void;
+  onError: () => void;
+};
+
 export function useGetBookshelves() {
   return useQuery<undefined, unknown, GetBookshelvesResult>({
     queryKey: BOOKSHELF_QUERY_KEY,
@@ -28,16 +31,17 @@ export function useGetBookshelves() {
   });
 }
 
-type UseCreateBookshelfParam = { onSuccess?: () => void };
+type UseCreateBookshelfParams = {
+  onMutate: () => void;
+  onSuccess: () => void;
+  onError: () => void;
+};
 
 export function useCreateBookshelf({
+  onMutate,
   onSuccess,
-}: UseCreateBookshelfParam = {}) {
-  const {
-    preferences: { isPlLanguage },
-  } = useUserContext();
-  const { enqueueSnackbar } = useSnackbar();
-
+  onError,
+}: UseCreateBookshelfParams) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -46,29 +50,18 @@ export function useCreateBookshelf({
 
     onMutate: async (bookshelf: BookshelfFormValues) =>
       handleMutateBookshelvesCache(queryClient, (bookshelves) => {
+        console.log("bookshelves", bookshelves);
         // @ts-ignore
-        bookshelves.push(bookshelf);
+        bookshelves.push({ ...bookshelf, books: [] });
+        onMutate();
         return bookshelves;
       }),
 
-    onSuccess: () => {
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Poprawnie utworzono regał"
-          : "Successfully created bookshelf",
-        variant: "success",
-      });
-      onSuccess?.();
-    },
+    onSuccess,
 
     onError: (error, bookshelf, context) => {
       handleError(queryClient, "creating", error, bookshelf, context);
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Wystąpił błąd podczas tworzenia regału"
-          : "Error occurred while creating bookshelf",
-        variant: "error",
-      });
+      onError();
     },
 
     onSettled: () => handleSettled(queryClient),
@@ -80,12 +73,7 @@ type BookshelfUpdate = {
   bookshelfId: number;
 };
 
-export function useUpdateBookshelf() {
-  const {
-    preferences: { isPlLanguage },
-  } = useUserContext();
-  const { enqueueSnackbar } = useSnackbar();
-
+export function useUpdateBookshelf({ onSuccess, onError }: ShowSnackbarParams) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -94,13 +82,7 @@ export function useUpdateBookshelf() {
         .patch(BASE_ENDPOINT + `/${bookshelfId}`, bookshelf)
         .then(unwrapResponseData),
 
-    onSuccess: () =>
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Poprawnie zaktualizowano regał"
-          : "Successfully updated bookshelf",
-        variant: "success",
-      }),
+    onSuccess,
     onMutate: async ({ bookshelf, bookshelfId }: BookshelfUpdate) =>
       handleMutateBookshelvesCache(queryClient, (bookshelves) =>
         //@ts-ignore
@@ -109,19 +91,14 @@ export function useUpdateBookshelf() {
 
     onError: (error, bookshelf, context) => {
       handleError(queryClient, "updating", error, bookshelf, context);
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Wystąpił błąd podczas aktualizacji regału"
-          : "Error occurred while updating bookshelf",
-        variant: "error",
-      });
+      onError();
     },
 
     onSettled: () => handleSettled(queryClient),
   });
 }
 
-export function useDeleteBookshelf() {
+export function useDeleteBookshelf({ onSuccess, onError }: ShowSnackbarParams) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -133,8 +110,12 @@ export function useDeleteBookshelf() {
         bookshelves.filter((b) => b.id !== id),
       ),
 
-    onError: (error, id, context) =>
-      handleError(queryClient, "deleting", error, id, context),
+    onSuccess,
+
+    onError: (error, id, context) => {
+      handleError(queryClient, "deleting", error, id, context);
+      onError();
+    },
 
     onSettled: () => handleSettled(queryClient),
   });

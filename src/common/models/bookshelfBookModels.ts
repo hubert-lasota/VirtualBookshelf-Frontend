@@ -1,14 +1,10 @@
 import { z } from "zod";
-import {
-  BookMutationRequest,
-  BookResponse,
-  createBookSchema,
-} from "./bookModels";
+import { BookResponse, createBookSchema } from "./bookModels";
 import { BaseResponse } from "../api/apiModels";
 
 export enum BookReadingStatus {
   READING = "READING",
-  ENDED = "ENDED",
+  READ = "READ",
 }
 
 export const createBookshelfBookSchema = (isPlLanguage: boolean) =>
@@ -44,13 +40,6 @@ export const createBookshelfBookSchema = (isPlLanguage: boolean) =>
 export type BookshelfBookFormValues = z.infer<
   ReturnType<typeof createBookshelfBookSchema>
 >;
-
-export type BookshelfBookMutationRequest = Omit<
-  BookshelfBookFormValues,
-  "book"
-> & {
-  book: BookMutationRequest;
-};
 
 export type BookshelfBookResponse = {
   book: BookResponse;

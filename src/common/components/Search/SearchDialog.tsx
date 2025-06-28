@@ -16,7 +16,7 @@ import SelectResourceType from "./SelectResourceType";
 import SearchIcon from "@mui/icons-material/Search";
 import DialogCloseButton from "../ui/Dialog/DialogCloseButton";
 import { AuthorResponse } from "../../models/authorModels";
-import CenteredContent from "../ui/CenteredContent";
+import CenteredContent from "../ui/layout/CenteredContent";
 import SearchDialogContainer from "./SearchDialogContainer";
 import SearchContentContainer from "./SearchContentContainer";
 

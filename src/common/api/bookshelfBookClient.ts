@@ -9,21 +9,25 @@ import {
   GetBookshelvesResult,
   handleMutateBookshelvesCache,
 } from "./bookshelfClient";
-import {
-  BookshelfBookResponse,
-  BookshelfResponse,
-} from "../models/bookshelfModels";
+import { BookshelfResponse } from "../models/bookshelfModels";
 import { unwrapResponseData } from "./apiUtils";
-import { useUserContext } from "../auth/UserContext";
-import { useSnackbar } from "notistack";
 import {
   findBookshelf,
   findBookshelfBook,
   findBookshelfIndex,
 } from "../utils/bookshelfUtils";
-import { BookshelfBookFormValues } from "../models/bookshelfBookModels";
+import {
+  BookReadingStatus,
+  BookshelfBookFormValues,
+  BookshelfBookResponse,
+} from "../models/bookshelfBookModels";
 
 const BASE_ENDPOINT = "/v1/bookshelf-books";
+
+type ShowSnackbarParams = {
+  onSuccess: () => void;
+  onError: () => void;
+};
 
 type CreateBookshelfBookParam = Omit<BookshelfBookFormValues, "book"> & {
   bookshelfId: number;
@@ -57,7 +61,10 @@ export function useCreateBookshelfBook() {
 
 type BookshelfBookUpdate = Omit<BookshelfBookResponse, "book">;
 
-export function useUpdateBookshelfBook() {
+export function useUpdateBookshelfBook({
+  onSuccess,
+  onError,
+}: ShowSnackbarParams) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -70,6 +77,7 @@ export function useUpdateBookshelfBook() {
       handleMutate(queryClient, book.id, (bookshelf) => {
         const index = bookshelf.books.findIndex((b) => b.id === book.id);
         const newBookshelf = { ...bookshelf };
+        // @ts-ignore
         newBookshelf.books[index] = {
           ...book,
           book: newBookshelf.books[index]!.book,
@@ -77,44 +85,78 @@ export function useUpdateBookshelfBook() {
         return newBookshelf;
       }),
 
-    onError: (error, bookshelfBook, context) =>
-      handleError(queryClient, "updating", error, bookshelfBook, context),
+    onSuccess,
+
+    onError: (error, bookshelfBook, context) => {
+      handleError(queryClient, "updating", error, bookshelfBook, context);
+      onError();
+    },
 
     onSettled: () => handleSettled(queryClient),
   });
 }
 
-type MoveBookshelfBookParam = {
+type ChangeBookshelfBookStatusParam = {
+  bookshelfBookId: BookshelfBookResponse["id"];
+  status: BookReadingStatus;
+};
+
+export function useChangeBookshelfBookStatus({
+  onSuccess,
+  onError,
+}: ShowSnackbarParams) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      bookshelfBookId,
+      status,
+    }: ChangeBookshelfBookStatusParam) =>
+      axiosInstance.patch(
+        `${BASE_ENDPOINT}/${bookshelfBookId}/${status.toLowerCase()}`,
+      ),
+
+    onSuccess,
+
+    onMutate: async ({ bookshelfBookId, status }) =>
+      handleMutate(queryClient, bookshelfBookId, (bookshelf) => {
+        const book = bookshelf.books.find((b) => b.id === bookshelfBookId)!;
+        book.status = status;
+        return bookshelf;
+      }),
+
+    onError: (error, params, context) => {
+      handleError(queryClient, "changing status", error, params, context);
+      onError();
+    },
+
+    onSettled: () => handleSettled(queryClient),
+  });
+}
+
+type MoveBookshelfBookParams = {
   bookshelfBookId: number;
   bookshelfId: number;
 };
 
-export function useMoveBookshelfBook() {
-  const {
-    preferences: { isPlLanguage },
-  } = useUserContext();
-  const { enqueueSnackbar } = useSnackbar();
-
+export function useMoveBookshelfBook({
+  onSuccess,
+  onError,
+}: ShowSnackbarParams) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ bookshelfBookId, bookshelfId }: MoveBookshelfBookParam) =>
+    mutationFn: ({ bookshelfBookId, bookshelfId }: MoveBookshelfBookParams) =>
       axiosInstance.patch(`${BASE_ENDPOINT}/${bookshelfBookId}/move`, {
         bookshelfId,
       }),
 
-    onSuccess: () =>
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Poprawnie przeniesiono książkę"
-          : "Successfully moved book",
-        variant: "success",
-      }),
+    onSuccess,
 
     onMutate: async ({
       bookshelfBookId,
       bookshelfId,
-    }: MoveBookshelfBookParam) =>
+    }: MoveBookshelfBookParams) =>
       handleMutateBookshelvesCache(queryClient, (bookshelves) => {
         const bookshelfBook = findBookshelfBook(bookshelves, bookshelfBookId);
         const bookshelf = findBookshelf(bookshelves, bookshelfBookId);
@@ -130,25 +172,17 @@ export function useMoveBookshelfBook() {
 
     onError: (err, bookshelfBook, context) => {
       handleError(queryClient, "moving", err, bookshelfBook, context);
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Wystąpił błąd poczas przenoszenia książki"
-          : "Error occurred while moving book",
-        variant: "error",
-      });
+      onError();
     },
 
     onSettled: () => handleSettled(queryClient),
   });
 }
 
-export function useDeleteBookshelfBook() {
-  const {
-    preferences: { isPlLanguage },
-  } = useUserContext();
-
-  const { enqueueSnackbar } = useSnackbar();
-
+export function useDeleteBookshelfBook({
+  onSuccess,
+  onError,
+}: ShowSnackbarParams) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -161,16 +195,12 @@ export function useDeleteBookshelfBook() {
         books: bookshelf.books.filter((b) => b.id !== bookshelfBookId),
       })),
 
-    onSuccess: () =>
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Poprawnie usunięto książkę"
-          : "Successfully removed book",
-        variant: "success",
-      }),
+    onSuccess,
 
-    onError: (err, bookshelfBook, context) =>
-      handleError(queryClient, "deleting", err, bookshelfBook, context),
+    onError: (err, bookshelfBook, context) => {
+      handleError(queryClient, "deleting", err, bookshelfBook, context);
+      onError();
+    },
 
     onSettled: () => handleSettled(queryClient),
   });
@@ -181,7 +211,12 @@ const handleSettled = (queryClient: QueryClient) =>
 
 const handleError = (
   queryClient: QueryClient,
-  actionType: string,
+  actionType:
+    | "creating"
+    | "updating"
+    | "deleting"
+    | "changing status"
+    | "moving",
   error: Error,
   variables: unknown,
   context:
@@ -198,7 +233,7 @@ type UpdateBookshelfFn = (bookshelf: BookshelfResponse) => BookshelfResponse;
 
 const handleMutate = async (
   queryClient: QueryClient,
-  bookshelfBookId: number,
+  bookshelfBookId: BookshelfBookResponse["id"],
   updateFn: UpdateBookshelfFn,
 ) => {
   return await handleMutateBookshelvesCache(queryClient, (bookshelves) => {

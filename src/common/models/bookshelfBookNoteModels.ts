@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { BaseResponse } from "../api/apiModels";
 
 export const createBookshelfBookNoteSchema = (isPlLanguage: boolean) => {
   const contentRequiredMessage = isPlLanguage
@@ -50,3 +51,5 @@ export const createBookshelfBookNoteSchema = (isPlLanguage: boolean) => {
 export type BookshelfBookNote = z.infer<
   ReturnType<typeof createBookshelfBookNoteSchema>
 >;
+
+export type BookshelfBookNoteResponse = BaseResponse & BookshelfBookNote;

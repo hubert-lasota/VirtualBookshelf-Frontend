@@ -1,19 +1,11 @@
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogProps,
-  DialogTitle,
-  Typography,
-} from "@mui/material";
+import { DialogProps, Typography } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { useDeleteBookshelf } from "../../../common/api/bookshelfClient";
 import { BookshelfResponse } from "../../../common/models/bookshelfModels";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { ALL_BOOKS_BOOKSHELF_INDEX } from "../common";
-import CancelButton from "../../../common/components/ui/Button/CancelButton";
-import DeleteButton from "../../../common/components/ui/Button/DeleteButton";
+import DeleteEntityDialog from "../../../common/components/ui/Dialog/DeleteEntityDialog";
+import { useSnackbar } from "notistack";
 
 type DeleteBookshelfDialogProps = Pick<DialogProps, "open"> & {
   bookshelf: BookshelfResponse;
@@ -29,18 +21,45 @@ export default function DeleteBookshelfDialog({
     preferences: { isPlLanguage },
   } = useUserContext();
 
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { mutate } = useDeleteBookshelf({
+    onSuccess: () =>
+      enqueueSnackbar({
+        variant: "success",
+        message: isPlLanguage
+          ? "Poprawnie usunięto regał"
+          : "Successfully deleted bookshelf",
+      }),
+    onError: () =>
+      enqueueSnackbar({
+        variant: "error",
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas usuwania regału"
+          : "Error occured while deleting bookshelf",
+      }),
+  });
+
   const { currentBookshelfIndex, setCurrentBookshelfIndex } =
     useBookshelfPageContext();
 
-  const { mutate } = useDeleteBookshelf();
-
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>
-        {isPlLanguage ? "Usuń regał" : "Delete bookshelf"}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
+    <DeleteEntityDialog
+      open={open}
+      onClose={onClose}
+      onDelete={(e) => {
+        e.stopPropagation();
+        const index =
+          currentBookshelfIndex === 0
+            ? ALL_BOOKS_BOOKSHELF_INDEX
+            : currentBookshelfIndex - 1;
+        setCurrentBookshelfIndex(index);
+        mutate(bookshelf.id);
+        onClose();
+      }}
+      title={isPlLanguage ? "Usuń regał" : "Delete bookshelf"}
+      contentText={
+        <>
           {isPlLanguage
             ? `Czy na pewno chcesz usunąć regał: `
             : `Are you sure you want to delete the bookshelf: `}
@@ -48,23 +67,8 @@ export default function DeleteBookshelfDialog({
             {bookshelf.name}
           </Typography>
           {"?"}
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <CancelButton onClick={onClose} />
-        <DeleteButton
-          onClick={(e) => {
-            e.stopPropagation();
-            const index =
-              currentBookshelfIndex === 0
-                ? ALL_BOOKS_BOOKSHELF_INDEX
-                : currentBookshelfIndex - 1;
-            setCurrentBookshelfIndex(index);
-            mutate(bookshelf.id);
-            onClose();
-          }}
-        />
-      </DialogActions>
-    </Dialog>
+        </>
+      }
+    />
   );
 }

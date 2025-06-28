@@ -1,9 +1,9 @@
 import LoginForm from "./LoginForm.js";
 import { Box, Stack } from "@mui/material";
-import { PageContainer } from "../../common/components/ui/styles.js";
 import GlobalAppBar from "../../common/components/GlobalAppBar/GlobalAppBar";
 import LanguageSelect from "../../common/components/GlobalAppBar/LanguageSelect";
 import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalAppBar/config";
+import PageContainer from "../../common/components/ui/layout/PageContainer.js";
 
 export default function LoginPage() {
   return (

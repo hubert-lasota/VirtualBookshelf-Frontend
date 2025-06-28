@@ -18,7 +18,7 @@ export default function BookReadingStatusSelect({
       label: isPlLanguage ? "W trakcie czytania" : "Reading",
     },
     {
-      value: BookReadingStatus.ENDED,
+      value: BookReadingStatus.READ,
       label: isPlLanguage ? "Zakończono czytanie" : "Ended",
     },
   ];

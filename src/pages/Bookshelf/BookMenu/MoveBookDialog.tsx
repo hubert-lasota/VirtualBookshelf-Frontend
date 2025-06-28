@@ -11,14 +11,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
 import ControlledSelect from "../../../common/components/FormInput/ControlledSelect";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
-import {
-  BookshelfBookResponse,
-  BookshelfResponse,
-} from "../../../common/models/bookshelfModels";
+import { BookshelfResponse } from "../../../common/models/bookshelfModels";
 import { useMoveBookshelfBook } from "../../../common/api/bookshelfBookClient";
 import CancelButton from "../../../common/components/ui/Button/CancelButton";
 import { findBookshelf } from "../../../common/utils/bookshelfUtils";
 import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
+import { useSnackbar } from "notistack";
 
 type MoveBookDialogProps = {
   bookshelfBook: BookshelfBookResponse;
@@ -36,9 +35,27 @@ export default function MoveBookDialog({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { bookshelves } = useBookshelfPageContext();
+  const { enqueueSnackbar } = useSnackbar();
 
-  const { mutate } = useMoveBookshelfBook();
+  const { mutate } = useMoveBookshelfBook({
+    onSuccess: () =>
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Poprawnie przeniesiono książkę"
+          : "Successfully moved book",
+        variant: "success",
+      }),
+
+    onError: () =>
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas przenoszenia książki"
+          : "Error occurred while moving book",
+        variant: "error",
+      }),
+  });
+
+  const { bookshelves } = useBookshelfPageContext();
 
   const bookshelf = findBookshelf(bookshelves, bookshelfBook.id);
 

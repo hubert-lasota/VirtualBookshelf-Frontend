@@ -2,61 +2,90 @@ import {
   BookshelfFormValues,
   createBookshelfSchema,
 } from "../../../common/models/bookshelfModels";
-import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
+import { Box, Paper, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import RequiredLabel from "../../../common/components/ui/Label/RequiredLabel";
-import BookshelfTypeSelect from "./BookshelfTypeSelect";
-import OptionalLabel from "../../../common/components/ui/Label/OptionalLabel";
-import ControlledTextField from "../../../common/components/FormInput/ControlledTextField";
 import CancelButton from "../../../common/components/ui/Button/CancelButton";
 import {
   useCreateBookshelf,
   useUpdateBookshelf,
 } from "../../../common/api/bookshelfClient";
 import SaveButton from "../../../common/components/ui/Button/SaveButton";
+import { useSnackbar } from "notistack";
+import { ALL_BOOKS_BOOKSHELF_INDEX } from "../common";
+import BookshelfFormFields from "./BookshelfFormFields";
 
 export default function BookshelfForm() {
-  const { currentBookshelf } = useBookshelfPageContext();
+  const {
+    currentBookshelf,
+    setIsBookshelfFormOpen,
+    setCurrentBookshelfIndex,
+    bookshelves,
+  } = useBookshelfPageContext();
 
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const isEditing = !!currentBookshelf;
+  const { enqueueSnackbar } = useSnackbar();
 
-  const { mutate: updateBookshelf } = useUpdateBookshelf();
-  const { mutate: createBookshelf } = useCreateBookshelf();
+  const isUpdating = !!currentBookshelf;
 
-  const schema = createBookshelfSchema(isPlLanguage);
+  const { mutate: updateBookshelf } = useUpdateBookshelf({
+    onSuccess: () =>
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Poprawnie zaktualizowano regał"
+          : "Successfully updated bookshelf",
+        variant: "success",
+      }),
+
+    onError: () =>
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas aktualizacji regału"
+          : "Error occurred while updating bookshelf",
+        variant: "error",
+      }),
+  });
+
+  const { mutate: createBookshelf } = useCreateBookshelf({
+    onMutate: () => setCurrentBookshelfIndex(bookshelves.length),
+    onError: () => {
+      setCurrentBookshelfIndex(ALL_BOOKS_BOOKSHELF_INDEX);
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas dodawania regału"
+          : "Error occurred while adding bookshelf",
+        variant: "error",
+      });
+    },
+    onSuccess: () =>
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Poprawnio utworzono regał"
+          : "Successfully created bookshelf",
+        variant: "success",
+      }),
+  });
+
   const form = useForm<BookshelfFormValues>({
     mode: "all",
     ...(currentBookshelf ? { defaultValues: currentBookshelf } : {}),
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createBookshelfSchema(isPlLanguage)),
   });
 
   const onSubmit = (bookshelf: BookshelfFormValues) => {
-    isEditing
-      ? updateBookshelf({ bookshelf, bookshelfId: currentBookshelf.id })
-      : createBookshelf(bookshelf);
-  };
+    if (isUpdating) {
+      updateBookshelf({ bookshelf, bookshelfId: currentBookshelf.id });
+    } else {
+      createBookshelf(bookshelf);
+    }
 
-  const fields = [
-    {
-      name: "name",
-      label: <RequiredLabel text={isPlLanguage ? "Nazwa" : "Name"} />,
-    },
-    {
-      component: <BookshelfTypeSelect />,
-    },
-    {
-      name: "description",
-      label: <OptionalLabel text={isPlLanguage ? "Opis" : "Description"} />,
-      multiline: true,
-    },
-  ];
+    setIsBookshelfFormOpen(false);
+  };
 
   return (
     <FormProvider {...form}>
@@ -78,36 +107,21 @@ export default function BookshelfForm() {
         >
           <Typography variant="h5" gutterBottom>
             {isPlLanguage
-              ? isEditing
+              ? isUpdating
                 ? `Edytuj regał: ${currentBookshelf!.name}`
                 : "Dodaj nowy regał"
-              : isEditing
+              : isUpdating
                 ? `Edit bookshelf: ${currentBookshelf!.name}`
                 : "Add new bookshelf"}
           </Typography>
-          <Divider />
-          <Grid container spacing={2}>
-            {fields.map(({ component, name, ...rest }, index) => (
-              <Grid
-                key={`bookshelf-details-step-${index}`}
-                size={name === "description" ? 12 : 6}
-              >
-                {component ? (
-                  component
-                ) : (
-                  <ControlledTextField name={name} {...rest} />
-                )}
-              </Grid>
-            ))}
-          </Grid>
-          <Divider />
+          <BookshelfFormFields />
           <Box>
             <Stack
               direction="row"
               gap={1.5}
               sx={{ width: "100%", justifyContent: "flex-end" }}
             >
-              <CancelButton />
+              <CancelButton onClick={() => setIsBookshelfFormOpen(false)} />
               <SaveButton />
             </Stack>
           </Box>

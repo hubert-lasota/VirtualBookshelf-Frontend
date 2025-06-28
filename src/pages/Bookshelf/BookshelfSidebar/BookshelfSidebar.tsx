@@ -70,22 +70,23 @@ export default function BookshelfSidebar() {
             {isPlLanguage ? "Dodaj regał" : "Add bookshelf"}
           </Button>
         </Box>
-
-        <BookshelfTab
-          name={getAllBooksBookshelfName(isPlLanguage)}
-          totalBooks={getAllBooksBookshelfTotalBooks(bookshelves)}
-          isSelected={
-            currentBookshelfIndex === ALL_BOOKS_BOOKSHELF_INDEX &&
-            !isBookshelfFormOpen
-          }
-          onSelect={() => handleSelect(ALL_BOOKS_BOOKSHELF_INDEX)}
-          disableConfig={true}
-        />
+        {bookshelves.length > 1 && (
+          <BookshelfTab
+            name={getAllBooksBookshelfName(isPlLanguage)}
+            totalBooks={getAllBooksBookshelfTotalBooks(bookshelves)}
+            isSelected={
+              currentBookshelfIndex === ALL_BOOKS_BOOKSHELF_INDEX &&
+              !isBookshelfFormOpen
+            }
+            onSelect={() => handleSelect(ALL_BOOKS_BOOKSHELF_INDEX)}
+            disableConfig={true}
+          />
+        )}
         {bookshelves.map((bookshelf, index) => (
           <BookshelfTab
             key={bookshelf.id}
             name={bookshelf.name}
-            totalBooks={bookshelf.books.length}
+            totalBooks={bookshelf?.books?.length}
             isSelected={currentBookshelfIndex === index && !isBookshelfFormOpen}
             onSelect={() => handleSelect(index)}
           />

@@ -1,4 +1,3 @@
-import { PageContainer } from "../../common/components/ui/styles";
 import BookshelfHeader from "./BookshelfHeader";
 import { useGetBookshelves } from "../../common/api/bookshelfClient";
 import { useMemo, useState } from "react";
@@ -10,7 +9,8 @@ import { ALL_BOOKS_BOOKSHELF_INDEX } from "./common";
 import BookshelfForm from "./BookshelfForm/BookshelfForm";
 import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalAppBar/config";
 import BookshelfContent from "./BookshelfContent/BookshelfContent";
-import { BookshelfBookResponse } from "../../common/models/bookshelfModels";
+import { BookshelfBookResponse } from "../../common/models/bookshelfBookModels";
+import PageContainer from "../../common/components/ui/layout/PageContainer";
 
 export default function BookshelfPage() {
   const { data: { bookshelves } = {}, isLoading } = useGetBookshelves();
@@ -47,6 +47,7 @@ export default function BookshelfPage() {
     return books;
   }, [bookshelves, query, currentBookshelfIndex]);
 
+  const isEmptyBookshelf = bookshelves?.length === 0 && !isBookshelfFormOpen;
   return (
     <BookshelfPageContext.Provider
       value={{
@@ -59,7 +60,7 @@ export default function BookshelfPage() {
         onQueryChange: setQuery,
       }}
     >
-      <PageContainer>
+      <PageContainer isLoading={isLoading}>
         <BookshelfHeader />
         <Stack
           direction="row"
@@ -70,12 +71,14 @@ export default function BookshelfPage() {
           }}
         >
           <BookshelfSidebar />
-          {isBookshelfFormOpen ? (
-            <BookshelfForm />
-          ) : (
-            <BookshelfContent books={booksFiltered} />
-          )}
-          {bookshelves?.length === 0 && isLoading && <EmptyBookshelf />}
+          {!isEmptyBookshelf ? (
+            isBookshelfFormOpen ? (
+              <BookshelfForm />
+            ) : (
+              <BookshelfContent books={booksFiltered} />
+            )
+          ) : null}
+          {isEmptyBookshelf && <EmptyBookshelf />}
         </Stack>
       </PageContainer>
     </BookshelfPageContext.Provider>

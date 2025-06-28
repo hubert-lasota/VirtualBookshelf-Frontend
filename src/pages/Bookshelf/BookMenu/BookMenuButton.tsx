@@ -18,33 +18,69 @@ import { useState } from "react";
 import MoveBookDialog from "./MoveBookDialog";
 import RemoveBookDialog from "./RemoveBookDialog";
 import { useNavigate } from "react-router-dom";
+import { useChangeBookshelfBookStatus } from "../../../common/api/bookshelfBookClient";
+import { useSnackbar } from "notistack";
 
 type BookMenuButtonProps = {
   bookshelfBook: BookshelfBookResponse;
+  onClose: () => void;
 };
 
-export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
+export default function BookMenuButton({
+  bookshelfBook,
+  onClose,
+}: BookMenuButtonProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [openMoveBook, setOpenMoveBook] = useState(false);
   const [openRemoveBook, setOpenRemoveBook] = useState(false);
 
-  const navigate = useNavigate();
-
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { mutate: changeStatus } = useChangeBookshelfBookStatus({
+    onSuccess: () =>
+      enqueueSnackbar({
+        variant: "success",
+        message: isPlLanguage
+          ? "Poprawnie zmieniono status książki"
+          : "Successfully changed book status",
+      }),
+
+    onError: () =>
+      enqueueSnackbar({
+        variant: "error",
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas zmiany statusu ksiązki"
+          : "Error occurred  while changing book status",
+      }),
+  });
+
+  const navigate = useNavigate();
 
   const items = [
     bookshelfBook.status == BookReadingStatus.READING
       ? {
           icon: <BookOpenTextIcon />,
           text: isPlLanguage ? 'Oznacz jako "przeczytane"' : 'Mark as "read"',
+          onClick: () =>
+            changeStatus({
+              bookshelfBookId: bookshelfBook.id,
+              status: BookReadingStatus.READ,
+            }),
         }
       : {
           icon: <BookCheckIcon />,
           text: isPlLanguage
             ? 'Oznacz jako "w trakcie czytania"'
             : 'Mark as "reading"',
+          onClick: () =>
+            changeStatus({
+              bookshelfBookId: bookshelfBook.id,
+              status: BookReadingStatus.READING,
+            }),
         },
     {
       icon: <BookUp2Icon />,
@@ -54,6 +90,7 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
     {
       icon: <NoteIcon />,
       text: isPlLanguage ? "Zarządzaj notatkami" : "Manage notes",
+      onClick: () => {},
     },
     {
       icon: <DeleteIcon />,
@@ -89,7 +126,10 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
       <Menu
         anchorEl={anchorEl}
         open={!!anchorEl}
-        onClose={() => setAnchorEl(null)}
+        onClose={() => {
+          setAnchorEl(null);
+          onClose();
+        }}
       >
         {items.map(({ icon, text, onClick, divider }) => (
           <MenuItem
@@ -97,7 +137,6 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
             key={text}
             onClick={() => {
               setAnchorEl(null);
-              // @ts-ignore
               onClick();
             }}
             divider={divider}

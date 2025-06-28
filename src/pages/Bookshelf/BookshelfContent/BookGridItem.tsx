@@ -2,9 +2,9 @@ import BookCard from "../../../common/components/Book/Card/BookCard";
 import { Box, Chip, Grid, Stack } from "@mui/material";
 import BookMenuButton from "../BookMenu/BookMenuButton";
 import { useState } from "react";
-import { BookshelfBookResponse } from "../../../common/models/bookshelfModels";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { findBookshelf } from "../../../common/utils/bookshelfUtils";
+import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
 
 type BookGridItemProps = {
   bookshelfBook: BookshelfBookResponse;
@@ -44,7 +44,12 @@ export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
               color="primary"
               sx={{ height: "30px" }}
             />
-            {isPointingCard && <BookMenuButton bookshelfBook={bookshelfBook} />}
+            {isPointingCard && (
+              <BookMenuButton
+                bookshelfBook={bookshelfBook}
+                onClose={() => setIsPointingCard(false)}
+              />
+            )}
           </Stack>
           <BookCard.Cover
             sx={{
