@@ -1,12 +1,6 @@
-import { BookResponse } from "./bookModels";
 import { z } from "zod";
 import { BaseResponse } from "../api/apiModels";
-import {
-  BookReadingStatus,
-  BookshelfBookMutationRequest,
-  BookshelfBookNote,
-  createBookshelfBookSchema,
-} from "./bookshelfBookModels";
+import { BookshelfBookResponse } from "./bookshelfBookModels";
 
 export enum BookshelfType {
   TO_READ = "TO_READ",
@@ -14,7 +8,7 @@ export enum BookshelfType {
   READ = "READ",
 }
 
-export function createBookshelfDetailsSchema(isPlLanguage: boolean) {
+export function createBookshelfSchema(isPlLanguage: boolean) {
   const requiredNameMessage = isPlLanguage
     ? "Nazwa jest wymagana"
     : "Name is required";
@@ -31,41 +25,11 @@ export function createBookshelfDetailsSchema(isPlLanguage: boolean) {
   });
 }
 
-export type BookshelfDetailsFormValues = z.infer<
-  ReturnType<typeof createBookshelfDetailsSchema>
+export type BookshelfFormValues = z.infer<
+  ReturnType<typeof createBookshelfSchema>
 >;
 
-export const createBookshelfBooksSchema = (isPlLanguage: boolean) =>
-  z.object({
-    books: z.array(createBookshelfBookSchema(isPlLanguage)).optional(),
-  });
-
-export type BookshelfBooksFormValues = z.infer<
-  ReturnType<typeof createBookshelfBooksSchema>
->;
-
-export type BookshelfFormValues = BookshelfDetailsFormValues &
-  BookshelfBooksFormValues;
-
-export type BookshelfMutationRequest = BookshelfFormValues & {
-  books?: BookshelfBookMutationRequest[];
-  bookCovers?: {
-    cover: File;
-    bookIndex: number;
-  }[];
-};
-
-export type BookshelfBookResponse = {
-  book: BookResponse;
-  notes: BookshelfBookNote[];
-  status: BookReadingStatus;
-  startedAt: string;
-  endedAt: string;
-  progressPercentage: number;
-  currentPage: number;
-} & BaseResponse;
-
-export type BookshelfResponse = BookshelfDetailsFormValues &
+export type BookshelfResponse = BookshelfFormValues &
   BaseResponse & {
     books: BookshelfBookResponse[];
   };

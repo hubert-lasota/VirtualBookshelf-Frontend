@@ -6,11 +6,9 @@ import {
 } from "@tanstack/react-query";
 import {
   BookshelfFormValues,
-  BookshelfMutationRequest,
   BookshelfResponse,
 } from "../models/bookshelfModels";
 import axiosInstance from "./axiosInstance";
-import { toBookshelfMutationFormData } from "../mappers/bookshelfMappers";
 import { unwrapResponseData } from "./apiUtils";
 import { useSnackbar } from "notistack";
 import { useUserContext } from "../auth/UserContext";
@@ -22,6 +20,7 @@ export const BOOKSHELF_QUERY_KEY: [any] = ["bookshelves"];
 export type GetBookshelvesResult = {
   bookshelves: BookshelfResponse[];
 };
+
 export function useGetBookshelves() {
   return useQuery<undefined, unknown, GetBookshelvesResult>({
     queryKey: BOOKSHELF_QUERY_KEY,
@@ -30,6 +29,7 @@ export function useGetBookshelves() {
 }
 
 type UseCreateBookshelfParam = { onSuccess?: () => void };
+
 export function useCreateBookshelf({
   onSuccess,
 }: UseCreateBookshelfParam = {}) {
@@ -41,12 +41,10 @@ export function useCreateBookshelf({
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (bookshelf: BookshelfMutationRequest) =>
-      axiosInstance
-        .post(BASE_ENDPOINT, toBookshelfMutationFormData(bookshelf))
-        .then(unwrapResponseData),
+    mutationFn: async (bookshelf: BookshelfFormValues) =>
+      axiosInstance.post(BASE_ENDPOINT, bookshelf).then(unwrapResponseData),
 
-    onMutate: async (bookshelf: BookshelfMutationRequest) =>
+    onMutate: async (bookshelf: BookshelfFormValues) =>
       handleMutateBookshelvesCache(queryClient, (bookshelves) => {
         // @ts-ignore
         bookshelves.push(bookshelf);
@@ -93,10 +91,7 @@ export function useUpdateBookshelf() {
   return useMutation({
     mutationFn: async ({ bookshelf, bookshelfId }: BookshelfUpdate) =>
       axiosInstance
-        .patch(
-          BASE_ENDPOINT + `/${bookshelfId}`,
-          toBookshelfMutationFormData(bookshelf),
-        )
+        .patch(BASE_ENDPOINT + `/${bookshelfId}`, bookshelf)
         .then(unwrapResponseData),
 
     onSuccess: () =>
@@ -147,7 +142,7 @@ export function useDeleteBookshelf() {
 
 const handleError = (
   queryClient: QueryClient,
-  actionType: string,
+  actionType: "creating" | "updating" | "deleting",
   error: Error,
   variables: unknown,
   context:

@@ -3,15 +3,15 @@ import { Box, Chip, Grid, Stack } from "@mui/material";
 import BookMenuButton from "../BookMenu/BookMenuButton";
 import { useState } from "react";
 import { BookshelfBookResponse } from "../../../common/models/bookshelfModels";
-import { findBookshelf } from "../common";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
+import { findBookshelf } from "../../../common/utils/bookshelfUtils";
 
 type BookGridItemProps = {
   bookshelfBook: BookshelfBookResponse;
 };
 
 export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
-  const [showMenuButton, setShowMenuButton] = useState(false);
+  const [isPointingCard, setIsPointingCard] = useState(false);
 
   const { bookshelves } = useBookshelfPageContext();
 
@@ -19,10 +19,14 @@ export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
 
   return (
     <Grid
-      onMouseEnter={() => setShowMenuButton(true)}
-      onMouseLeave={() => setShowMenuButton(false)}
+      onMouseEnter={() => setIsPointingCard(true)}
+      onMouseLeave={() => setIsPointingCard(false)}
     >
-      <BookCard book={bookshelfBook.book} sx={{ minWidth: "150px" }}>
+      <BookCard
+        book={bookshelfBook.book}
+        sx={{ minWidth: "150px" }}
+        elevation={isPointingCard ? 6 : undefined}
+      >
         <Box sx={{ height: "300px", width: "200px", position: "relative" }}>
           <Stack
             direction="row"
@@ -40,7 +44,7 @@ export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
               color="primary"
               sx={{ height: "30px" }}
             />
-            {showMenuButton && <BookMenuButton bookshelfBook={bookshelfBook} />}
+            {isPointingCard && <BookMenuButton bookshelfBook={bookshelfBook} />}
           </Stack>
           <BookCard.Cover
             sx={{

@@ -1,8 +1,8 @@
 import { MenuItem } from "@mui/material";
-import { useUserContext } from "../../../../common/auth/UserContext";
-import { BookshelfType } from "../../../../common/models/bookshelfModels";
-import ControlledSelect from "../../../../common/components/FormInput/ControlledSelect";
-import RequiredLabel from "../../../../common/components/ui/Label/RequiredLabel";
+import { useUserContext } from "../../../common/auth/UserContext";
+import { BookshelfType } from "../../../common/models/bookshelfModels";
+import ControlledSelect from "../../../common/components/FormInput/ControlledSelect";
+import RequiredLabel from "../../../common/components/ui/Label/RequiredLabel";
 
 export default function BookshelfTypeSelect() {
   const {

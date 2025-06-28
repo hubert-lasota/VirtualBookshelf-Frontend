@@ -8,8 +8,6 @@ import {
 import { useUserContext } from "../../../common/auth/UserContext";
 import { useDeleteBookshelfBook } from "../../../common/api/bookshelfBookClient";
 import { BookshelfBookResponse } from "../../../common/models/bookshelfModels";
-import { findBookshelf } from "../common";
-import { useBookshelfPageContext } from "../BookshelfPageContext";
 import CancelButton from "../../../common/components/ui/Button/CancelButton";
 import DeleteButton from "../../../common/components/ui/Button/DeleteButton";
 import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
@@ -28,8 +26,6 @@ export default function RemoveBookDialog({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { bookshelves } = useBookshelfPageContext();
-
   const { mutate } = useDeleteBookshelfBook();
 
   return (
@@ -46,14 +42,7 @@ export default function RemoveBookDialog({
       </DialogContent>
       <DialogActions>
         <CancelButton onClick={onClose} />
-        <DeleteButton
-          onClick={() =>
-            mutate({
-              bookshelfBookId: bookshelfBook.id,
-              bookshelfId: findBookshelf(bookshelves, bookshelfBook.id).id,
-            })
-          }
-        />
+        <DeleteButton onClick={() => mutate(bookshelfBook.id)} />
       </DialogActions>
     </Dialog>
   );

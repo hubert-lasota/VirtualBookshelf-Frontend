@@ -1,4 +1,7 @@
-import { BookReadingStatus } from "../../../common/models/bookshelfBookModels";
+import {
+  BookReadingStatus,
+  BookshelfBookResponse,
+} from "../../../common/models/bookshelfBookModels";
 import { BookCheckIcon, BookOpenTextIcon, BookUp2Icon } from "lucide-react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useUserContext } from "../../../common/auth/UserContext";
@@ -14,7 +17,7 @@ import NoteIcon from "@mui/icons-material/Note";
 import { useState } from "react";
 import MoveBookDialog from "./MoveBookDialog";
 import RemoveBookDialog from "./RemoveBookDialog";
-import { BookshelfBookResponse } from "../../../common/models/bookshelfModels";
+import { useNavigate } from "react-router-dom";
 
 type BookMenuButtonProps = {
   bookshelfBook: BookshelfBookResponse;
@@ -24,6 +27,8 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [openMoveBook, setOpenMoveBook] = useState(false);
   const [openRemoveBook, setOpenRemoveBook] = useState(false);
+
+  const navigate = useNavigate();
 
   const {
     preferences: { isPlLanguage },
@@ -54,6 +59,12 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
       icon: <DeleteIcon />,
       text: isPlLanguage ? "Usuń książkę" : "Delete book",
       onClick: () => setOpenRemoveBook(true),
+      divider: true,
+    },
+    {
+      icon: <BookOpenTextIcon />,
+      text: isPlLanguage ? "Przejdź do strony książki" : "See book site",
+      onClick: () => navigate(`/books/${bookshelfBook.book.id}`),
     },
   ];
 
@@ -80,14 +91,16 @@ export default function BookMenuButton({ bookshelfBook }: BookMenuButtonProps) {
         open={!!anchorEl}
         onClose={() => setAnchorEl(null)}
       >
-        {items.map(({ icon, text, onClick }) => (
+        {items.map(({ icon, text, onClick, divider }) => (
           <MenuItem
+            color="error"
             key={text}
             onClick={() => {
               setAnchorEl(null);
               // @ts-ignore
               onClick();
             }}
+            divider={divider}
           >
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText>{text}</ListItemText>

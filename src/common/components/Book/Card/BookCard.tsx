@@ -1,9 +1,9 @@
-import { BookResponse } from "../../bookModels";
 import { Card, CardProps } from "@mui/material";
 import BookTitle from "./BookTitle";
 import BookCover from "./BookCover";
 import BookAuthors from "./BookAuthors";
 import { BookContext } from "./BookContext";
+import { BookResponse } from "../../../models/bookModels";
 
 type BookCardProps = {
   book: BookResponse;

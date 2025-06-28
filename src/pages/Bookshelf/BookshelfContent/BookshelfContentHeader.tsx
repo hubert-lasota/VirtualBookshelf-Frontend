@@ -3,7 +3,6 @@ import {
   ALL_BOOKS_BOOKSHELF_INDEX,
   getAllBooksBookshelfName,
   getAllBooksBookshelfTotalBooks,
-  getTotalBooksSuffix,
 } from "../common";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
@@ -28,9 +27,16 @@ export default function BookshelfContentHeader() {
     <Stack>
       <Typography variant="h5">{name}</Typography>
       <Typography color="textSecondary">
-        {isPlLanguage ? "Masz" : "You have"}
-        {` ${totalBooks} ${getTotalBooksSuffix(totalBooks, isPlLanguage)} `}
-        {isPlLanguage ? "w tym regale" : "in this bookshelf"}
+        {isPlLanguage ? "Masz " : "You have "}
+        {totalBooks}{" "}
+        {isPlLanguage
+          ? totalBooks === 1
+            ? "książkę"
+            : "książek"
+          : totalBooks === 1
+            ? "book"
+            : "books"}
+        {isPlLanguage ? " w tym regale" : " in this bookshelf"}
       </Typography>
     </Stack>
   );

@@ -3,14 +3,12 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { BookshelfBookWithBookshelfHeader } from "../models/bookshelfBookModels";
 import axiosInstance from "./axiosInstance";
 import {
   BOOKSHELF_QUERY_KEY,
   GetBookshelvesResult,
   handleMutateBookshelvesCache,
 } from "./bookshelfClient";
-import { BookMutationRequest } from "../models/bookModels";
 import {
   BookshelfBookResponse,
   BookshelfResponse,
@@ -18,35 +16,36 @@ import {
 import { unwrapResponseData } from "./apiUtils";
 import { useUserContext } from "../auth/UserContext";
 import { useSnackbar } from "notistack";
-import { findBookshelfBook } from "../../pages/Bookshelf/common";
+import {
+  findBookshelf,
+  findBookshelfBook,
+  findBookshelfIndex,
+} from "../utils/bookshelfUtils";
+import { BookshelfBookFormValues } from "../models/bookshelfBookModels";
 
 const BASE_ENDPOINT = "/v1/bookshelf-books";
 
-type CreateBookshelfBookParam = Omit<
-  BookshelfBookWithBookshelfHeader,
-  "book"
-> & {
-  book: BookshelfBookWithBookshelfHeader["book"] | BookMutationRequest;
+type CreateBookshelfBookParam = Omit<BookshelfBookFormValues, "book"> & {
+  bookshelfId: number;
 };
-
 export function useCreateBookshelfBook() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      bookshelf,
-      ...bookshelfBook
-    }: CreateBookshelfBookParam) =>
-      axiosInstance.post(BASE_ENDPOINT, bookshelfBook).then(unwrapResponseData),
+    mutationFn: async (book: CreateBookshelfBookParam) =>
+      axiosInstance.post(BASE_ENDPOINT, book).then(unwrapResponseData),
 
-    onMutate: async ({
-      bookshelf,
-      ...bookshelfBook
-    }: CreateBookshelfBookParam) =>
-      handleMutate(queryClient, bookshelf.id, (bookshelf) => {
-        const newBookshelf = structuredClone(bookshelf);
-        newBookshelf.books.push(bookshelfBook as BookshelfBookResponse);
-        return newBookshelf;
+    onMutate: async (book: CreateBookshelfBookParam) =>
+      handleMutateBookshelvesCache(queryClient, (bookshelves) => {
+        const bookshelf = bookshelves.find((b) => b.id === book.bookshelfId)!;
+        if (bookshelf.books) {
+          // @ts-ignore
+          bookshelf.books.push(book);
+        } else {
+          // @ts-ignore
+          bookshelf.books = [book];
+        }
+        return bookshelves;
       }),
 
     onError: (err, bookshelfBook, context) =>
@@ -56,26 +55,23 @@ export function useCreateBookshelfBook() {
   });
 }
 
-type UpdateBookshelfBookParam = Omit<BookshelfBookWithBookshelfHeader, "book">;
+type BookshelfBookUpdate = Omit<BookshelfBookResponse, "book">;
 
 export function useUpdateBookshelfBook() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      bookshelf,
-      ...bookshelfBook
-    }: UpdateBookshelfBookParam) =>
-      axiosInstance.post(BASE_ENDPOINT, bookshelfBook).then(unwrapResponseData),
+    mutationFn: async (book: BookshelfBookUpdate) =>
+      axiosInstance
+        .patch(`${BASE_ENDPOINT}/${book.id}`, book)
+        .then(unwrapResponseData),
 
-    onMutate: async ({ bookshelf, ...bookshelfBook }) =>
-      handleMutate(queryClient, bookshelf.id, (bookshelf) => {
-        const index = bookshelf.books.findIndex(
-          (b) => b.id === bookshelfBook.id,
-        );
+    onMutate: async (book) =>
+      handleMutate(queryClient, book.id, (bookshelf) => {
+        const index = bookshelf.books.findIndex((b) => b.id === book.id);
         const newBookshelf = { ...bookshelf };
         newBookshelf.books[index] = {
-          ...bookshelfBook,
+          ...book,
           book: newBookshelf.books[index]!.book,
         };
         return newBookshelf;
@@ -120,10 +116,8 @@ export function useMoveBookshelfBook() {
       bookshelfId,
     }: MoveBookshelfBookParam) =>
       handleMutateBookshelvesCache(queryClient, (bookshelves) => {
-        const { bookshelfBook, bookshelf } = findBookshelfBook(
-          bookshelves,
-          bookshelfBookId,
-        );
+        const bookshelfBook = findBookshelfBook(bookshelves, bookshelfBookId);
+        const bookshelf = findBookshelf(bookshelves, bookshelfBookId);
         bookshelf.books = bookshelf.books.filter(
           (b) => b.id !== bookshelfBook.id,
         );
@@ -148,11 +142,6 @@ export function useMoveBookshelfBook() {
   });
 }
 
-type DeleteBookshelfBookParam = {
-  bookshelfId: number;
-  bookshelfBookId: number;
-};
-
 export function useDeleteBookshelfBook() {
   const {
     preferences: { isPlLanguage },
@@ -163,11 +152,11 @@ export function useDeleteBookshelfBook() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ bookshelfBookId }: DeleteBookshelfBookParam) =>
+    mutationFn: (bookshelfBookId: number) =>
       axiosInstance.delete(`${BASE_ENDPOINT}/${bookshelfBookId}`),
 
-    onMutate: ({ bookshelfId, bookshelfBookId }: DeleteBookshelfBookParam) =>
-      handleMutate(queryClient, bookshelfId, (bookshelf) => ({
+    onMutate: (bookshelfBookId: number) =>
+      handleMutate(queryClient, bookshelfBookId, (bookshelf) => ({
         ...bookshelf,
         books: bookshelf.books.filter((b) => b.id !== bookshelfBookId),
       })),
@@ -209,14 +198,11 @@ type UpdateBookshelfFn = (bookshelf: BookshelfResponse) => BookshelfResponse;
 
 const handleMutate = async (
   queryClient: QueryClient,
-  bookshelfId: number,
+  bookshelfBookId: number,
   updateFn: UpdateBookshelfFn,
 ) => {
   return await handleMutateBookshelvesCache(queryClient, (bookshelves) => {
-    const index = bookshelves.findIndex((b) => b.id === bookshelfId);
-    if (index === -1) {
-      throw new Error(`Could not find bookshelf with id='${bookshelfId}'`);
-    }
+    const index = findBookshelfIndex(bookshelves, bookshelfBookId);
     bookshelves[index] = updateFn(bookshelves[index]!);
     return [...bookshelves];
   });

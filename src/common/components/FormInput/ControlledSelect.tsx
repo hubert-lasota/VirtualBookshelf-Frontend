@@ -22,13 +22,14 @@ export default function ControlledSelect({
   label,
   formControlProps,
   defaultValue,
+  disabled,
   ...rest
 }: ControlledSelectProps) {
   const {
     field: { value, ref, ...restFieldProps },
     fieldState: { invalid, error },
-  } = useController({ name, defaultValue });
-  console.log("value", value);
+  } = useController({ name, defaultValue, disabled });
+
   return (
     <FormControl
       variant="outlined"

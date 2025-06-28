@@ -1,7 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import BookshelfTabMenuButton from "./BookshelfTabMenuButton";
-import { getTotalBooksSuffix } from "../common";
 
 type BookshelfTabProps = {
   name: string;
@@ -65,7 +64,13 @@ export default function BookshelfTab({
           <Typography fontSize="0.88rem">{name}</Typography>
           <Typography fontSize="0.78rem" color="textSecondary">
             {`${totalBooks} `}
-            {getTotalBooksSuffix(totalBooks, isPlLanguage)}
+            {isPlLanguage
+              ? totalBooks === 1
+                ? "książka"
+                : "książek"
+              : totalBooks === 1
+                ? "book"
+                : "books"}
           </Typography>
         </Stack>
       </Stack>

@@ -4,7 +4,6 @@ import {
   DialogActions,
   DialogContent,
   DialogProps,
-  DialogTitle,
   MenuItem,
 } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
@@ -17,8 +16,9 @@ import {
   BookshelfResponse,
 } from "../../../common/models/bookshelfModels";
 import { useMoveBookshelfBook } from "../../../common/api/bookshelfBookClient";
-import { findBookshelf } from "../common";
 import CancelButton from "../../../common/components/ui/Button/CancelButton";
+import { findBookshelf } from "../../../common/utils/bookshelfUtils";
+import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 
 type MoveBookDialogProps = {
   bookshelfBook: BookshelfBookResponse;
@@ -64,9 +64,9 @@ export default function MoveBookDialog({
         }}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <DialogTitle>
+        <DialogTitleWithCloseButton onClose={onClose}>
           {isPlLanguage ? "Wybierz nowy regał" : "Select new bookshelf"}
-        </DialogTitle>
+        </DialogTitleWithCloseButton>
         <DialogContent>
           <ControlledSelect
             name="bookshelf"

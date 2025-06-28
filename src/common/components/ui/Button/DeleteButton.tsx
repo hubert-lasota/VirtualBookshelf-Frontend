@@ -8,7 +8,12 @@ export default function DeleteButton({ children, ...props }: ButtonProps) {
   } = useUserContext();
 
   return (
-    <Button startIcon={<DeleteIcon />} color="error" {...props}>
+    <Button
+      startIcon={<DeleteIcon />}
+      color="error"
+      variant="contained"
+      {...props}
+    >
       {children || isPlLanguage ? "Usuń" : "Delete"}
     </Button>
   );
