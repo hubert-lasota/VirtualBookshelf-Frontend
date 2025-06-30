@@ -18,8 +18,8 @@ import { useState } from "react";
 import MoveBookDialog from "./MoveBookDialog";
 import RemoveBookDialog from "./RemoveBookDialog";
 import { useNavigate } from "react-router-dom";
-import { useChangeBookshelfBookStatus } from "../../../common/api/bookshelfBookClient";
-import { useSnackbar } from "notistack";
+import { useChangeBookshelfBookStatus } from "../../../common/api/clients/bookshelfBookClient";
+import ManageNotesDialog from "../ManageNotes/ManageNotesDialog";
 
 type BookMenuButtonProps = {
   bookshelfBook: BookshelfBookResponse;
@@ -33,30 +33,13 @@ export default function BookMenuButton({
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [openMoveBook, setOpenMoveBook] = useState(false);
   const [openRemoveBook, setOpenRemoveBook] = useState(false);
+  const [openManageNotes, setOpenManageNotes] = useState(false);
 
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { enqueueSnackbar } = useSnackbar();
-
-  const { mutate: changeStatus } = useChangeBookshelfBookStatus({
-    onSuccess: () =>
-      enqueueSnackbar({
-        variant: "success",
-        message: isPlLanguage
-          ? "Poprawnie zmieniono status książki"
-          : "Successfully changed book status",
-      }),
-
-    onError: () =>
-      enqueueSnackbar({
-        variant: "error",
-        message: isPlLanguage
-          ? "Wystąpił błąd podczas zmiany statusu ksiązki"
-          : "Error occurred  while changing book status",
-      }),
-  });
+  const { mutate: changeStatus } = useChangeBookshelfBookStatus();
 
   const navigate = useNavigate();
 
@@ -90,7 +73,7 @@ export default function BookMenuButton({
     {
       icon: <NoteIcon />,
       text: isPlLanguage ? "Zarządzaj notatkami" : "Manage notes",
-      onClick: () => {},
+      onClick: () => setOpenManageNotes(true),
     },
     {
       icon: <DeleteIcon />,
@@ -157,6 +140,11 @@ export default function BookMenuButton({
       <RemoveBookDialog
         open={openRemoveBook}
         onClose={() => setOpenRemoveBook(false)}
+        bookshelfBook={bookshelfBook}
+      />
+      <ManageNotesDialog
+        open={openManageNotes}
+        onClose={() => setOpenManageNotes(false)}
         bookshelfBook={bookshelfBook}
       />
     </>

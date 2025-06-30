@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { useVerifyJwtValidity } from "../api/authClient";
+import { useVerifyJwtValidity } from "../api/clients/authClient";
 import { useUserContext } from "./UserContext";
 
 // TODO do usunięcia

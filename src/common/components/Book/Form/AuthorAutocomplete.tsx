@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import { Author, AuthorResponse } from "../../../models/authorModels";
 import { useUserContext } from "../../../auth/UserContext";
-import { useGetAuthors } from "../../../api/authorClient";
+import { useGetAuthors } from "../../../api/clients/authorClient";
 import RequiredLabel from "../../ui/Label/RequiredLabel";
 
 type AuthorAutocompleteProps = {

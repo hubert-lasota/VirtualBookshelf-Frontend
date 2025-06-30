@@ -48,8 +48,9 @@ export const createBookshelfBookNoteSchema = (isPlLanguage: boolean) => {
   });
 };
 
-export type BookshelfBookNote = z.infer<
+export type BookshelfBookNoteFormValues = z.infer<
   ReturnType<typeof createBookshelfBookNoteSchema>
 >;
 
-export type BookshelfBookNoteResponse = BaseResponse & BookshelfBookNote;
+export type BookshelfBookNoteResponse = BaseResponse &
+  BookshelfBookNoteFormValues;

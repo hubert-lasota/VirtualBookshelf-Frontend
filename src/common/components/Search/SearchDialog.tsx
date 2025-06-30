@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ResourceType, useSearch } from "../../api/searchClient";
+import { ResourceType, useSearch } from "../../api/clients/searchClient";
 import { useUserContext } from "../../auth/UserContext";
 import { BookResponse } from "../../models/bookModels";
 import BookResult from "./Result/BookResult";

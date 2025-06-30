@@ -1,5 +1,5 @@
 import BookshelfHeader from "./BookshelfHeader";
-import { useGetBookshelves } from "../../common/api/bookshelfClient";
+import { useGetBookshelves } from "../../common/api/clients/bookshelfClient";
 import { useMemo, useState } from "react";
 import EmptyBookshelf from "./EmptyBookshelf";
 import { BookshelfPageContext } from "./BookshelfPageContext";

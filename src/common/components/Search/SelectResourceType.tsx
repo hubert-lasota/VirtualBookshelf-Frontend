@@ -1,4 +1,4 @@
-import { ResourceType } from "../../api/searchClient";
+import { ResourceType } from "../../api/clients/searchClient";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { useUserContext } from "../../auth/UserContext";
 

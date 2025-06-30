@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { useController, useFormContext } from "react-hook-form";
 import { useUserContext } from "../../../../auth/UserContext";
-import { useGetBookSeries } from "../../../../api/bookSeriesClient";
+import { useGetBookSeries } from "../../../../api/clients/bookSeriesClient";
 
 type BookSeriesNameAutocompleteProps = {
   name: string;

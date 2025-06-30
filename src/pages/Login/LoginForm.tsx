@@ -1,4 +1,4 @@
-import { useSignIn } from "../../common/api/authClient.js";
+import { useSignIn } from "../../common/api/clients/authClient.js";
 import {
   Button,
   Link,

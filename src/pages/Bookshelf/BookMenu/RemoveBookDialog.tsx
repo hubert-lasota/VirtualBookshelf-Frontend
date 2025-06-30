@@ -1,9 +1,8 @@
 import { DialogProps } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
-import { useDeleteBookshelfBook } from "../../../common/api/bookshelfBookClient";
+import { useDeleteBookshelfBook } from "../../../common/api/clients/bookshelfBookClient";
 import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
 import DeleteEntityDialog from "../../../common/components/ui/Dialog/DeleteEntityDialog";
-import { useSnackbar } from "notistack";
 
 type RemoveBookDialogProps = Pick<DialogProps, "open"> & {
   bookshelfBook: BookshelfBookResponse;
@@ -19,24 +18,7 @@ export default function RemoveBookDialog({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { enqueueSnackbar } = useSnackbar();
-
-  const { mutate } = useDeleteBookshelfBook({
-    onSuccess: () =>
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Poprawnie usunięto książkę"
-          : "Successfully removed book",
-        variant: "success",
-      }),
-    onError: () =>
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Wystąpił błąd podczas usuwania książki"
-          : "Error occurred while removing book",
-        variant: "error",
-      }),
-  });
+  const { mutate } = useDeleteBookshelfBook();
 
   return (
     <DeleteEntityDialog

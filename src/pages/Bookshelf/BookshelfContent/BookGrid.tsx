@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 
 import BookGridItem from "./BookGridItem";
-import { BookshelfBookResponse } from "../../../common/models/bookshelfModels";
+import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
 
 type BookGridProps = {
   books: BookshelfBookResponse[];

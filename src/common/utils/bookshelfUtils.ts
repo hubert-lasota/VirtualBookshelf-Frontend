@@ -1,7 +1,5 @@
-import {
-  BookshelfBookResponse,
-  BookshelfResponse,
-} from "../models/bookshelfModels";
+import { BookshelfResponse } from "../models/bookshelfModels";
+import { BookshelfBookResponse } from "../models/bookshelfBookModels";
 
 export function findBookshelfBook(
   bookshelves: BookshelfResponse[],

@@ -11,9 +11,8 @@ import CancelButton from "../../../common/components/ui/Button/CancelButton";
 import {
   useCreateBookshelf,
   useUpdateBookshelf,
-} from "../../../common/api/bookshelfClient";
+} from "../../../common/api/clients/bookshelfClient";
 import SaveButton from "../../../common/components/ui/Button/SaveButton";
-import { useSnackbar } from "notistack";
 import { ALL_BOOKS_BOOKSHELF_INDEX } from "../common";
 import BookshelfFormFields from "./BookshelfFormFields";
 
@@ -29,46 +28,13 @@ export default function BookshelfForm() {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { enqueueSnackbar } = useSnackbar();
-
   const isUpdating = !!currentBookshelf;
 
-  const { mutate: updateBookshelf } = useUpdateBookshelf({
-    onSuccess: () =>
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Poprawnie zaktualizowano regał"
-          : "Successfully updated bookshelf",
-        variant: "success",
-      }),
-
-    onError: () =>
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Wystąpił błąd podczas aktualizacji regału"
-          : "Error occurred while updating bookshelf",
-        variant: "error",
-      }),
-  });
+  const { mutate: updateBookshelf } = useUpdateBookshelf();
 
   const { mutate: createBookshelf } = useCreateBookshelf({
     onMutate: () => setCurrentBookshelfIndex(bookshelves.length),
-    onError: () => {
-      setCurrentBookshelfIndex(ALL_BOOKS_BOOKSHELF_INDEX);
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Wystąpił błąd podczas dodawania regału"
-          : "Error occurred while adding bookshelf",
-        variant: "error",
-      });
-    },
-    onSuccess: () =>
-      enqueueSnackbar({
-        message: isPlLanguage
-          ? "Poprawnio utworzono regał"
-          : "Successfully created bookshelf",
-        variant: "success",
-      }),
+    onError: () => setCurrentBookshelfIndex(ALL_BOOKS_BOOKSHELF_INDEX),
   });
 
   const form = useForm<BookshelfFormValues>({

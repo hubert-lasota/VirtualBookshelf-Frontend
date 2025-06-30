@@ -3,33 +3,31 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../axiosInstance";
 import {
   BOOKSHELF_QUERY_KEY,
   GetBookshelvesResult,
   handleMutateBookshelvesCache,
 } from "./bookshelfClient";
-import { BookshelfResponse } from "../models/bookshelfModels";
-import { unwrapResponseData } from "./apiUtils";
+import { BookshelfResponse } from "../../models/bookshelfModels";
+import { unwrapResponseData } from "../apiUtils";
 import {
   findBookshelf,
   findBookshelfBook,
   findBookshelfIndex,
-} from "../utils/bookshelfUtils";
+} from "../../utils/bookshelfUtils";
 import {
   BookReadingStatus,
   BookshelfBookFormValues,
   BookshelfBookResponse,
-} from "../models/bookshelfBookModels";
+} from "../../models/bookshelfBookModels";
+import { useSnackbar } from "notistack";
+import { useUserContext } from "../../auth/UserContext";
+import { bookshelfBookFormValuesToFormData } from "../../mappers/bookshelfBookMappers";
 
 const BASE_ENDPOINT = "/v1/bookshelf-books";
 
-type ShowSnackbarParams = {
-  onSuccess: () => void;
-  onError: () => void;
-};
-
-type CreateBookshelfBookParam = Omit<BookshelfBookFormValues, "book"> & {
+export type CreateBookshelfBookParam = BookshelfBookFormValues & {
   bookshelfId: number;
 };
 export function useCreateBookshelfBook() {
@@ -37,7 +35,9 @@ export function useCreateBookshelfBook() {
 
   return useMutation({
     mutationFn: async (book: CreateBookshelfBookParam) =>
-      axiosInstance.post(BASE_ENDPOINT, book).then(unwrapResponseData),
+      axiosInstance
+        .post(BASE_ENDPOINT, bookshelfBookFormValuesToFormData(book))
+        .then(unwrapResponseData),
 
     onMutate: async (book: CreateBookshelfBookParam) =>
       handleMutateBookshelvesCache(queryClient, (bookshelves) => {
@@ -61,11 +61,14 @@ export function useCreateBookshelfBook() {
 
 type BookshelfBookUpdate = Omit<BookshelfBookResponse, "book">;
 
-export function useUpdateBookshelfBook({
-  onSuccess,
-  onError,
-}: ShowSnackbarParams) {
+export function useUpdateBookshelfBook() {
   const queryClient = useQueryClient();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const {
+    preferences: { isPlLanguage },
+  } = useUserContext();
 
   return useMutation({
     mutationFn: async (book: BookshelfBookUpdate) =>
@@ -85,11 +88,22 @@ export function useUpdateBookshelfBook({
         return newBookshelf;
       }),
 
-    onSuccess,
+    onSuccess: () =>
+      enqueueSnackbar({
+        variant: "success",
+        message: isPlLanguage
+          ? "Poprawnie zaktualizowano książkę"
+          : "Successfully updated book",
+      }),
 
     onError: (error, bookshelfBook, context) => {
       handleError(queryClient, "updating", error, bookshelfBook, context);
-      onError();
+      enqueueSnackbar({
+        variant: "error",
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas aktualizacji książki"
+          : "Error occurred while updating book",
+      });
     },
 
     onSettled: () => handleSettled(queryClient),
@@ -101,11 +115,14 @@ type ChangeBookshelfBookStatusParam = {
   status: BookReadingStatus;
 };
 
-export function useChangeBookshelfBookStatus({
-  onSuccess,
-  onError,
-}: ShowSnackbarParams) {
+export function useChangeBookshelfBookStatus() {
   const queryClient = useQueryClient();
+
+  const {
+    preferences: { isPlLanguage },
+  } = useUserContext();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   return useMutation({
     mutationFn: async ({
@@ -116,7 +133,13 @@ export function useChangeBookshelfBookStatus({
         `${BASE_ENDPOINT}/${bookshelfBookId}/${status.toLowerCase()}`,
       ),
 
-    onSuccess,
+    onSuccess: () =>
+      enqueueSnackbar({
+        variant: "success",
+        message: isPlLanguage
+          ? "Poprawnie zmieniono status książki"
+          : "Successfully changed book status",
+      }),
 
     onMutate: async ({ bookshelfBookId, status }) =>
       handleMutate(queryClient, bookshelfBookId, (bookshelf) => {
@@ -127,7 +150,12 @@ export function useChangeBookshelfBookStatus({
 
     onError: (error, params, context) => {
       handleError(queryClient, "changing status", error, params, context);
-      onError();
+      enqueueSnackbar({
+        variant: "error",
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas zmiany statusu ksiązki"
+          : "Error occurred  while changing book status",
+      });
     },
 
     onSettled: () => handleSettled(queryClient),
@@ -139,11 +167,14 @@ type MoveBookshelfBookParams = {
   bookshelfId: number;
 };
 
-export function useMoveBookshelfBook({
-  onSuccess,
-  onError,
-}: ShowSnackbarParams) {
+export function useMoveBookshelfBook() {
   const queryClient = useQueryClient();
+
+  const {
+    preferences: { isPlLanguage },
+  } = useUserContext();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   return useMutation({
     mutationFn: ({ bookshelfBookId, bookshelfId }: MoveBookshelfBookParams) =>
@@ -151,7 +182,13 @@ export function useMoveBookshelfBook({
         bookshelfId,
       }),
 
-    onSuccess,
+    onSuccess: () =>
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Poprawnie przeniesiono książkę"
+          : "Successfully moved book",
+        variant: "success",
+      }),
 
     onMutate: async ({
       bookshelfBookId,
@@ -172,18 +209,26 @@ export function useMoveBookshelfBook({
 
     onError: (err, bookshelfBook, context) => {
       handleError(queryClient, "moving", err, bookshelfBook, context);
-      onError();
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas przenoszenia książki"
+          : "Error occurred while moving book",
+        variant: "error",
+      });
     },
 
     onSettled: () => handleSettled(queryClient),
   });
 }
 
-export function useDeleteBookshelfBook({
-  onSuccess,
-  onError,
-}: ShowSnackbarParams) {
+export function useDeleteBookshelfBook() {
   const queryClient = useQueryClient();
+
+  const {
+    preferences: { isPlLanguage },
+  } = useUserContext();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   return useMutation({
     mutationFn: (bookshelfBookId: number) =>
@@ -195,11 +240,22 @@ export function useDeleteBookshelfBook({
         books: bookshelf.books.filter((b) => b.id !== bookshelfBookId),
       })),
 
-    onSuccess,
+    onSuccess: () =>
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Poprawnie usunięto książkę"
+          : "Successfully removed book",
+        variant: "success",
+      }),
 
     onError: (err, bookshelfBook, context) => {
       handleError(queryClient, "deleting", err, bookshelfBook, context);
-      onError();
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas usuwania książki"
+          : "Error occurred while removing book",
+        variant: "error",
+      });
     },
 
     onSettled: () => handleSettled(queryClient),

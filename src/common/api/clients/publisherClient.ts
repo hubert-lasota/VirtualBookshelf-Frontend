@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { PaginatedResponse } from "./apiModels";
-import { PublisherResponse } from "../models/publisherModels";
-import axiosInstance from "./axiosInstance";
-import { unwrapResponseData } from "./apiUtils";
+import { PaginatedResponse } from "../apiModels";
+import { PublisherResponse } from "../../models/publisherModels";
+import axiosInstance from "../axiosInstance";
+import { unwrapResponseData } from "../apiUtils";
 
 const BASE_ENDPOINT = "/v1/publishers";
 

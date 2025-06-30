@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { GenreResponse } from "../models/genreModels";
-import axiosInstance from "./axiosInstance";
-import { unwrapResponseData } from "./apiUtils";
+import { GenreResponse } from "../../models/genreModels";
+import axiosInstance from "../axiosInstance";
+import { unwrapResponseData } from "../apiUtils";
 
 const BASE_ENDPOINT = "/v1/genres";
 

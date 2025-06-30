@@ -5,13 +5,14 @@ import { useState } from "react";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { findBookshelf } from "../../../common/utils/bookshelfUtils";
 import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
+import BookReadingProgress from "./BookReadingProgress";
 
 type BookGridItemProps = {
   bookshelfBook: BookshelfBookResponse;
 };
 
 export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
-  const [isPointingCard, setIsPointingCard] = useState(false);
+  const [isPointingCard, setIsPointingCard] = useState(true);
 
   const { bookshelves } = useBookshelfPageContext();
 
@@ -44,13 +45,15 @@ export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
               color="primary"
               sx={{ height: "30px" }}
             />
-            {isPointingCard && (
-              <BookMenuButton
-                bookshelfBook={bookshelfBook}
-                onClose={() => setIsPointingCard(false)}
-              />
-            )}
+
+            <BookMenuButton
+              bookshelfBook={bookshelfBook}
+              onClose={() => setIsPointingCard(false)}
+            />
           </Stack>
+          <BookReadingProgress
+            progressPercentage={bookshelfBook.progressPercentage}
+          />
           <BookCard.Cover
             sx={{
               height: "100%",

@@ -5,7 +5,7 @@ import {
   AutocompleteInputChangeReason,
   TextField,
 } from "@mui/material";
-import { useGetPublishers } from "../../../api/publisherClient";
+import { useGetPublishers } from "../../../api/clients/publisherClient";
 import { PublisherResponse } from "../../../models/publisherModels";
 import { useUserContext } from "../../../auth/UserContext";
 import OptionalLabel from "../../ui/Label/OptionalLabel";

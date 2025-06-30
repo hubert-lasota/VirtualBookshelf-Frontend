@@ -1,12 +1,12 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { ApiError } from "./apiModels";
-import { User, UserCredentials } from "../models/userModels";
-import { useUserContext } from "../auth/UserContext";
+import { ApiError } from "../apiModels";
+import { User, UserCredentials } from "../../models/userModels";
+import { useUserContext } from "../../auth/UserContext";
 import { AxiosError } from "axios";
-import { unwrapResponseData } from "./apiUtils";
+import { unwrapResponseData } from "../apiUtils";
 
 const BASE_ENDPOINT = "/v1/auth";
 

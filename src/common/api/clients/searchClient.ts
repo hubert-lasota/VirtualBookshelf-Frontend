@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "./axiosInstance";
-import { PaginatedResponse } from "./apiModels";
-import { BookResponse } from "../models/bookModels";
-import { unwrapResponseData } from "./apiUtils";
+import axiosInstance from "../axiosInstance";
+import { PaginatedResponse } from "../apiModels";
+import { BookResponse } from "../../models/bookModels";
+import { unwrapResponseData } from "../apiUtils";
 
 type Author = {};
 

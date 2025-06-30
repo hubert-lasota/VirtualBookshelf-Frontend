@@ -1,11 +1,10 @@
 import { DialogProps, Typography } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
-import { useDeleteBookshelf } from "../../../common/api/bookshelfClient";
+import { useDeleteBookshelf } from "../../../common/api/clients/bookshelfClient";
 import { BookshelfResponse } from "../../../common/models/bookshelfModels";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { ALL_BOOKS_BOOKSHELF_INDEX } from "../common";
 import DeleteEntityDialog from "../../../common/components/ui/Dialog/DeleteEntityDialog";
-import { useSnackbar } from "notistack";
 
 type DeleteBookshelfDialogProps = Pick<DialogProps, "open"> & {
   bookshelf: BookshelfResponse;
@@ -21,24 +20,7 @@ export default function DeleteBookshelfDialog({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { enqueueSnackbar } = useSnackbar();
-
-  const { mutate } = useDeleteBookshelf({
-    onSuccess: () =>
-      enqueueSnackbar({
-        variant: "success",
-        message: isPlLanguage
-          ? "Poprawnie usunięto regał"
-          : "Successfully deleted bookshelf",
-      }),
-    onError: () =>
-      enqueueSnackbar({
-        variant: "error",
-        message: isPlLanguage
-          ? "Wystąpił błąd podczas usuwania regału"
-          : "Error occured while deleting bookshelf",
-      }),
-  });
+  const { mutate } = useDeleteBookshelf();
 
   const { currentBookshelfIndex, setCurrentBookshelfIndex } =
     useBookshelfPageContext();

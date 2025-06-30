@@ -2,7 +2,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import { useUserContext } from "../../../auth/UserContext";
 import { useController } from "react-hook-form";
 import { GenreResponse } from "../../../models/genreModels";
-import { useGetGenres } from "../../../api/genreClient";
+import { useGetGenres } from "../../../api/clients/genreClient";
 import RequiredLabel from "../../ui/Label/RequiredLabel";
 
 type GenreAutocompleteProps = {
