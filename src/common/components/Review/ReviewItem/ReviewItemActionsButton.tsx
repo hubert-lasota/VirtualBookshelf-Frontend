@@ -41,7 +41,7 @@ export default function ReviewItemActionsButton({
 
   return (
     <>
-      <IconButton>
+      <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
         <MoreVertIcon />
       </IconButton>
       <Menu

@@ -144,4 +144,8 @@ export type BookResponse = Omit<
     format?: BookFormat;
     coverUrl?: string;
     genres: GenreResponse[];
+    review: {
+      average: number;
+      total: number;
+    };
   };

@@ -1,4 +1,4 @@
-import { Paper, Rating, Stack, Typography } from "@mui/material";
+import { Pagination, Paper, Rating, Stack, Typography } from "@mui/material";
 import { ReviewFormValues, ReviewResponse } from "../../models/reviewModels";
 import { useUserContext } from "../../auth/UserContext";
 import ReviewForm from "./ReviewForm";
@@ -9,6 +9,9 @@ type ReviewDetailsPaperProps = {
   totalRatings: number;
   averageRating: number;
   onSubmitNewReview: (review: ReviewFormValues) => void;
+  page: number;
+  onPageChange: (page: number) => void;
+  totalPages: number;
 };
 
 export default function ReviewDetailsPaper({
@@ -16,6 +19,9 @@ export default function ReviewDetailsPaper({
   totalRatings,
   averageRating,
   onSubmitNewReview,
+  page,
+  onPageChange,
+  totalPages,
 }: ReviewDetailsPaperProps) {
   const {
     preferences: { isPlLanguage },
@@ -43,11 +49,24 @@ export default function ReviewDetailsPaper({
         </Stack>
       </Stack>
       <ReviewForm onSubmit={onSubmitNewReview} />
-      <Stack spacing={2}>
+      <Stack
+        spacing={3}
+        sx={(theme) => ({ width: "100%", paddingTop: theme.spacing(3) })}
+      >
         {reviews.map((review) => (
           <ReviewItem key={review.id} review={review} />
         ))}
       </Stack>
+      {totalPages > 1 && (
+        <Stack direction="row" sx={{ width: "100%", justifyContent: "center" }}>
+          <Pagination
+            page={page + 1}
+            onChange={(_e, page) => onPageChange(page - 1)}
+            count={totalPages}
+            variant="outlined"
+          />
+        </Stack>
+      )}
     </Stack>
   );
 }

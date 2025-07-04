@@ -19,28 +19,55 @@ export default function ReviewItem({ review }: ReviewItemProps) {
 
   const onSubmit = (reviewFormValues: ReviewFormValues) => {
     mutate({ review: reviewFormValues, reviewId: review.id });
+    setIsFormOpen(false);
   };
 
   if (isFormOpen) {
-    return <ReviewForm onSubmit={onSubmit} review={review} />;
+    return (
+      <ReviewForm
+        onSubmit={onSubmit}
+        review={review}
+        onCancel={() => setIsFormOpen(false)}
+      />
+    );
   }
 
   return (
     <ReviewContext.Provider value={review}>
-      <Stack direction="row" spacing={1} sx={{ width: "100%" }}>
+      <Stack
+        direction="row"
+        spacing={1.5}
+        sx={(theme) => ({
+          width: "100%",
+          "&:not(:last-child)": {
+            borderBottom: `1px solid ${theme.palette.divider}`,
+            paddingBottom: theme.spacing(3),
+          },
+        })}
+      >
         <Avatar src={profile.pictureUrl} alt={name} />
-        <Stack>
-          <Stack direction="row" justifyContent="space-between">
-            <Typography>{name}</Typography>
+        <Stack spacing={1.5} sx={{ width: "100%" }}>
+          <Stack
+            direction="row"
+            spacing={5}
+            sx={{
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+            }}
+          >
+            <Stack sx={{ width: "100%" }}>
+              <Typography fontWeight={600}>{name}</Typography>
+              <Stack direction="row" spacing={1}>
+                <Rating value={review.rating} readOnly size="small" />
+                <Typography color="textSecondary" variant="subtitle2">
+                  {new Date(review.createdAt).toLocaleDateString()}
+                </Typography>
+              </Stack>
+            </Stack>
             <ReviewItemActionsButton onEdit={() => setIsFormOpen(true)} />
           </Stack>
 
-          <Stack direction="row" spacing={1}>
-            <Rating value={review.rating} readOnly size="small" />
-            <Typography color="textSecondary" variant="subtitle2">
-              {new Date(review.createdAt).toLocaleDateString()}
-            </Typography>
-          </Stack>
           <Typography color="textSecondary">{review.content}</Typography>
         </Stack>
       </Stack>

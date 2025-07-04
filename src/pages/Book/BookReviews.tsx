@@ -4,14 +4,17 @@ import useCreateBookReview, {
   useGetBookReviews,
 } from "../../common/api/clients/bookReviewClient";
 import { ReviewFormValues } from "../../common/models/reviewModels";
+import { useState } from "react";
 
 type BookReviewsProps = {
   book: BookResponse;
 };
 
 export default function BookReviews({ book }: BookReviewsProps) {
-  const { data: { reviews = [] } = {} } = useGetBookReviews({
-    page: 0,
+  const [page, setPage] = useState(0);
+
+  const { data: { reviews = [], totalPages = 0 } = {} } = useGetBookReviews({
+    page,
     bookId: book.id,
   });
 
@@ -24,9 +27,12 @@ export default function BookReviews({ book }: BookReviewsProps) {
   return (
     <ReviewDetailsPaper
       reviews={reviews}
-      averageRating={0}
-      totalRatings={0}
+      averageRating={book.review.average}
+      totalRatings={book.review.total}
       onSubmitNewReview={onSubmit}
+      page={page}
+      onPageChange={(page) => setPage(page)}
+      totalPages={totalPages}
     />
   );
 }

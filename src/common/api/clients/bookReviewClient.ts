@@ -81,7 +81,7 @@ export function useUpdateBookReview() {
   return useMutation({
     mutationFn: async ({ review, reviewId }: UpdateBookReviewParams) =>
       axiosInstance
-        .put(`${BASE_ENDPOINT}/${reviewId}`, review)
+        .patch(`${BASE_ENDPOINT}/${reviewId}`, review)
         .then(unwrapResponseData),
 
     onSuccess: () => {

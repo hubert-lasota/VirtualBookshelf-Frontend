@@ -18,17 +18,18 @@ export default function BookDetails({ book }: BookDetailsProps) {
     preferences: { isPlLanguage },
   } = useUserContext();
 
+  const noInfoText = isPlLanguage ? "Brak informacji" : "No information";
+
   const infoItems = [
     {
       icon: DescriptionIcon,
       label: "Format",
-      value: book.format || isPlLanguage ? "Brak" : "No format",
+      value: book.format || noInfoText,
     },
     {
       icon: CalendarTodayIcon,
       label: isPlLanguage ? "Rok wydania" : "Publication year",
-      value:
-        book.publicationYear || isPlLanguage ? "Brak" : "No publication year",
+      value: book.publicationYear || noInfoText,
     },
     {
       icon: TagIcon,
@@ -43,7 +44,7 @@ export default function BookDetails({ book }: BookDetailsProps) {
     {
       icon: ApartmentIcon,
       label: isPlLanguage ? "Wydawnictwo" : "Publisher",
-      value: book.publisher || isPlLanguage ? "Brak" : "No publisher",
+      value: book.publisher || noInfoText,
     },
     {
       icon: LanguageIcon,

@@ -7,7 +7,7 @@ import ManageNotesTitle from "./ManageNotesTitle";
 import NoteForm from "./NoteForm";
 import NoteToolbar from "./NoteToolbar";
 import { ManageNotesContext } from "./ManageNotesContext";
-import NoteCard from "./NoteCard";
+import NoteCard from "./NoteCard/NoteCard";
 
 type ManageNotesDialogProps = {
   open: boolean;
