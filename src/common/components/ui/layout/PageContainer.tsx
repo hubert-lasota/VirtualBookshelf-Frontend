@@ -18,7 +18,6 @@ export default function PageContainer({
           width: "100%",
           backgroundImage: theme.palette.background.defaultGradient,
           backgroundRepeat: "no-repeat",
-          zIndex: -1,
         }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

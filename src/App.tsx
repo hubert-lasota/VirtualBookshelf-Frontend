@@ -12,6 +12,7 @@ import UserProvider from "./common/auth/UserProvider";
 import BookshelfPage from "./pages/Bookshelf/BookshelfPage";
 import { SnackbarProvider } from "notistack";
 import SnackbarAdapter from "./common/components/ui/Snackbar/SnackbarAdapter";
+import BookPage from "./pages/Book/BookPage";
 
 const queryClient = new QueryClient();
 
@@ -35,7 +36,7 @@ export default function App() {
               <Route element={<PrivateRoute />}>
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/my-bookshelves" element={<BookshelfPage />} />
-                <Route path="/books/:id" element={<div />} />
+                <Route path="/books/:id" element={<BookPage />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
