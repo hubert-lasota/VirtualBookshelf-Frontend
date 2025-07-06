@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
-import BookshelfTabMenuButton from "./BookshelfTabMenuButton";
+import { useUserContext } from "../../../../common/auth/UserContext";
+import BookshelfActionsButton from "./BookshelfActionsButton";
 
 type BookshelfTabProps = {
   name: string;
@@ -74,7 +74,7 @@ export default function BookshelfTab({
           </Typography>
         </Stack>
       </Stack>
-      {!disableConfig && isSelected && <BookshelfTabMenuButton />}
+      {!disableConfig && <BookshelfActionsButton />}
     </Stack>
   );
 }

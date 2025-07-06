@@ -1,8 +1,8 @@
 import { Button, Paper, Stack, Typography } from "@mui/material";
 import ShelvesIcon from "@mui/icons-material/Shelves";
-import { useUserContext } from "../../common/auth/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import AddIcon from "@mui/icons-material/Add";
-import { useBookshelfPageContext } from "./BookshelfPageContext";
+import { useBookshelfPageContext } from "../BookshelfPageContext";
 
 export default function EmptyBookshelf() {
   const {

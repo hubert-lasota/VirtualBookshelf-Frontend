@@ -1,8 +1,8 @@
 import { DialogProps } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
-import { useDeleteBookshelfBook } from "../../../common/api/clients/bookshelfBookClient";
-import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
-import DeleteEntityDialog from "../../../common/components/ui/Dialog/DeleteEntityDialog";
+import { useUserContext } from "../../../../common/auth/UserContext";
+import { useDeleteBookshelfBook } from "../../../../common/api/clients/bookshelfBookClient";
+import { BookshelfBookResponse } from "../../../../common/models/bookshelfBookModels";
+import DeleteEntityDialog from "../../../../common/components/ui/Dialog/DeleteEntityDialog";
 
 type RemoveBookDialogProps = Pick<DialogProps, "open"> & {
   bookshelfBook: BookshelfBookResponse;

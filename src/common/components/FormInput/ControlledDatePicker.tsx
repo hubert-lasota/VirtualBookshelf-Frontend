@@ -25,7 +25,7 @@ export default function ControlledDatePicker({
   dayjs.locale(languageCode);
 
   const {
-    field: { value, onChange, onBlur, ...restFieldProps },
+    field: { value, onChange, onBlur, ref, ...restFieldProps },
     fieldState: { invalid, error },
   } = useController({ name });
 
@@ -37,6 +37,7 @@ export default function ControlledDatePicker({
       <DatePicker
         value={value ? dayjs(value) : null}
         onChange={(value) => onChange(value?.toISOString())}
+        inputRef={ref}
         slotProps={{
           textField: {
             fullWidth: true,

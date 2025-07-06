@@ -19,7 +19,6 @@ const fieldNames = ["username", "password"] as const;
 
 export default function LoginForm() {
   const messages = useGetLoginFormMessages();
-  const schema = createUserCredentialsSchema(messages);
 
   const {
     handleSubmit,
@@ -27,7 +26,7 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<UserCredentials>({
     mode: "all",
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createUserCredentialsSchema(messages)),
   });
 
   const { mutate: signInRequest, isPending, apiError } = useSignIn();

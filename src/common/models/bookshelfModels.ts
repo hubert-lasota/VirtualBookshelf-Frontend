@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { BaseResponse } from "../api/apiModels";
-import { BookshelfBookResponse } from "./bookshelfBookModels";
 
 export enum BookshelfType {
   TO_READ = "TO_READ",
@@ -31,5 +30,5 @@ export type BookshelfFormValues = z.infer<
 
 export type BookshelfResponse = BookshelfFormValues &
   BaseResponse & {
-    books: BookshelfBookResponse[];
+    totalBooks: number;
   };

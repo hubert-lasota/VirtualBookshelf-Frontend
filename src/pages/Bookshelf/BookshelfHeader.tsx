@@ -1,51 +1,53 @@
-import { Stack, TextField } from "@mui/material";
-import { useDebounceValue } from "../../common/hooks";
-import { useEffect, useState } from "react";
+import { Stack, Tab, Tabs } from "@mui/material";
 import GlobalAppBarContainer from "../../common/components/GlobalAppBar/GlobalAppBarContainer";
 import AppLogo from "../../common/components/GlobalAppBar/AppLogo";
-import { useUserContext } from "../../common/auth/UserContext";
 import SettingsButton from "../../common/components/GlobalAppBar/SettingsButton";
-import SearchIcon from "@mui/icons-material/Search";
 import AppPagesDropdown from "../../common/components/GlobalAppBar/AppPagesDropdown";
-import { useBookshelfPageContext } from "./BookshelfPageContext";
+import { BookshelfView } from "./BookshelfPage";
+import { useUserContext } from "../../common/auth/UserContext";
 
-export default function BookshelfHeader() {
-  const { onQueryChange } = useBookshelfPageContext();
+type BookshelfHeaderProps = {
+  view: BookshelfView;
+  onViewChange: (view: BookshelfView) => void;
+};
+export default function BookshelfHeader({
+  view,
+  onViewChange,
+}: BookshelfHeaderProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
-  const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounceValue(query, 200);
 
-  useEffect(() => {
-    onQueryChange(debouncedQuery);
-  }, [debouncedQuery]);
+  const tabs = [
+    {
+      value: BookshelfView.BOOKSHELVES,
+      label: isPlLanguage ? "Regały" : "Bookshelves",
+    },
+    {
+      value: BookshelfView.STATISTICS,
+      label: isPlLanguage ? "Statystyki" : "Statistics",
+    },
+    {
+      value: BookshelfView.CHALLENGES,
+      label: isPlLanguage ? "Wyzwania" : "Challenges",
+    },
+  ];
 
   return (
-    <>
-      <GlobalAppBarContainer>
-        <AppLogo />
-        <TextField
-          size="small"
-          sx={{ width: "35%" }}
-          placeholder={isPlLanguage ? "Szukaj książek..." : "Search books..."}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          slotProps={{
-            input: {
-              sx: (theme) => ({
-                backgroundImage: theme.palette.background.defaultGradient,
-                borderRadius: theme.spacing(1.5),
-              }),
-              startAdornment: <SearchIcon sx={{ marginRight: "0.4rem" }} />,
-            },
-          }}
-        />
-        <Stack direction="row" spacing={4} alignItems="center">
-          <AppPagesDropdown />
-          <SettingsButton />
-        </Stack>
-      </GlobalAppBarContainer>
-    </>
+    <GlobalAppBarContainer>
+      <AppLogo />
+      <Tabs
+        value={view}
+        onChange={(_, newValue) => onViewChange(newValue as BookshelfView)}
+      >
+        {tabs.map(({ value, label }) => (
+          <Tab key={value} value={value} label={label} />
+        ))}
+      </Tabs>
+      <Stack direction="row" spacing={4} alignItems="center">
+        <AppPagesDropdown />
+        <SettingsButton />
+      </Stack>
+    </GlobalAppBarContainer>
   );
 }

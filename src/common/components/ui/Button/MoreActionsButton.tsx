@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import {
   IconButton,
   ListItemIcon,
@@ -12,7 +12,7 @@ import { useUserContext } from "../../../auth/UserContext";
 
 type MoreActionsButtonProps = {
   items: {
-    onClick: () => void;
+    onClick: (e: React.MouseEvent<HTMLElement>) => void;
     text: string;
     icon: ReactNode;
   }[];
@@ -38,7 +38,12 @@ export default function MoreActionsButton({ items }: MoreActionsButtonProps) {
         anchorEl={anchorEl}
       >
         {items.map(({ text, icon, onClick }) => (
-          <MenuItem onClick={onClick}>
+          <MenuItem
+            onClick={(e) => {
+              onClick(e);
+              setAnchorEl(null);
+            }}
+          >
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText>{text}</ListItemText>
           </MenuItem>

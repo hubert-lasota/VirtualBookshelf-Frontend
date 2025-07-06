@@ -1,10 +1,10 @@
 import {
   BookReadingStatus,
   BookshelfBookResponse,
-} from "../../../common/models/bookshelfBookModels";
+} from "../../../../common/models/bookshelfBookModels";
 import { BookCheckIcon, BookOpenTextIcon, BookUp2Icon } from "lucide-react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../../../common/auth/UserContext";
 import {
   IconButton,
   ListItemIcon,
@@ -18,8 +18,8 @@ import { useState } from "react";
 import MoveBookDialog from "./MoveBookDialog";
 import RemoveBookDialog from "./RemoveBookDialog";
 import { useNavigate } from "react-router-dom";
-import { useChangeBookshelfBookStatus } from "../../../common/api/clients/bookshelfBookClient";
-import ManageNotesDialog from "../ManageNotes/ManageNotesDialog";
+import { useChangeBookshelfBookStatus } from "../../../../common/api/clients/bookshelfBookClient";
+import ManageNotesDialog from "../../ManageNotes/ManageNotesDialog";
 
 type BookMenuButtonProps = {
   bookshelfBook: BookshelfBookResponse;
@@ -142,11 +142,13 @@ export default function BookMenuButton({
         onClose={() => setOpenRemoveBook(false)}
         bookshelfBook={bookshelfBook}
       />
-      <ManageNotesDialog
-        open={openManageNotes}
-        onClose={() => setOpenManageNotes(false)}
-        bookshelfBook={bookshelfBook}
-      />
+      {openManageNotes && (
+        <ManageNotesDialog
+          open={openManageNotes}
+          onClose={() => setOpenManageNotes(false)}
+          bookshelfBook={bookshelfBook}
+        />
+      )}
     </>
   );
 }

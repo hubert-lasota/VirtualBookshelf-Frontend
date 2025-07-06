@@ -9,10 +9,15 @@ export type UserProfile = {
   pictureUrl: string;
 };
 
-export type User = {
+export type UserSignInResponse = {
   id: number;
   username: string;
   jwt: string;
+};
+
+export type User = {
+  id: number;
+  username: string;
   profile: UserProfile;
 };
 

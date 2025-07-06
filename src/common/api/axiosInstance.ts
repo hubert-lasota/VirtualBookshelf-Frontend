@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, UserPreferences } from "../models/userModels";
+import { UserPreferences, UserSignInResponse } from "../models/userModels";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api",
@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
   const user = localStorage.getItem("user");
   if (user) {
-    const { jwt } = JSON.parse(user) as User;
+    const { jwt } = JSON.parse(user) as UserSignInResponse;
     if (jwt) {
       config.headers.Authorization = `Bearer ${jwt}`;
     }

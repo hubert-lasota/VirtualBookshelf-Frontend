@@ -17,8 +17,8 @@ export default function ControlledNumberField({
   } = useController({ name });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const num = value?.length > 0 ? Number(value) : undefined;
+    const val = e.target.value;
+    const num = val.length > 0 ? Number(val) : undefined;
     onChange(num);
   };
 

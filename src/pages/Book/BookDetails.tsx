@@ -24,12 +24,12 @@ export default function BookDetails({ book }: BookDetailsProps) {
     {
       icon: DescriptionIcon,
       label: "Format",
-      value: book.format || noInfoText,
+      value: book.format?.name ?? noInfoText,
     },
     {
       icon: CalendarTodayIcon,
       label: isPlLanguage ? "Rok wydania" : "Publication year",
-      value: book.publicationYear || noInfoText,
+      value: book.publicationYear ?? noInfoText,
     },
     {
       icon: TagIcon,
@@ -44,7 +44,7 @@ export default function BookDetails({ book }: BookDetailsProps) {
     {
       icon: ApartmentIcon,
       label: isPlLanguage ? "Wydawnictwo" : "Publisher",
-      value: book.publisher || noInfoText,
+      value: book.publisher?.name ?? noInfoText,
     },
     {
       icon: LanguageIcon,

@@ -48,4 +48,9 @@ export type BookshelfBookResponse = {
   endedAt: string;
   progressPercentage: number;
   currentPage: number;
+  totalNotes: number;
+  bookshelf: {
+    id: number;
+    name: string;
+  };
 } & BaseResponse;

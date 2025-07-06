@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { ApiError } from "../apiModels";
-import { User, UserCredentials } from "../../models/userModels";
+import {
+  User,
+  UserCredentials,
+  UserSignInResponse,
+} from "../../models/userModels";
 import { useUserContext } from "../../auth/UserContext";
 import { AxiosError } from "axios";
 import { unwrapResponseData } from "../apiUtils";
@@ -34,7 +38,7 @@ export function useSignIn() {
         .post<User>(BASE_ENDPOINT + "/sign-in", credentials)
         .then(unwrapResponseData),
 
-    onSuccess: (user: User) => {
+    onSuccess: (user: UserSignInResponse) => {
       setUser(user);
       navigate("/home");
     },

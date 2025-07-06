@@ -3,25 +3,25 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogProps,
   MenuItem,
 } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
-import { FORM_VALIDATE_MODE } from "../../../common/config/form";
-import ControlledSelect from "../../../common/components/FormInput/ControlledSelect";
-import { useBookshelfPageContext } from "../BookshelfPageContext";
-import { BookshelfResponse } from "../../../common/models/bookshelfModels";
-import { useMoveBookshelfBook } from "../../../common/api/clients/bookshelfBookClient";
-import CancelButton from "../../../common/components/ui/Button/CancelButton";
-import { findBookshelf } from "../../../common/utils/bookshelfUtils";
-import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
-import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
+import { FORM_VALIDATE_MODE } from "../../../../common/config/form";
+import ControlledSelect from "../../../../common/components/FormInput/ControlledSelect";
+import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
+import { useMoveBookshelfBook } from "../../../../common/api/clients/bookshelfBookClient";
+import CancelButton from "../../../../common/components/ui/Button/CancelButton";
+import { findBookshelf } from "../../../../common/utils/bookshelfUtils";
+import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import { BookshelfBookResponse } from "../../../../common/models/bookshelfBookModels";
+import { useBookshelvesViewContext } from "../BookshelvesViewContext";
 
 type MoveBookDialogProps = {
   bookshelfBook: BookshelfBookResponse;
   onClose: () => void;
-} & Pick<DialogProps, "open">;
+  open: boolean;
+};
 
 type FormType = { bookshelf: BookshelfResponse };
 
@@ -36,7 +36,7 @@ export default function MoveBookDialog({
 
   const { mutate } = useMoveBookshelfBook();
 
-  const { bookshelves } = useBookshelfPageContext();
+  const { bookshelves } = useBookshelvesViewContext();
 
   const bookshelf = findBookshelf(bookshelves, bookshelfBook.id);
 

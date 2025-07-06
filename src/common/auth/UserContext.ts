@@ -1,10 +1,14 @@
-import { AppLanguageCode, User, UserPreferences } from "../models/userModels";
+import {
+  AppLanguageCode,
+  UserPreferences,
+  UserSignInResponse,
+} from "../models/userModels";
 import { createContext, useContext } from "react";
 import { PaletteMode } from "@mui/material";
 
 type UserContextValue = {
-  user: User;
-  setUser: (user: User) => void;
+  user: UserSignInResponse;
+  setUser: (user: UserSignInResponse) => void;
   preferences: UserPreferences & {
     isPlLanguage: boolean;
     isDarkTheme: boolean;

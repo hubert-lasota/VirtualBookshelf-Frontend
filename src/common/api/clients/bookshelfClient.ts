@@ -12,10 +12,11 @@ import axiosInstance from "../axiosInstance";
 import { unwrapResponseData } from "../apiUtils";
 import { useSnackbar } from "notistack";
 import { useUserContext } from "../../auth/UserContext";
+import { useBookshelvesViewContext } from "../../../pages/Bookshelf/BookshelvesView/BookshelvesViewContext";
 
 const BASE_ENDPOINT = "/v1/bookshelves";
 
-export const BOOKSHELF_QUERY_KEY: [any] = ["bookshelves"];
+const QUERY_KEY: [any] = ["bookshelves"];
 
 export type GetBookshelvesResult = {
   bookshelves: BookshelfResponse[];
@@ -23,20 +24,12 @@ export type GetBookshelvesResult = {
 
 export function useGetBookshelves() {
   return useQuery<undefined, unknown, GetBookshelvesResult>({
-    queryKey: BOOKSHELF_QUERY_KEY,
+    queryKey: QUERY_KEY,
     queryFn: () => axiosInstance.get(BASE_ENDPOINT).then(unwrapResponseData),
   });
 }
 
-type UseCreateBookshelfParams = {
-  onMutate: () => void;
-  onError: () => void;
-};
-
-export function useCreateBookshelf({
-  onMutate,
-  onError,
-}: UseCreateBookshelfParams) {
+export function useCreateBookshelf() {
   const { enqueueSnackbar } = useSnackbar();
 
   const {
@@ -45,16 +38,19 @@ export function useCreateBookshelf({
 
   const queryClient = useQueryClient();
 
+  const { onCurrentBookshelfChange, selectAllBooksBookshelf } =
+    useBookshelvesViewContext();
+
   return useMutation({
     mutationFn: async (bookshelf: BookshelfFormValues) =>
       axiosInstance.post(BASE_ENDPOINT, bookshelf).then(unwrapResponseData),
 
     onMutate: async (bookshelf: BookshelfFormValues) =>
-      handleMutateBookshelvesCache(queryClient, (bookshelves) => {
-        console.log("bookshelves", bookshelves);
+      handleMutate(queryClient, (bookshelves) => {
         // @ts-ignore
-        bookshelves.push({ ...bookshelf, books: [] });
-        onMutate();
+        const newBookshelf: BookshelfResponse = { ...bookshelf, books: [] };
+        bookshelves.push(newBookshelf);
+        onCurrentBookshelfChange(newBookshelf);
         return bookshelves;
       }),
 
@@ -74,7 +70,7 @@ export function useCreateBookshelf({
           : "Error occurred while adding bookshelf",
         variant: "error",
       });
-      onError();
+      selectAllBooksBookshelf();
     },
 
     onSettled: () => handleSettled(queryClient),
@@ -109,7 +105,7 @@ export function useUpdateBookshelf() {
         variant: "success",
       }),
     onMutate: async ({ bookshelf, bookshelfId }: BookshelfUpdate) =>
-      handleMutateBookshelvesCache(queryClient, (bookshelves) =>
+      handleMutate(queryClient, (bookshelves) =>
         //@ts-ignore
         bookshelves.map((old) => (old.id === bookshelfId ? bookshelf : old)),
       ),
@@ -142,7 +138,7 @@ export function useDeleteBookshelf() {
       axiosInstance.delete(BASE_ENDPOINT + `/${id}`),
 
     onMutate: async (id: number) =>
-      handleMutateBookshelvesCache(queryClient, (bookshelves) =>
+      handleMutate(queryClient, (bookshelves) =>
         bookshelves.filter((b) => b.id !== id),
       ),
 
@@ -170,7 +166,7 @@ export function useDeleteBookshelf() {
 
 const handleError = (
   queryClient: QueryClient,
-  actionType: "creating" | "updating" | "deleting",
+  actionType: string,
   error: Error,
   variables: unknown,
   context:
@@ -180,38 +176,31 @@ const handleError = (
     | undefined,
 ) => {
   console.error(`Error in ${actionType} Bookshelf`, error, variables);
-  queryClient.setQueryData(BOOKSHELF_QUERY_KEY, context!.previousBookshelves);
+  queryClient.setQueryData(QUERY_KEY, context!.previousBookshelves);
 };
 
 const handleSettled = (queryClient: QueryClient) =>
-  queryClient.invalidateQueries({ queryKey: BOOKSHELF_QUERY_KEY });
+  queryClient.invalidateQueries({ queryKey: QUERY_KEY });
 
 type UpdateBookshelvesFn = (
   bookshelves: BookshelfResponse[],
 ) => BookshelfResponse[];
 
-export async function handleMutateBookshelvesCache(
+async function handleMutate(
   queryClient: QueryClient,
   updateFn: UpdateBookshelvesFn,
 ) {
-  await queryClient.cancelQueries({ queryKey: BOOKSHELF_QUERY_KEY });
+  await queryClient.cancelQueries({ queryKey: QUERY_KEY });
   const prev = {
     previousBookshelves:
-      queryClient.getQueryData<GetBookshelvesResult>(BOOKSHELF_QUERY_KEY),
+      queryClient.getQueryData<GetBookshelvesResult>(QUERY_KEY),
   };
-  updateBookshelvesCache(queryClient, updateFn);
-  return prev;
-}
-
-function updateBookshelvesCache(
-  queryClient: QueryClient,
-  updateFn: UpdateBookshelvesFn,
-) {
   queryClient.setQueryData(
-    BOOKSHELF_QUERY_KEY,
+    QUERY_KEY,
     (bookshelfResult: GetBookshelvesResult) => {
       const bookshelves = [...bookshelfResult.bookshelves];
       return { bookshelves: updateFn(bookshelves) };
     },
   );
+  return prev;
 }

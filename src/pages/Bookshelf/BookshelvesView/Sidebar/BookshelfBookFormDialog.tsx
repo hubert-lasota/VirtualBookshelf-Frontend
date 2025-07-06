@@ -3,28 +3,27 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogProps,
   Grid,
   Typography,
 } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
-import { BookshelfResponse } from "../../../common/models/bookshelfModels";
+import { useUserContext } from "../../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
-import { FORM_VALIDATE_MODE } from "../../../common/config/form";
-import BookshelfBookFormFields from "../BookshelfBookFormFields";
-import CancelButton from "../../../common/components/ui/Button/CancelButton";
-import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
-import { useCreateBookshelfBook } from "../../../common/api/clients/bookshelfBookClient";
+import { FORM_VALIDATE_MODE } from "../../../../common/config/form";
+import BookshelfBookFormFields from "../../BookshelfBookFormFields";
+import CancelButton from "../../../../common/components/ui/Button/CancelButton";
+import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import { useCreateBookshelfBook } from "../../../../common/api/clients/bookshelfBookClient";
 import {
   BookshelfBookFormValues,
   createBookshelfBookSchema,
-} from "../../../common/models/bookshelfBookModels";
+} from "../../../../common/models/bookshelfBookModels";
+import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
 
-type BookFormDialogProps = Pick<DialogProps, "open"> & {
-  bookshelf: BookshelfResponse;
+type BookFormDialogProps = {
+  open: boolean;
   onClose: () => void;
+  bookshelf: BookshelfResponse;
 };
 
 export default function BookshelfBookFormDialog({
@@ -42,24 +41,23 @@ export default function BookshelfBookFormDialog({
     resolver: zodResolver(createBookshelfBookSchema(isPlLanguage)),
   });
 
-  useEffect(() => {
-    if (!open) {
-      form.reset();
-    }
-  }, [open]);
-
   const { mutate } = useCreateBookshelfBook();
+
+  const handleClose = () => {
+    form.reset();
+    onClose();
+  };
 
   const onSubmit = async (bookshelfBook: BookshelfBookFormValues) => {
     mutate({ ...bookshelfBook, bookshelfId: bookshelf.id });
-    onClose();
+    handleClose();
   };
 
   return (
     <FormProvider {...form}>
       <Dialog
         open={open}
-        onClose={onClose}
+        onClose={handleClose}
         slotProps={{
           paper: {
             component: "form",
@@ -68,7 +66,7 @@ export default function BookshelfBookFormDialog({
         }}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <DialogTitleWithCloseButton onClose={onClose}>
+        <DialogTitleWithCloseButton onClose={handleClose}>
           {isPlLanguage
             ? "Dodaj książkę do regału: "
             : "Add book to bookshelf: "}
@@ -82,7 +80,7 @@ export default function BookshelfBookFormDialog({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <CancelButton onClick={onClose} />
+          <CancelButton onClick={handleClose} />
           <Button variant="contained" type="submit">
             {isPlLanguage ? "Dodaj" : "Add"}
           </Button>

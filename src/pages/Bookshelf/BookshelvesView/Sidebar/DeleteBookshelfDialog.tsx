@@ -1,10 +1,9 @@
 import { DialogProps, Typography } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
-import { useDeleteBookshelf } from "../../../common/api/clients/bookshelfClient";
-import { BookshelfResponse } from "../../../common/models/bookshelfModels";
-import { useBookshelfPageContext } from "../BookshelfPageContext";
-import { ALL_BOOKS_BOOKSHELF_INDEX } from "../common";
-import DeleteEntityDialog from "../../../common/components/ui/Dialog/DeleteEntityDialog";
+import { useUserContext } from "../../../../common/auth/UserContext";
+import { useDeleteBookshelf } from "../../../../common/api/clients/bookshelfClient";
+import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
+
+import DeleteEntityDialog from "../../../../common/components/ui/Dialog/DeleteEntityDialog";
 
 type DeleteBookshelfDialogProps = Pick<DialogProps, "open"> & {
   bookshelf: BookshelfResponse;
@@ -22,20 +21,17 @@ export default function DeleteBookshelfDialog({
 
   const { mutate } = useDeleteBookshelf();
 
-  const { currentBookshelfIndex, setCurrentBookshelfIndex } =
-    useBookshelfPageContext();
-
   return (
     <DeleteEntityDialog
       open={open}
       onClose={onClose}
       onDelete={(e) => {
         e.stopPropagation();
-        const index =
-          currentBookshelfIndex === 0
-            ? ALL_BOOKS_BOOKSHELF_INDEX
-            : currentBookshelfIndex - 1;
-        setCurrentBookshelfIndex(index);
+        // const index =
+        //   currentBookshelfIndex === 0
+        //     ? ALL_BOOKS_BOOKSHELF_INDEX
+        //     : currentBookshelfIndex - 1;
+        // setCurrentBookshelfIndex(index);
         mutate(bookshelf.id);
         onClose();
       }}
