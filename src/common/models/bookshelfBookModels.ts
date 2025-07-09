@@ -5,6 +5,7 @@ import { BaseResponse } from "../api/apiModels";
 export enum BookReadingStatus {
   READING = "READING",
   READ = "READ",
+  WANT_TO_READ = "WANT_TO_READ",
 }
 
 export const createBookshelfBookSchema = (isPlLanguage: boolean) =>
@@ -30,7 +31,7 @@ export const createBookshelfBookSchema = (isPlLanguage: boolean) =>
           ? "Aktualna strona nie może być mniejsza od 1"
           : "Current page cannot be lower than 1",
       ),
-    startedAt: z.string({
+    startedReadingAt: z.string({
       message: isPlLanguage
         ? "Data rozpoczęcia jest wymagana"
         : "Start date is required",

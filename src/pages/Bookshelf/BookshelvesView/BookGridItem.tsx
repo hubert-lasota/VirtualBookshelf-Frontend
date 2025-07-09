@@ -1,6 +1,6 @@
 import BookCard from "../../../common/components/Book/Card/BookCard";
 import { Box, Chip, Grid, Stack } from "@mui/material";
-import BookMenuButton from "./BookMenu/BookMenuButton";
+import BookshelfBookMenuButton from "./BookMenu/BookshelfBookMenuButton";
 import { useState } from "react";
 import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
 import BookReadingProgress from "./BookReadingProgress";
@@ -40,7 +40,7 @@ export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
               sx={{ height: "30px" }}
             />
 
-            <BookMenuButton
+            <BookshelfBookMenuButton
               bookshelfBook={bookshelfBook}
               onClose={() => setIsPointingCard(false)}
             />

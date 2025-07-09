@@ -12,7 +12,12 @@ export default function BookReadingStatusSelect({
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
+
   const items = [
+    {
+      value: BookReadingStatus.WANT_TO_READ,
+      label: isPlLanguage ? "Chcę przeczytać" : "Want to read",
+    },
     {
       value: BookReadingStatus.READING,
       label: isPlLanguage ? "W trakcie czytania" : "Reading",

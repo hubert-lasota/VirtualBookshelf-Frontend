@@ -2,6 +2,7 @@ import { z } from "zod";
 import { BaseResponse } from "../api/apiModels";
 import { BookFormat } from "./bookFormatModels";
 import { GenreResponse } from "./genreModels";
+import { ReviewResponse, ReviewStatistics } from "./reviewModels";
 
 export function createBookSchema(isPlLanguage: boolean) {
   const authorsRequiredMessage = isPlLanguage
@@ -132,10 +133,6 @@ export function createBookSchema(isPlLanguage: boolean) {
 
 export type BookFormValues = z.infer<ReturnType<typeof createBookSchema>>;
 
-export type BookMutationRequest = Omit<BookFormValues, "cover"> & {
-  coverUrl?: string;
-};
-
 export type BookResponse = Omit<
   BookFormValues,
   "formatId" | "cover" | "genreIds"
@@ -144,8 +141,9 @@ export type BookResponse = Omit<
     format?: BookFormat;
     coverUrl?: string;
     genres: GenreResponse[];
-    review: {
-      average: number;
-      total: number;
-    };
+    reviewStatistics: ReviewStatistics;
   };
+
+export type BookDetailsResponse = BookResponse & {
+  userReview: ReviewResponse;
+};

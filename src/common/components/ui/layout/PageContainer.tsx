@@ -1,4 +1,5 @@
 import { Box, BoxProps, CircularProgress, Stack } from "@mui/material";
+import { GLOBAL_APP_BAR_HEIGHT } from "../../GlobalAppBar/config";
 
 type PageContainerProps = BoxProps & {
   isLoading?: boolean;
@@ -14,10 +15,12 @@ export default function PageContainer({
     <Box
       sx={[
         (theme) => ({
-          height: "100dvh",
+          height: `calc(100dvh - ${GLOBAL_APP_BAR_HEIGHT})`,
           width: "100%",
           backgroundImage: theme.palette.background.defaultGradient,
           backgroundRepeat: "no-repeat",
+          marginTop: GLOBAL_APP_BAR_HEIGHT,
+          overflow: "auto",
         }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

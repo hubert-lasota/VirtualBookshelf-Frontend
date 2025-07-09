@@ -83,6 +83,7 @@ export default function BookshelvesView() {
         <Stack
           spacing={3}
           sx={(theme) => ({
+            marginLeft: "22%",
             padding: theme.spacing(4),
             width: "100%",
             height: "100%",

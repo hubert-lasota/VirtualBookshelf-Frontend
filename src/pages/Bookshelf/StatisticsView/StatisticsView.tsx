@@ -1,3 +1,3 @@
 export default function StatisticsView() {
-  return "stats";
+  return "null";
 }

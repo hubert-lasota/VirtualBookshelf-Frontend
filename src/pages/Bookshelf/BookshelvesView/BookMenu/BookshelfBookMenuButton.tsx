@@ -21,15 +21,15 @@ import { useNavigate } from "react-router-dom";
 import { useChangeBookshelfBookStatus } from "../../../../common/api/clients/bookshelfBookClient";
 import ManageNotesDialog from "../../ManageNotes/ManageNotesDialog";
 
-type BookMenuButtonProps = {
+type BookshelfBookMenuButtonProps = {
   bookshelfBook: BookshelfBookResponse;
   onClose: () => void;
 };
 
-export default function BookMenuButton({
+export default function BookshelfBookMenuButton({
   bookshelfBook,
   onClose,
-}: BookMenuButtonProps) {
+}: BookshelfBookMenuButtonProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [openMoveBook, setOpenMoveBook] = useState(false);
   const [openRemoveBook, setOpenRemoveBook] = useState(false);
@@ -46,7 +46,7 @@ export default function BookMenuButton({
   const items = [
     bookshelfBook.status == BookReadingStatus.READING
       ? {
-          icon: <BookOpenTextIcon />,
+          icon: <BookCheckIcon />,
           text: isPlLanguage ? 'Oznacz jako "przeczytane"' : 'Mark as "read"',
           onClick: () =>
             changeStatus({
@@ -55,7 +55,7 @@ export default function BookMenuButton({
             }),
         }
       : {
-          icon: <BookCheckIcon />,
+          icon: <BookOpenTextIcon />,
           text: isPlLanguage
             ? 'Oznacz jako "w trakcie czytania"'
             : 'Mark as "reading"',

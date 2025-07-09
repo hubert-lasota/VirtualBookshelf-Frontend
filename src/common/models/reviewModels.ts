@@ -31,3 +31,8 @@ export type ReviewResponse = ReviewFormValues &
       };
     };
   };
+
+export type ReviewStatistics = {
+  average: number;
+  total: number;
+};

@@ -1,6 +1,5 @@
 import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
-import { BookOpenText as BookOpenTextIcon } from "lucide-react";
-import { Divider, Stack, useTheme } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import useManageNotesContext from "./ManageNotesContext";
 
@@ -13,18 +12,20 @@ export default function ManageNotesTitle({ onClose }: ManageNotesTitleProps) {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const theme = useTheme();
-
   const { bookshelfBook } = useManageNotesContext();
 
   return (
     <DialogTitleWithCloseButton onClose={onClose}>
-      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-        <BookOpenTextIcon style={{ color: theme.palette.primary.main }} />
-        <span>
+      <Stack>
+        <Typography fontWeight={600} fontSize="1.3rem">
           {isPlLanguage ? "Notatki" : "Notes"}
           {` - ${bookshelfBook.book.title}`}
-        </span>
+        </Typography>
+        <Typography color="textSecondary">
+          {isPlLanguage
+            ? "Zarządzaj swoimi notatkami i przemyśleniami dotyczącymi tej książki"
+            : "Manage your notes and thoughts about this book"}
+        </Typography>
       </Stack>
       <Divider />
     </DialogTitleWithCloseButton>

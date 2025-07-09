@@ -20,11 +20,12 @@ export default function BookshelvesViewSidebar() {
   return (
     <Stack
       sx={(theme) => ({
-        height: "100%",
+        height: "100dvh",
         borderRight: `1px solid ${theme.palette.divider}`,
         width: "25%",
         maxWidth: "300px",
         backgroundColor: theme.palette.background.paper,
+        position: "fixed",
       })}
     >
       <Box

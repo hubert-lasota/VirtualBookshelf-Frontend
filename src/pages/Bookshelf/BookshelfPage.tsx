@@ -1,7 +1,6 @@
 import BookshelfHeader from "./BookshelfHeader";
 import { useState } from "react";
 import { Stack } from "@mui/material";
-import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalAppBar/config";
 import BookshelvesView from "./BookshelvesView/BookshelvesView";
 import PageContainer from "../../common/components/ui/layout/PageContainer";
 import StatisticsView from "./StatisticsView/StatisticsView";
@@ -35,7 +34,6 @@ export default function BookshelfPage() {
         sx={{
           width: "100%",
           height: "100%",
-          paddingTop: GLOBAL_APP_BAR_HEIGHT,
         }}
       >
         {renderView()}

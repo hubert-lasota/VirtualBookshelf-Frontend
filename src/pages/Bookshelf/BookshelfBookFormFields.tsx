@@ -22,7 +22,7 @@ export default function BookshelfBookFormFields({
   const fields = [
     <BookReadingStatusSelect namePrefix={namePrefix} />,
     <ControlledDatePicker
-      name={`${namePrefix}startedAt`}
+      name={`${namePrefix}startedReadingAt`}
       label={
         <RequiredLabel
           text={isPlLanguage ? "Data rozpoczęcia" : "Start date"}

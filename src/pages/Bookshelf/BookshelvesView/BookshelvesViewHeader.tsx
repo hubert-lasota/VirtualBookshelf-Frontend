@@ -22,7 +22,9 @@ export default function BookshelvesViewHeader() {
       sx={{ justifyContent: "space-between", width: "100%" }}
     >
       <Box>
-        <Typography variant="h5">{currentBookshelf.name}</Typography>
+        <Typography fontSize="30px" fontWeight={600}>
+          {currentBookshelf.name}
+        </Typography>
         <Typography color="textSecondary">
           {isPlLanguage ? "Masz " : "You have "}
           {totalBooks}{" "}
