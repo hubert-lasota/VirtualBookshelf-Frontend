@@ -7,47 +7,47 @@ import {
 import axiosInstance from "../axiosInstance";
 import { unwrapResponseData } from "../apiUtils";
 import {
-  BookReadingStatus,
-  BookshelfBookFormValues,
-  BookshelfBookResponse,
-} from "../../models/bookshelfBookModels";
+  ReadingBookFormValues,
+  ReadingBookResponse,
+  ReadingStatus,
+} from "../../models/readingBookModels";
 import { useSnackbar } from "notistack";
 import { useUserContext } from "../../auth/UserContext";
-import { bookshelfBookFormValuesToFormData } from "../../mappers/bookshelfBookMappers";
+import { readingBookFormValuesToFormData } from "../../mappers/bookshelfBookMappers";
 
-const BASE_ENDPOINT = "/v1/bookshelf-books";
+const BASE_ENDPOINT = "/v1/reading-books";
 
-const KEY_NAME = "bookshelf-books";
+const KEY_NAME = "reading-books";
 const QUERY_KEY = [KEY_NAME];
 
-type GetBookshelfBooksResult = {
-  bookshelfBooks: BookshelfBookResponse[];
+type GetReadingBooksResult = {
+  readingBooks: ReadingBookResponse[];
 };
 
-type UseGetBookshelfBooksParams = {
+type UseGetReadingBooksParams = {
   query: string;
 };
 
-export const useGetBookshelfBooks = (params: UseGetBookshelfBooksParams) =>
-  useQuery<GetBookshelfBooksResult>({
+export const useGetBookshelfBooks = (params: UseGetReadingBooksParams) =>
+  useQuery<GetReadingBooksResult>({
     queryKey: [KEY_NAME, params],
     queryFn: () =>
       axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),
   });
 
-export type CreateBookshelfBookParam = BookshelfBookFormValues & {
+export type CreateReadingBookParams = ReadingBookFormValues & {
   bookshelfId: number;
 };
-export function useCreateBookshelfBook() {
+export function useCreateReadingBook() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (book: CreateBookshelfBookParam) =>
+    mutationFn: async (book: CreateReadingBookParams) =>
       axiosInstance
-        .post(BASE_ENDPOINT, bookshelfBookFormValuesToFormData(book))
+        .post(BASE_ENDPOINT, readingBookFormValuesToFormData(book))
         .then(unwrapResponseData),
 
-    onMutate: async (book: CreateBookshelfBookParam) =>
+    onMutate: async (book: CreateReadingBookParams) =>
       handleMutate(queryClient, (books) => [
         // @ts-ignore
         { ...book, bookshelf: { id: book.bookshelfId } },
@@ -61,9 +61,9 @@ export function useCreateBookshelfBook() {
   });
 }
 
-type ChangeBookshelfBookStatusParam = {
-  bookshelfBookId: BookshelfBookResponse["id"];
-  status: BookReadingStatus;
+type ChangeReadingBookStatusParams = {
+  readingBookId: ReadingBookResponse["id"];
+  status: ReadingStatus;
 };
 
 export function useChangeBookshelfBookStatus() {
@@ -77,12 +77,12 @@ export function useChangeBookshelfBookStatus() {
 
   return useMutation({
     mutationFn: async ({
-      bookshelfBookId,
+      readingBookId,
       status,
-    }: ChangeBookshelfBookStatusParam) =>
-      axiosInstance.patch(
-        `${BASE_ENDPOINT}/${bookshelfBookId}/${status.toLowerCase()}`,
-      ),
+    }: ChangeReadingBookStatusParams) =>
+      axiosInstance.patch(`${BASE_ENDPOINT}/${readingBookId}/change-status}`, {
+        status,
+      }),
 
     onSuccess: () =>
       enqueueSnackbar({
@@ -92,8 +92,8 @@ export function useChangeBookshelfBookStatus() {
           : "Successfully changed book status",
       }),
 
-    onMutate: async ({ bookshelfBookId, status }) =>
-      handleMutateBookshelfBook(queryClient, bookshelfBookId, (book) => ({
+    onMutate: async ({ readingBookId, status }) =>
+      handleMutateReadingBook(queryClient, readingBookId, (book) => ({
         ...book,
         status,
       })),
@@ -112,12 +112,12 @@ export function useChangeBookshelfBookStatus() {
   });
 }
 
-type MoveBookshelfBookParams = {
-  bookshelfBookId: number;
+type MoveReadingBookParams = {
+  readingBookId: number;
   bookshelfId: number;
 };
 
-export function useMoveBookshelfBook() {
+export function useMoveReadingBook() {
   const queryClient = useQueryClient();
 
   const {
@@ -127,8 +127,8 @@ export function useMoveBookshelfBook() {
   const { enqueueSnackbar } = useSnackbar();
 
   return useMutation({
-    mutationFn: ({ bookshelfBookId, bookshelfId }: MoveBookshelfBookParams) =>
-      axiosInstance.patch(`${BASE_ENDPOINT}/${bookshelfBookId}/move`, {
+    mutationFn: ({ readingBookId, bookshelfId }: MoveReadingBookParams) =>
+      axiosInstance.patch(`${BASE_ENDPOINT}/${readingBookId}/move`, {
         bookshelfId,
       }),
 
@@ -140,11 +140,8 @@ export function useMoveBookshelfBook() {
         variant: "success",
       }),
 
-    onMutate: async ({
-      bookshelfBookId,
-      bookshelfId,
-    }: MoveBookshelfBookParams) =>
-      handleMutateBookshelfBook(queryClient, bookshelfBookId, (book) => ({
+    onMutate: async ({ readingBookId, bookshelfId }: MoveReadingBookParams) =>
+      handleMutateReadingBook(queryClient, readingBookId, (book) => ({
         ...book,
         bookshelf: { ...book.bookshelf, id: bookshelfId },
       })),
@@ -163,7 +160,7 @@ export function useMoveBookshelfBook() {
   });
 }
 
-export function useDeleteBookshelfBook() {
+export function useDeleteReadingBook() {
   const queryClient = useQueryClient();
 
   const {
@@ -213,25 +210,23 @@ const handleError = (
   variables: unknown,
   context: any,
 ) => {
-  console.error(`Error in ${actionType} BookshelfBook`, error, variables);
+  console.error(`Error in ${actionType} ReadingBook`, error, variables);
   // @ts-ignore
   context.previousQueries.forEach(([queryKey, oldData]) =>
     queryClient.setQueryData(queryKey, oldData),
   );
 };
 
-type UpdateBookshelfBookFn = (
-  book: BookshelfBookResponse,
-) => BookshelfBookResponse;
+type UpdateReadingBookFn = (book: ReadingBookResponse) => ReadingBookResponse;
 
-const handleMutateBookshelfBook = async (
+const handleMutateReadingBook = async (
   queryClient: QueryClient,
-  bookshelfBookId: number,
-  updateFn: UpdateBookshelfBookFn,
+  readingBookId: number,
+  updateFn: UpdateReadingBookFn,
 ) =>
   handleMutate(queryClient, (books) => {
     const newBooks = [...books];
-    const index = books.findIndex((b) => b.id === bookshelfBookId);
+    const index = books.findIndex((b) => b.id === readingBookId);
     if (!index) return newBooks;
     const book = newBooks[index]!;
     newBooks[index] = updateFn(book);
@@ -239,8 +234,8 @@ const handleMutateBookshelfBook = async (
   });
 
 type UpdateBookshelfBooksFn = (
-  books: BookshelfBookResponse[],
-) => BookshelfBookResponse[];
+  books: ReadingBookResponse[],
+) => ReadingBookResponse[];
 
 const handleMutate = async (
   queryClient: QueryClient,
@@ -251,12 +246,12 @@ const handleMutate = async (
   const previousQueries = queryClient.getQueriesData<
     any,
     any,
-    GetBookshelfBooksResult
+    GetReadingBooksResult
   >({ queryKey: QUERY_KEY });
 
-  previousQueries.forEach(([queryKey, { bookshelfBooks = [] } = {}]) => {
+  previousQueries.forEach(([queryKey, { readingBooks = [] } = {}]) => {
     queryClient.setQueryData(queryKey, {
-      bookshelfBooks: updateFn(bookshelfBooks),
+      readingBooks: updateFn(readingBooks),
     });
   });
 

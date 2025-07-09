@@ -1,7 +1,7 @@
 import DeleteEntityDialog from "../../../../common/components/ui/Dialog/DeleteEntityDialog";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import { useNoteContext } from "./NoteContext";
-import { useDeleteBookshelfBookNote } from "../../../../common/api/clients/bookshelfBookNoteClient";
+import { useDeleteReadingNote } from "../../../../common/api/clients/readingNoteClient";
 import useManageNotesContext from "../ManageNotesContext";
 
 type DeleteNoteDialogProps = {
@@ -21,7 +21,7 @@ export default function DeleteNoteDialog({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { mutate } = useDeleteBookshelfBookNote();
+  const { mutate } = useDeleteReadingNote();
 
   return (
     <DeleteEntityDialog

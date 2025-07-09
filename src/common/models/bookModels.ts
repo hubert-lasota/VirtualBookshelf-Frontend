@@ -9,10 +9,6 @@ export function createBookSchema(isPlLanguage: boolean) {
     ? "Co najmniej jeden autor jest wymagany"
     : "At least one author is required";
 
-  const seriesNameMinMessages = isPlLanguage
-    ? "Nazwa serii musi mieć co najmniej jeden znak"
-    : "Series names must contain at least one character";
-
   const genreRequiredMessage = isPlLanguage
     ? "Co najmniej jeden gatunek jest wymagany"
     : "At least one genre is required";
@@ -61,33 +57,6 @@ export function createBookSchema(isPlLanguage: boolean) {
     genreIds: z
       .array(z.number(), { message: genreRequiredMessage })
       .min(1, genreRequiredMessage),
-
-    series: z
-      .array(
-        z.object({
-          id: z.number().optional(),
-          name: z
-            .string({ message: seriesNameMinMessages })
-            .min(1, seriesNameMinMessages),
-          bookOrder: z
-            .number({
-              message: isPlLanguage
-                ? "Kolejność w serii jest wymagana"
-                : "Order in series is required",
-            })
-            .int(
-              isPlLanguage
-                ? "Kolejność w serii musi być liczbą całkowitą"
-                : "Order in series must be integer",
-            )
-            .min(1, {
-              message: isPlLanguage
-                ? "Kolejność w serii musi być równa lub większa 1"
-                : "Order in series must be greater or equal to 1",
-            }),
-        }),
-      )
-      .optional(),
 
     publicationYear: z
       .number()

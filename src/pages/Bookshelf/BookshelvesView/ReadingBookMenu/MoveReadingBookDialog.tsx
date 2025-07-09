@@ -10,35 +10,35 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FORM_VALIDATE_MODE } from "../../../../common/config/form";
 import ControlledSelect from "../../../../common/components/FormInput/ControlledSelect";
 import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
-import { useMoveBookshelfBook } from "../../../../common/api/clients/bookshelfBookClient";
+import { useMoveReadingBook } from "../../../../common/api/clients/readingBookClient";
 import CancelButton from "../../../../common/components/ui/Button/CancelButton";
 import { findBookshelf } from "../../../../common/utils/bookshelfUtils";
 import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
-import { BookshelfBookResponse } from "../../../../common/models/bookshelfBookModels";
+import { ReadingBookResponse } from "../../../../common/models/readingBookModels";
 import { useBookshelvesViewContext } from "../BookshelvesViewContext";
 
 type MoveBookDialogProps = {
-  bookshelfBook: BookshelfBookResponse;
+  readingBook: ReadingBookResponse;
   onClose: () => void;
   open: boolean;
 };
 
 type FormType = { bookshelf: BookshelfResponse };
 
-export default function MoveBookDialog({
+export default function MoveReadingBookDialog({
   open,
   onClose,
-  bookshelfBook,
+  readingBook,
 }: MoveBookDialogProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { mutate } = useMoveBookshelfBook();
+  const { mutate } = useMoveReadingBook();
 
   const { bookshelves } = useBookshelvesViewContext();
 
-  const bookshelf = findBookshelf(bookshelves, bookshelfBook.id);
+  const bookshelf = findBookshelf(bookshelves, readingBook.id);
 
   const form = useForm<FormType>({
     mode: FORM_VALIDATE_MODE,
@@ -46,7 +46,7 @@ export default function MoveBookDialog({
   });
 
   const onSubmit = ({ bookshelf }: FormType) => {
-    mutate({ bookshelfId: bookshelf.id, bookshelfBookId: bookshelfBook.id });
+    mutate({ bookshelfId: bookshelf.id, readingBookId: readingBook.id });
   };
 
   return (

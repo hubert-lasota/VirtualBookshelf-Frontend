@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { BookshelfResponse } from "../../../common/models/bookshelfModels";
-import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
+import { ReadingBookResponse } from "../../../common/models/readingBookModels";
 import {
   AllBooksBookshelf,
   BookshelfFormMode,
@@ -9,7 +9,7 @@ import {
 
 type BookViewContextValue = {
   bookshelves: BookshelfResponse[];
-  bookshelfBooks: BookshelfBookResponse[];
+  readingBooks: ReadingBookResponse[];
   query: string;
   onQueryChange: (query: string) => void;
   currentBookshelf: CurrentBookshelf;

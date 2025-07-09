@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useState } from "react";
 import SearchBookDialog from "./SearchBookDialog";
 import DeleteBookshelfDialog from "./DeleteBookshelfDialog";
-import BookshelfBookFormDialog from "./BookshelfBookFormDialog";
+import ReadingBookFormDialog from "./ReadingBookFormDialog";
 import MoreActionsButton from "../../../../common/components/ui/Button/MoreActionsButton";
 import { useBookshelvesViewContext } from "../BookshelvesViewContext";
 import { BookshelfFormMode, isBookshelfResponse } from "../models";
@@ -71,7 +71,7 @@ export default function BookshelfActionsButton() {
             onClose={() => setOpenDeleteBookshelfDialog(false)}
             bookshelf={currentBookshelf}
           />
-          <BookshelfBookFormDialog
+          <ReadingBookFormDialog
             open={openCreateBookDialog}
             onClose={() => setOpenCreateBookDialog(false)}
             bookshelf={currentBookshelf}

@@ -1,15 +1,15 @@
 import BookCard from "../../../common/components/Book/Card/BookCard";
 import { Box, Chip, Grid, Stack } from "@mui/material";
-import BookshelfBookMenuButton from "./BookMenu/BookshelfBookMenuButton";
+import ReadingBookMenuButton from "./ReadingBookMenu/ReadingBookMenuButton";
 import { useState } from "react";
-import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
+import { ReadingBookResponse } from "../../../common/models/readingBookModels";
 import BookReadingProgress from "./BookReadingProgress";
 
 type BookGridItemProps = {
-  bookshelfBook: BookshelfBookResponse;
+  readingBook: ReadingBookResponse;
 };
 
-export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
+export default function BookGridItem({ readingBook }: BookGridItemProps) {
   const [isPointingCard, setIsPointingCard] = useState(true);
 
   return (
@@ -18,7 +18,7 @@ export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
       onMouseLeave={() => setIsPointingCard(false)}
     >
       <BookCard
-        book={bookshelfBook.book}
+        book={readingBook.book}
         sx={{ minWidth: "150px" }}
         elevation={isPointingCard ? 6 : undefined}
       >
@@ -35,18 +35,18 @@ export default function BookGridItem({ bookshelfBook }: BookGridItemProps) {
             }}
           >
             <Chip
-              label={bookshelfBook.bookshelf.name}
+              label={readingBook.bookshelf.name}
               color="primary"
               sx={{ height: "30px" }}
             />
 
-            <BookshelfBookMenuButton
-              bookshelfBook={bookshelfBook}
+            <ReadingBookMenuButton
+              readingBook={readingBook}
               onClose={() => setIsPointingCard(false)}
             />
           </Stack>
           <BookReadingProgress
-            progressPercentage={bookshelfBook.progressPercentage}
+            progressPercentage={readingBook.progressPercentage}
           />
           <BookCard.Cover
             sx={{

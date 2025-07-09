@@ -1,30 +1,30 @@
 import { DialogProps } from "@mui/material";
 import { useUserContext } from "../../../../common/auth/UserContext";
-import { useDeleteBookshelfBook } from "../../../../common/api/clients/bookshelfBookClient";
-import { BookshelfBookResponse } from "../../../../common/models/bookshelfBookModels";
+import { useDeleteReadingBook } from "../../../../common/api/clients/readingBookClient";
+import { ReadingBookResponse } from "../../../../common/models/readingBookModels";
 import DeleteEntityDialog from "../../../../common/components/ui/Dialog/DeleteEntityDialog";
 
 type RemoveBookDialogProps = Pick<DialogProps, "open"> & {
-  bookshelfBook: BookshelfBookResponse;
+  readingBook: ReadingBookResponse;
   onClose: () => void;
 };
 
-export default function RemoveBookDialog({
+export default function DeleteReadingBookDialog({
   open,
   onClose,
-  bookshelfBook,
+  readingBook,
 }: RemoveBookDialogProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { mutate } = useDeleteBookshelfBook();
+  const { mutate } = useDeleteReadingBook();
 
   return (
     <DeleteEntityDialog
       open={open}
       onClose={onClose}
-      onDelete={() => mutate(bookshelfBook.id)}
+      onDelete={() => mutate(readingBook.id)}
       title={isPlLanguage ? "Usuń książkę" : "Delete book"}
       contentText={
         isPlLanguage

@@ -3,11 +3,11 @@ import BookGridItem from "./BookGridItem";
 import { useBookshelvesViewContext } from "./BookshelvesViewContext";
 
 export default function BookGrid() {
-  const { bookshelfBooks } = useBookshelvesViewContext();
+  const { readingBooks } = useBookshelvesViewContext();
   return (
     <Grid container spacing={5} sx={{ paddingBottom: "1rem" }}>
-      {bookshelfBooks.map((bookshelfBook) => (
-        <BookGridItem bookshelfBook={bookshelfBook} key={bookshelfBook.id} />
+      {readingBooks.map((rb) => (
+        <BookGridItem readingBook={rb} key={rb.id} />
       ))}
     </Grid>
   );

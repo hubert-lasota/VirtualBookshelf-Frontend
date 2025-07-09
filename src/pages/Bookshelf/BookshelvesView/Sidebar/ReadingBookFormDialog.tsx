@@ -13,11 +13,11 @@ import { FORM_VALIDATE_MODE } from "../../../../common/config/form";
 import BookshelfBookFormFields from "../../BookshelfBookFormFields";
 import CancelButton from "../../../../common/components/ui/Button/CancelButton";
 import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
-import { useCreateBookshelfBook } from "../../../../common/api/clients/bookshelfBookClient";
+import { useCreateReadingBook } from "../../../../common/api/clients/readingBookClient";
 import {
-  BookshelfBookFormValues,
-  createBookshelfBookSchema,
-} from "../../../../common/models/bookshelfBookModels";
+  createReadingBookSchema,
+  ReadingBookFormValues,
+} from "../../../../common/models/readingBookModels";
 import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
 
 type BookFormDialogProps = {
@@ -26,7 +26,7 @@ type BookFormDialogProps = {
   bookshelf: BookshelfResponse;
 };
 
-export default function BookshelfBookFormDialog({
+export default function ReadingBookFormDialog({
   open,
   onClose,
   bookshelf,
@@ -35,21 +35,21 @@ export default function BookshelfBookFormDialog({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const form = useForm<BookshelfBookFormValues>({
+  const form = useForm<ReadingBookFormValues>({
     mode: FORM_VALIDATE_MODE,
     reValidateMode: "onChange",
-    resolver: zodResolver(createBookshelfBookSchema(isPlLanguage)),
+    resolver: zodResolver(createReadingBookSchema(isPlLanguage)),
   });
 
-  const { mutate } = useCreateBookshelfBook();
+  const { mutate } = useCreateReadingBook();
 
   const handleClose = () => {
     form.reset();
     onClose();
   };
 
-  const onSubmit = async (bookshelfBook: BookshelfBookFormValues) => {
-    mutate({ ...bookshelfBook, bookshelfId: bookshelf.id });
+  const onSubmit = async (readingBook: ReadingBookFormValues) => {
+    mutate({ ...readingBook, bookshelfId: bookshelf.id });
     handleClose();
   };
 

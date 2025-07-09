@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
-import { BookshelfBookNoteResponse } from "../../../../common/models/bookshelfBookNoteModels";
+import { ReadingNoteResponse } from "../../../../common/models/readingNoteModels";
 
 type NoteContextValue = {
-  note: BookshelfBookNoteResponse;
+  note: ReadingNoteResponse;
   onEdit: () => void;
 };
 

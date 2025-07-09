@@ -10,7 +10,6 @@ import AuthorAutocomplete from "./AuthorAutocomplete";
 import GenreAutocomplete from "./GenreAutocomplete";
 import PublisherAutocomplete from "./PublisherAutocomplete";
 import BookFormatSelect from "./BookFormatSelect";
-import BookSeriesAutocompleteWithAddButton from "./BookSeries/BookSeriesAutocompleteWithAddButton";
 
 type BookFormFieldsProps = {
   namePrefix?: string;
@@ -99,14 +98,6 @@ export default function BookFormFields({
         name: namePrefix + "description",
         label: <OptionalLabel text={isPlLanguage ? "Opis" : "Description"} />,
         multiline: true,
-      },
-      size: 12,
-    },
-
-    {
-      component: BookSeriesAutocompleteWithAddButton,
-      props: {
-        namePrefix: namePrefix,
       },
       size: 12,
     },

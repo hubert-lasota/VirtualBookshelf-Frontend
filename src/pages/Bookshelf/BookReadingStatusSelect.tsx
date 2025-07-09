@@ -1,7 +1,7 @@
 import ControlledSelect from "../../common/components/FormInput/ControlledSelect";
 import RequiredLabel from "../../common/components/ui/Label/RequiredLabel";
 import { useUserContext } from "../../common/auth/UserContext";
-import { BookReadingStatus } from "../../common/models/bookshelfBookModels";
+import { ReadingStatus } from "../../common/models/readingBookModels";
 import { MenuItem } from "@mui/material";
 
 export default function BookReadingStatusSelect({
@@ -15,15 +15,15 @@ export default function BookReadingStatusSelect({
 
   const items = [
     {
-      value: BookReadingStatus.WANT_TO_READ,
+      value: ReadingStatus.WANT_TO_READ,
       label: isPlLanguage ? "Chcę przeczytać" : "Want to read",
     },
     {
-      value: BookReadingStatus.READING,
+      value: ReadingStatus.READING,
       label: isPlLanguage ? "W trakcie czytania" : "Reading",
     },
     {
-      value: BookReadingStatus.READ,
+      value: ReadingStatus.READ,
       label: isPlLanguage ? "Zakończono czytanie" : "Ended",
     },
   ];

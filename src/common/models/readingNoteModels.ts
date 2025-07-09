@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { BaseResponse } from "../api/apiModels";
 
-export const createBookshelfBookNoteSchema = (isPlLanguage: boolean) => {
+export const createReadingNoteSchema = (isPlLanguage: boolean) => {
   const contentRequiredMessage = isPlLanguage
     ? "Treść jest wymagana"
     : "Content is required";
@@ -48,9 +48,8 @@ export const createBookshelfBookNoteSchema = (isPlLanguage: boolean) => {
   });
 };
 
-export type BookshelfBookNoteFormValues = z.infer<
-  ReturnType<typeof createBookshelfBookNoteSchema>
+export type ReadingNoteFormValues = z.infer<
+  ReturnType<typeof createReadingNoteSchema>
 >;
 
-export type BookshelfBookNoteResponse = BaseResponse &
-  BookshelfBookNoteFormValues;
+export type ReadingNoteResponse = BaseResponse & ReadingNoteFormValues;

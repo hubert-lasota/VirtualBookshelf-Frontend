@@ -1,10 +1,10 @@
 import { BookshelfResponse } from "../models/bookshelfModels";
-import { BookshelfBookResponse } from "../models/bookshelfBookModels";
+import { ReadingBookResponse } from "../models/readingBookModels";
 
 export function findBookshelfBook(
   bookshelves: BookshelfResponse[],
-  bookshelfBookId: BookshelfBookResponse["id"],
-): BookshelfBookResponse {
+  bookshelfBookId: ReadingBookResponse["id"],
+): ReadingBookResponse {
   for (const bookshelf of bookshelves) {
     const book = bookshelf.books.find((b) => b.id === bookshelfBookId);
     if (book) {
@@ -19,7 +19,7 @@ export function findBookshelfBook(
 
 export function findBookshelf(
   bookshelves: BookshelfResponse[],
-  bookshelfBookId: BookshelfBookResponse["id"],
+  bookshelfBookId: ReadingBookResponse["id"],
 ) {
   for (const bookshelf of bookshelves) {
     const bookshelfBook = bookshelf.books.find((b) => b.id === bookshelfBookId);
@@ -35,7 +35,7 @@ export function findBookshelf(
 
 export function findBookshelfIndex(
   bookshelves: BookshelfResponse[],
-  bookshelfBookId: BookshelfBookResponse["id"],
+  bookshelfBookId: ReadingBookResponse["id"],
 ) {
   for (const [index, bookshelf] of bookshelves.entries()) {
     const bookshelfBook = bookshelf.books.find((b) => b.id === bookshelfBookId);

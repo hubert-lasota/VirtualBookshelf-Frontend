@@ -1,8 +1,8 @@
 import { Dialog, DialogContent, Stack } from "@mui/material";
-import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
-import { useGetBookshelfBookNotes } from "../../../common/api/clients/bookshelfBookNoteClient";
+import { ReadingBookResponse } from "../../../common/models/readingBookModels";
+import { useGetReadingBookNotes } from "../../../common/api/clients/readingNoteClient";
 import { useMemo, useState } from "react";
-import { BookshelfBookNoteResponse } from "../../../common/models/bookshelfBookNoteModels";
+import { ReadingNoteResponse } from "../../../common/models/readingNoteModels";
 import ManageNotesTitle from "./ManageNotesTitle";
 import NoteForm from "./NoteForm";
 import NoteToolbar from "./NoteToolbar";
@@ -12,21 +12,21 @@ import NoteCard from "./NoteCard/NoteCard";
 type ManageNotesDialogProps = {
   open: boolean;
   onClose: () => void;
-  bookshelfBook: BookshelfBookResponse;
+  readingBook: ReadingBookResponse;
 };
 
 export default function ManageNotesDialog({
   open,
   onClose,
-  bookshelfBook,
+  readingBook,
 }: ManageNotesDialogProps) {
-  const { data: { notes } = {} } = useGetBookshelfBookNotes(bookshelfBook.id);
+  const { data: { notes } = {} } = useGetReadingBookNotes(readingBook.id);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [noteToUpdate, setNoteToUpdate] = useState<BookshelfBookNoteResponse>();
+  const [noteToUpdate, setNoteToUpdate] = useState<ReadingNoteResponse>();
 
   const [query, setQuery] = useState("");
 
-  const notesFiltered: BookshelfBookNoteResponse[] = useMemo(() => {
+  const notesFiltered: ReadingNoteResponse[] = useMemo(() => {
     if (!notes) return [];
     if (!query) return notes;
 
@@ -40,7 +40,7 @@ export default function ManageNotesDialog({
   }, [notes, query]);
 
   return (
-    <ManageNotesContext.Provider value={{ bookshelfBook }}>
+    <ManageNotesContext.Provider value={{ bookshelfBook: readingBook }}>
       <Dialog
         open={open}
         onClose={onClose}

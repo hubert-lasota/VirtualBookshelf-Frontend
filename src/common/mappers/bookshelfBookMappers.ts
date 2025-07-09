@@ -1,16 +1,16 @@
-import { CreateBookshelfBookParam } from "../api/clients/bookshelfBookClient";
+import { CreateReadingBookParams } from "../api/clients/readingBookClient";
 
-export function bookshelfBookFormValuesToFormData(
-  bookshelfBookFormValues: CreateBookshelfBookParam,
+export function readingBookFormValuesToFormData(
+  readingBookFormValues: CreateReadingBookParams,
 ) {
   const {
     book: { cover, ...book },
     ...bookshelfBook
-  } = bookshelfBookFormValues;
+  } = readingBookFormValues;
 
   const formData = new FormData();
   formData.append(
-    "bookshelfBook",
+    "readingBook",
     new Blob(
       [
         JSON.stringify({

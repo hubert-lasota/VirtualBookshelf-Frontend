@@ -3,9 +3,9 @@ import BookshelvesViewHeader from "./BookshelvesViewHeader";
 import BookGrid from "./BookGrid";
 import { useEffect, useMemo, useState } from "react";
 import { useGetBookshelves } from "../../../common/api/clients/bookshelfClient";
-import { BookshelfBookResponse } from "../../../common/models/bookshelfBookModels";
+import { ReadingBookResponse } from "../../../common/models/readingBookModels";
 import { BookshelvesViewContext } from "./BookshelvesViewContext";
-import { useGetBookshelfBooks } from "../../../common/api/clients/bookshelfBookClient";
+import { useGetBookshelfBooks } from "../../../common/api/clients/readingBookClient";
 import { useUserContext } from "../../../common/auth/UserContext";
 import {
   AllBooksBookshelf,
@@ -25,7 +25,7 @@ export default function BookshelvesView() {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounceValue(query, 500);
 
-  const { data: { bookshelfBooks = [] } = {} } = useGetBookshelfBooks({
+  const { data: { readingBooks = [] } = {} } = useGetBookshelfBooks({
     query: debouncedQuery,
   });
 
@@ -54,13 +54,13 @@ export default function BookshelvesView() {
     BookshelfFormMode.CLOSED,
   );
 
-  const filteredBooks: BookshelfBookResponse[] = useMemo(
+  const filteredBooks: ReadingBookResponse[] = useMemo(
     () =>
       isBookshelfResponse(currentBookshelf)
-        ? bookshelfBooks.filter((b) => b.bookshelf.id === currentBookshelf.id)
-        : bookshelfBooks,
+        ? readingBooks.filter((b) => b.bookshelf.id === currentBookshelf.id)
+        : readingBooks,
 
-    [bookshelves, bookshelfBooks, currentBookshelf, query],
+    [bookshelves, readingBooks, currentBookshelf, query],
   );
 
   return (
@@ -70,7 +70,7 @@ export default function BookshelvesView() {
         onCurrentBookshelfChange: (bookshelf) => setCurrentBookshelf(bookshelf),
         allBooksBookshelf,
         selectAllBooksBookshelf: () => setCurrentBookshelf(allBooksBookshelf),
-        bookshelfBooks: filteredBooks,
+        readingBooks: filteredBooks,
         bookshelves,
         query,
         onQueryChange: (query) => setQuery(query),

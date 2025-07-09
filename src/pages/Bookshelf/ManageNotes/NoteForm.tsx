@@ -7,19 +7,19 @@ import ControlledNumberField from "../../../common/components/FormInput/Controll
 import ControlledTextField from "../../../common/components/FormInput/ControlledTextField";
 import { FormProvider, useForm } from "react-hook-form";
 import {
-  BookshelfBookNoteFormValues,
-  BookshelfBookNoteResponse,
-} from "../../../common/models/bookshelfBookNoteModels";
+  ReadingNoteFormValues,
+  ReadingNoteResponse,
+} from "../../../common/models/readingNoteModels";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
 import {
-  useCreateBookshelfBookNote,
-  useUpdateBookshelfBookNote,
-} from "../../../common/api/clients/bookshelfBookNoteClient";
+  useCreateReadingNote,
+  useUpdateReadingNote,
+} from "../../../common/api/clients/readingNoteClient";
 import useManageNotesContext from "./ManageNotesContext";
 
 type NoteFormProps = {
-  note?: BookshelfBookNoteFormValues;
-  noteId?: BookshelfBookNoteResponse["id"];
+  note?: ReadingNoteFormValues;
+  noteId?: ReadingNoteResponse["id"];
   onClose: () => void;
 };
 
@@ -30,17 +30,17 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
 
   const { bookshelfBook } = useManageNotesContext();
 
-  const form = useForm<BookshelfBookNoteFormValues>({
+  const form = useForm<ReadingNoteFormValues>({
     mode: FORM_VALIDATE_MODE,
     defaultValues: note,
   });
 
-  const { mutate: createNote } = useCreateBookshelfBookNote();
-  const { mutate: updateNote } = useUpdateBookshelfBookNote();
+  const { mutate: createNote } = useCreateReadingNote();
+  const { mutate: updateNote } = useUpdateReadingNote();
 
   const isUpdating = !!note && !!noteId;
 
-  const onSubmit = (note: BookshelfBookNoteFormValues) => {
+  const onSubmit = (note: ReadingNoteFormValues) => {
     const bookshelfBookId = bookshelfBook.id;
     if (isUpdating) {
       updateNote({ note, noteId, bookshelfBookId });
