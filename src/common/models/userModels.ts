@@ -9,16 +9,14 @@ export type UserProfile = {
   pictureUrl: string;
 };
 
-export type UserSignInResponse = {
-  id: number;
-  username: string;
-  jwt: string;
-};
-
 export type User = {
   id: number;
   username: string;
   profile: UserProfile;
+};
+
+export type UserSignInResponse = User & {
+  jwt: string;
 };
 
 export type AppLanguageCode = "pl" | "en";

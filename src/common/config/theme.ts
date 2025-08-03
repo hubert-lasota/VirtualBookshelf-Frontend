@@ -1,31 +1,80 @@
 import { createTheme } from "@mui/material";
 
 declare module "@mui/material/styles" {
-  interface TypeBackground {
-    defaultGradient: string;
+  interface PaletteColor {
+    light: string;
+    dark: string;
+    main: string;
+    contrastText: string;
+    contrastTextOnLight: string;
+    "50": string;
+    "100": string;
+    "200": string;
+    "300": string;
+    "400": string;
+    "500": string;
+    "600": string;
+    "700": string;
+    "800": string;
+    "900": string;
+    [key: string]: string;
+  }
+
+  interface SimplePaletteColorOptions {
+    contrastTextOnLight: string;
+    [key: string]: string | undefined;
   }
 }
 
+const primaryColor = {
+  50: "hsl(20, 39%, 92%)",
+  100: "hsl(24, 43%, 80%)",
+  200: "hsl(27, 39%, 67%)",
+  300: "hsl(27, 38%, 53%)",
+  400: "hsl(29, 49%, 41%)",
+  500: "hsl(22, 59%, 25%)",
+  600: "hsl(22, 59%, 22%)",
+  700: "hsl(22, 61%, 19%)",
+  800: "hsl(22, 63%, 15%)",
+  900: "hsl(22, 66%, 10%)",
+  A100: "hsl(30, 100%, 85%)",
+  A200: "hsl(28, 100%, 75%)",
+  A400: "hsl(25, 100%, 65%)",
+  A700: "hsl(22, 100%, 57%)",
+};
+
 const theme = createTheme({
+  shape: {
+    borderRadius: 3,
+  },
   palette: {
     mode: "light",
+    divider: "hsl(35 20% 85%)",
     background: {
-      default: "hsl(0, 0%, 99%)",
-      defaultGradient:
-        "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
+      default: "hsl(35 20% 96%)",
+      paper: "hsl(35 30% 98%)",
+    },
+    primary: {
+      ...primaryColor,
+      contrastText: "#ffff",
+      contrastTextOnLight: "hsl(0,0%,95%)",
+      main: primaryColor[500],
+      dark: primaryColor[700],
+      light: primaryColor[300],
     },
     text: {
-      secondary: "hsl(220, 20%, 35%)",
+      primary: "hsl(15,15%,16%)",
+      secondary: "rgb(132, 112, 98)",
     },
   },
   components: {
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          borderRadius: 12,
-        },
-      },
-    },
+    // MuiPaper: {
+    //   styleOverrides: {
+    //     root: {
+    //       borderRadius: 12,
+    //     },
+    //   },
+    // },
     MuiButton: {
       defaultProps: {
         disableTouchRipple: true,
@@ -39,14 +88,6 @@ const theme = createTheme({
           borderRadius: 8,
           padding: "10px 20px",
         },
-      },
-    },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          backgroundColor: theme.palette.background.default,
-          borderRadius: 8,
-        }),
       },
     },
   },

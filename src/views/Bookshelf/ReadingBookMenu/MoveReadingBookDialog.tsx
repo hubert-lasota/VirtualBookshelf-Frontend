@@ -5,17 +5,17 @@ import {
   DialogContent,
   MenuItem,
 } from "@mui/material";
-import { useUserContext } from "../../../../common/auth/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
-import { FORM_VALIDATE_MODE } from "../../../../common/config/form";
-import ControlledSelect from "../../../../common/components/FormInput/ControlledSelect";
-import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
-import { useMoveReadingBook } from "../../../../common/api/clients/readingBookClient";
-import CancelButton from "../../../../common/components/ui/Button/CancelButton";
-import { findBookshelf } from "../../../../common/utils/bookshelfUtils";
-import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
-import { ReadingBookResponse } from "../../../../common/models/readingBookModels";
-import { useBookshelvesViewContext } from "../BookshelvesViewContext";
+import { FORM_VALIDATE_MODE } from "../../../common/config/form";
+import ControlledSelect from "../../../common/components/FormInput/ControlledSelect";
+import { BookshelfResponse } from "../../../common/models/bookshelfModels";
+import { useMoveReadingBook } from "../../../common/api/clients/readingBookClient";
+import CancelButton from "../../../common/components/ui/Button/CancelButton";
+import { findBookshelf } from "../../../common/utils/bookshelfUtils";
+import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import { ReadingBookResponse } from "../../../common/models/readingBookModels";
+import { useBookshelfViewContext } from "../BookshelfViewContext";
 
 type MoveBookDialogProps = {
   readingBook: ReadingBookResponse;
@@ -36,7 +36,7 @@ export default function MoveReadingBookDialog({
 
   const { mutate } = useMoveReadingBook();
 
-  const { bookshelves } = useBookshelvesViewContext();
+  const { bookshelves } = useBookshelfViewContext();
 
   const bookshelf = findBookshelf(bookshelves, readingBook.id);
 

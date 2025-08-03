@@ -1,15 +1,15 @@
 import LoginForm from "./LoginForm.js";
 import { Box, Stack } from "@mui/material";
-import GlobalAppBar from "../../common/components/GlobalAppBar/GlobalAppBar";
-import LanguageSelect from "../../common/components/GlobalAppBar/LanguageSelect";
+import GlobalNavbar from "../../common/components/GlobalNavbar/GlobalNavbar";
+import LanguageSelect from "../../common/components/GlobalNavbar/LanguageSelect";
 import PageContainer from "../../common/components/ui/layout/PageContainer.js";
 
 export default function LoginPage() {
   return (
     <PageContainer>
-      <GlobalAppBar>
+      <GlobalNavbar>
         <LanguageSelect />
-      </GlobalAppBar>
+      </GlobalNavbar>
       <Stack
         direction={{ xs: "column", md: "row" }}
         sx={{

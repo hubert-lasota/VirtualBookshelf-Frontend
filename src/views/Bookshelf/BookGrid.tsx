@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 import BookGridItem from "./BookGridItem";
-import { useBookshelvesViewContext } from "./BookshelvesViewContext";
+import { useBookshelfViewContext } from "./BookshelfViewContext";
 
 export default function BookGrid() {
-  const { readingBooks } = useBookshelvesViewContext();
+  const { readingBooks } = useBookshelfViewContext();
   return (
     <Grid container spacing={5} sx={{ paddingBottom: "1rem" }}>
       {readingBooks.map((rb) => (

@@ -1,25 +1,22 @@
-import { Stack } from "@mui/material";
-import BookshelvesViewHeader from "./BookshelvesViewHeader";
-import BookGrid from "../../../views/Bookshelf/BookGrid";
+import { useGetBookshelves } from "../../common/api/clients/bookshelfClient";
 import { useEffect, useMemo, useState } from "react";
-import { useGetBookshelves } from "../../../common/api/clients/bookshelfClient";
-import { ReadingBookResponse } from "../../../common/models/readingBookModels";
-import { BookshelfViewContext } from "../../../views/Bookshelf/BookshelfViewContext";
-import { useGetBookshelfBooks } from "../../../common/api/clients/readingBookClient";
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useDebounceValue } from "../../common/hooks";
+import { useGetBookshelfBooks } from "../../common/api/clients/readingBookClient";
+import { useUserContext } from "../../common/auth/UserContext";
 import {
   AllBooksBookshelf,
   BookshelfFormMode,
   CurrentBookshelf,
   isAllBooksBookshelf,
   isBookshelfResponse,
-} from "../../../views/Bookshelf/models";
-import BookshelfFormDialog from "../../../views/Bookshelf/BookshelfForm/BookshelfFormDialog";
-import BookshelvesViewSidebar from "./Sidebar/BookshelvesViewSidebar";
-import BookshelfToolbar from "../../../views/Bookshelf/BookshelfToolbar";
-import { useDebounceValue } from "../../../common/hooks";
+} from "./models";
+import { ReadingBookResponse } from "../../common/models/readingBookModels";
+import { BookshelfViewContext } from "./BookshelfViewContext";
+import BookshelfFormDialog from "./BookshelfForm/BookshelfFormDialog";
+import { Box } from "@mui/material";
+import BookshelfSidebar from "./BookshelfSidebar";
 
-export default function BookshelvesView() {
+export default function BookshelfView() {
   const { data: { bookshelves = [] } = {} } = useGetBookshelves();
 
   const [query, setQuery] = useState("");
@@ -62,7 +59,6 @@ export default function BookshelvesView() {
 
     [bookshelves, readingBooks, currentBookshelf, query],
   );
-
   return (
     <BookshelfViewContext.Provider
       value={{
@@ -78,22 +74,17 @@ export default function BookshelvesView() {
         onFormModeChange: (formMode) => setFormMode(formMode),
       }}
     >
-      <Stack direction="row" sx={{ width: "100%", height: "100%" }}>
-        <BookshelvesViewSidebar />
-        <Stack
-          spacing={3}
-          sx={(theme) => ({
-            marginLeft: "22%",
-            padding: theme.spacing(4),
-            width: "100%",
-            height: "100%",
-          })}
-        >
-          <BookshelvesViewHeader />
-          <BookshelfToolbar />
-          <BookGrid />
-        </Stack>
-      </Stack>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          display: "grid",
+          gridTemplateColumns: "1fr 200px",
+        }}
+      >
+        <div>text</div>
+        <BookshelfSidebar />
+      </Box>
       {formMode !== BookshelfFormMode.CLOSED && <BookshelfFormDialog />}
     </BookshelfViewContext.Provider>
   );

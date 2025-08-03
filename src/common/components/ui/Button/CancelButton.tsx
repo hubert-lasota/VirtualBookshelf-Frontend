@@ -7,7 +7,7 @@ export default function CancelButton({ children, ...props }: ButtonProps) {
   } = useUserContext();
 
   return (
-    <Button color="inherit" {...props}>
+    <Button variant="outlined" {...props}>
       {children || isPlLanguage ? "Anuluj" : "Cancel"}
     </Button>
   );

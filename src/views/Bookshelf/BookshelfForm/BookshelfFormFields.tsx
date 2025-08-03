@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
-import ControlledTextField from "../../../../common/components/FormInput/ControlledTextField";
-import RequiredLabel from "../../../../common/components/ui/Label/RequiredLabel";
+import ControlledTextField from "../../../common/components/FormInput/ControlledTextField";
+import RequiredLabel from "../../../common/components/ui/Label/RequiredLabel";
 import BookshelfTypeSelect from "./BookshelfTypeSelect";
-import OptionalLabel from "../../../../common/components/ui/Label/OptionalLabel";
-import { useUserContext } from "../../../../common/auth/UserContext";
+import OptionalLabel from "../../../common/components/ui/Label/OptionalLabel";
+import { useUserContext } from "../../../common/auth/UserContext";
 
 export default function BookshelfFormFields() {
   const {

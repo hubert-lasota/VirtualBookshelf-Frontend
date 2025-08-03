@@ -8,8 +8,11 @@ import SearchBookDialog from "./SearchBookDialog";
 import DeleteBookshelfDialog from "./DeleteBookshelfDialog";
 import ReadingBookFormDialog from "./ReadingBookFormDialog";
 import MoreActionsButton from "../../../../common/components/ui/Button/MoreActionsButton";
-import { useBookshelvesViewContext } from "../BookshelvesViewContext";
-import { BookshelfFormMode, isBookshelfResponse } from "../models";
+import { useBookshelfViewContext } from "../../../../views/Bookshelf/BookshelfViewContext";
+import {
+  BookshelfFormMode,
+  isBookshelfResponse,
+} from "../../../../views/Bookshelf/models";
 
 export default function BookshelfActionsButton() {
   const [openCreateBookDialog, setOpenCreateBookDialog] = useState(false);
@@ -21,7 +24,7 @@ export default function BookshelfActionsButton() {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { currentBookshelf, onFormModeChange } = useBookshelvesViewContext();
+  const { currentBookshelf, onFormModeChange } = useBookshelfViewContext();
 
   const clickWithStopPropagation = (callback: () => void) => {
     return (e: React.MouseEvent<HTMLElement>) => {

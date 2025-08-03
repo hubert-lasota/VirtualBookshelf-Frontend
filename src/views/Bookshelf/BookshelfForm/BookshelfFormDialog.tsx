@@ -1,25 +1,25 @@
 import {
   BookshelfFormValues,
   createBookshelfSchema,
-} from "../../../../common/models/bookshelfModels";
+} from "../../../common/models/bookshelfModels";
 import { Dialog, DialogActions, DialogContent } from "@mui/material";
-import { useUserContext } from "../../../../common/auth/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CancelButton from "../../../../common/components/ui/Button/CancelButton";
+import CancelButton from "../../../common/components/ui/Button/CancelButton";
 import {
   useCreateBookshelf,
   useUpdateBookshelf,
-} from "../../../../common/api/clients/bookshelfClient";
-import SaveButton from "../../../../common/components/ui/Button/SaveButton";
+} from "../../../common/api/clients/bookshelfClient";
+import SaveButton from "../../../common/components/ui/Button/SaveButton";
 import BookshelfFormFields from "./BookshelfFormFields";
-import { useBookshelvesViewContext } from "../BookshelvesViewContext";
-import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import { useBookshelfViewContext } from "../BookshelfViewContext";
+import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 import { BookshelfFormMode, isBookshelfResponse } from "../models";
 
 export default function BookshelfFormDialog() {
   const { currentBookshelf, formMode, onFormModeChange } =
-    useBookshelvesViewContext();
+    useBookshelfViewContext();
 
   const {
     preferences: { isPlLanguage },

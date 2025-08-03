@@ -1,10 +1,10 @@
 import { useUserContext } from "../../../common/auth/UserContext";
 import { TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useBookshelvesViewContext } from "./BookshelvesViewContext";
+import { useBookshelfViewContext } from "../../../views/Bookshelf/BookshelfViewContext";
 
 export default function SearchTextField() {
-  const { query, onQueryChange } = useBookshelvesViewContext();
+  const { query, onQueryChange } = useBookshelfViewContext();
   const {
     preferences: { isPlLanguage },
   } = useUserContext();

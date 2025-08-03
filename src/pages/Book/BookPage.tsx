@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useGetBookById } from "../../common/api/clients/bookClient";
 import PageContainer from "../../common/components/ui/layout/PageContainer";
 import { Box, Grid, Stack } from "@mui/material";
-import LoggedInGlobalAppBar from "../../common/components/GlobalAppBar/LoggedInGlobalAppBar";
-import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalAppBar/config";
+import LoggedInGlobalNavbar from "../../common/components/GlobalNavbar/LoggedInGlobalNavbar";
+import { GLOBAL_APP_BAR_HEIGHT } from "../../common/components/GlobalNavbar/config";
 import BookCard from "../../common/components/Book/Card/BookCard";
 import BookDetails from "./BookDetails";
 import BookReviews from "./BookReviews";
@@ -15,7 +15,7 @@ export default function BookPage() {
 
   return (
     <PageContainer isLoading={isLoading}>
-      <LoggedInGlobalAppBar />
+      <LoggedInGlobalNavbar />
       <Box sx={{ height: GLOBAL_APP_BAR_HEIGHT }} />
       <Grid
         container

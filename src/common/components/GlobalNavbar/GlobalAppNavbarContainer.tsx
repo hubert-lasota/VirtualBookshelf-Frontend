@@ -13,8 +13,9 @@ type GlobalAppBarContainerProps = {
   children: ReactNode;
   toolbarProps?: ToolbarProps;
 } & Pick<AppBarProps, "position">;
-
-export default function GlobalAppBarContainer({
+// TODO powinien być position: sticky, aby elementy pod spodem nie musialy uzywac margin-top, to jest GLobalNavBar, a nie app bar
+// + zawsze powinien mieć logo z lewej strony, zostawić tam to zawsze, jedynie przerzucać logoNavigateTo
+export default function GlobalAppNavbarContainer({
   children,
   sx,
   toolbarProps,

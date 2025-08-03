@@ -1,8 +1,11 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import BookshelfTab from "./BookshelfTab";
-import { useBookshelvesViewContext } from "../BookshelvesViewContext";
-import { isAllBooksBookshelf, isBookshelfResponse } from "../models";
+import { useBookshelfViewContext } from "../../../../views/Bookshelf/BookshelfViewContext";
+import {
+  isAllBooksBookshelf,
+  isBookshelfResponse,
+} from "../../../../views/Bookshelf/models";
 
 export default function BookshelvesViewSidebar() {
   const {
@@ -15,7 +18,7 @@ export default function BookshelvesViewSidebar() {
     onCurrentBookshelfChange,
     allBooksBookshelf,
     selectAllBooksBookshelf,
-  } = useBookshelvesViewContext();
+  } = useBookshelfViewContext();
 
   return (
     <Stack

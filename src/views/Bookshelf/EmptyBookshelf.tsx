@@ -1,15 +1,16 @@
 import { Button, Paper, Stack, Typography } from "@mui/material";
 import ShelvesIcon from "@mui/icons-material/Shelves";
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../common/auth/UserContext";
 import AddIcon from "@mui/icons-material/Add";
-import { useBookshelfPageContext } from "../BookshelfPageContext";
+import { useBookshelfViewContext } from "./BookshelfViewContext";
+import { BookshelfFormMode } from "./models";
 
 export default function EmptyBookshelf() {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { setIsBookshelfFormOpen } = useBookshelfPageContext();
+  const { onFormModeChange } = useBookshelfViewContext();
 
   return (
     <Stack
@@ -44,7 +45,7 @@ export default function EmptyBookshelf() {
           </Typography>
         </Stack>
         <Button
-          onClick={() => setIsBookshelfFormOpen(true)}
+          onClick={() => onFormModeChange(BookshelfFormMode.CREATE)}
           variant="contained"
           sx={(theme) => ({
             mt: theme.spacing(3),

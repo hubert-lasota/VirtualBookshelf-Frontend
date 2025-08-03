@@ -1,8 +1,8 @@
 import { Stack, Tab, Tabs } from "@mui/material";
-import GlobalAppBarContainer from "../../common/components/GlobalAppBar/GlobalAppBarContainer";
-import AppLogo from "../../common/components/GlobalAppBar/AppLogo";
-import SettingsButton from "../../common/components/GlobalAppBar/SettingsButton";
-import AppPagesDropdown from "../../common/components/GlobalAppBar/AppPagesDropdown";
+import GlobalAppNavbarContainer from "../../common/components/GlobalNavbar/GlobalAppNavbarContainer";
+import AppLogo from "../../common/components/AppLogo/AppLogo";
+import SettingsButton from "../../common/components/GlobalNavbar/SettingsButton";
+import AppPagesDropdown from "../../common/components/GlobalNavbar/AppPagesDropdown";
 import { BookshelfView } from "./BookshelfPage";
 import { useUserContext } from "../../common/auth/UserContext";
 
@@ -34,7 +34,7 @@ export default function BookshelfHeader({
   ];
 
   return (
-    <GlobalAppBarContainer>
+    <GlobalAppNavbarContainer>
       <AppLogo />
       <Tabs
         value={view}
@@ -48,6 +48,6 @@ export default function BookshelfHeader({
         <AppPagesDropdown />
         <SettingsButton />
       </Stack>
-    </GlobalAppBarContainer>
+    </GlobalAppNavbarContainer>
   );
 }

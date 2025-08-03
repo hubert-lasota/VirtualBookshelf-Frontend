@@ -12,7 +12,7 @@ import axiosInstance from "../axiosInstance";
 import { unwrapResponseData } from "../apiUtils";
 import { useSnackbar } from "notistack";
 import { useUserContext } from "../../auth/UserContext";
-import { useBookshelvesViewContext } from "../../../pages/Bookshelf/BookshelvesView/BookshelvesViewContext";
+import { useBookshelfViewContext } from "../../../views/Bookshelf/BookshelfViewContext";
 
 const BASE_ENDPOINT = "/v1/bookshelves";
 
@@ -39,7 +39,7 @@ export function useCreateBookshelf() {
   const queryClient = useQueryClient();
 
   const { onCurrentBookshelfChange, selectAllBooksBookshelf } =
-    useBookshelvesViewContext();
+    useBookshelfViewContext();
 
   return useMutation({
     mutationFn: async (bookshelf: BookshelfFormValues) =>

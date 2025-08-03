@@ -1,13 +1,13 @@
 import { createContext, useContext } from "react";
-import { BookshelfResponse } from "../../../common/models/bookshelfModels";
-import { ReadingBookResponse } from "../../../common/models/readingBookModels";
+import { BookshelfResponse } from "../../common/models/bookshelfModels";
+import { ReadingBookResponse } from "../../common/models/readingBookModels";
 import {
   AllBooksBookshelf,
   BookshelfFormMode,
   CurrentBookshelf,
 } from "./models";
 
-type BookViewContextValue = {
+type BookshelfViewContextValue = {
   bookshelves: BookshelfResponse[];
   readingBooks: ReadingBookResponse[];
   query: string;
@@ -20,14 +20,14 @@ type BookViewContextValue = {
   onFormModeChange: (mode: BookshelfFormMode) => void;
 };
 
-export const BookshelvesViewContext =
-  createContext<BookViewContextValue | null>(null);
+export const BookshelfViewContext =
+  createContext<BookshelfViewContextValue | null>(null);
 
-export function useBookshelvesViewContext() {
-  const context = useContext(BookshelvesViewContext);
+export function useBookshelfViewContext() {
+  const context = useContext(BookshelfViewContext);
   if (!context) {
     throw new Error(
-      "useBookViewContext must be used within BookshelvesViewContext",
+      "useBookshelfViewContext must be used within BookshelfViewContextProvider",
     );
   }
   return context;

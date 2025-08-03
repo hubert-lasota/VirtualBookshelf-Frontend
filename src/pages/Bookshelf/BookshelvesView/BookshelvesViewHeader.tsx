@@ -1,15 +1,15 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
-import { useBookshelvesViewContext } from "./BookshelvesViewContext";
+import { useBookshelfViewContext } from "../../../views/Bookshelf/BookshelfViewContext";
 import AddButton from "../../../common/components/ui/Button/AddButton";
-import { BookshelfFormMode } from "./models";
+import { BookshelfFormMode } from "../../../views/Bookshelf/models";
 
 export default function BookshelvesViewHeader() {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { currentBookshelf, onFormModeChange } = useBookshelvesViewContext();
+  const { currentBookshelf, onFormModeChange } = useBookshelfViewContext();
 
   if (!currentBookshelf) {
     throw new Error("currentBookshelf is not defined");

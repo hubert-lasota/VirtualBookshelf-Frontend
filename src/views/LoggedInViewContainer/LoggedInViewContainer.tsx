@@ -1,0 +1,17 @@
+import { Outlet } from "react-router-dom";
+import PageContainer from "../../common/components/ui/layout/PageContainer";
+import NavSidebar from "./NavSidebar";
+
+export default function LoggedInViewContainer() {
+  return (
+    <PageContainer
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "280px 1fr",
+      }}
+    >
+      <NavSidebar />
+      <Outlet />
+    </PageContainer>
+  );
+}
