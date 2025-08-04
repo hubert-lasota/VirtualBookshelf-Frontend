@@ -1,7 +1,7 @@
-import MoreActionsButton from "../../../../common/components/ui/Button/MoreActionsButton";
+import MoreActionsButton from "../../../../../../common/components/ui/Button/MoreActionsButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
-import { useUserContext } from "../../../../common/auth/UserContext";
+import { useUserContext } from "../../../../../../common/auth/UserContext";
 import DeleteNoteDialog from "./DeleteNoteDialog";
 import { useNoteContext } from "./NoteContext";
 import EditIcon from "@mui/icons-material/Edit";

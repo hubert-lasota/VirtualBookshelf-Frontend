@@ -13,8 +13,10 @@ import {
 import { ReadingBookResponse } from "../../common/models/readingBookModels";
 import { BookshelfViewContext } from "./BookshelfViewContext";
 import BookshelfFormDialog from "./BookshelfForm/BookshelfFormDialog";
-import { Box } from "@mui/material";
-import BookshelfSidebar from "./BookshelfSidebar";
+import { Stack } from "@mui/material";
+import { VIEW_SPACING } from "../LoggedInViewContainer/config";
+import BookshelfTabs from "./BookshelfTabs/BookshelfTabs";
+import BookshelfViewHeader from "./BookshelfViewHeader";
 
 export default function BookshelfView() {
   const { data: { bookshelves = [] } = {} } = useGetBookshelves();
@@ -30,9 +32,16 @@ export default function BookshelfView() {
     preferences: { isPlLanguage },
   } = useUserContext();
 
+  const totalBooks = bookshelves.reduce(
+    (acc, shelf) => acc + shelf.totalBooks,
+    0,
+  );
   const allBooksBookshelf: AllBooksBookshelf = {
     name: isPlLanguage ? "Wszystkie książki" : "All books",
-    totalBooks: bookshelves.reduce((acc, shelf) => acc + shelf.totalBooks, 0),
+    totalBooks,
+    description: isPlLanguage
+      ? `Posiadasz łącznie ${totalBooks} książek`
+      : `You have ${totalBooks} books in total`,
   };
 
   const [currentBookshelf, setCurrentBookshelf] =
@@ -74,17 +83,17 @@ export default function BookshelfView() {
         onFormModeChange: (formMode) => setFormMode(formMode),
       }}
     >
-      <Box
-        sx={{
+      <Stack
+        spacing={3}
+        sx={(theme) => ({
           width: "100%",
           height: "100%",
-          display: "grid",
-          gridTemplateColumns: "1fr 200px",
-        }}
+          padding: theme.spacing(VIEW_SPACING),
+        })}
       >
-        <div>text</div>
-        <BookshelfSidebar />
-      </Box>
+        <BookshelfTabs />
+        <BookshelfViewHeader />
+      </Stack>
       {formMode !== BookshelfFormMode.CLOSED && <BookshelfFormDialog />}
     </BookshelfViewContext.Provider>
   );

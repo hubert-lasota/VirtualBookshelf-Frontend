@@ -12,7 +12,7 @@ export default function DialogTitleWithCloseButton({
 }: DialogTitleWithCloseButtonProps) {
   return (
     <>
-      <DialogTitle {...props} />
+      <DialogTitle color="textPrimary" {...props} />
       <DialogCloseButton onClose={onClose} {...closeButtonProps} />
     </>
   );

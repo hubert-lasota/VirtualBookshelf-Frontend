@@ -1,20 +1,20 @@
 import { DialogActions, Grid, Stack, Typography } from "@mui/material";
-import CancelButton from "../../../common/components/ui/Button/CancelButton";
-import SaveButton from "../../../common/components/ui/Button/SaveButton";
-import { useUserContext } from "../../../common/auth/UserContext";
-import RequiredLabel from "../../../common/components/ui/Label/RequiredLabel";
-import ControlledNumberField from "../../../common/components/FormInput/ControlledNumberField";
-import ControlledTextField from "../../../common/components/FormInput/ControlledTextField";
+import CancelButton from "../../../../../common/components/ui/Button/CancelButton";
+import SaveButton from "../../../../../common/components/ui/Button/SaveButton";
+import { useUserContext } from "../../../../../common/auth/UserContext";
+import RequiredLabel from "../../../../../common/components/ui/Label/RequiredLabel";
+import ControlledNumberField from "../../../../../common/components/FormInput/ControlledNumberField";
+import ControlledTextField from "../../../../../common/components/FormInput/ControlledTextField";
 import { FormProvider, useForm } from "react-hook-form";
 import {
   ReadingNoteFormValues,
   ReadingNoteResponse,
-} from "../../../common/models/readingNoteModels";
-import { FORM_VALIDATE_MODE } from "../../../common/config/form";
+} from "../../../../../common/models/readingNoteModels";
+import { FORM_VALIDATE_MODE } from "../../../../../common/config/form";
 import {
   useCreateReadingNote,
   useUpdateReadingNote,
-} from "../../../common/api/clients/readingNoteClient";
+} from "../../../../../common/api/clients/readingNoteClient";
 import useManageNotesContext from "./ManageNotesContext";
 
 type NoteFormProps = {

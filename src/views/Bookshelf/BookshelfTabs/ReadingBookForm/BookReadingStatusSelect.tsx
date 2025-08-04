@@ -1,7 +1,7 @@
-import ControlledSelect from "../../common/components/FormInput/ControlledSelect";
-import RequiredLabel from "../../common/components/ui/Label/RequiredLabel";
-import { useUserContext } from "../../common/auth/UserContext";
-import { ReadingStatus } from "../../common/models/readingBookModels";
+import ControlledSelect from "../../../../common/components/FormInput/ControlledSelect";
+import RequiredLabel from "../../../../common/components/ui/Label/RequiredLabel";
+import { useUserContext } from "../../../../common/auth/UserContext";
+import { ReadingStatus } from "../../../../common/models/readingBookModels";
 import { MenuItem } from "@mui/material";
 
 export default function BookReadingStatusSelect({

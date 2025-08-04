@@ -1,8 +1,8 @@
-import BookCard from "../../common/components/Book/Card/BookCard";
+import BookCard from "../../../common/components/Book/Card/BookCard";
 import { Box, Chip, Grid, Stack } from "@mui/material";
 import ReadingBookMenuButton from "./ReadingBookMenu/ReadingBookMenuButton";
 import { useState } from "react";
-import { ReadingBookResponse } from "../../common/models/readingBookModels";
+import { ReadingBookResponse } from "../../../common/models/readingBookModels";
 import BookReadingProgress from "./BookReadingProgress";
 
 type BookGridItemProps = {

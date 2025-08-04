@@ -1,10 +1,10 @@
 import {
   ReadingBookResponse,
   ReadingStatus,
-} from "../../../common/models/readingBookModels";
+} from "../../../../common/models/readingBookModels";
 import { BookCheckIcon, BookOpenTextIcon, BookUp2Icon } from "lucide-react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../../../common/auth/UserContext";
 import {
   IconButton,
   ListItemIcon,
@@ -18,8 +18,8 @@ import { useState } from "react";
 import MoveReadingBookDialog from "./MoveReadingBookDialog";
 import DeleteReadingBookDialog from "./DeleteReadingBookDialog";
 import { useNavigate } from "react-router-dom";
-import { useChangeBookshelfBookStatus } from "../../../common/api/clients/readingBookClient";
-import ManageNotesDialog from "../../../pages/Bookshelf/ManageNotes/ManageNotesDialog";
+import { useChangeBookshelfBookStatus } from "../../../../common/api/clients/readingBookClient";
+import ManageNotesDialog from "./ManageNotes/ManageNotesDialog";
 
 type BookshelfBookMenuButtonProps = {
   readingBook: ReadingBookResponse;

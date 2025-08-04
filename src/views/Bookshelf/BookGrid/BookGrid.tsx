@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import BookGridItem from "./BookGridItem";
-import { useBookshelfViewContext } from "./BookshelfViewContext";
+import { useBookshelfViewContext } from "../BookshelfViewContext";
 
 export default function BookGrid() {
   const { readingBooks } = useBookshelfViewContext();

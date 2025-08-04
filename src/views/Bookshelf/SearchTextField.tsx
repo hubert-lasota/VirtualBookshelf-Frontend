@@ -1,7 +1,7 @@
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../common/auth/UserContext";
 import { TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useBookshelfViewContext } from "../../../views/Bookshelf/BookshelfViewContext";
+import { useBookshelfViewContext } from "./BookshelfViewContext";
 
 export default function SearchTextField() {
   const { query, onQueryChange } = useBookshelfViewContext();
@@ -19,7 +19,6 @@ export default function SearchTextField() {
       slotProps={{
         input: {
           sx: (theme) => ({
-            backgroundImage: theme.palette.background.defaultGradient,
             borderRadius: theme.spacing(1.5),
           }),
           startAdornment: <SearchIcon sx={{ marginRight: "0.4rem" }} />,

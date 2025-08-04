@@ -1,5 +1,5 @@
 import { Paper, Stack } from "@mui/material";
-import SearchTextField from "../../pages/Bookshelf/BookshelvesView/SearchTextField";
+import SearchTextField from "./SearchTextField";
 
 export default function BookshelfToolbar() {
   return (

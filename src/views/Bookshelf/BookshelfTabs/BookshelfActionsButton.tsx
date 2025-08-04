@@ -1,4 +1,4 @@
-import { useUserContext } from "../../../../common/auth/UserContext";
+import { useUserContext } from "../../../common/auth/UserContext";
 import { BookPlusIcon } from "lucide-react";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
@@ -6,13 +6,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useState } from "react";
 import SearchBookDialog from "./SearchBookDialog";
 import DeleteBookshelfDialog from "./DeleteBookshelfDialog";
-import ReadingBookFormDialog from "./ReadingBookFormDialog";
-import MoreActionsButton from "../../../../common/components/ui/Button/MoreActionsButton";
-import { useBookshelfViewContext } from "../../../../views/Bookshelf/BookshelfViewContext";
-import {
-  BookshelfFormMode,
-  isBookshelfResponse,
-} from "../../../../views/Bookshelf/models";
+import ReadingBookFormDialog from "./ReadingBookForm/ReadingBookFormDialog";
+import MoreActionsButton from "../../../common/components/ui/Button/MoreActionsButton";
+import { useBookshelfViewContext } from "../BookshelfViewContext";
+import { BookshelfFormMode, isBookshelfResponse } from "../models";
 
 export default function BookshelfActionsButton() {
   const [openCreateBookDialog, setOpenCreateBookDialog] = useState(false);
@@ -62,7 +59,15 @@ export default function BookshelfActionsButton() {
 
   return (
     <>
-      <MoreActionsButton items={items} />
+      <MoreActionsButton
+        items={items}
+        iconButtonProps={{
+          size: "small",
+          sx: (theme) => ({
+            color: theme.palette.primary["100"],
+          }),
+        }}
+      />
       <SearchBookDialog
         open={openSearchBookDialog}
         onClose={() => setOpenSearchBookDialog(false)}

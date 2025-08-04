@@ -10,7 +10,7 @@ import { useUserContext } from "../../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FORM_VALIDATE_MODE } from "../../../../common/config/form";
-import BookshelfBookFormFields from "../../BookshelfBookFormFields";
+import BookshelfBookFormFields from "./BookshelfBookFormFields";
 import CancelButton from "../../../../common/components/ui/Button/CancelButton";
 import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 import { useCreateReadingBook } from "../../../../common/api/clients/readingBookClient";

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { ReadingBookResponse } from "../../../common/models/readingBookModels";
+import { ReadingBookResponse } from "../../../../../common/models/readingBookModels";
 
 type ManageNotesContextValue = {
   bookshelfBook: ReadingBookResponse;

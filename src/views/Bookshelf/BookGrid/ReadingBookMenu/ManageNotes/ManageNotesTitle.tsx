@@ -1,6 +1,6 @@
-import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import DialogTitleWithCloseButton from "../../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 import { Divider, Stack, Typography } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../../../../common/auth/UserContext";
 import useManageNotesContext from "./ManageNotesContext";
 
 type ManageNotesTitleProps = {

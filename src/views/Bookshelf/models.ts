@@ -2,6 +2,7 @@ import { BookshelfResponse } from "../../common/models/bookshelfModels";
 
 export type AllBooksBookshelf = {
   name: string;
+  description: string;
   totalBooks: number;
 };
 

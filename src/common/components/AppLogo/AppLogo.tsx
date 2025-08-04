@@ -10,7 +10,12 @@ export default function AppLogo(props: StackProps) {
   return (
     <Stack direction="row" alignItems="center" spacing={1} {...props}>
       <LocalLibraryIcon color="primary" fontSize="large" />
-      <Typography component="h1" variant="h5" fontWeight="600">
+      <Typography
+        component="h1"
+        variant="h5"
+        fontWeight="600"
+        color="textPrimary"
+      >
         {isPlLanguage ? "Wirtualny Regał" : "Virtual Bookshelf"}
       </Typography>
     </Stack>

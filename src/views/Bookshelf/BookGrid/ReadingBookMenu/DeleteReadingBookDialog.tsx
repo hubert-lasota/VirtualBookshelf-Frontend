@@ -1,8 +1,8 @@
 import { DialogProps } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
-import { useDeleteReadingBook } from "../../../common/api/clients/readingBookClient";
-import { ReadingBookResponse } from "../../../common/models/readingBookModels";
-import DeleteEntityDialog from "../../../common/components/ui/Dialog/DeleteEntityDialog";
+import { useUserContext } from "../../../../common/auth/UserContext";
+import { useDeleteReadingBook } from "../../../../common/api/clients/readingBookClient";
+import { ReadingBookResponse } from "../../../../common/models/readingBookModels";
+import DeleteEntityDialog from "../../../../common/components/ui/Dialog/DeleteEntityDialog";
 
 type RemoveBookDialogProps = Pick<DialogProps, "open"> & {
   readingBook: ReadingBookResponse;

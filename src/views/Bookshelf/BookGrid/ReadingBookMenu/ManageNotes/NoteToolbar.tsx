@@ -1,5 +1,5 @@
 import { Button, Divider, Stack, TextField } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../../../../common/auth/UserContext";
 import SearchIcon from "@mui/icons-material/Search";
 
 type NoteToolbarProps = {

@@ -1,4 +1,4 @@
-import { ReadingNoteResponse } from "../../../../common/models/readingNoteModels";
+import { ReadingNoteResponse } from "../../../../../../common/models/readingNoteModels";
 import { Paper, Stack, Typography, useTheme } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { BookOpen as BookOpenIcon } from "lucide-react";

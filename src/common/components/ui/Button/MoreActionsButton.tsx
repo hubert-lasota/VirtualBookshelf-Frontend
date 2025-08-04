@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import {
   IconButton,
+  IconButtonProps,
   ListItemIcon,
   ListItemText,
   Menu,
@@ -16,9 +17,13 @@ type MoreActionsButtonProps = {
     text: string;
     icon: ReactNode;
   }[];
+  iconButtonProps?: IconButtonProps;
 };
 
-export default function MoreActionsButton({ items }: MoreActionsButtonProps) {
+export default function MoreActionsButton({
+  items,
+  iconButtonProps = {},
+}: MoreActionsButtonProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const {
@@ -28,7 +33,10 @@ export default function MoreActionsButton({ items }: MoreActionsButtonProps) {
   return (
     <>
       <Tooltip title={isPlLanguage ? "Więcej akcji" : "More actions"}>
-        <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+        <IconButton
+          {...iconButtonProps}
+          onClick={(e) => setAnchorEl(e.currentTarget)}
+        >
           <MoreVertIcon />
         </IconButton>
       </Tooltip>

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { ReadingNoteResponse } from "../../../../common/models/readingNoteModels";
+import { ReadingNoteResponse } from "../../../../../../common/models/readingNoteModels";
 
 type NoteContextValue = {
   note: ReadingNoteResponse;

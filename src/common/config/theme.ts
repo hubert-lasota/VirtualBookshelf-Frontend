@@ -1,6 +1,11 @@
 import { createTheme } from "@mui/material";
 
 declare module "@mui/material/styles" {
+  interface TypeBackground {
+    secondary: string;
+    tab: string;
+  }
+
   interface PaletteColor {
     light: string;
     dark: string;
@@ -53,28 +58,23 @@ const theme = createTheme({
     background: {
       default: "hsl(35 20% 96%)",
       paper: "hsl(35 30% 98%)",
+      secondary: "hsl(36 27% 90%)",
+      tab: "hsl(30, 20%, 96%)",
     },
     primary: {
       ...primaryColor,
       contrastText: "#ffff",
-      contrastTextOnLight: "hsl(0,0%,95%)",
+      contrastTextOnLight: "hsl(0 0% 95%)",
       main: primaryColor[500],
       dark: primaryColor[700],
       light: primaryColor[300],
     },
     text: {
-      primary: "hsl(15,15%,16%)",
-      secondary: "rgb(132, 112, 98)",
+      primary: "hsl(15, 15%, 16%)",
+      secondary: "rgb(92,76,67)",
     },
   },
   components: {
-    // MuiPaper: {
-    //   styleOverrides: {
-    //     root: {
-    //       borderRadius: 12,
-    //     },
-    //   },
-    // },
     MuiButton: {
       defaultProps: {
         disableTouchRipple: true,

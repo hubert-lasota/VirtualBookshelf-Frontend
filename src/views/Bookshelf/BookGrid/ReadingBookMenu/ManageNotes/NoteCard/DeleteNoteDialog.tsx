@@ -1,7 +1,7 @@
-import DeleteEntityDialog from "../../../../common/components/ui/Dialog/DeleteEntityDialog";
-import { useUserContext } from "../../../../common/auth/UserContext";
+import DeleteEntityDialog from "../../../../../../common/components/ui/Dialog/DeleteEntityDialog";
+import { useUserContext } from "../../../../../../common/auth/UserContext";
 import { useNoteContext } from "./NoteContext";
-import { useDeleteReadingNote } from "../../../../common/api/clients/readingNoteClient";
+import { useDeleteReadingNote } from "../../../../../../common/api/clients/readingNoteClient";
 import useManageNotesContext from "../ManageNotesContext";
 
 type DeleteNoteDialogProps = {

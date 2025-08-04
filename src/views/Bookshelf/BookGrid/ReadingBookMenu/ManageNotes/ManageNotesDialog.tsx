@@ -1,8 +1,8 @@
 import { Dialog, DialogContent, Stack } from "@mui/material";
-import { ReadingBookResponse } from "../../../common/models/readingBookModels";
-import { useGetReadingBookNotes } from "../../../common/api/clients/readingNoteClient";
+import { ReadingBookResponse } from "../../../../../common/models/readingBookModels";
+import { useGetReadingBookNotes } from "../../../../../common/api/clients/readingNoteClient";
 import { useMemo, useState } from "react";
-import { ReadingNoteResponse } from "../../../common/models/readingNoteModels";
+import { ReadingNoteResponse } from "../../../../../common/models/readingNoteModels";
 import ManageNotesTitle from "./ManageNotesTitle";
 import NoteForm from "./NoteForm";
 import NoteToolbar from "./NoteToolbar";
