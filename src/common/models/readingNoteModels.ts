@@ -23,7 +23,7 @@ export const createReadingNoteSchema = (isPlLanguage: boolean) => {
     content: z
       .string({ message: contentRequiredMessage })
       .min(1, contentRequiredMessage),
-    startPage: z
+    pageFrom: z
       .number({
         message: isPlLanguage
           ? "Start od jest wymagana"
@@ -34,7 +34,7 @@ export const createReadingNoteSchema = (isPlLanguage: boolean) => {
           ? "Start od musi być poprawną liczbą całkowitą"
           : "Page from must be valid integer",
       ),
-    endPage: z
+    pageTo: z
       .number({
         message: isPlLanguage
           ? "Start do jest wymagana"

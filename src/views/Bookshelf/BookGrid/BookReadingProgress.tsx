@@ -1,5 +1,5 @@
-import { LinearProgress, Stack, Typography, useTheme } from "@mui/material";
-import { BookOpen as BookOpenIcon } from "lucide-react";
+import { LinearProgress, Stack, Typography } from "@mui/material";
+import { useUserContext } from "../../../common/auth/UserContext";
 
 type BookReadingProgressProps = {
   progressPercentage: number;
@@ -8,7 +8,9 @@ type BookReadingProgressProps = {
 export default function BookReadingProgress({
   progressPercentage,
 }: BookReadingProgressProps) {
-  const theme = useTheme();
+  const {
+    preferences: { isPlLanguage },
+  } = useUserContext();
 
   return (
     <Stack
@@ -23,19 +25,11 @@ export default function BookReadingProgress({
         backdropFilter: "blur(4px)",
       }}
     >
-      <Stack direction="row" spacing={0.5} alignItems="center">
-        <BookOpenIcon
-          style={{
-            width: "14px",
-            height: "14px",
-            color: theme.palette.text.secondary,
-          }}
-        />
-        <Typography variant="subtitle2" color="textSecondary">
-          {progressPercentage}
-          {"%"}
-        </Typography>
-      </Stack>
+      <Typography variant="subtitle2" color="textPrimary">
+        {isPlLanguage ? "Postęp " : "Progress "}
+        {progressPercentage}
+        {"%"}
+      </Typography>
       <LinearProgress
         value={progressPercentage}
         variant="determinate"

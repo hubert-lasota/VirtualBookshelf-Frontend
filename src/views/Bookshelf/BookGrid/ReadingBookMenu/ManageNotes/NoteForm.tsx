@@ -28,7 +28,7 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { bookshelfBook } = useManageNotesContext();
+  const { readingBook } = useManageNotesContext();
 
   const form = useForm<ReadingNoteFormValues>({
     mode: FORM_VALIDATE_MODE,
@@ -41,11 +41,11 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
   const isUpdating = !!note && !!noteId;
 
   const onSubmit = (note: ReadingNoteFormValues) => {
-    const bookshelfBookId = bookshelfBook.id;
+    const readingBookId = readingBook.id;
     if (isUpdating) {
-      updateNote({ note, noteId, bookshelfBookId });
+      updateNote({ note, noteId, readingBookId });
     } else {
-      createNote({ note, bookshelfBookId });
+      createNote({ note, readingBookId });
     }
 
     onClose();
@@ -64,7 +64,7 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
     {
       component: ControlledNumberField,
       props: {
-        name: "startPage",
+        name: "pageFrom",
         label: (
           <RequiredLabel text={isPlLanguage ? "Strona od" : "Start page"} />
         ),
@@ -73,7 +73,7 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
     {
       component: ControlledNumberField,
       props: {
-        name: "endPage",
+        name: "pageTo",
         label: <RequiredLabel text={isPlLanguage ? "Strona do" : "End page"} />,
       },
     },

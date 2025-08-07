@@ -19,7 +19,8 @@ export default function BookshelfTabs() {
       sx={(theme) => ({
         borderRadius: theme.shape.borderRadius,
         backgroundColor: theme.palette.background.secondary,
-        padding: theme.spacing(1),
+        border: `1px solid ${theme.palette.divider}`,
+        padding: theme.spacing(1.5),
         overflowX: "auto",
       })}
     >

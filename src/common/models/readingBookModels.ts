@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { BookResponse, createBookSchema } from "./bookModels";
-import { BaseResponse } from "../api/apiModels";
 
 export enum ReadingStatus {
   READING = "READING",
@@ -30,10 +29,11 @@ export type ReadingBookFormValues = z.infer<
 >;
 
 export type ReadingBookResponse = {
+  id: number;
   book: BookResponse;
   status: ReadingStatus;
-  startedAt: string;
-  endedAt: string;
+  startedReadingAt: string;
+  endedReadingAt: string;
   progressPercentage: number;
   currentPage: number;
   totalNotes: number;
@@ -41,4 +41,4 @@ export type ReadingBookResponse = {
     id: number;
     name: string;
   };
-} & BaseResponse;
+};

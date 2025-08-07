@@ -40,7 +40,7 @@ export default function ManageNotesDialog({
   }, [notes, query]);
 
   return (
-    <ManageNotesContext.Provider value={{ bookshelfBook: readingBook }}>
+    <ManageNotesContext.Provider value={{ readingBook }}>
       <Dialog
         open={open}
         onClose={onClose}
@@ -53,11 +53,7 @@ export default function ManageNotesDialog({
         }}
       >
         <ManageNotesTitle onClose={onClose} />
-        <DialogContent
-          sx={(theme) => ({
-            backgroundImage: theme.palette.background.defaultGradient,
-          })}
-        >
+        <DialogContent>
           {isFormOpen ? (
             <NoteForm
               onClose={() => setIsFormOpen(false)}

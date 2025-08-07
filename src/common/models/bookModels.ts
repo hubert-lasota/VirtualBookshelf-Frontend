@@ -111,8 +111,5 @@ export type BookResponse = Omit<
     coverUrl?: string;
     genres: GenreResponse[];
     reviewStatistics: ReviewStatistics;
+    review: ReviewResponse | null;
   };
-
-export type BookDetailsResponse = BookResponse & {
-  userReview: ReviewResponse;
-};

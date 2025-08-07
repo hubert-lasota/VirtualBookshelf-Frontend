@@ -12,14 +12,14 @@ export default function ManageNotesTitle({ onClose }: ManageNotesTitleProps) {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const { bookshelfBook } = useManageNotesContext();
+  const { readingBook } = useManageNotesContext();
 
   return (
     <DialogTitleWithCloseButton onClose={onClose}>
       <Stack>
         <Typography fontWeight={600} fontSize="1.3rem">
           {isPlLanguage ? "Notatki" : "Notes"}
-          {` - ${bookshelfBook.book.title}`}
+          {` - ${readingBook.book.title}`}
         </Typography>
         <Typography color="textSecondary">
           {isPlLanguage

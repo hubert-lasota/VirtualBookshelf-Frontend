@@ -1,7 +1,6 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../common/auth/UserContext";
 import { useBookshelfViewContext } from "./BookshelfViewContext";
-import AddButton from "../../common/components/ui/Button/AddButton";
 import { BookshelfFormMode } from "./models";
 
 export default function BookshelfViewHeader() {
@@ -21,12 +20,13 @@ export default function BookshelfViewHeader() {
           {currentBookshelf.name}
         </Typography>
 
-        <AddButton
+        <Button
           onClick={() => onFormModeChange(BookshelfFormMode.CREATE)}
           size="small"
+          variant="contained"
         >
           {isPlLanguage ? "Dodaj regał" : "Add bookshelf"}
-        </AddButton>
+        </Button>
       </Stack>
       <Typography color="textSecondary">
         {currentBookshelf.description}

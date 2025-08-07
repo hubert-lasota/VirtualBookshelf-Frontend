@@ -12,7 +12,6 @@ import ControlledSelect from "../../../../common/components/FormInput/Controlled
 import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
 import { useMoveReadingBook } from "../../../../common/api/clients/readingBookClient";
 import CancelButton from "../../../../common/components/ui/Button/CancelButton";
-import { findBookshelf } from "../../../../common/utils/bookshelfUtils";
 import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 import { ReadingBookResponse } from "../../../../common/models/readingBookModels";
 import { useBookshelfViewContext } from "../../BookshelfViewContext";
@@ -38,11 +37,9 @@ export default function MoveReadingBookDialog({
 
   const { bookshelves } = useBookshelfViewContext();
 
-  const bookshelf = findBookshelf(bookshelves, readingBook.id);
-
   const form = useForm<FormType>({
     mode: FORM_VALIDATE_MODE,
-    defaultValues: { bookshelf },
+    defaultValues: { bookshelf: readingBook.bookshelf },
   });
 
   const onSubmit = ({ bookshelf }: FormType) => {

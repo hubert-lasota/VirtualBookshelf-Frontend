@@ -2,8 +2,13 @@ import {
   ReadingBookResponse,
   ReadingStatus,
 } from "../../../../common/models/readingBookModels";
-import { BookCheckIcon, BookOpenTextIcon, BookUp2Icon } from "lucide-react";
-import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  BookCheckIcon,
+  BookOpenTextIcon,
+  BookUp2Icon,
+  StickyNote,
+} from "lucide-react";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import {
   IconButton,
@@ -13,7 +18,6 @@ import {
   MenuItem,
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import NoteIcon from "@mui/icons-material/Note";
 import { useState } from "react";
 import MoveReadingBookDialog from "./MoveReadingBookDialog";
 import DeleteReadingBookDialog from "./DeleteReadingBookDialog";
@@ -71,12 +75,12 @@ export default function ReadingBookMenuButton({
       onClick: () => setOpenMoveBook(true),
     },
     {
-      icon: <NoteIcon />,
+      icon: <StickyNote />,
       text: isPlLanguage ? "Zarządzaj notatkami" : "Manage notes",
       onClick: () => setOpenManageNotes(true),
     },
     {
-      icon: <DeleteIcon />,
+      icon: <DeleteOutlineIcon />,
       text: isPlLanguage ? "Usuń książkę" : "Delete book",
       onClick: () => setOpenDeleteBook(true),
       divider: true,

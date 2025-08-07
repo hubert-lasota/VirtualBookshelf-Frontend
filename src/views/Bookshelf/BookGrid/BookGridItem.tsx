@@ -1,9 +1,11 @@
 import BookCard from "../../../common/components/Book/Card/BookCard";
-import { Box, Chip, Grid, Stack } from "@mui/material";
+import { Box, Chip, Grid, Stack, Typography, useTheme } from "@mui/material";
 import ReadingBookMenuButton from "./ReadingBookMenu/ReadingBookMenuButton";
 import { useState } from "react";
 import { ReadingBookResponse } from "../../../common/models/readingBookModels";
 import BookReadingProgress from "./BookReadingProgress";
+import { Calendar, StickyNote } from "lucide-react";
+import StarIcon from "@mui/icons-material/Star";
 
 type BookGridItemProps = {
   readingBook: ReadingBookResponse;
@@ -11,6 +13,27 @@ type BookGridItemProps = {
 
 export default function BookGridItem({ readingBook }: BookGridItemProps) {
   const [isPointingCard, setIsPointingCard] = useState(true);
+  const theme = useTheme();
+
+  const detailsItems = [
+    {
+      value: new Date(readingBook.startedReadingAt).toLocaleDateString(),
+      icon: Calendar,
+    },
+    {
+      value: readingBook.totalNotes,
+      icon: StickyNote,
+    },
+  ];
+
+  const review = readingBook.book.review;
+  if (review) {
+    detailsItems.push({
+      value: review.rating,
+      // @ts-ignore
+      icon: StarIcon,
+    });
+  }
 
   return (
     <Grid
@@ -59,6 +82,26 @@ export default function BookGridItem({ readingBook }: BookGridItemProps) {
         <Stack sx={(theme) => ({ padding: theme.spacing(2) })}>
           <BookCard.Title />
           <BookCard.Authors />
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            {detailsItems.map(({ value, icon: Icon }) => (
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Icon
+                  style={{
+                    width: "14px",
+                    height: "14px",
+                    color: theme.palette.text.secondary,
+                  }}
+                />
+                <Typography variant="body2" color="textSecondary">
+                  {value}
+                </Typography>
+              </Stack>
+            ))}
+          </Stack>
         </Stack>
       </BookCard>
     </Grid>

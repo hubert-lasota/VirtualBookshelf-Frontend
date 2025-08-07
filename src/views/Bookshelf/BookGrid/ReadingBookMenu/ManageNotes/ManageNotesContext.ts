@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { ReadingBookResponse } from "../../../../../common/models/readingBookModels";
 
 type ManageNotesContextValue = {
-  bookshelfBook: ReadingBookResponse;
+  readingBook: ReadingBookResponse;
 };
 
 export const ManageNotesContext = createContext<ManageNotesContextValue | null>(

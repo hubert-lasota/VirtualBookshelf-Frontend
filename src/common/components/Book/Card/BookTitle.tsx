@@ -5,7 +5,7 @@ export default function BookTitle(props: TypographyProps) {
   const { title } = useBookContext();
 
   return (
-    <Typography fontWeight={600} variant="body1" {...props}>
+    <Typography fontWeight={600} variant="h6" {...props}>
       {title}
     </Typography>
   );

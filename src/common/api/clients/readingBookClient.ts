@@ -80,7 +80,7 @@ export function useChangeBookshelfBookStatus() {
       readingBookId,
       status,
     }: ChangeReadingBookStatusParams) =>
-      axiosInstance.patch(`${BASE_ENDPOINT}/${readingBookId}/change-status}`, {
+      axiosInstance.patch(`${BASE_ENDPOINT}/${readingBookId}/change-status`, {
         status,
       }),
 

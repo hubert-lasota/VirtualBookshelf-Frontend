@@ -40,9 +40,6 @@ export function useCreateBookshelf() {
 
   const queryClient = useQueryClient();
 
-  const { onCurrentBookshelfChange, selectAllBooksBookshelf } =
-    useBookshelfViewContext();
-
   return useMutation({
     mutationFn: async (bookshelf: BookshelfFormValues) =>
       axiosInstance.post(BASE_ENDPOINT, bookshelf).then(unwrapResponseData),
@@ -56,7 +53,6 @@ export function useCreateBookshelf() {
           books: [],
         };
         bookshelves.push(newBookshelf);
-        onCurrentBookshelfChange(newBookshelf);
         return bookshelves;
       }),
 
@@ -77,7 +73,6 @@ export function useCreateBookshelf() {
           : "Error occurred while adding bookshelf",
         variant: "error",
       });
-      selectAllBooksBookshelf();
     },
 
     onSettled: () => handleSettled(queryClient),

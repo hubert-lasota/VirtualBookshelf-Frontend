@@ -20,6 +20,7 @@ export default function NoteCard({ note, onEdit }: NoteCardProps) {
           borderLeft: `4px solid ${theme.palette.primary.light}`,
           paddingInline: theme.spacing(2),
           paddingBlock: theme.spacing(1.5),
+          borderRadius: theme.shape.borderRadius,
         })}
         component={Stack}
         spacing={1}
@@ -44,7 +45,7 @@ export default function NoteCard({ note, onEdit }: NoteCardProps) {
             <Typography
               variant="subtitle2"
               color="textSecondary"
-            >{`Strona ${note.startPage}-${note.endPage}`}</Typography>
+            >{`Strona ${note.pageFrom}-${note.pageTo}`}</Typography>
           </Stack>
           <Stack direction="row" spacing={0.5} alignItems="center">
             <CalendarTodayIcon

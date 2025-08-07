@@ -31,7 +31,7 @@ export const useGetReadingBookNotes = (
     queryFn: () =>
       axiosInstance
         .get(BASE_ENDPOINT, {
-          params: { bookshelfBookId: readingBookId },
+          params: { readingBookId },
         })
         .then(unwrapResponseData),
   });
