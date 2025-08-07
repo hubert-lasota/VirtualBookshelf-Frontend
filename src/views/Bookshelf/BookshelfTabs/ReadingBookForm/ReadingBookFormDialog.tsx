@@ -4,13 +4,12 @@ import {
   DialogActions,
   DialogContent,
   Grid,
-  Typography,
 } from "@mui/material";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FORM_VALIDATE_MODE } from "../../../../common/config/form";
-import BookshelfBookFormFields from "./BookshelfBookFormFields";
+import ReadingBookFormFields from "./ReadingBookFormFields";
 import CancelButton from "../../../../common/components/ui/Button/CancelButton";
 import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 import { useCreateReadingBook } from "../../../../common/api/clients/readingBookClient";
@@ -67,16 +66,12 @@ export default function ReadingBookFormDialog({
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <DialogTitleWithCloseButton onClose={handleClose}>
-          {isPlLanguage
-            ? "Dodaj książkę do regału: "
-            : "Add book to bookshelf: "}
-          <Typography component="span" fontWeight={600}>
-            {bookshelf.name}
-          </Typography>
+          {isPlLanguage ? "Dodaj książkę do regału " : "Add book to bookshelf "}
+          {bookshelf.name}
         </DialogTitleWithCloseButton>
         <DialogContent dividers>
           <Grid container spacing={2}>
-            <BookshelfBookFormFields />
+            <ReadingBookFormFields />
           </Grid>
         </DialogContent>
         <DialogActions>

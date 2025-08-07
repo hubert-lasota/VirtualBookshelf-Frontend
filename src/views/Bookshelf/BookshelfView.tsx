@@ -17,6 +17,7 @@ import { Stack } from "@mui/material";
 import { VIEW_SPACING } from "../LoggedInViewContainer/config";
 import BookshelfTabs from "./BookshelfTabs/BookshelfTabs";
 import BookshelfViewHeader from "./BookshelfViewHeader";
+import BookGrid from "./BookGrid/BookGrid";
 
 export default function BookshelfView() {
   const { data: { bookshelves = [] } = {} } = useGetBookshelves();
@@ -75,6 +76,7 @@ export default function BookshelfView() {
         onCurrentBookshelfChange: (bookshelf) => setCurrentBookshelf(bookshelf),
         allBooksBookshelf,
         selectAllBooksBookshelf: () => setCurrentBookshelf(allBooksBookshelf),
+
         readingBooks: filteredBooks,
         bookshelves,
         query,
@@ -93,6 +95,7 @@ export default function BookshelfView() {
       >
         <BookshelfTabs />
         <BookshelfViewHeader />
+        <BookGrid />
       </Stack>
       {formMode !== BookshelfFormMode.CLOSED && <BookshelfFormDialog />}
     </BookshelfViewContext.Provider>

@@ -18,19 +18,6 @@ export const createReadingBookSchema = (isPlLanguage: boolean) =>
         ? "Status czytania jest wymagany"
         : "Reading status is required",
     }),
-    currentPage: z
-      .number({
-        message: isPlLanguage
-          ? "Aktualna strona jest wymagana"
-          : "Current page is required",
-      })
-      .int()
-      .min(
-        1,
-        isPlLanguage
-          ? "Aktualna strona nie może być mniejsza od 1"
-          : "Current page cannot be lower than 1",
-      ),
     startedReadingAt: z.string({
       message: isPlLanguage
         ? "Data rozpoczęcia jest wymagana"

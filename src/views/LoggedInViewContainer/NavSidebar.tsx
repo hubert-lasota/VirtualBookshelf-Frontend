@@ -7,6 +7,7 @@ import {
   BookOpenText,
   ChartNoAxesCombined,
   House,
+  Search,
   SquareLibrary,
   Target,
 } from "lucide-react";
@@ -47,7 +48,13 @@ export default function NavSidebar() {
       icon: ChartNoAxesCombined,
       path: "/statistics",
     },
+    {
+      label: isPlLanguage ? "Szukaj" : "Search",
+      icon: Search,
+      path: "/search",
+    },
   ];
+
   return (
     <Stack
       sx={(theme) => ({

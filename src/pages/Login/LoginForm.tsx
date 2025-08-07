@@ -39,18 +39,26 @@ export default function LoginForm() {
     <Paper
       component="form"
       variant="outlined"
-      sx={{
+      sx={(theme) => ({
+        width: "70%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        padding: "2rem",
+        paddingBlock: theme.spacing(5),
+        paddingInline: theme.spacing(6),
         boxShadow:
           "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
-      }}
+      })}
       onSubmit={handleSubmit(onSubmit)}
     >
       <Stack direction="column" spacing={2}>
-        <Typography variant="h4" component="h1">
+        <Typography
+          variant="h4"
+          component="h1"
+          textAlign="center"
+          color="textPrimary"
+          paddingBottom={1}
+        >
           {messages.title}
         </Typography>
         {fieldNames.map((name) => (
@@ -63,7 +71,12 @@ export default function LoginForm() {
             type={name === "password" ? "password" : "text"}
           />
         ))}
-        <Stack direction="row" justifyContent="flex-end" spacing={1}>
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center"
+          spacing={1}
+        >
           <Typography>{messages.register.linkPrefix}</Typography>
           <Link sx={{ cursor: "pointer" }}>{messages.register.linkLabel}</Link>
         </Stack>

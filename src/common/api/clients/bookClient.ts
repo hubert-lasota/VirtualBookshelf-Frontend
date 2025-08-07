@@ -10,3 +10,17 @@ export const useGetBookById = (id: number) =>
     queryFn: () =>
       axiosInstance.get(`${BASE_ENDPOINT}/${id}`).then(unwrapResponseData),
   });
+
+type UseGetBooksParams = {
+  page: number;
+  size: number;
+  query: string;
+};
+
+export const useGetBooks = (params: UseGetBooksParams) =>
+  useQuery({
+    queryKey: ["books", params],
+    queryFn: () =>
+      axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),
+    enabled: !!params.query,
+  });

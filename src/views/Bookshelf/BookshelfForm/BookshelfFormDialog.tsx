@@ -2,7 +2,7 @@ import {
   BookshelfFormValues,
   createBookshelfSchema,
 } from "../../../common/models/bookshelfModels";
-import { Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,7 +11,6 @@ import {
   useCreateBookshelf,
   useUpdateBookshelf,
 } from "../../../common/api/clients/bookshelfClient";
-import SaveButton from "../../../common/components/ui/Button/SaveButton";
 import BookshelfFormFields from "./BookshelfFormFields";
 import { useBookshelfViewContext } from "../BookshelfViewContext";
 import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
@@ -66,10 +65,10 @@ export default function BookshelfFormDialog() {
         <DialogTitleWithCloseButton onClose={handleClose}>
           {isPlLanguage
             ? isUpdating
-              ? `Edytuj regał: ${currentBookshelf!.name}`
+              ? `Edytuj regał ${currentBookshelf!.name}`
               : "Dodaj nowy regał"
             : isUpdating
-              ? `Edit bookshelf: ${currentBookshelf!.name}`
+              ? `Edit bookshelf ${currentBookshelf!.name}`
               : "Add new bookshelf"}
         </DialogTitleWithCloseButton>
         <DialogContent dividers>
@@ -77,7 +76,15 @@ export default function BookshelfFormDialog() {
         </DialogContent>
         <DialogActions>
           <CancelButton onClick={handleClose} />
-          <SaveButton />
+          <Button type="submit" variant="contained">
+            {isPlLanguage
+              ? isUpdating
+                ? "Edytuj"
+                : "Dodaj"
+              : isUpdating
+                ? "Edit"
+                : "Add"}
+          </Button>
         </DialogActions>
       </Dialog>
     </FormProvider>

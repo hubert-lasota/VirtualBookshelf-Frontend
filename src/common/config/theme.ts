@@ -71,7 +71,6 @@ const theme = createTheme({
     },
     text: {
       primary: "hsl(15, 15%, 16%)",
-      secondary: "rgb(92,76,67)",
     },
   },
   components: {

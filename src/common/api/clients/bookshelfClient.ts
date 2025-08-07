@@ -18,6 +18,8 @@ const BASE_ENDPOINT = "/v1/bookshelves";
 
 const QUERY_KEY: [any] = ["bookshelves"];
 
+export const BOOKSHELF_TEMP_ID = -1;
+
 export type GetBookshelvesResult = {
   bookshelves: BookshelfResponse[];
 };
@@ -47,20 +49,25 @@ export function useCreateBookshelf() {
 
     onMutate: async (bookshelf: BookshelfFormValues) =>
       handleMutate(queryClient, (bookshelves) => {
-        // @ts-ignore
-        const newBookshelf: BookshelfResponse = { ...bookshelf, books: [] };
+        const newBookshelf: BookshelfResponse = {
+          ...bookshelf,
+          id: BOOKSHELF_TEMP_ID,
+          // @ts-ignore
+          books: [],
+        };
         bookshelves.push(newBookshelf);
         onCurrentBookshelfChange(newBookshelf);
         return bookshelves;
       }),
 
-    onSuccess: () => () =>
+    onSuccess: () => {
       enqueueSnackbar({
         message: isPlLanguage
           ? "Poprawnio utworzono regał"
           : "Successfully created bookshelf",
         variant: "success",
-      }),
+      });
+    },
 
     onError: (error, bookshelf, context) => {
       handleError(queryClient, "creating", error, bookshelf, context);
@@ -129,6 +136,8 @@ export function useDeleteBookshelf() {
 
   const { enqueueSnackbar } = useSnackbar();
 
+  const { selectAllBooksBookshelf } = useBookshelfViewContext();
+
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
@@ -137,10 +146,12 @@ export function useDeleteBookshelf() {
     mutationFn: async (id: number) =>
       axiosInstance.delete(BASE_ENDPOINT + `/${id}`),
 
-    onMutate: async (id: number) =>
-      handleMutate(queryClient, (bookshelves) =>
+    onMutate: async (id: number) => {
+      await handleMutate(queryClient, (bookshelves) =>
         bookshelves.filter((b) => b.id !== id),
-      ),
+      );
+      selectAllBooksBookshelf();
+    },
 
     onSuccess: () =>
       enqueueSnackbar({
@@ -151,6 +162,7 @@ export function useDeleteBookshelf() {
       }),
 
     onError: (error, id, context) => {
+      // @ts-ignore
       handleError(queryClient, "deleting", error, id, context);
       enqueueSnackbar({
         variant: "error",

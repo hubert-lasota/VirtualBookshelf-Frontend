@@ -1,14 +1,37 @@
 import { Stack, StackProps, Typography } from "@mui/material";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import { useUserContext } from "../../auth/UserContext";
+import { useNavigate } from "react-router-dom";
 
-export default function AppLogo(props: StackProps) {
+type AppLogoProps = StackProps & {
+  navigateTo?: string;
+};
+
+export default function AppLogo({ navigateTo, ...props }: AppLogoProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    if (navigateTo) {
+      navigate(navigateTo);
+    }
+  };
+
   return (
-    <Stack direction="row" alignItems="center" spacing={1} {...props}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      spacing={1}
+      onClick={handleNavigate}
+      sx={{
+        ...(!!navigateTo ? { cursor: "pointer" } : {}),
+        userSelect: "none",
+      }}
+      {...props}
+    >
       <LocalLibraryIcon color="primary" fontSize="large" />
       <Typography
         component="h1"

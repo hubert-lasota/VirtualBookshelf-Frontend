@@ -25,13 +25,7 @@ export default function DeleteBookshelfDialog({
     <DeleteEntityDialog
       open={open}
       onClose={onClose}
-      onDelete={(e) => {
-        e.stopPropagation();
-        // const index =
-        //   currentBookshelfIndex === 0
-        //     ? ALL_BOOKS_BOOKSHELF_INDEX
-        //     : currentBookshelfIndex - 1;
-        // setCurrentBookshelfIndex(index);
+      onDelete={() => {
         mutate(bookshelf.id);
         onClose();
       }}
@@ -39,9 +33,9 @@ export default function DeleteBookshelfDialog({
       contentText={
         <>
           {isPlLanguage
-            ? `Czy na pewno chcesz usunąć regał: `
-            : `Are you sure you want to delete the bookshelf: `}
-          <Typography component="span" fontWeight={600}>
+            ? `Czy na pewno chcesz usunąć regał `
+            : `Are you sure you want to delete the bookshelf `}
+          <Typography component="span" fontWeight={600} color="textPrimary">
             {bookshelf.name}
           </Typography>
           {"?"}

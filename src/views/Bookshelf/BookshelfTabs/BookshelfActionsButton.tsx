@@ -1,10 +1,9 @@
 import { useUserContext } from "../../../common/auth/UserContext";
-import { BookPlusIcon } from "lucide-react";
-import EditIcon from "@mui/icons-material/Edit";
+import { BookPlusIcon, Pencil } from "lucide-react";
 import SearchIcon from "@mui/icons-material/Search";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import React, { useState } from "react";
-import SearchBookDialog from "./SearchBookDialog";
+import SearchBookDialog from "./SearchBook/SearchBookDialog";
 import DeleteBookshelfDialog from "./DeleteBookshelfDialog";
 import ReadingBookFormDialog from "./ReadingBookForm/ReadingBookFormDialog";
 import MoreActionsButton from "../../../common/components/ui/Button/MoreActionsButton";
@@ -33,7 +32,7 @@ export default function BookshelfActionsButton() {
   const items = [
     {
       text: isPlLanguage ? "Edytuj regał" : "Edit bookshelf",
-      icon: <EditIcon />,
+      icon: <Pencil />,
       onClick: clickWithStopPropagation(() =>
         onFormModeChange(BookshelfFormMode.UPDATE),
       ),
@@ -50,7 +49,7 @@ export default function BookshelfActionsButton() {
     },
     {
       text: isPlLanguage ? "Usuń regał" : "Delete bookshelf",
-      icon: <DeleteIcon />,
+      icon: <DeleteOutlineIcon />,
       onClick: clickWithStopPropagation(() =>
         setOpenDeleteBookshelfDialog(true),
       ),

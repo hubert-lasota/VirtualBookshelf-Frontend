@@ -2,10 +2,18 @@ import { Stack } from "@mui/material";
 import AppLogo from "../AppLogo/AppLogo";
 import GlobalAppNavbarContainer from "./GlobalAppNavbarContainer";
 
-export default function GlobalNavbar({ children }: { children: any }) {
+type GlobalNavbarProps = {
+  children: React.ReactNode;
+  appLogoNavigateTo?: string;
+};
+
+export default function GlobalNavbar({
+  children,
+  appLogoNavigateTo,
+}: GlobalNavbarProps) {
   return (
     <GlobalAppNavbarContainer>
-      <AppLogo />
+      <AppLogo navigateTo={appLogoNavigateTo} />
       <Stack spacing={2} alignItems="center" direction="row">
         {children}
       </Stack>
