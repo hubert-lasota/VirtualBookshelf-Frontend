@@ -58,6 +58,9 @@ export default function NavSidebar() {
   return (
     <Stack
       sx={(theme) => ({
+        position: "sticky",
+        top: 0,
+        maxHeight: "100dvh",
         borderRight: `1px solid ${theme.palette.divider}`,
         justifyContent: "space-between",
         backgroundImage:

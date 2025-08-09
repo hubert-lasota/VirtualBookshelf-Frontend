@@ -14,6 +14,21 @@ export enum BookshelfFormMode {
   CLOSED = "closed",
 }
 
+export type ReadingBookFilters = {
+  publicationYear: {
+    lte?: number;
+    gte?: number;
+  };
+  pageCount: {
+    lte?: number;
+    gte?: number;
+  };
+  authorId?: number;
+  genreId?: number;
+  formatId?: number;
+  publisherId?: number;
+};
+
 export const isBookshelfResponse = (
   bookshelf: CurrentBookshelf,
 ): bookshelf is BookshelfResponse => "id" in bookshelf;

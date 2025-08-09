@@ -8,9 +8,16 @@ const BASE_ENDPOINT = "/v1/book-formats";
 type UseGetBookFormatsResult = {
   formats: BookFormat[];
 };
-
-export const useGetBookFormats = () =>
+type UseGetBookFormatsParams = {
+  availableInBookshelf?: boolean;
+};
+export const useGetBookFormats = ({
+  availableInBookshelf,
+}: UseGetBookFormatsParams = {}) =>
   useQuery<UseGetBookFormatsResult>({
     queryKey: ["book-formats"],
-    queryFn: () => axiosInstance.get(BASE_ENDPOINT).then(unwrapResponseData),
+    queryFn: () =>
+      axiosInstance
+        .get(BASE_ENDPOINT, { params: { availableInBookshelf } })
+        .then(unwrapResponseData),
   });

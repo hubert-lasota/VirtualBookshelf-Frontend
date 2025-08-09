@@ -29,7 +29,7 @@ export default function NavItem({
           marginBottom: theme.spacing(1.5),
         },
         cursor: "pointer",
-
+        userSelect: "none",
         borderRadius: theme.shape.borderRadius,
         paddingBlock: theme.spacing(1.25),
         paddingInline: theme.spacing(1.5),

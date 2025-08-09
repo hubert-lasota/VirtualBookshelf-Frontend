@@ -9,6 +9,7 @@ import {
   CurrentBookshelf,
   isAllBooksBookshelf,
   isBookshelfResponse,
+  ReadingBookFilters,
 } from "./models";
 import { ReadingBookResponse } from "../../common/models/readingBookModels";
 import { BookshelfViewContext } from "./BookshelfViewContext";
@@ -18,12 +19,25 @@ import { VIEW_SPACING } from "../LoggedInViewContainer/config";
 import BookshelfTabs from "./BookshelfTabs/BookshelfTabs";
 import BookshelfViewHeader from "./BookshelfViewHeader";
 import BookGrid from "./BookGrid/BookGrid";
+import BookshelfToolbar from "./BookshelfToolbar/BookshelfToolbar";
+
+const initFilters: ReadingBookFilters = {
+  pageCount: {
+    gte: undefined,
+    lte: undefined,
+  },
+  publicationYear: {
+    gte: undefined,
+    lte: undefined,
+  },
+};
 
 export default function BookshelfView() {
   const { data: { bookshelves = [] } = {} } = useGetBookshelves();
 
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounceValue(query, 500);
+  const [filters, setFilters] = useState<ReadingBookFilters>(initFilters);
 
   const { data: { readingBooks = [] } = {} } = useGetBookshelfBooks({
     query: debouncedQuery,
@@ -76,13 +90,14 @@ export default function BookshelfView() {
         onCurrentBookshelfChange: (bookshelf) => setCurrentBookshelf(bookshelf),
         allBooksBookshelf,
         selectAllBooksBookshelf: () => setCurrentBookshelf(allBooksBookshelf),
-
         readingBooks: filteredBooks,
         bookshelves,
         query,
         onQueryChange: (query) => setQuery(query),
         formMode,
         onFormModeChange: (formMode) => setFormMode(formMode),
+        filters,
+        onFiltersChange: (filters) => setFilters(filters),
       }}
     >
       <Stack
@@ -95,6 +110,7 @@ export default function BookshelfView() {
       >
         <BookshelfTabs />
         <BookshelfViewHeader />
+        <BookshelfToolbar />
         <BookGrid />
       </Stack>
       {formMode !== BookshelfFormMode.CLOSED && <BookshelfFormDialog />}

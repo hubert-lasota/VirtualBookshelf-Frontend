@@ -5,6 +5,7 @@ import {
   AllBooksBookshelf,
   BookshelfFormMode,
   CurrentBookshelf,
+  ReadingBookFilters,
 } from "./models";
 
 type BookshelfViewContextValue = {
@@ -18,6 +19,8 @@ type BookshelfViewContextValue = {
   selectAllBooksBookshelf: () => void;
   formMode: BookshelfFormMode;
   onFormModeChange: (mode: BookshelfFormMode) => void;
+  filters: ReadingBookFilters;
+  onFiltersChange: (filters: ReadingBookFilters) => void;
 };
 
 export const BookshelfViewContext =

@@ -15,7 +15,7 @@ export default function ToolbarContainer({
   ...props
 }: StackProps) {
   return (
-    <Stack direction="row" spacing={1} sx={mergeSx(toolbarSx, sx)} {...props}>
+    <Stack direction="row" spacing={2} sx={mergeSx(toolbarSx, sx)} {...props}>
       {children}
     </Stack>
   );

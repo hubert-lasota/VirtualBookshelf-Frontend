@@ -18,3 +18,8 @@ export type BaseResponse = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type ApiSort = {
+  field: string;
+  direction: "asc" | "desc";
+};

@@ -9,8 +9,16 @@ type UseGetGenresResult = {
   genres: GenreResponse[];
 };
 
-export const useGetGenres = () =>
+type UseGetGenresParams = {
+  availableInBookshelf?: boolean;
+};
+export const useGetGenres = ({
+  availableInBookshelf,
+}: UseGetGenresParams = {}) =>
   useQuery<UseGetGenresResult>({
     queryKey: ["genres"],
-    queryFn: () => axiosInstance.get(BASE_ENDPOINT).then(unwrapResponseData),
+    queryFn: () =>
+      axiosInstance
+        .get(BASE_ENDPOINT, { params: { availableInBookshelf } })
+        .then(unwrapResponseData),
   });
