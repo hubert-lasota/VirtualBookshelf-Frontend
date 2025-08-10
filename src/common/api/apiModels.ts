@@ -4,19 +4,11 @@ export type ApiError = {
   errors?: { string: string };
 };
 
-export type PaginatedResponse<ContentType, ContentFieldName extends string> = {
-  [K in ContentFieldName]: ContentType[];
-} & {
+export type PageMeta = {
   count: number;
   totalCount: number;
   page: number;
   totalPages: number;
-};
-
-export type BaseResponse = {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type ApiSort = {

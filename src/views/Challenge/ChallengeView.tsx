@@ -1,6 +1,8 @@
 import { Stack } from "@mui/material";
 import ChallengeHeader from "./ChallengeHeader/ChallengeHeader";
 import { VIEW_SPACING } from "../LoggedInViewContainer/config";
+import ChallengeToolbar from "./ChallengeToolbar";
+import ChallengeGrid from "./ChallengeGrid/ChallengeGrid";
 
 export default function ChallengeView() {
   return (
@@ -13,6 +15,8 @@ export default function ChallengeView() {
       })}
     >
       <ChallengeHeader />
+      <ChallengeToolbar />
+      <ChallengeGrid />
     </Stack>
   );
 }

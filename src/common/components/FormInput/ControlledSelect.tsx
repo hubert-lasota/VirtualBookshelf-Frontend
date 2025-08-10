@@ -13,11 +13,13 @@ type ControlledSelectProps = Omit<
   "value" | "onChange" | "name"
 > & {
   name: string;
+  shouldUnregister?: boolean;
   formControlProps?: FormControlProps;
 };
 
 export default function ControlledSelect({
   name,
+  shouldUnregister,
   children,
   label,
   formControlProps,
@@ -28,7 +30,7 @@ export default function ControlledSelect({
   const {
     field: { value, ref, ...restFieldProps },
     fieldState: { invalid, error },
-  } = useController({ name, defaultValue, disabled });
+  } = useController({ name, defaultValue, disabled, shouldUnregister });
 
   return (
     <FormControl

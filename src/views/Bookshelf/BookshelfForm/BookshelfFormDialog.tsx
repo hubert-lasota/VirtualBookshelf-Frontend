@@ -28,9 +28,8 @@ export default function BookshelfFormDialog() {
     isBookshelfResponse(currentBookshelf) &&
     formMode === BookshelfFormMode.UPDATE;
 
-  const { mutate: updateBookshelf } = useUpdateBookshelf();
-
-  const { mutate: createBookshelf } = useCreateBookshelf();
+  const { mutateAsync: updateBookshelf } = useUpdateBookshelf();
+  const { mutateAsync: createBookshelf } = useCreateBookshelf();
 
   const form = useForm<BookshelfFormValues>({
     mode: "all",
@@ -40,11 +39,11 @@ export default function BookshelfFormDialog() {
 
   const handleClose = () => onFormModeChange(BookshelfFormMode.CLOSED);
 
-  const onSubmit = (bookshelf: BookshelfFormValues) => {
+  const onSubmit = async (bookshelf: BookshelfFormValues) => {
     if (isUpdating) {
-      updateBookshelf({ bookshelf, bookshelfId: currentBookshelf.id });
+      await updateBookshelf({ bookshelf, bookshelfId: currentBookshelf.id });
     } else {
-      createBookshelf(bookshelf);
+      await createBookshelf(bookshelf);
     }
 
     handleClose();
@@ -76,7 +75,11 @@ export default function BookshelfFormDialog() {
         </DialogContent>
         <DialogActions>
           <CancelButton onClick={handleClose} />
-          <Button type="submit" variant="contained">
+          <Button
+            type="submit"
+            variant="contained"
+            loading={form.formState.isSubmitting}
+          >
             {isPlLanguage
               ? isUpdating
                 ? "Edytuj"

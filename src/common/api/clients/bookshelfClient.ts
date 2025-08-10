@@ -44,18 +44,6 @@ export function useCreateBookshelf() {
     mutationFn: async (bookshelf: BookshelfFormValues) =>
       axiosInstance.post(BASE_ENDPOINT, bookshelf).then(unwrapResponseData),
 
-    onMutate: async (bookshelf: BookshelfFormValues) =>
-      handleMutate(queryClient, (bookshelves) => {
-        const newBookshelf: BookshelfResponse = {
-          ...bookshelf,
-          id: BOOKSHELF_TEMP_ID,
-          // @ts-ignore
-          books: [],
-        };
-        bookshelves.push(newBookshelf);
-        return bookshelves;
-      }),
-
     onSuccess: () => {
       enqueueSnackbar({
         message: isPlLanguage
@@ -63,19 +51,18 @@ export function useCreateBookshelf() {
           : "Successfully created bookshelf",
         variant: "success",
       });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY, exact: false });
     },
 
-    onError: (error, bookshelf, context) => {
-      handleError(queryClient, "creating", error, bookshelf, context);
+    onError: (error, bookshelf) => {
       enqueueSnackbar({
         message: isPlLanguage
           ? "Wystąpił błąd podczas dodawania regału"
           : "Error occurred while adding bookshelf",
         variant: "error",
       });
+      console.error("Error in creating bookshelf", error, bookshelf);
     },
-
-    onSettled: () => handleSettled(queryClient),
   });
 }
 
