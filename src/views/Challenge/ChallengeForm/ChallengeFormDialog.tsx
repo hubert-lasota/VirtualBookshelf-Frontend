@@ -1,30 +1,42 @@
 import {
   ChallengeFormValues,
+  ChallengeResponse,
   createChallengeSchema,
 } from "../../../common/models/challengeModels";
 import { FormProvider, useForm } from "react-hook-form";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
-import { Dialog, DialogContent, Button, DialogActions } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 import { useUserContext } from "../../../common/auth/UserContext";
 import CancelButton from "../../../common/components/ui/Button/CancelButton";
 import ChallengeFormFields from "./ChallengeFormFields";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  useCreateChallenge,
+  useUpdateChallenge,
+} from "../../../common/api/clients/challengeClient";
 
 type ChallengeFormDialogProps = {
   open: boolean;
   onClose: () => void;
-  challengeFormValues?: ChallengeFormValues;
+  challenge?: ChallengeResponse;
 };
 
 export default function ChallengeFormDialog({
   open,
   onClose,
-  challengeFormValues,
+  challenge,
 }: ChallengeFormDialogProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
+
+  const challengeFormValues: ChallengeFormValues | undefined = challenge
+    ? {
+        ...challenge,
+        genreId: challenge.genre?.id,
+      }
+    : undefined;
 
   const form = useForm<ChallengeFormValues>({
     mode: FORM_VALIDATE_MODE,
@@ -32,9 +44,22 @@ export default function ChallengeFormDialog({
     resolver: zodResolver(createChallengeSchema(isPlLanguage)),
   });
 
-  const isUpdating = !!challengeFormValues;
+  const isUpdating = !!challenge;
 
-  const onSubmit = async () => {};
+  const { mutateAsync: createChallenge } = useCreateChallenge();
+  const { mutateAsync: updateChallenge } = useUpdateChallenge();
+
+  const onSubmit = async (challengeFormValues: ChallengeFormValues) => {
+    if (isUpdating) {
+      await updateChallenge({
+        challengeId: challenge.id,
+        challenge: challengeFormValues,
+      });
+    } else {
+      await createChallenge(challengeFormValues);
+    }
+    onClose();
+  };
 
   return (
     <FormProvider {...form}>
@@ -43,6 +68,7 @@ export default function ChallengeFormDialog({
         onClose={onClose}
         slotProps={{
           paper: {
+            sx: { minWidth: "60%" },
             component: "form",
             onSubmit: form.handleSubmit(onSubmit),
           },
@@ -51,10 +77,10 @@ export default function ChallengeFormDialog({
         <DialogTitleWithCloseButton onClose={onClose}>
           {isPlLanguage
             ? isUpdating
-              ? `Edytuj wyzwanie ${challengeFormValues.title}`
+              ? `Edytuj wyzwanie ${challenge.title}`
               : "Dodaj nowe wyzwanie"
             : isUpdating
-              ? `Edit challenge ${challengeFormValues.title}`
+              ? `Edit challenge ${challenge.title}`
               : "Add new challenge"}
         </DialogTitleWithCloseButton>
         <DialogContent dividers>

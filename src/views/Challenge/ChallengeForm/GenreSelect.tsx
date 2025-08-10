@@ -14,6 +14,7 @@ export default function GenreSelect() {
   return (
     <ControlledSelect
       name="genreId"
+      shouldUnregister
       label={<RequiredLabel text={isPlLanguage ? "Gatunek" : "Genre"} />}
       renderValue={(genreId) =>
         genres.find((g) => g.id === genreId)?.name ?? ""

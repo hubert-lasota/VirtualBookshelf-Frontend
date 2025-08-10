@@ -40,11 +40,22 @@ export const createChallengeSchema = (isPlLanguage: boolean) => {
       type: z.nativeEnum(ChallengeType, {
         message: isPlLanguage ? "Typ jest wymagany" : "Type is required",
       }),
-      targetCount: z.number().int(),
+      targetCount: z
+        .number({
+          message: isPlLanguage
+            ? "Cel jest wymagany"
+            : "Target count is required",
+        })
+        .int()
+        .min(
+          1,
+          isPlLanguage
+            ? "Cel musi być większy od 0"
+            : "Target count must be greater than 0",
+        ),
       genreId: z.number().optional(),
     })
     .superRefine((data, ctx) => {
-      console.log("data", data);
       if (data.type === ChallengeType.GENRE_BOOKS && !data.genreId) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,

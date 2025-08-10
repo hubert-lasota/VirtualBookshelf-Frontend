@@ -6,6 +6,8 @@ import ControlledTextField from "../../../common/components/FormInput/Controlled
 import { useWatch } from "react-hook-form";
 import ChallengeTypeSelect from "./ChallengeTypeSelect";
 import { ChallengeType } from "../../../common/models/challengeModels";
+import ControlledNumberField from "../../../common/components/FormInput/ControlledNumberField";
+import ControlledDatePicker from "../../../common/components/FormInput/ControlledDatePicker";
 
 export default function ChallengeFormFields() {
   const {
@@ -22,6 +24,7 @@ export default function ChallengeFormFields() {
       },
     },
     {
+      component: ControlledNumberField,
       props: {
         name: "targetCount",
         label: <RequiredLabel text={isPlLanguage ? "Cel" : "Target count"} />,
@@ -33,6 +36,28 @@ export default function ChallengeFormFields() {
     {
       skip: type !== ChallengeType.GENRE_BOOKS,
       component: GenreSelect,
+    },
+    {
+      component: ControlledDatePicker,
+      props: {
+        name: "startAt",
+        label: (
+          <RequiredLabel
+            text={isPlLanguage ? "Data rozpoczęcia" : "Start date"}
+          />
+        ),
+      },
+    },
+    {
+      component: ControlledDatePicker,
+      props: {
+        name: "endAt",
+        label: (
+          <RequiredLabel
+            text={isPlLanguage ? "Data zakończenia" : "End date"}
+          />
+        ),
+      },
     },
     {
       size: 12,
@@ -52,13 +77,14 @@ export default function ChallengeFormFields() {
           size = 6,
           props = {},
           component: FieldComponent = ControlledTextField,
-        }) =>
-          skip ? null : (
-            <Grid size={size}>
-              {/*@ts-ignore*/}
+        }) => (
+          <Grid size={size}>
+            {skip ? null : (
+              /* @ts-ignore */
               <FieldComponent {...props} />
-            </Grid>
-          ),
+            )}
+          </Grid>
+        ),
       )}
     </Grid>
   );

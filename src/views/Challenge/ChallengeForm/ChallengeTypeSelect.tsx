@@ -20,7 +20,9 @@ export default function CChallengeTypeSelect() {
     },
     {
       value: ChallengeType.GENRE_COUNT,
-      label: isPlLanguage ? "Ilość gatunków" : "Number of genres",
+      label: isPlLanguage
+        ? "Ilość różnych gatunków"
+        : "Number of different genres",
     },
     {
       value: ChallengeType.GENRE_BOOKS,
