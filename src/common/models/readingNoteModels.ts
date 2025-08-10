@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { BaseResponse } from "../api/apiModels";
 
 export const createReadingNoteSchema = (isPlLanguage: boolean) => {
   const contentRequiredMessage = isPlLanguage
@@ -52,4 +51,12 @@ export type ReadingNoteFormValues = z.infer<
   ReturnType<typeof createReadingNoteSchema>
 >;
 
-export type ReadingNoteResponse = BaseResponse & ReadingNoteFormValues;
+export type ReadingNoteResponse = {
+  id: number;
+  title: string;
+  content: string;
+  pageFrom: number;
+  pageTo: number;
+  createdAt: string;
+  updatedAt: string | null;
+};

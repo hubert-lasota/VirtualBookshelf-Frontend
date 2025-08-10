@@ -1,11 +1,15 @@
 import { ReactNode } from "react";
 import { UserContext } from "./UserContext";
 import { useLocalStorage } from "../hooks";
-import { AppLanguageCode, User, UserPreferences } from "../models/userModels";
+import {
+  AppLanguageCode,
+  UserPreferences,
+  UserResponse,
+} from "../models/userModels";
 import { PaletteMode } from "@mui/material";
 
 export default function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useLocalStorage<User>("user");
+  const [user, setUser] = useLocalStorage<UserResponse>("user");
   const [preferences, setPreferences] = useLocalStorage<UserPreferences>(
     "preferences",
     {

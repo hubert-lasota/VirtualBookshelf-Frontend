@@ -9,13 +9,13 @@ export type UserProfile = {
   pictureUrl: string;
 };
 
-export type User = {
+export type UserResponse = {
   id: number;
   username: string;
   profile: UserProfile;
 };
 
-export type UserSignInResponse = User & {
+export type UserSignInResponse = UserResponse & {
   jwt: string;
 };
 

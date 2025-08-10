@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { BaseResponse } from "../api/apiModels";
 import { BookFormat } from "./bookFormatModels";
 import { GenreResponse } from "./genreModels";
 import { ReviewResponse, ReviewStatistics } from "./reviewModels";
+import { AuthorResponse } from "./authorModels";
 
 export function createBookSchema(isPlLanguage: boolean) {
   const authorsRequiredMessage = isPlLanguage
@@ -100,16 +100,24 @@ export function createBookSchema(isPlLanguage: boolean) {
   });
 }
 
-export type BookFormValues = z.infer<ReturnType<typeof createBookSchema>>;
+export type BookResponse = {
+  id: number;
+  title: string;
+  isbn: string;
+  authors: AuthorResponse[];
+  coverUrl: string | null;
+};
 
-export type BookResponse = Omit<
-  BookFormValues,
-  "formatId" | "cover" | "genreIds"
-> &
-  BaseResponse & {
-    format?: BookFormat;
-    coverUrl?: string;
-    genres: GenreResponse[];
-    reviewStatistics: ReviewStatistics;
-    review: ReviewResponse | null;
-  };
+export type BookDetailsResponse = {
+  id: number;
+  title: string;
+  isbn: string;
+  authors: AuthorResponse[];
+  format: BookFormat | null;
+  coverUrl: string | null;
+  genres: GenreResponse[];
+  reviewStatistics: ReviewStatistics;
+  review: ReviewResponse | null;
+  createdAt: string;
+  updatedAt: string | null;
+};

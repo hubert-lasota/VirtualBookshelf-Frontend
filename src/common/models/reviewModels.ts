@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseResponse } from "../api/apiModels";
+import { UserResponse } from "./userModels";
 
 const VALID_RATINGS = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 
@@ -20,17 +20,14 @@ export const createReviewSchema = (isPlLanguage: boolean) =>
 
 export type ReviewFormValues = z.infer<ReturnType<typeof createReviewSchema>>;
 
-export type ReviewResponse = ReviewFormValues &
-  BaseResponse & {
-    user: {
-      id: number;
-      profile: {
-        firstName: string;
-        lastName: string;
-        pictureUrl: string;
-      };
-    };
-  };
+export type ReviewResponse = {
+  id: number;
+  rating: number;
+  content: string | null;
+  user: UserResponse;
+  createdAt: string;
+  updatedAt: string | null;
+};
 
 export type ReviewStatistics = {
   average: number;

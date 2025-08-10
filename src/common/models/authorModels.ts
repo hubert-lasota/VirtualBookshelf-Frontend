@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { BaseResponse } from "../api/apiModels";
 
 export const createAuthorSchema = (isPlLanguage: boolean) =>
   z.object({
@@ -17,4 +16,17 @@ export const createAuthorSchema = (isPlLanguage: boolean) =>
 
 export type Author = z.infer<ReturnType<typeof createAuthorSchema>>;
 
-export type AuthorResponse = Author & BaseResponse;
+export type AuthorResponse = {
+  id: number;
+  fullName: string;
+  photoUrl: string | null;
+};
+
+export type AuthorDetailsResponse = {
+  id: number;
+  fullName: string;
+  photoUrl: string | null;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string | null;
+};

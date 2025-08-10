@@ -4,8 +4,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { ApiError } from "../apiModels";
 import {
-  User,
   UserCredentials,
+  UserResponse,
   UserSignInResponse,
 } from "../../models/userModels";
 import { useUserContext } from "../../auth/UserContext";
@@ -35,7 +35,7 @@ export function useSignIn() {
   const mutationReturn = useMutation({
     mutationFn: (credentials: UserCredentials) =>
       axiosInstance
-        .post<User>(BASE_ENDPOINT + "/sign-in", credentials)
+        .post<UserResponse>(BASE_ENDPOINT + "/sign-in", credentials)
         .then(unwrapResponseData),
 
     onSuccess: (user: UserSignInResponse) => {
