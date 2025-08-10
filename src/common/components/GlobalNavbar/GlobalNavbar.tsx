@@ -5,6 +5,7 @@ import GlobalAppNavbarContainer from "./GlobalAppNavbarContainer";
 type GlobalNavbarProps = {
   children: React.ReactNode;
   appLogoNavigateTo?: string;
+  position?: "fixed" | "absolute" | "sticky" | "static" | "relative";
 };
 
 export default function GlobalNavbar({

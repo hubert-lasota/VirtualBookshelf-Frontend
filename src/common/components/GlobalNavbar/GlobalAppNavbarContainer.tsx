@@ -6,24 +6,28 @@ import {
   Toolbar,
   ToolbarProps,
 } from "@mui/material";
+import { GLOBAL_NAVBAR_HEIGHT } from "./config";
 
 type GlobalAppBarContainerProps = {
   sx?: SxProps;
   children: ReactNode;
   toolbarProps?: ToolbarProps;
+  position?: "fixed" | "absolute" | "sticky" | "static" | "relative";
 } & Pick<AppBarProps, "position">;
 
 export default function GlobalAppNavbarContainer({
   children,
   sx,
   toolbarProps,
+  position = "sticky",
 }: GlobalAppBarContainerProps) {
   return (
     <AppBar
       elevation={0}
-      position="sticky"
+      position={position}
       sx={[
         (theme) => ({
+          height: GLOBAL_NAVBAR_HEIGHT,
           borderRadius: 0,
           paddingInline: theme.spacing(12),
           borderBottom: `1.5px solid ${theme.palette.divider}`,
