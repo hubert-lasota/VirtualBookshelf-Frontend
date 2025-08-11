@@ -1,17 +1,23 @@
 import MoreActionsButton from "../../../../../common/components/ui/Button/MoreActionsButton";
 import { useUserContext } from "../../../../../common/auth/UserContext";
-import { UserRoundX } from "lucide-react";
+import { Pencil, UserRoundX } from "lucide-react";
 import { useState } from "react";
 import QuitChallengeDialog from "./QuitChallengeDialog";
+import { useChallengeContext } from "../ChallengeContext";
+import ChallengeFormDialog from "../../../ChallengeForm/ChallengeFormDialog";
 
 export default function ChallengeActionsButton() {
   const [openQuitChallenge, setOpenQuitChallenge] = useState(false);
+  const [openFormChallenge, setOpenFormChallenge] = useState(false);
+
+  const challenge = useChallengeContext();
 
   const {
     preferences: { isPlLanguage },
+    user,
   } = useUserContext();
 
-  const items = [
+  let items = [
     {
       text: isPlLanguage ? "Zrezygnuj" : "Quit challenge",
       icon: <UserRoundX />,
@@ -19,12 +25,28 @@ export default function ChallengeActionsButton() {
     },
   ];
 
+  if (user.id === challenge.user.id) {
+    items = [
+      {
+        text: isPlLanguage ? "Edytuj" : "Edit",
+        icon: <Pencil />,
+        onClick: () => setOpenFormChallenge(true),
+      },
+      ...items,
+    ];
+  }
+
   return (
     <>
       <MoreActionsButton items={items} iconButtonProps={{ size: "small" }} />
       <QuitChallengeDialog
         open={openQuitChallenge}
         onClose={() => setOpenQuitChallenge(false)}
+      />
+      <ChallengeFormDialog
+        open={openFormChallenge}
+        onClose={() => setOpenFormChallenge(false)}
+        challenge={challenge}
       />
     </>
   );

@@ -1,7 +1,7 @@
 import { useUserContext } from "../../../common/auth/UserContext";
 import { Stack } from "@mui/material";
 import AddChallengeButton from "./AddChallengeButton";
-import FindChallengeButton from "./FindChallengeButton";
+import SearchChallengeButton from "./SearchChallengeButton";
 import ViewTitle from "../../../common/components/ui/ViewTitle/ViewTitle";
 import ViewSubtitle from "../../../common/components/ui/ViewTitle/ViewSubtitle";
 
@@ -24,7 +24,7 @@ export default function ChallengeHeader() {
       </div>
       <Stack spacing={1}>
         <AddChallengeButton />
-        <FindChallengeButton />
+        <SearchChallengeButton />
       </Stack>
     </Stack>
   );

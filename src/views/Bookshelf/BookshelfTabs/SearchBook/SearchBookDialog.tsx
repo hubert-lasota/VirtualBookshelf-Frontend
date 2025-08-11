@@ -47,15 +47,15 @@ export default function SearchBookDialog({
       }}
     >
       <DialogTitleWithCloseButton onClose={onClose} variant="h5">
+        {isPlLanguage ? "Szukaj książki" : "Search book"}
+      </DialogTitleWithCloseButton>
+      <DialogContent sx={{ width: "100%", overflowY: "auto" }} dividers>
         <TextField
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          label={isPlLanguage ? "Szukaj książki" : "Search book"}
+          label={isPlLanguage ? "Szukaj" : "Search"}
           sx={{ width: "95%" }}
-          size="small"
         />
-      </DialogTitleWithCloseButton>
-      <DialogContent sx={{ width: "100%", overflowY: "auto" }} dividers>
         <SearchBookResult books={books} />
       </DialogContent>
       {totalPages > 1 && (
