@@ -9,11 +9,11 @@ import AuthorFilterSelect from "./AuthorFilterSelect";
 import GenreFilterSelect from "./GenreFilterSelect";
 
 const initFilters: ReadingBookFilters = {
-  pageCount: {
+  pageCountRange: {
     gte: undefined,
     lte: undefined,
   },
-  publicationYear: {
+  publicationYearRange: {
     gte: undefined,
     lte: undefined,
   },
@@ -44,14 +44,14 @@ export default function BookshelfToolbar() {
   const rangeListItems = [
     {
       label: isPlLanguage ? "Rok publikacji" : "Publication year",
-      rangeObject: unsavedFilters.publicationYear,
+      rangeObject: unsavedFilters.publicationYearRange,
     },
     {
       label: isPlLanguage ? "Liczba stron" : "Page count",
-      rangeObject: unsavedFilters.pageCount,
+      rangeObject: unsavedFilters.pageCountRange,
     },
   ];
-  console.log(unsavedFilters);
+
   return (
     <Toolbar
       searchTextFieldProps={{
@@ -97,7 +97,7 @@ export default function BookshelfToolbar() {
                       value={rangeObject[key] ?? ""}
                       onChange={(e) =>
                         handleFilterChange("publicationYear", {
-                          ...unsavedFilters.publicationYear,
+                          ...unsavedFilters.publicationYearRange,
                           [key]: e.target.value,
                         })
                       }

@@ -15,11 +15,11 @@ export enum BookshelfFormMode {
 }
 
 export type ReadingBookFilters = {
-  publicationYear: {
+  publicationYearRange: {
     lte?: number;
     gte?: number;
   };
-  pageCount: {
+  pageCountRange: {
     lte?: number;
     gte?: number;
   };

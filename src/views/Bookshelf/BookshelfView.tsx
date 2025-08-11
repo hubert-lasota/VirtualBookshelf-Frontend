@@ -22,11 +22,11 @@ import BookGrid from "./BookGrid/BookGrid";
 import BookshelfToolbar from "./BookshelfToolbar/BookshelfToolbar";
 
 const initFilters: ReadingBookFilters = {
-  pageCount: {
+  pageCountRange: {
     gte: undefined,
     lte: undefined,
   },
-  publicationYear: {
+  publicationYearRange: {
     gte: undefined,
     lte: undefined,
   },
