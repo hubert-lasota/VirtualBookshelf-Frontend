@@ -1,5 +1,7 @@
 import { GenreResponse } from "./genreModels";
 import { z } from "zod";
+import { ChallengeParticipantStatus } from "./challengePartictipantModels";
+import { UserResponse } from "./userModels";
 
 export enum ChallengeType {
   BOOK_COUNT = "BOOK_COUNT",
@@ -53,6 +55,16 @@ export const createChallengeSchema = (isPlLanguage: boolean) => {
             ? "Cel musi być większy od 0"
             : "Target count must be greater than 0",
         ),
+      startAt: z.string({
+        message: isPlLanguage
+          ? "Data rozpoczęcia jest wymagana"
+          : "Start date is required",
+      }),
+      endAt: z.string({
+        message: isPlLanguage
+          ? "Data zakończenia jest wymagana"
+          : "End date is required",
+      }),
       genreId: z.number().optional(),
     })
     .superRefine((data, ctx) => {
@@ -70,6 +82,24 @@ export type ChallengeFormValues = z.infer<
   ReturnType<typeof createChallengeSchema>
 >;
 
+type Participation =
+  | {
+      participates: true;
+      currentCount: number;
+      progressPercentage: number;
+      status: ChallengeParticipantStatus;
+      startedAt: string;
+      finishedAt: string | null;
+    }
+  | {
+      participates: false;
+      currentCount: null;
+      progressPercentage: null;
+      status: null;
+      startedAt: null;
+      finishedAt: null;
+    };
+
 export type ChallengeResponse = {
   id: number;
   title: string;
@@ -80,5 +110,6 @@ export type ChallengeResponse = {
   endAt: string;
   genre: GenreResponse | null;
   totalParticipants: number;
-  progressPercentage: number;
+  participation: Participation;
+  user: UserResponse;
 };

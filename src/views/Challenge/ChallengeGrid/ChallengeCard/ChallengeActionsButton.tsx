@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
+import MoreActionsButton from "../../../../common/components/ui/Button/MoreActionsButton";
 
 export default function ChallengeActionsButton() {
-  return <Button></Button>;
+  return <MoreActionsButton items={[]} iconButtonProps={{ size: "small" }} />;
 }

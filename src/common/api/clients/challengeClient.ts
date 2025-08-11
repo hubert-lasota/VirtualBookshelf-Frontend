@@ -7,6 +7,7 @@ import {
 } from "../../models/challengeModels";
 import { useSnackbar } from "notistack";
 import { useUserContext } from "../../auth/UserContext";
+import { PageMeta } from "../apiModels";
 
 const QUERY_KEY = ["challenges"];
 
@@ -14,19 +15,18 @@ const BASE_ENDPOINT = "/v1/challenges";
 
 type UseGetChallengesResult = {
   challenges: ChallengeResponse[];
+  pageMeta: PageMeta;
 };
 
-export const useGetCurrentUserChallenges = () =>
-  useQuery<UseGetChallengesResult>({
-    queryKey: QUERY_KEY,
-    queryFn: () =>
-      axiosInstance.get(BASE_ENDPOINT + "/my").then(unwrapResponseData),
-  });
+type UseGetChallengeParams = {
+  participating?: boolean;
+};
 
-export const useGetChallenges = () =>
+export const useGetChallenges = (params: UseGetChallengeParams = {}) =>
   useQuery<UseGetChallengesResult>({
-    queryKey: QUERY_KEY,
-    queryFn: () => axiosInstance.get(BASE_ENDPOINT).then(unwrapResponseData),
+    queryKey: [...QUERY_KEY, params],
+    queryFn: () =>
+      axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),
   });
 
 export const useCreateChallenge = () => {

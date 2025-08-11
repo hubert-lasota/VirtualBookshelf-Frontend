@@ -1,9 +1,10 @@
-import { useGetCurrentUserChallenges } from "../../../common/api/clients/challengeClient";
+import { useGetChallenges } from "../../../common/api/clients/challengeClient";
 import { Grid } from "@mui/material";
 import ChallengeCard from "./ChallengeCard/ChallengeCard";
 
 export default function ChallengeGrid() {
-  const { data: { challenges = [] } = {} } = useGetCurrentUserChallenges();
+  const { data: { challenges = [] } = {} } = useGetChallenges({});
+
   return (
     <Grid container spacing={2}>
       {challenges.map((c) => (
