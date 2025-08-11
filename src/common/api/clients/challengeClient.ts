@@ -92,3 +92,34 @@ export const useUpdateChallenge = () => {
     },
   });
 };
+
+export const useQuitChallenge = () => {
+  const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
+  const {
+    preferences: { isPlLanguage },
+  } = useUserContext();
+
+  return useMutation({
+    mutationFn: (challengeId: number) =>
+      axiosInstance.delete(`${BASE_ENDPOINT}/${challengeId}/quit`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY, exact: false });
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Poprawnie zrezygnowano z wyzwania"
+          : "Successfully quit challenge",
+        variant: "success",
+      });
+    },
+    onError: (error, challenge) => {
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas rezygnacji wyzwania"
+          : "Error occurred while quting challenge",
+        variant: "error",
+      });
+      console.error("Error in quting challenge", error, challenge);
+    },
+  });
+};

@@ -1,6 +1,7 @@
 import React from "react";
 import DialogTitleWithCloseButton from "./DliagotTitleWithCloseButton";
 import {
+  ButtonProps,
   Dialog,
   DialogActions,
   DialogContent,
@@ -15,6 +16,7 @@ type DeleteEntityDialogProps = {
   onDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   title: React.ReactNode;
   contentText: React.ReactNode;
+  deleteButtonProps?: ButtonProps;
 };
 
 export default function DeleteEntityDialog({
@@ -23,6 +25,7 @@ export default function DeleteEntityDialog({
   onDelete,
   title,
   contentText,
+  deleteButtonProps,
 }: DeleteEntityDialogProps) {
   return (
     <Dialog open={open} onClose={onClose}>
@@ -34,7 +37,7 @@ export default function DeleteEntityDialog({
       </DialogContent>
       <DialogActions>
         <CancelButton onClick={onClose} />
-        <DeleteButton onClick={onDelete} />
+        <DeleteButton onClick={onDelete} {...deleteButtonProps} />
       </DialogActions>
     </Dialog>
   );

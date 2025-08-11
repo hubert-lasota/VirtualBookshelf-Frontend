@@ -14,7 +14,7 @@ export default function DeleteButton({ children, ...props }: ButtonProps) {
       variant="contained"
       {...props}
     >
-      {children || isPlLanguage ? "Usuń" : "Delete"}
+      {children ?? (isPlLanguage ? "Usuń" : "Delete")}
     </Button>
   );
 }

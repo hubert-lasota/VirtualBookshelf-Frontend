@@ -6,10 +6,12 @@ import ChallengeCardFooter from "./ChallengeCardFooter";
 import StatusBadge from "./StatusBadge";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import ChallengeAuthorBadge from "./ChallengeAuthorBadge";
+import ChallengeProgress from "./ChallengeProgress";
 
 type ChallengeCardProps = {
   challenge: ChallengeResponse;
 };
+
 export default function ChallengeCard({ challenge }: ChallengeCardProps) {
   const { user } = useUserContext();
   return (
@@ -33,6 +35,7 @@ export default function ChallengeCard({ challenge }: ChallengeCardProps) {
         <Typography variant="body1" color="textSecondary">
           {challenge.description}
         </Typography>
+        <ChallengeProgress />
         <ChallengeCardFooter />
       </Stack>
     </ChallengeContext.Provider>

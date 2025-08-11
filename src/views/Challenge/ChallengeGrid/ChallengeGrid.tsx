@@ -3,7 +3,9 @@ import { Grid } from "@mui/material";
 import ChallengeCard from "./ChallengeCard/ChallengeCard";
 
 export default function ChallengeGrid() {
-  const { data: { challenges = [] } = {} } = useGetChallenges({});
+  const { data: { challenges = [] } = {} } = useGetChallenges({
+    participating: true,
+  });
 
   return (
     <Grid container spacing={2}>
