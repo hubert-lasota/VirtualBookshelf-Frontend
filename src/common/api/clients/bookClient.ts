@@ -1,11 +1,12 @@
 import axiosInstance from "../axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { unwrapResponseData } from "../apiUtils";
+import { BookDetailsResponse } from "../../models/bookModels";
 
 const BASE_ENDPOINT = "/v1/books";
 
 export const useGetBookById = (id: number) =>
-  useQuery({
+  useQuery<BookDetailsResponse>({
     queryKey: ["books", id],
     queryFn: () =>
       axiosInstance.get(`${BASE_ENDPOINT}/${id}`).then(unwrapResponseData),

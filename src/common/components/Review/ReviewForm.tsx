@@ -27,10 +27,17 @@ export default function ReviewForm({
     preferences: { isPlLanguage },
   } = useUserContext();
 
+  const reviewFormValues: ReviewFormValues | undefined = review
+    ? {
+        ...review,
+        content: review.content ?? undefined,
+      }
+    : undefined;
+
   const form = useForm<ReviewFormValues>({
     mode: "onSubmit",
     resolver: zodResolver(createReviewSchema(isPlLanguage)),
-    defaultValues: review,
+    defaultValues: reviewFormValues,
   });
 
   const isEditing = !!review;
@@ -41,9 +48,9 @@ export default function ReviewForm({
         component="form"
         onSubmit={form.handleSubmit(onSubmit)}
         sx={(theme) => ({
-          backgroundColor: "rgb(249 250 251)",
-          borderRadius: theme.spacing(1),
-          padding: theme.spacing(2),
+          borderRadius: theme.shape.borderRadius,
+          padding: theme.spacing(3),
+          border: `1px solid ${theme.palette.divider}`,
         })}
       >
         <Typography variant="h6">

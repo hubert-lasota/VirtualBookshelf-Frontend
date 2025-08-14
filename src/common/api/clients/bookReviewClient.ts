@@ -1,35 +1,29 @@
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../axiosInstance";
 import { unwrapResponseData } from "../apiUtils";
 import { ReviewFormValues, ReviewResponse } from "../../models/reviewModels";
 import { useUserContext } from "../../auth/UserContext";
 import { useSnackbar } from "notistack";
-import { PaginatedResponse } from "../apiModels";
+import { PageMeta } from "../apiModels";
 
 const BASE_ENDPOINT = "/v1/book-reviews";
-
-const getQueryKey = (page: number, bookId: number) => [
-  "book-reviews",
-  { page, bookId },
-];
+const QUERY_KEY = ["book-reviews"];
 
 type UseGetBookReviewParams = {
   page: number;
   bookId: number;
 };
 
-export const useGetBookReviews = ({ page, bookId }: UseGetBookReviewParams) =>
-  useQuery<unknown, unknown, PaginatedResponse<ReviewResponse, "reviews">>({
-    queryKey: getQueryKey(page, bookId),
+type UseGetBookReviewsResult = {
+  reviews: ReviewResponse[];
+  pageMeta: PageMeta;
+};
+
+export const useGetBookReviews = (params: UseGetBookReviewParams) =>
+  useQuery<UseGetBookReviewsResult>({
+    queryKey: [...QUERY_KEY, params],
     queryFn: () =>
-      axiosInstance
-        .get(BASE_ENDPOINT, { params: { page, bookId } })
-        .then(unwrapResponseData),
+      axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),
   });
 
 type CreateBookReviewParams = {
@@ -61,7 +55,7 @@ export default function useCreateBookReview() {
       }),
 
     onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: getQueryKey(0) }),
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY, exact: false }),
   });
 }
 
@@ -92,51 +86,16 @@ export function useUpdateBookReview() {
           : "Successfully updated review",
       });
     },
-
-    onMutate: async ({ review, reviewId }) => {
-      await queryClient.cancelQueries({ queryKey: ["book-reviews"] });
-
-      const queries = queryClient.getQueriesData<
-        PaginatedResponse<ReviewResponse, "reviews">
-      >({
-        queryKey: ["book-reviews"],
-      });
-
-      const previousReviews = new Map(queries);
-
-      queries.forEach(([queryKey, pageData]) => {
-        if (!pageData) return;
-
-        const reviewIndex = pageData.reviews.findIndex(
-          (rev) => rev.id === reviewId,
-        );
-
-        if (reviewIndex !== -1) {
-          queryClient.setQueryData(queryKey, {
-            ...pageData,
-            reviews: pageData.reviews.map((rev: ReviewResponse) =>
-              rev.id === reviewId ? { ...rev, ...review } : rev,
-            ),
-          });
-        }
-      });
-
-      return { previousReviews };
-    },
-
-    onError: (_, __, context: any) => {
-      revertReviewsState(queryClient, context?.previousReviews);
-
+    onError: () =>
       enqueueSnackbar({
         variant: "error",
         message: isPlLanguage
           ? "Wystąpił błąd podczas aktualizacji recenzji"
           : "Error occurred while updating review",
-      });
-    },
+      }),
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["book-reviews"] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY, exact: false });
     },
   });
 }
@@ -159,68 +118,24 @@ export function useDeleteBookReview() {
         .delete(`${BASE_ENDPOINT}/${reviewId}`)
         .then(unwrapResponseData),
 
-    onSuccess: () => {
+    onSuccess: () =>
       enqueueSnackbar({
         variant: "success",
         message: isPlLanguage
           ? "Poprawnie usunięto recenzję"
           : "Successfully deleted review",
-      });
-    },
+      }),
 
-    onMutate: async ({ reviewId }) => {
-      await queryClient.cancelQueries({ queryKey: ["book-reviews"] });
-
-      const queries = queryClient.getQueriesData<
-        PaginatedResponse<ReviewResponse, "reviews">
-      >({
-        queryKey: ["book-reviews"],
-      });
-
-      const previousReviews = new Map(queries);
-
-      queries.forEach(([queryKey, pageData]) => {
-        if (!pageData) return;
-
-        const hasReview = pageData.reviews.some((rev) => rev.id === reviewId);
-
-        if (hasReview) {
-          queryClient.setQueryData(queryKey, {
-            ...pageData,
-            reviews: pageData.reviews.filter(
-              (rev: ReviewResponse) => rev.id !== reviewId,
-            ),
-          });
-        }
-      });
-
-      return { previousReviews };
-    },
-
-    onError: (_, __, context: any) => {
-      revertReviewsState(queryClient, context?.previousReviews);
-
+    onError: () =>
       enqueueSnackbar({
         variant: "error",
         message: isPlLanguage
           ? "Wystąpił błąd podczas usuwania recenzji"
           : "Error occurred while deleting review",
-      });
-    },
+      }),
 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["book-reviews"] });
     },
   });
 }
-
-const revertReviewsState = (
-  queryClient: QueryClient,
-  previousReviews: Map<unknown, unknown>,
-) => {
-  if (!previousReviews) return;
-
-  previousReviews.forEach((value, queryKey) => {
-    queryClient.setQueryData(queryKey, value);
-  });
-};

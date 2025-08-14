@@ -3,6 +3,7 @@ import { BookFormat } from "./bookFormatModels";
 import { GenreResponse } from "./genreModels";
 import { ReviewResponse, ReviewStatistics } from "./reviewModels";
 import { AuthorResponse } from "./authorModels";
+import { PublisherResponse } from "./publisherModels";
 
 export function createBookSchema(isPlLanguage: boolean) {
   const authorsRequiredMessage = isPlLanguage
@@ -113,6 +114,11 @@ export type BookDetailsResponse = {
   title: string;
   isbn: string;
   authors: AuthorResponse[];
+  description: string | null;
+  publicationYear: number | null;
+  languageCode: string;
+  pageCount: number;
+  publisher: PublisherResponse | null;
   format: BookFormat | null;
   coverUrl: string | null;
   genres: GenreResponse[];

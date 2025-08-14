@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./index.css";
 import LoginPage from "./pages/Login/LoginPage";
-import NotFound from "./pages/NotFound/NotFound.jsx";
+import NotFound from "./pages/NotFound/NotFound.js";
 import Landing from "./pages/Landing/Landing.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@mui/material";

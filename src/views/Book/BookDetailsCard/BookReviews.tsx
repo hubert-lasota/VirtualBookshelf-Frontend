@@ -1,22 +1,23 @@
-import { BookResponse } from "../../common/models/bookModels";
-import ReviewDetailsPaper from "../../common/components/Review/ReviewDetailsPaper";
+import { BookDetailsResponse } from "../../../common/models/bookModels";
+import ReviewDetailsPaper from "../../../common/components/Review/ReviewDetailsPaper";
 import useCreateBookReview, {
   useGetBookReviews,
-} from "../../common/api/clients/bookReviewClient";
-import { ReviewFormValues } from "../../common/models/reviewModels";
+} from "../../../common/api/clients/bookReviewClient";
+import { ReviewFormValues } from "../../../common/models/reviewModels";
 import { useState } from "react";
 
 type BookReviewsProps = {
-  book: BookResponse;
+  book: BookDetailsResponse;
 };
 
 export default function BookReviews({ book }: BookReviewsProps) {
   const [page, setPage] = useState(0);
 
-  const { data: { reviews = [], totalPages = 0 } = {} } = useGetBookReviews({
-    page,
-    bookId: book.id,
-  });
+  const { data: { reviews = [], pageMeta: { totalPages = 0 } = {} } = {} } =
+    useGetBookReviews({
+      page,
+      bookId: book.id,
+    });
 
   const { mutate } = useCreateBookReview();
 
@@ -32,6 +33,7 @@ export default function BookReviews({ book }: BookReviewsProps) {
       page={page}
       onPageChange={(page) => setPage(page)}
       totalPages={totalPages}
+      disableCreateReviewForm={!!book.review}
     />
   );
 }

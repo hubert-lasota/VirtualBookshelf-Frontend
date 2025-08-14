@@ -15,6 +15,7 @@ type ReviewDetailsPaperProps = {
   page: number;
   onPageChange: (page: number) => void;
   totalPages: number;
+  disableCreateReviewForm?: boolean;
 };
 
 export default function ReviewDetailsPaper({
@@ -24,6 +25,7 @@ export default function ReviewDetailsPaper({
   page,
   onPageChange,
   totalPages,
+  disableCreateReviewForm = false,
 }: ReviewDetailsPaperProps) {
   const {
     preferences: { isPlLanguage },
@@ -34,7 +36,10 @@ export default function ReviewDetailsPaper({
       spacing={2}
       component={Paper}
       variant="outlined"
-      sx={(theme) => ({ padding: theme.spacing(4) })}
+      sx={(theme) => ({
+        padding: theme.spacing(4),
+        borderRadius: theme.shape.borderRadius,
+      })}
     >
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="h5">
@@ -50,7 +55,7 @@ export default function ReviewDetailsPaper({
           </Typography>
         </Stack>
       </Stack>
-      <ReviewForm onSubmit={onSubmitNewReview} />
+      {!disableCreateReviewForm && <ReviewForm onSubmit={onSubmitNewReview} />}
       <Stack
         spacing={3}
         sx={(theme) => ({ width: "100%", paddingTop: theme.spacing(3) })}

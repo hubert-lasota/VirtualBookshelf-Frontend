@@ -5,6 +5,7 @@ import ReviewForm from "../ReviewForm";
 import { useUpdateBookReview } from "../../../api/clients/bookReviewClient";
 import { ReviewContext } from "./ReviewContext";
 import ReviewItemActionsButton from "./ReviewItemActionsButton";
+import { CalendarIcon } from "lucide-react";
 
 type ReviewItemProps = {
   review: ReviewResponse;
@@ -56,13 +57,25 @@ export default function ReviewItem({ review }: ReviewItemProps) {
               alignItems: "flex-start",
             }}
           >
-            <Stack sx={{ width: "100%" }}>
-              <Typography fontWeight={600}>{name}</Typography>
-              <Stack direction="row" spacing={1}>
+            <Stack sx={{ width: "100%" }} spacing={3}>
+              <Stack spacing={1}>
+                <Typography fontWeight={600}>{name}</Typography>
                 <Rating value={review.rating} readOnly size="small" />
-                <Typography color="textSecondary" variant="subtitle2">
-                  {new Date(review.createdAt).toLocaleDateString()}
-                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={0.5}
+                  sx={(theme) => ({
+                    color: theme.palette.text.secondary,
+                    alignItems: "center",
+                  })}
+                >
+                  <CalendarIcon
+                    style={{ width: "14px", height: "14px", fontSize: "14px" }}
+                  />
+                  <Typography color="textSecondary" variant="subtitle2">
+                    {new Date(review.createdAt).toLocaleDateString()}
+                  </Typography>
+                </Stack>
               </Stack>
             </Stack>
             <ReviewItemActionsButton onEdit={() => setIsFormOpen(true)} />
