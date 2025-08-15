@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ReviewResponse, ReviewStatistics } from "./reviewModels";
 
 export const createAuthorSchema = (isPlLanguage: boolean) =>
   z.object({
@@ -27,6 +28,8 @@ export type AuthorDetailsResponse = {
   fullName: string;
   photoUrl: string | null;
   description: string | null;
+  reviewStatistics: ReviewStatistics;
+  review: ReviewResponse | null;
   createdAt: string;
   updatedAt: string | null;
 };

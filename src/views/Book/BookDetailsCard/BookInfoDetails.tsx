@@ -1,4 +1,3 @@
-import { BookDetailsResponse } from "../../../common/models/bookModels";
 import { useUserContext } from "../../../common/auth/UserContext";
 import DescriptionIcon from "@mui/icons-material/Description";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
@@ -7,11 +6,11 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import LanguageIcon from "@mui/icons-material/Language";
 import { Grid, Stack, Typography } from "@mui/material";
+import { useBookDetailsContext } from "../BookDetailsContext";
 
-type BookInfoDetailsProps = {
-  book: BookDetailsResponse;
-};
-export default function BookInfoDetails({ book }: BookInfoDetailsProps) {
+export default function BookInfoDetails() {
+  const book = useBookDetailsContext();
+
   const {
     preferences: { isPlLanguage },
   } = useUserContext();

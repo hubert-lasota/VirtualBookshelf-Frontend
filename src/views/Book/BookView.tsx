@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useGetBookById } from "../../common/api/clients/bookClient";
 import { VIEW_SPACING } from "../LoggedInViewContainer/config";
 import BookReviews from "./BookDetailsCard/BookReviews";
+import { BookDetailsContext } from "./BookDetailsContext";
 
 export default function BookView() {
   const { id } = useParams();
@@ -15,12 +16,14 @@ export default function BookView() {
   }
 
   return (
-    <Stack
-      spacing={4}
-      sx={(theme) => ({ padding: theme.spacing(VIEW_SPACING) })}
-    >
-      <BookDetailsCard book={book!} />
-      <BookReviews book={book!} />
-    </Stack>
+    <BookDetailsContext.Provider value={book!}>
+      <Stack
+        spacing={4}
+        sx={(theme) => ({ padding: theme.spacing(VIEW_SPACING) })}
+      >
+        <BookDetailsCard />
+        <BookReviews />
+      </Stack>
+    </BookDetailsContext.Provider>
   );
 }

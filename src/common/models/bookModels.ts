@@ -124,6 +124,10 @@ export type BookDetailsResponse = {
   genres: GenreResponse[];
   reviewStatistics: ReviewStatistics;
   review: ReviewResponse | null;
+  bookshelf: {
+    id: number;
+    name: string;
+  } | null;
   createdAt: string;
   updatedAt: string | null;
 };

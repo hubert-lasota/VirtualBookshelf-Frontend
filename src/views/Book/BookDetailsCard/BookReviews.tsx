@@ -1,16 +1,13 @@
-import { BookDetailsResponse } from "../../../common/models/bookModels";
 import ReviewDetailsPaper from "../../../common/components/Review/ReviewDetailsPaper";
 import useCreateBookReview, {
   useGetBookReviews,
 } from "../../../common/api/clients/bookReviewClient";
 import { ReviewFormValues } from "../../../common/models/reviewModels";
 import { useState } from "react";
+import { useBookDetailsContext } from "../BookDetailsContext";
 
-type BookReviewsProps = {
-  book: BookDetailsResponse;
-};
-
-export default function BookReviews({ book }: BookReviewsProps) {
+export default function BookReviews() {
+  const book = useBookDetailsContext();
   const [page, setPage] = useState(0);
 
   const { data: { reviews = [], pageMeta: { totalPages = 0 } = {} } = {} } =

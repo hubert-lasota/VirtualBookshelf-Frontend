@@ -1,12 +1,9 @@
-import { AuthorResponse } from "../../../common/models/authorModels";
 import { Link, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useBookDetailsContext } from "../BookDetailsContext";
 
-type BookAuthorLinksProps = {
-  authors: AuthorResponse[];
-};
-
-export default function BookAuthorLinks({ authors }: BookAuthorLinksProps) {
+export default function BookAuthorLinks() {
+  const { authors } = useBookDetailsContext();
   const navigate = useNavigate();
 
   return (
