@@ -14,13 +14,13 @@ type UseGetBookReviewParams = {
   bookId: number;
 };
 
-type UseGetBookReviewsResult = {
+type BookReviewPageResponse = {
   reviews: ReviewResponse[];
   pageMeta: PageMeta;
 };
 
 export const useGetBookReviews = (params: UseGetBookReviewParams) =>
-  useQuery<UseGetBookReviewsResult>({
+  useQuery<unknown, unknown, BookReviewPageResponse>({
     queryKey: [...QUERY_KEY, params],
     queryFn: () =>
       axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),

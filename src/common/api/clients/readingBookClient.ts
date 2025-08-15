@@ -20,7 +20,7 @@ const BASE_ENDPOINT = "/v1/reading-books";
 const KEY_NAME = "reading-books";
 const QUERY_KEY = [KEY_NAME];
 
-type GetReadingBooksResult = {
+type ReadingBookListResponse = {
   readingBooks: ReadingBookResponse[];
 };
 
@@ -29,7 +29,7 @@ type UseGetReadingBooksParams = {
 };
 
 export const useGetBookshelfBooks = (params: UseGetReadingBooksParams) =>
-  useQuery<GetReadingBooksResult>({
+  useQuery<ReadingBookListResponse>({
     queryKey: [KEY_NAME, params],
     queryFn: () =>
       axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),
@@ -246,7 +246,7 @@ const handleMutate = async (
   const previousQueries = queryClient.getQueriesData<
     any,
     any,
-    GetReadingBooksResult
+    ReadingBookListResponse
   >({ queryKey: QUERY_KEY });
 
   previousQueries.forEach(([queryKey, { readingBooks = [] } = {}]) => {

@@ -1,22 +1,15 @@
-import { Stack } from "@mui/material";
 import ChallengeHeader from "./ChallengeHeader/ChallengeHeader";
-import { VIEW_SPACING } from "../LoggedInViewContainer/config";
+
 import ChallengeToolbar from "./ChallengeToolbar";
 import ChallengeGrid from "./ChallengeGrid/ChallengeGrid";
+import ViewContainer from "../../common/components/ui/View/ViewContainer";
 
 export default function ChallengeView() {
   return (
-    <Stack
-      spacing={3}
-      sx={(theme) => ({
-        width: "100%",
-        height: "100%",
-        padding: theme.spacing(VIEW_SPACING),
-      })}
-    >
+    <ViewContainer spacing={3}>
       <ChallengeHeader />
       <ChallengeToolbar />
       <ChallengeGrid />
-    </Stack>
+    </ViewContainer>
   );
 }

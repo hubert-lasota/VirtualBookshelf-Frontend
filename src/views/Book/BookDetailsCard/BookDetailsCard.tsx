@@ -4,7 +4,7 @@ import { useUserContext } from "../../../common/auth/UserContext";
 import BookInfoDetails from "./BookInfoDetails";
 import BookAuthorLinks from "./BookAuthorLinks";
 import { useBookDetailsContext } from "../BookDetailsContext";
-import BookReplacementCover from "../../../common/components/Book/Card/BookReplacementCover";
+import BookCover from "../../../common/components/Book/BookCover";
 
 export default function BookDetailsCard() {
   const { coverUrl, title, description, genres } = useBookDetailsContext();
@@ -25,11 +25,7 @@ export default function BookDetailsCard() {
         paddingBlock: theme.spacing(3),
       })}
     >
-      {coverUrl ? (
-        <img src={coverUrl} alt={title} style={{ width: "30%" }} />
-      ) : (
-        <BookReplacementCover sx={{ width: "30%" }} />
-      )}
+      <BookCover coverUrl={coverUrl} sx={{ width: "30%" }} />
       <Stack spacing={3} sx={{ width: "70%" }}>
         <Stack spacing={1}>
           <Typography variant="h4" color="textPrimary">

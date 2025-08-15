@@ -5,7 +5,7 @@ import { unwrapResponseData } from "../apiUtils";
 
 const BASE_ENDPOINT = "/v1/book-formats";
 
-type UseGetBookFormatsResult = {
+type BookFormatListResponse = {
   formats: BookFormat[];
 };
 type UseGetBookFormatsParams = {
@@ -14,7 +14,7 @@ type UseGetBookFormatsParams = {
 export const useGetBookFormats = ({
   availableInBookshelf,
 }: UseGetBookFormatsParams = {}) =>
-  useQuery<UseGetBookFormatsResult>({
+  useQuery<BookFormatListResponse>({
     queryKey: ["book-formats"],
     queryFn: () =>
       axiosInstance

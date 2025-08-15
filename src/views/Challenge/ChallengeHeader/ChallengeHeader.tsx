@@ -2,8 +2,8 @@ import { useUserContext } from "../../../common/auth/UserContext";
 import { Stack } from "@mui/material";
 import AddChallengeButton from "./AddChallengeButton";
 import SearchChallengeButton from "./SearchChallengeButton";
-import ViewTitle from "../../../common/components/ui/ViewTitle/ViewTitle";
-import ViewSubtitle from "../../../common/components/ui/ViewTitle/ViewSubtitle";
+import ViewTitle from "../../../common/components/ui/View/ViewTitle";
+import ViewSubtitle from "../../../common/components/ui/View/ViewSubtitle";
 
 export default function ChallengeHeader() {
   const {

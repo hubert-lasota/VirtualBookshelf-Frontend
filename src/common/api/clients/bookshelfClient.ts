@@ -18,14 +18,12 @@ const BASE_ENDPOINT = "/v1/bookshelves";
 
 const QUERY_KEY: [any] = ["bookshelves"];
 
-export const BOOKSHELF_TEMP_ID = -1;
-
-export type GetBookshelvesResult = {
+export type BookshelfListResponse = {
   bookshelves: BookshelfResponse[];
 };
 
 export function useGetBookshelves() {
-  return useQuery<undefined, unknown, GetBookshelvesResult>({
+  return useQuery<undefined, unknown, BookshelfListResponse>({
     queryKey: QUERY_KEY,
     queryFn: () => axiosInstance.get(BASE_ENDPOINT).then(unwrapResponseData),
   });
@@ -165,7 +163,7 @@ const handleError = (
   variables: unknown,
   context:
     | {
-        previousBookshelves: GetBookshelvesResult | undefined;
+        previousBookshelves: BookshelfListResponse | undefined;
       }
     | undefined,
 ) => {
@@ -187,11 +185,11 @@ async function handleMutate(
   await queryClient.cancelQueries({ queryKey: QUERY_KEY });
   const prev = {
     previousBookshelves:
-      queryClient.getQueryData<GetBookshelvesResult>(QUERY_KEY),
+      queryClient.getQueryData<BookshelfListResponse>(QUERY_KEY),
   };
   queryClient.setQueryData(
     QUERY_KEY,
-    (bookshelfResult: GetBookshelvesResult) => {
+    (bookshelfResult: BookshelfListResponse) => {
       const bookshelves = [...bookshelfResult.bookshelves];
       return { bookshelves: updateFn(bookshelves) };
     },

@@ -31,7 +31,7 @@ export default function NavSidebar() {
     {
       label: isPlLanguage ? "Moje regały" : "My bookshelves",
       icon: SquareLibrary,
-      path: "/my-bookshelves",
+      path: "/bookshelves",
     },
     {
       label: isPlLanguage ? "Sesje czytelnicze" : "Reading sessions",

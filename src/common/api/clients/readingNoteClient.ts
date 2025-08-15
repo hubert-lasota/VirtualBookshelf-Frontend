@@ -14,7 +14,7 @@ import { unwrapResponseData } from "../apiUtils";
 
 const BASE_ENDPOINT = "/v1/reading-notes";
 
-type GetReadingBookNotesResult = {
+type ReadingNoteListResponse = {
   notes: ReadingNoteResponse[];
 };
 
@@ -26,7 +26,7 @@ const getQueryKey = (readingBookId: ReadingBookResponse["id"]) => [
 export const useGetReadingBookNotes = (
   readingBookId: ReadingBookResponse["id"],
 ) =>
-  useQuery<GetReadingBookNotesResult>({
+  useQuery<ReadingNoteListResponse>({
     queryKey: getQueryKey(readingBookId),
     queryFn: () =>
       axiosInstance
@@ -142,14 +142,14 @@ const handleError = (
   variables: unknown,
   context:
     | {
-        previousNotes: GetReadingBookNotesResult | undefined;
+        previousNotes: ReadingNoteListResponse | undefined;
       }
     | undefined,
 ) => {
   console.error(
     `Error occurred in ${actionType} reading note. Error: ${error}. Variables: ${variables}`,
   );
-  queryClient.setQueryData<GetReadingBookNotesResult>(
+  queryClient.setQueryData<ReadingNoteListResponse>(
     getQueryKey(bookshelfBookId),
     context!.previousNotes,
   );
@@ -164,14 +164,14 @@ const handleMutate = async (
 ) => {
   await queryClient.cancelQueries({ queryKey: getQueryKey(readingBookId) });
   const prev = {
-    previousNotes: queryClient.getQueryData<GetReadingBookNotesResult>(
+    previousNotes: queryClient.getQueryData<ReadingNoteListResponse>(
       getQueryKey(readingBookId),
     ),
   };
 
-  queryClient.setQueryData<GetReadingBookNotesResult>(
+  queryClient.setQueryData<ReadingNoteListResponse>(
     getQueryKey(readingBookId),
-    (noteResult: GetReadingBookNotesResult | undefined) => {
+    (noteResult: ReadingNoteListResponse | undefined) => {
       const notes = noteResult ? [...noteResult.notes] : [];
       return { notes: updateFn(notes) };
     },

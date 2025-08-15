@@ -5,7 +5,7 @@ import { unwrapResponseData } from "../apiUtils";
 
 const BASE_ENDPOINT = "/v1/genres";
 
-type UseGetGenresResult = {
+type GenreListResponse = {
   genres: GenreResponse[];
 };
 
@@ -15,7 +15,7 @@ type UseGetGenresParams = {
 export const useGetGenres = ({
   availableInBookshelf,
 }: UseGetGenresParams = {}) =>
-  useQuery<UseGetGenresResult>({
+  useQuery<GenreListResponse>({
     queryKey: ["genres"],
     queryFn: () =>
       axiosInstance

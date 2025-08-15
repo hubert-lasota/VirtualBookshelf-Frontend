@@ -1,0 +1,17 @@
+import { useGetReadingSessions } from "../../../common/api/clients/readingSessionClient";
+import { Grid } from "@mui/material";
+import ReadingSessionCard from "./ReadingSessionCard/ReadingSessionCard";
+
+export default function ReadingSessionGrid() {
+  const { data: { sessions = [] } = {}, isLoading } = useGetReadingSessions();
+
+  return (
+    <Grid container spacing={2}>
+      {sessions.map((s) => (
+        <Grid key={s.id}>
+          <ReadingSessionCard session={s} />
+        </Grid>
+      ))}
+    </Grid>
+  );
+}

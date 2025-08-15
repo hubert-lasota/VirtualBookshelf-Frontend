@@ -1,9 +1,8 @@
-import { VIEW_SPACING } from "../LoggedInViewContainer/config";
 import { useParams } from "react-router-dom";
-import { Stack } from "@mui/material";
 import { useGetAuthorById } from "../../common/api/clients/authorClient";
 import { AuthorDetailsContext } from "./AuthorDetailsContext";
 import AuthorDetailsCard from "./AuthorDetailsCard/AuthorDetailsCard";
+import ViewContainer from "../../common/components/ui/View/ViewContainer";
 
 export default function AuthorView() {
   const { id } = useParams();
@@ -15,12 +14,9 @@ export default function AuthorView() {
   }
   return (
     <AuthorDetailsContext.Provider value={author!}>
-      <Stack
-        spacing={4}
-        sx={(theme) => ({ padding: theme.spacing(VIEW_SPACING) })}
-      >
+      <ViewContainer spacing={4}>
         <AuthorDetailsCard />
-      </Stack>
+      </ViewContainer>
     </AuthorDetailsContext.Provider>
   );
 }

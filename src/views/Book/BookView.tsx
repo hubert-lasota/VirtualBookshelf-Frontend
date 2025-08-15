@@ -1,10 +1,9 @@
-import { Stack } from "@mui/material";
 import BookDetailsCard from "./BookDetailsCard/BookDetailsCard";
 import { useParams } from "react-router-dom";
 import { useGetBookById } from "../../common/api/clients/bookClient";
-import { VIEW_SPACING } from "../LoggedInViewContainer/config";
 import BookReviews from "./BookDetailsCard/BookReviews";
 import { BookDetailsContext } from "./BookDetailsContext";
+import ViewContainer from "../../common/components/ui/View/ViewContainer";
 
 export default function BookView() {
   const { id } = useParams();
@@ -17,13 +16,10 @@ export default function BookView() {
 
   return (
     <BookDetailsContext.Provider value={book!}>
-      <Stack
-        spacing={4}
-        sx={(theme) => ({ padding: theme.spacing(VIEW_SPACING) })}
-      >
+      <ViewContainer spacing={4}>
         <BookDetailsCard />
         <BookReviews />
-      </Stack>
+      </ViewContainer>
     </BookDetailsContext.Provider>
   );
 }

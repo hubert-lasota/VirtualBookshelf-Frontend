@@ -17,7 +17,7 @@ type UseGetAuthorsParams = {
   sort?: ApiSort;
 };
 
-type UseGetAuthorsResult = {
+type AuthorPageResponse = {
   authors: AuthorResponse[];
   pageMeta: PageMeta;
 };
@@ -28,7 +28,7 @@ export const useGetAuthors = ({
   size = 100,
   sort = { field: "fullName", direction: "asc" },
 }: UseGetAuthorsParams = {}) =>
-  useQuery<UseGetAuthorsResult>({
+  useQuery<AuthorPageResponse>({
     queryKey: QUERY_KEY,
     queryFn: () =>
       axiosInstance

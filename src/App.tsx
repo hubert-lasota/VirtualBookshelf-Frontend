@@ -15,6 +15,7 @@ import BookshelfView from "./views/Bookshelf/BookshelfView";
 import BookView from "./views/Book/BookView";
 import ChallengeView from "./views/Challenge/ChallengeView";
 import AuthorView from "./views/Author/AuthorView";
+import ReadingSessionView from "./views/ReadingSession/ReadingSessionView";
 
 const queryClient = new QueryClient();
 
@@ -37,8 +38,12 @@ export default function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route element={<LoggedInViewContainer />}>
                 <Route path="/home" element={<HomeView />} />
-                <Route path="/my-bookshelves" element={<BookshelfView />} />
+                <Route path="/bookshelves" element={<BookshelfView />} />
                 <Route path="/challenges" element={<ChallengeView />} />
+                <Route
+                  path="/reading-sessions"
+                  element={<ReadingSessionView />}
+                />
                 <Route path="/books/:id" element={<BookView />} />
                 <Route path="/authors/:id" element={<AuthorView />} />
               </Route>

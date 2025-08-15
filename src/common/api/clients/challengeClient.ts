@@ -13,7 +13,7 @@ const QUERY_KEY = ["challenges"];
 
 const BASE_ENDPOINT = "/v1/challenges";
 
-type UseGetChallengesResult = {
+type ChallengePageResponse = {
   challenges: ChallengeResponse[];
   pageMeta: PageMeta;
 };
@@ -23,7 +23,7 @@ type UseGetChallengeParams = {
 };
 
 export const useGetChallenges = (params: UseGetChallengeParams = {}) =>
-  useQuery<UseGetChallengesResult>({
+  useQuery<ChallengePageResponse>({
     queryKey: [...QUERY_KEY, params],
     queryFn: () =>
       axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),

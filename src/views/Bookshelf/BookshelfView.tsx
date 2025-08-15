@@ -14,12 +14,11 @@ import {
 import { ReadingBookResponse } from "../../common/models/readingBookModels";
 import { BookshelfViewContext } from "./BookshelfViewContext";
 import BookshelfFormDialog from "./BookshelfForm/BookshelfFormDialog";
-import { Stack } from "@mui/material";
-import { VIEW_SPACING } from "../LoggedInViewContainer/config";
 import BookshelfTabs from "./BookshelfTabs/BookshelfTabs";
 import BookshelfViewHeader from "./BookshelfViewHeader";
-import BookGrid from "./BookGrid/BookGrid";
+import ReadingBookGrid from "./ReadingBookGrid/ReadingBookGrid";
 import BookshelfToolbar from "./BookshelfToolbar/BookshelfToolbar";
+import ViewContainer from "../../common/components/ui/View/ViewContainer";
 
 const initFilters: ReadingBookFilters = {
   pageCountRange: {
@@ -100,19 +99,12 @@ export default function BookshelfView() {
         onFiltersChange: (filters) => setFilters(filters),
       }}
     >
-      <Stack
-        spacing={3}
-        sx={(theme) => ({
-          width: "100%",
-          height: "100%",
-          padding: theme.spacing(VIEW_SPACING),
-        })}
-      >
+      <ViewContainer spacing={3}>
         <BookshelfTabs />
         <BookshelfViewHeader />
         <BookshelfToolbar />
-        <BookGrid />
-      </Stack>
+        <ReadingBookGrid />
+      </ViewContainer>
       {formMode !== BookshelfFormMode.CLOSED && <BookshelfFormDialog />}
     </BookshelfViewContext.Provider>
   );
