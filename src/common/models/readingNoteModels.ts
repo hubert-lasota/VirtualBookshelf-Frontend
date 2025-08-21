@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { createPageRangeSchema, PageRange } from "./commonModels";
 
 export const createReadingNoteSchema = (isPlLanguage: boolean) => {
   const contentRequiredMessage = isPlLanguage
@@ -22,28 +23,8 @@ export const createReadingNoteSchema = (isPlLanguage: boolean) => {
     content: z
       .string({ message: contentRequiredMessage })
       .min(1, contentRequiredMessage),
-    pageFrom: z
-      .number({
-        message: isPlLanguage
-          ? "Start od jest wymagana"
-          : "Page from is required",
-      })
-      .int(
-        isPlLanguage
-          ? "Start od musi być poprawną liczbą całkowitą"
-          : "Page from must be valid integer",
-      ),
-    pageTo: z
-      .number({
-        message: isPlLanguage
-          ? "Start do jest wymagana"
-          : "Page to is required",
-      })
-      .int(
-        isPlLanguage
-          ? "Start do musi być poprawną liczbą całkowitą"
-          : "Page to must be valid integer",
-      ),
+
+    pageRange: createPageRangeSchema(isPlLanguage),
   });
 };
 
@@ -55,8 +36,7 @@ export type ReadingNoteResponse = {
   id: number;
   title: string;
   content: string;
-  pageFrom: number;
-  pageTo: number;
+  pageRange: PageRange;
   createdAt: string;
   updatedAt: string | null;
 };

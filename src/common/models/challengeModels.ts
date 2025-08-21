@@ -42,11 +42,11 @@ export const createChallengeSchema = (isPlLanguage: boolean) => {
       type: z.nativeEnum(ChallengeType, {
         message: isPlLanguage ? "Typ jest wymagany" : "Type is required",
       }),
-      targetCount: z
+      goalValue: z
         .number({
           message: isPlLanguage
-            ? "Cel jest wymagany"
-            : "Target count is required",
+            ? "Wartość celu jest wymagana"
+            : "Goal value is required",
         })
         .int()
         .min(
@@ -85,7 +85,7 @@ export type ChallengeFormValues = z.infer<
 type Participation =
   | {
       participates: true;
-      currentCount: number;
+      currentGoalValue: number;
       progressPercentage: number;
       status: ChallengeParticipantStatus;
       startedAt: string;
@@ -93,7 +93,7 @@ type Participation =
     }
   | {
       participates: false;
-      currentCount: null;
+      currentGoalValue: null;
       progressPercentage: null;
       status: null;
       startedAt: null;

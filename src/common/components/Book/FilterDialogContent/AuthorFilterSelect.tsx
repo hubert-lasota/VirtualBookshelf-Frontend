@@ -1,6 +1,6 @@
 import { FormControl, MenuItem, Select, Typography } from "@mui/material";
-import { useGetAuthors } from "../../../common/api/clients/authorClient";
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useGetAuthors } from "../../../api/clients/authorClient";
+import { useUserContext } from "../../../auth/UserContext";
 
 type AuthorFilterSelectProps = {
   authorId?: number;

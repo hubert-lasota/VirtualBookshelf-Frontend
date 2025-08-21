@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import ReadingSessionCard from "./ReadingSessionCard/ReadingSessionCard";
 
 export default function ReadingSessionGrid() {
-  const { data: { sessions = [] } = {}, isLoading } = useGetReadingSessions();
+  const { data: { sessions = [] } = {} } = useGetReadingSessions();
 
   return (
     <Grid container spacing={2}>

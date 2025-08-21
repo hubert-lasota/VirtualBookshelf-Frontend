@@ -9,7 +9,6 @@ import {
   CurrentBookshelf,
   isAllBooksBookshelf,
   isBookshelfResponse,
-  ReadingBookFilters,
 } from "./models";
 import { ReadingBookResponse } from "../../common/models/readingBookModels";
 import { BookshelfViewContext } from "./BookshelfViewContext";
@@ -17,10 +16,11 @@ import BookshelfFormDialog from "./BookshelfForm/BookshelfFormDialog";
 import BookshelfTabs from "./BookshelfTabs/BookshelfTabs";
 import BookshelfViewHeader from "./BookshelfViewHeader";
 import ReadingBookGrid from "./ReadingBookGrid/ReadingBookGrid";
-import BookshelfToolbar from "./BookshelfToolbar/BookshelfToolbar";
+import BookshelfToolbar from "./BookshelfToolbar";
 import ViewContainer from "../../common/components/ui/View/ViewContainer";
+import { BookFilter } from "../../common/models/bookModels";
 
-const initFilters: ReadingBookFilters = {
+const initFilters: BookFilter = {
   pageCountRange: {
     gte: undefined,
     lte: undefined,
@@ -36,7 +36,7 @@ export default function BookshelfView() {
 
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounceValue(query, 500);
-  const [filters, setFilters] = useState<ReadingBookFilters>(initFilters);
+  const [filter, setFilter] = useState<BookFilter>(initFilters);
 
   const { data: { readingBooks = [] } = {} } = useGetBookshelfBooks({
     query: debouncedQuery,
@@ -95,8 +95,9 @@ export default function BookshelfView() {
         onQueryChange: (query) => setQuery(query),
         formMode,
         onFormModeChange: (formMode) => setFormMode(formMode),
-        filters,
-        onFiltersChange: (filters) => setFilters(filters),
+        filter,
+        setFilter,
+        resetFilter: () => setFilter(initFilters),
       }}
     >
       <ViewContainer spacing={3}>

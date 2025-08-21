@@ -1,4 +1,4 @@
-import { useGetBookFormats } from "../../../common/api/clients/bookFormatClient";
+import { useGetBookFormats } from "../../../api/clients/bookFormatClient";
 import { FormControl, MenuItem, Select, Typography } from "@mui/material";
 
 type BookFormatSelectProps = {

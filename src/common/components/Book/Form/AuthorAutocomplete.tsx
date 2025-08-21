@@ -4,7 +4,7 @@ import {
   AutocompleteChangeReason,
   TextField,
 } from "@mui/material";
-import { Author, AuthorResponse } from "../../../models/authorModels";
+import { AuthorFormValues, AuthorResponse } from "../../../models/authorModels";
 import { useUserContext } from "../../../auth/UserContext";
 import { useGetAuthors } from "../../../api/clients/authorClient";
 import RequiredLabel from "../../ui/Label/RequiredLabel";
@@ -14,7 +14,7 @@ type AuthorAutocompleteProps = {
   disabled?: boolean;
 };
 
-type AutocompleteValue = Pick<Author, "fullName"> | AuthorResponse;
+type AutocompleteValue = Pick<AuthorFormValues, "fullName"> | AuthorResponse;
 
 export default function AuthorAutocomplete({
   name,

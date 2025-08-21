@@ -33,6 +33,4 @@ export type BookshelfResponse = {
   type: BookshelfType;
   totalBooks: number;
   description: string | null;
-  createdAt: string;
-  updatedAt: string | null;
 };

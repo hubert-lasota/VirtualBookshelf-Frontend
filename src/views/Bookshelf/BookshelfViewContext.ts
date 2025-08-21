@@ -1,12 +1,12 @@
-import { createContext, useContext } from "react";
+import { createContext, Dispatch, SetStateAction, useContext } from "react";
 import { BookshelfResponse } from "../../common/models/bookshelfModels";
 import { ReadingBookResponse } from "../../common/models/readingBookModels";
 import {
   AllBooksBookshelf,
   BookshelfFormMode,
   CurrentBookshelf,
-  ReadingBookFilters,
 } from "./models";
+import { BookFilter } from "../../common/models/bookModels";
 
 type BookshelfViewContextValue = {
   bookshelves: BookshelfResponse[];
@@ -19,8 +19,9 @@ type BookshelfViewContextValue = {
   selectAllBooksBookshelf: () => void;
   formMode: BookshelfFormMode;
   onFormModeChange: (mode: BookshelfFormMode) => void;
-  filters: ReadingBookFilters;
-  onFiltersChange: (filters: ReadingBookFilters) => void;
+  filter: BookFilter;
+  setFilter: Dispatch<SetStateAction<BookFilter>>;
+  resetFilter: () => void;
 };
 
 export const BookshelfViewContext =

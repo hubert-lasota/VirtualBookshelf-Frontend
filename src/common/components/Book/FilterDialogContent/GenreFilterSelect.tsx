@@ -1,6 +1,6 @@
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../../auth/UserContext";
 import { FormControl, MenuItem, Select, Typography } from "@mui/material";
-import { useGetGenres } from "../../../common/api/clients/genreClient";
+import { useGetGenres } from "../../../api/clients/genreClient";
 
 type GenreFilterSelectProps = {
   genreId?: number;

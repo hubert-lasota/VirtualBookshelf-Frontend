@@ -15,7 +15,7 @@ export const createAuthorSchema = (isPlLanguage: boolean) =>
     description: z.string().optional(),
   });
 
-export type Author = z.infer<ReturnType<typeof createAuthorSchema>>;
+export type AuthorFormValues = z.infer<ReturnType<typeof createAuthorSchema>>;
 
 export type AuthorResponse = {
   id: number;
