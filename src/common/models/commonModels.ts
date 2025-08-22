@@ -38,7 +38,7 @@ export const createPageRangeSchema = (isPlLanguage: boolean) =>
         }),
     })
     .superRefine(({ from, to }, ctx) => {
-      if (to > from) {
+      if (from > to) {
         ctx.addIssue({
           path: ["to"],
           code: z.ZodIssueCode.custom,
@@ -49,7 +49,7 @@ export const createPageRangeSchema = (isPlLanguage: boolean) =>
       }
     });
 
-export const createReadingRangeSchema = (isPlLanguage: boolean) =>
+export const createReadingDurationRangeSchema = (isPlLanguage: boolean) =>
   z
     .object({
       startedAt: z.string({
@@ -80,7 +80,7 @@ export type PageRange = {
   to: number;
 };
 
-export type ReadingRange = {
+export type ReadingDurationRange = {
   startedAt: string;
   finishedAt: string;
 };

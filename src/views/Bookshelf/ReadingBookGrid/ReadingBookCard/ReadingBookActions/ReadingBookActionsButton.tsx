@@ -3,6 +3,7 @@ import {
   BookCheckIcon,
   BookOpenTextIcon,
   BookUp2Icon,
+  PanelsTopLeft,
   StickyNote,
 } from "lucide-react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -22,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useChangeBookshelfBookStatus } from "../../../../../common/api/clients/readingBookClient";
 import ManageNotesDialog from "./ManageNotes/ManageNotesDialog";
 import { useReadingBookContext } from "../ReadingBookContext";
+import ReadingSessionFormDialog from "../../../../../common/components/ReadingSessionForm/ReadingSessionFormDialog";
 
 type ReadingBookActionsButtonProps = {
   onClose: () => void;
@@ -35,6 +37,7 @@ export default function ReadingBookActionsButton({
     moveBook: false,
     deleteBook: false,
     manageNotes: false,
+    readingSessionForm: false,
   });
 
   const handleOpenDialogChange = (
@@ -53,6 +56,11 @@ export default function ReadingBookActionsButton({
   const navigate = useNavigate();
 
   const items = [
+    {
+      icon: <BookOpenTextIcon />,
+      text: isPlLanguage ? "Dodaj sesję czytania" : "Add reading session",
+      onClick: () => handleOpenDialogChange("readingSessionForm", true),
+    },
     readingBook.status == ReadingStatus.READING
       ? {
           icon: <BookCheckIcon />,
@@ -91,7 +99,7 @@ export default function ReadingBookActionsButton({
       divider: true,
     },
     {
-      icon: <BookOpenTextIcon />,
+      icon: <PanelsTopLeft />,
       text: isPlLanguage ? "Przejdź do strony książki" : "See book site",
       onClick: () => navigate(`/books/${readingBook.book.id}`),
     },
@@ -155,9 +163,13 @@ export default function ReadingBookActionsButton({
         <ManageNotesDialog
           open={openDialogs.manageNotes}
           onClose={() => handleOpenDialogChange("manageNotes", false)}
-          readingBook={readingBook}
         />
       )}
+      <ReadingSessionFormDialog
+        open={openDialogs.readingSessionForm}
+        onClose={() => handleOpenDialogChange("readingSessionForm", false)}
+        readingBookId={readingBook.id}
+      />
     </>
   );
 }

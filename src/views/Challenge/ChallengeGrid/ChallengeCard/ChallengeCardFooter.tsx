@@ -3,7 +3,10 @@ import { Stack, Typography } from "@mui/material";
 import { Calendar as CalendarIcon, Users as UsersIcon } from "lucide-react";
 
 export default function ChallengeCardFooter() {
-  const { startAt, endAt, totalParticipants } = useChallengeContext();
+  const {
+    durationRange: { startAt, endAt },
+    totalParticipants,
+  } = useChallengeContext();
 
   const items = [
     {

@@ -20,8 +20,8 @@ const getChallengeTypeLabel = (type: ChallengeType, isPlLanguage: boolean) => {
 
 export default function ChallengeProgress() {
   const {
-    participation: { progressPercentage, currentCount, participates },
-    targetCount,
+    participation: { progressPercentage, currentGoalValue, participates },
+    goalValue,
     type,
   } = useChallengeContext();
   const {
@@ -40,9 +40,9 @@ export default function ChallengeProgress() {
           {"%"}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          {currentCount}
+          {currentGoalValue}
           {" / "}
-          {targetCount}
+          {goalValue}
           {" " + getChallengeTypeLabel(type, isPlLanguage)}
         </Typography>
       </Stack>

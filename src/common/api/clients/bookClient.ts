@@ -1,7 +1,7 @@
 import axiosInstance from "../axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { unwrapResponseData } from "../apiUtils";
-import { BookDetailsResponse } from "../../models/bookModels";
+import { BookDetailsResponse, BookFilter } from "../../models/bookModels";
 
 const BASE_ENDPOINT = "/v1/books";
 
@@ -16,12 +16,15 @@ type UseGetBooksParams = {
   page: number;
   size: number;
   query: string;
+  filter?: BookFilter;
 };
 
-export const useGetBooks = (params: UseGetBooksParams) =>
-  useQuery({
+export const useGetBooks = ({ filter, ...restParams }: UseGetBooksParams) => {
+  const params = { ...filter, ...restParams };
+  return useQuery({
     queryKey: ["books", params],
     queryFn: () =>
       axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),
     enabled: !!params.query,
   });
+};

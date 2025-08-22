@@ -11,6 +11,20 @@ export enum ChallengeType {
   AUTHOR_COUNT = "AUTHOR_COUNT",
 }
 
+const createDurationRangeSchema = (isPlLanguage: boolean) =>
+  z.object({
+    startAt: z.string({
+      message: isPlLanguage
+        ? "Data rozpoczęcia jest wymagana"
+        : "Start date is required",
+    }),
+    endAt: z.string({
+      message: isPlLanguage
+        ? "Data zakończenia jest wymagana"
+        : "End date is required",
+    }),
+  });
+
 export const createChallengeSchema = (isPlLanguage: boolean) => {
   const titleRequiredMessage = isPlLanguage
     ? "Tytuł jest wymagany"
@@ -55,16 +69,7 @@ export const createChallengeSchema = (isPlLanguage: boolean) => {
             ? "Cel musi być większy od 0"
             : "Target count must be greater than 0",
         ),
-      startAt: z.string({
-        message: isPlLanguage
-          ? "Data rozpoczęcia jest wymagana"
-          : "Start date is required",
-      }),
-      endAt: z.string({
-        message: isPlLanguage
-          ? "Data zakończenia jest wymagana"
-          : "End date is required",
-      }),
+      durationRange: createDurationRangeSchema(isPlLanguage),
       genreId: z.number().optional(),
     })
     .superRefine((data, ctx) => {
@@ -105,9 +110,11 @@ export type ChallengeResponse = {
   title: string;
   description: string;
   type: ChallengeType;
-  targetCount: number;
-  startAt: string;
-  endAt: string;
+  goalValue: number;
+  durationRange: {
+    startAt: string;
+    endAt: string;
+  };
   genre: GenreResponse | null;
   totalParticipants: number;
   participation: Participation;

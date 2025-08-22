@@ -5,7 +5,7 @@ import {
 } from "../../../common/models/challengeModels";
 import { FormProvider, useForm } from "react-hook-form";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
-import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@mui/material";
 import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 import { useUserContext } from "../../../common/auth/UserContext";
 import CancelButton from "../../../common/components/ui/Button/CancelButton";
@@ -15,6 +15,8 @@ import {
   useCreateChallenge,
   useUpdateChallenge,
 } from "../../../common/api/clients/challengeClient";
+import SubmitButton from "../../../common/components/ui/Button/SubmitButton";
+import { TITLE_ENTITY_SEPARATOR } from "../../../common/constants";
 
 type ChallengeFormDialogProps = {
   open: boolean;
@@ -77,10 +79,10 @@ export default function ChallengeFormDialog({
         <DialogTitleWithCloseButton onClose={onClose}>
           {isPlLanguage
             ? isUpdating
-              ? `Edytuj wyzwanie ${challenge.title}`
+              ? `Edytuj wyzwanie${TITLE_ENTITY_SEPARATOR}${challenge.title}`
               : "Dodaj nowe wyzwanie"
             : isUpdating
-              ? `Edit challenge ${challenge.title}`
+              ? `Edit challenge${TITLE_ENTITY_SEPARATOR}${challenge.title}`
               : "Add new challenge"}
         </DialogTitleWithCloseButton>
         <DialogContent dividers>
@@ -88,19 +90,7 @@ export default function ChallengeFormDialog({
         </DialogContent>
         <DialogActions>
           <CancelButton onClick={onClose} />
-          <Button
-            type="submit"
-            variant="contained"
-            loading={form.formState.isSubmitting}
-          >
-            {isPlLanguage
-              ? isUpdating
-                ? "Edytuj"
-                : "Dodaj"
-              : isUpdating
-                ? "Edit"
-                : "Add"}
-          </Button>
+          <SubmitButton isUpdating={isUpdating} />
         </DialogActions>
       </Dialog>
     </FormProvider>

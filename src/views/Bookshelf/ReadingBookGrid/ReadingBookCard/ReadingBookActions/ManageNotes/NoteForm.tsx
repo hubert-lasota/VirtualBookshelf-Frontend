@@ -1,6 +1,5 @@
 import { DialogActions, Grid, Stack, Typography } from "@mui/material";
 import CancelButton from "../../../../../../common/components/ui/Button/CancelButton";
-import SaveButton from "../../../../../../common/components/ui/Button/SaveButton";
 import { useUserContext } from "../../../../../../common/auth/UserContext";
 import RequiredLabel from "../../../../../../common/components/ui/Label/RequiredLabel";
 import ControlledNumberField from "../../../../../../common/components/FormInput/ControlledNumberField";
@@ -16,6 +15,8 @@ import {
   useUpdateReadingNote,
 } from "../../../../../../common/api/clients/readingNoteClient";
 import { useReadingBookContext } from "../../ReadingBookContext";
+import { TITLE_ENTITY_SEPARATOR } from "../../../../../../common/constants";
+import SubmitButton from "../../../../../../common/components/ui/Button/SubmitButton";
 
 type NoteFormProps = {
   note?: ReadingNoteFormValues;
@@ -101,8 +102,8 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
         <Typography variant="h6">
           {isUpdating
             ? isPlLanguage
-              ? `Edytujesz notatkę - ${note?.title}`
-              : `You are editing - ${note?.title}`
+              ? `Edytujesz notatkę${TITLE_ENTITY_SEPARATOR}${note?.title}`
+              : `You are editing${TITLE_ENTITY_SEPARATOR}${note?.title}`
             : isPlLanguage
               ? "Dodaj nową notatkę"
               : "Add new note"}
@@ -119,7 +120,7 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
         </Grid>
         <DialogActions>
           <CancelButton onClick={onClose} />
-          <SaveButton />
+          <SubmitButton isUpdating={isUpdating} />
         </DialogActions>
       </Stack>
     </FormProvider>

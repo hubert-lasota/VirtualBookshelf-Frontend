@@ -2,7 +2,7 @@ import {
   BookshelfFormValues,
   createBookshelfSchema,
 } from "../../../common/models/bookshelfModels";
-import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +15,9 @@ import BookshelfFormFields from "./BookshelfFormFields";
 import { useBookshelfViewContext } from "../BookshelfViewContext";
 import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
 import { BookshelfFormMode, isBookshelfResponse } from "../models";
+import SubmitButton from "../../../common/components/ui/Button/SubmitButton";
+import { TITLE_ENTITY_SEPARATOR } from "../../../common/constants";
+import { FORM_VALIDATE_MODE } from "../../../common/config/form";
 
 export default function BookshelfFormDialog() {
   const { currentBookshelf, formMode, onFormModeChange } =
@@ -32,7 +35,7 @@ export default function BookshelfFormDialog() {
   const { mutateAsync: createBookshelf } = useCreateBookshelf();
 
   const form = useForm<BookshelfFormValues>({
-    mode: "all",
+    mode: FORM_VALIDATE_MODE,
     defaultValues: isUpdating ? currentBookshelf : undefined,
     resolver: zodResolver(createBookshelfSchema(isPlLanguage)),
   });
@@ -64,10 +67,10 @@ export default function BookshelfFormDialog() {
         <DialogTitleWithCloseButton onClose={handleClose}>
           {isPlLanguage
             ? isUpdating
-              ? `Edytuj regał ${currentBookshelf!.name}`
+              ? `Edytuj regał${TITLE_ENTITY_SEPARATOR}${currentBookshelf!.name}`
               : "Dodaj nowy regał"
             : isUpdating
-              ? `Edit bookshelf ${currentBookshelf!.name}`
+              ? `Edit bookshelf${TITLE_ENTITY_SEPARATOR}${currentBookshelf!.name}`
               : "Add new bookshelf"}
         </DialogTitleWithCloseButton>
         <DialogContent dividers>
@@ -75,19 +78,7 @@ export default function BookshelfFormDialog() {
         </DialogContent>
         <DialogActions>
           <CancelButton onClick={handleClose} />
-          <Button
-            type="submit"
-            variant="contained"
-            loading={form.formState.isSubmitting}
-          >
-            {isPlLanguage
-              ? isUpdating
-                ? "Edytuj"
-                : "Dodaj"
-              : isUpdating
-                ? "Edit"
-                : "Add"}
-          </Button>
+          <SubmitButton isUpdating={isUpdating} />
         </DialogActions>
       </Dialog>
     </FormProvider>

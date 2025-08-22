@@ -6,8 +6,8 @@ export default function ReadingSessionCardHeader() {
   const { book } = useReadingSessionContext();
 
   return (
-    <Stack direction="row">
-      <Typography>{book.title}</Typography>
+    <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Typography variant="h5">{book.title}</Typography>
       <ReadingSessionActionsButton />
     </Stack>
   );
