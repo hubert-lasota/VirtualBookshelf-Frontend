@@ -23,6 +23,10 @@ export default function ChallengeCard({ challenge }: ChallengeCardProps) {
         sx={(theme) => ({
           padding: theme.spacing(3),
           borderRadius: theme.shape.borderRadius,
+          transition: "box-shadow 0.3s ease-in-out",
+          "&:hover": {
+            boxShadow: theme.shadows[3],
+          },
         })}
       >
         <Stack spacing={0.5}>

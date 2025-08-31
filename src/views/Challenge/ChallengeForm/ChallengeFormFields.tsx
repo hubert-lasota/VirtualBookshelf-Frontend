@@ -26,8 +26,8 @@ export default function ChallengeFormFields() {
     {
       component: ControlledNumberField,
       props: {
-        name: "targetCount",
-        label: <RequiredLabel text={isPlLanguage ? "Cel" : "Target count"} />,
+        name: "goalValue",
+        label: <RequiredLabel text={isPlLanguage ? "Cel" : "Goal"} />,
       },
     },
     {
@@ -40,7 +40,7 @@ export default function ChallengeFormFields() {
     {
       component: ControlledDatePicker,
       props: {
-        name: "startAt",
+        name: "durationRange.startAt",
         label: (
           <RequiredLabel
             text={isPlLanguage ? "Data rozpoczęcia" : "Start date"}
@@ -51,7 +51,7 @@ export default function ChallengeFormFields() {
     {
       component: ControlledDatePicker,
       props: {
-        name: "endAt",
+        name: "durationRange.endAt",
         label: (
           <RequiredLabel
             text={isPlLanguage ? "Data zakończenia" : "End date"}

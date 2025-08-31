@@ -4,6 +4,8 @@ import BookReadingStatusSelect from "./BookReadingStatusSelect";
 import ControlledDatePicker from "../../../../common/components/FormInput/ControlledDatePicker";
 import RequiredLabel from "../../../../common/components/ui/Label/RequiredLabel";
 import BookFormFields from "../../../../common/components/Book/Form/BookFormFields";
+import { useWatch } from "react-hook-form";
+import { ReadingStatus } from "../../../../common/models/readingBookModels";
 
 type ReadingBookFormFieldsProps = {
   namePrefix?: string;
@@ -18,17 +20,39 @@ export default function ReadingBookFormFields({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const fields = [
-    <BookReadingStatusSelect namePrefix={namePrefix} />,
-    <ControlledDatePicker
-      name={`${namePrefix}startedReadingAt`}
-      label={
-        <RequiredLabel
-          text={isPlLanguage ? "Data rozpoczęcia" : "Start date"}
-        />
-      }
-    />,
-  ];
+  const status: ReadingStatus = useWatch({
+    name: namePrefix + "status",
+    exact: true,
+  });
+
+  const fields = [<BookReadingStatusSelect namePrefix={namePrefix} />];
+
+  if (status === ReadingStatus.READING || status === ReadingStatus.READ) {
+    fields.push(
+      <ControlledDatePicker
+        name={`${namePrefix}durationRange.startedAt`}
+        label={
+          <RequiredLabel
+            text={isPlLanguage ? "Data rozpoczęcia" : "Start date"}
+          />
+        }
+      />,
+    );
+  }
+
+  if (status === ReadingStatus.READ) {
+    fields.push(
+      <ControlledDatePicker
+        name={`${namePrefix}durationRange.finishedAt`}
+        shouldUnregister
+        label={
+          <RequiredLabel
+            text={isPlLanguage ? "Data zakończenia" : "End date"}
+          />
+        }
+      />,
+    );
+  }
 
   return (
     <Grid container spacing={2} sx={{ mt: 3 }}>

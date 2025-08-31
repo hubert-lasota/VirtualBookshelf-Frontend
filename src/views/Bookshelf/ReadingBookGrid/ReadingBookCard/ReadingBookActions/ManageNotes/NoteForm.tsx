@@ -65,7 +65,7 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
     {
       component: ControlledNumberField,
       props: {
-        name: "pageFrom",
+        name: "pageRange.from",
         label: (
           <RequiredLabel text={isPlLanguage ? "Strona od" : "Start page"} />
         ),
@@ -74,7 +74,7 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
     {
       component: ControlledNumberField,
       props: {
-        name: "pageTo",
+        name: "pageRange.to",
         label: <RequiredLabel text={isPlLanguage ? "Strona do" : "End page"} />,
       },
     },

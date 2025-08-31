@@ -12,10 +12,12 @@ import "dayjs/locale/en";
 
 type ControlledDatePickerProps = {
   name: string;
+  shouldUnregister?: boolean;
 } & DatePickerProps;
 
 export default function ControlledDatePicker({
   name,
+  shouldUnregister,
   ...props
 }: ControlledDatePickerProps) {
   const {
@@ -27,7 +29,7 @@ export default function ControlledDatePicker({
   const {
     field: { value, onChange, onBlur, ref, ...restFieldProps },
     fieldState: { invalid, error },
-  } = useController({ name });
+  } = useController({ name, shouldUnregister });
 
   return (
     <LocalizationProvider

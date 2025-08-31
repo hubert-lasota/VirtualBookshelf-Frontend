@@ -4,7 +4,8 @@ import AuthorReplacementPhoto from "./AuthorReplacementPhoto";
 import { useUserContext } from "../../../common/auth/UserContext";
 
 export default function AuthorDetailsCard() {
-  const { photoUrl, fullName, description } = useAuthorDetailsContext();
+  const { profilePictureUrl, fullName, description } =
+    useAuthorDetailsContext();
 
   const {
     preferences: { isPlLanguage },
@@ -22,7 +23,7 @@ export default function AuthorDetailsCard() {
         paddingBlock: theme.spacing(3),
       })}
     >
-      {photoUrl ? (
+      {profilePictureUrl ? (
         <img style={{ width: "30%" }} alt={fullName} />
       ) : (
         <AuthorReplacementPhoto sx={{ width: "30%" }} />

@@ -17,13 +17,9 @@ export default function SubmitButton({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const buttonText = isUpdating
-    ? isPlLanguage
-      ? "Edytuj"
-      : "Edit"
-    : isPlLanguage
-      ? "Dodaj"
-      : "Add";
+  const updateText = isPlLanguage ? "Edytuj" : "Edit";
+  const addText = isPlLanguage ? "Dodaj" : "Add";
+  const buttonText = isUpdating ? updateText : addText;
 
   return (
     <Button variant="contained" type="submit" loading={isSubmitting} {...props}>

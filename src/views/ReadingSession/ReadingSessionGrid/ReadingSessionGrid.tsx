@@ -8,7 +8,7 @@ export default function ReadingSessionGrid() {
   return (
     <Grid container spacing={2}>
       {sessions.map((s) => (
-        <Grid key={s.id} size={3}>
+        <Grid key={s.id} size={8}>
           <ReadingSessionCard session={s} />
         </Grid>
       ))}

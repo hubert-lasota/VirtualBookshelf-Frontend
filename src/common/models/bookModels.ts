@@ -108,6 +108,7 @@ export type BookResponse = {
   isbn: string;
   authors: AuthorResponse[];
   coverUrl: string | null;
+  pageCount: number;
 };
 
 export type BookDetailsResponse = {

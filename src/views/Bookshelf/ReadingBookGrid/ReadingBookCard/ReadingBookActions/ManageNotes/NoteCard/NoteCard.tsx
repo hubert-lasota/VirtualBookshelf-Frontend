@@ -45,7 +45,7 @@ export default function NoteCard({ note, onEdit }: NoteCardProps) {
             <Typography
               variant="subtitle2"
               color="textSecondary"
-            >{`Strona ${note.pageFrom}-${note.pageTo}`}</Typography>
+            >{`Strona ${note.pageRange.from}-${note.pageRange.to}`}</Typography>
           </Stack>
           <Stack direction="row" spacing={0.5} alignItems="center">
             <CalendarTodayIcon

@@ -1,6 +1,6 @@
 import axiosInstance from "../axiosInstance";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { ApiError } from "../apiModels";
 import {
@@ -13,19 +13,6 @@ import { AxiosError } from "axios";
 import { unwrapResponseData } from "../apiUtils";
 
 const BASE_ENDPOINT = "/v1/auth";
-
-export function useVerifyJwtValidity(jwt: string) {
-  return useQuery<string, ApiError, { isValid: boolean }>({
-    queryKey: ["verifyJwtValidity", jwt],
-    queryFn: () =>
-      axiosInstance
-        .get(BASE_ENDPOINT + "/verify-jwt-validity", {
-          params: { jwt },
-        })
-        .then(unwrapResponseData),
-    staleTime: 0,
-  });
-}
 
 export function useSignIn() {
   const [apiError, setApiError] = useState<ApiError | undefined>();

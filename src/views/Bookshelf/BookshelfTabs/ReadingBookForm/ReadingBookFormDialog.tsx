@@ -1,10 +1,4 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Grid,
-} from "@mui/material";
+import { Dialog, DialogActions, DialogContent, Grid } from "@mui/material";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +12,7 @@ import {
   ReadingBookFormValues,
 } from "../../../../common/models/readingBookModels";
 import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
+import SubmitButton from "../../../../common/components/ui/Button/SubmitButton";
 
 type BookFormDialogProps = {
   open: boolean;
@@ -40,7 +35,7 @@ export default function ReadingBookFormDialog({
     resolver: zodResolver(createReadingBookSchema(isPlLanguage)),
   });
 
-  const { mutate } = useCreateReadingBook();
+  const { mutateAsync } = useCreateReadingBook();
 
   const handleClose = () => {
     form.reset();
@@ -48,7 +43,7 @@ export default function ReadingBookFormDialog({
   };
 
   const onSubmit = async (readingBook: ReadingBookFormValues) => {
-    mutate({ ...readingBook, bookshelfId: bookshelf.id });
+    await mutateAsync({ ...readingBook, bookshelfId: bookshelf.id });
     handleClose();
   };
 
@@ -61,9 +56,9 @@ export default function ReadingBookFormDialog({
           paper: {
             component: "form",
             sx: { minWidth: "70%", maxHeight: "93%" },
+            onSubmit: form.handleSubmit(onSubmit),
           },
         }}
-        onSubmit={form.handleSubmit(onSubmit)}
       >
         <DialogTitleWithCloseButton onClose={handleClose}>
           {isPlLanguage ? "Dodaj książkę do regału " : "Add book to bookshelf "}
@@ -76,9 +71,7 @@ export default function ReadingBookFormDialog({
         </DialogContent>
         <DialogActions>
           <CancelButton onClick={handleClose} />
-          <Button variant="contained" type="submit">
-            {isPlLanguage ? "Dodaj" : "Add"}
-          </Button>
+          <SubmitButton />
         </DialogActions>
       </Dialog>
     </FormProvider>

@@ -8,14 +8,6 @@ import {
 } from "lucide-react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useUserContext } from "../../../../../common/auth/UserContext";
-import {
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-} from "@mui/material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState } from "react";
 import MoveReadingBookDialog from "./MoveReadingBookDialog";
 import DeleteReadingBookDialog from "./DeleteReadingBookDialog";
@@ -24,15 +16,9 @@ import { useChangeBookshelfBookStatus } from "../../../../../common/api/clients/
 import ManageNotesDialog from "./ManageNotes/ManageNotesDialog";
 import { useReadingBookContext } from "../ReadingBookContext";
 import ReadingSessionFormDialog from "../../../../../common/components/ReadingSessionForm/ReadingSessionFormDialog";
+import MoreActionsButton from "../../../../../common/components/ui/Button/MoreActionsButton";
 
-type ReadingBookActionsButtonProps = {
-  onClose: () => void;
-};
-
-export default function ReadingBookActionsButton({
-  onClose,
-}: ReadingBookActionsButtonProps) {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+export default function ReadingBookActionsButton() {
   const [openDialogs, setOpenDialogs] = useState({
     moveBook: false,
     deleteBook: false,
@@ -107,45 +93,7 @@ export default function ReadingBookActionsButton({
 
   return (
     <>
-      <IconButton
-        onClick={(e) => setAnchorEl(e.currentTarget)}
-        sx={(theme) => ({
-          width: "30px",
-          height: "30px",
-          transition: "all 0.3s ease",
-          backgroundColor: theme.palette.background.paper,
-          "&:hover": {
-            backgroundColor: theme.palette.background.paper,
-            opacity: "90%",
-          },
-        })}
-      >
-        <MoreHorizIcon />
-      </IconButton>
-
-      <Menu
-        anchorEl={anchorEl}
-        open={!!anchorEl}
-        onClose={() => {
-          setAnchorEl(null);
-          onClose();
-        }}
-      >
-        {items.map(({ icon, text, onClick, divider }) => (
-          <MenuItem
-            color="error"
-            key={text}
-            onClick={() => {
-              setAnchorEl(null);
-              onClick();
-            }}
-            divider={divider}
-          >
-            <ListItemIcon>{icon}</ListItemIcon>
-            <ListItemText>{text}</ListItemText>
-          </MenuItem>
-        ))}
-      </Menu>
+      <MoreActionsButton items={items} iconButtonProps={{ size: "small" }} />
 
       {openDialogs.moveBook && (
         <MoveReadingBookDialog

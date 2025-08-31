@@ -1,33 +1,52 @@
 import { Paper, Stack, Typography } from "@mui/material";
-import { useState } from "react";
 import { ReadingBookResponse } from "../../../../common/models/readingBookModels";
 import { ReadingBookContext } from "./ReadingBookContext";
-import ReadingBookCover from "./ReadingBookCover";
+import BookCover from "../../../../common/components/Book/BookCover";
+import ReadingProgress from "./ReadingProgress";
+import ReadingBookStats from "./ReadingBookStats";
+import TitleAndActionsButton from "./TitleAndActionsButton";
+import ChipStack from "./ChipStack";
 
 type ReadingBookCardProps = {
   readingBook: ReadingBookResponse;
 };
 
 export default function ReadingBookCard({ readingBook }: ReadingBookCardProps) {
-  const [isPointingCard, setIsPointingCard] = useState(true);
-
   return (
     <ReadingBookContext.Provider value={readingBook}>
       <Stack
-        sx={{ minWidth: "150px" }}
+        direction="row"
+        sx={(theme) => ({
+          padding: theme.spacing(2),
+          borderRadius: theme.shape.borderRadius,
+          boxShadow: theme.shadows[2],
+          transition: "box-shadow 0.3s ease-in-out",
+          "&:hover": {
+            boxShadow: theme.shadows[6],
+          },
+        })}
         component={Paper}
-        elevation={isPointingCard ? 6 : undefined}
-        onMouseEnter={() => setIsPointingCard(true)}
-        onMouseLeave={() => setIsPointingCard(false)}
+        spacing={2}
+        variant="outlined"
       >
-        <ReadingBookCover onPointingCardChange={setIsPointingCard} />
-        <Stack sx={(theme) => ({ padding: theme.spacing(2) })}>
-          <Typography fontWeight={600} variant="h6">
-            {readingBook.book.title}
-          </Typography>
-          <Typography color="textSecondary" variant="subtitle1">
-            {readingBook.book.authors.map((a) => a.fullName).join(", ")}
-          </Typography>
+        <BookCover
+          coverUrl={readingBook.book.coverUrl}
+          sx={{
+            height: "300px",
+            width: "200px",
+            objectFit: "fill",
+          }}
+        />
+        <Stack sx={{ minWidth: "250px" }} spacing={1.5}>
+          <Stack sx={{ width: "100%" }}>
+            <TitleAndActionsButton />
+            <Typography color="textSecondary" variant="subtitle1">
+              {readingBook.book.authors.map((a) => a.fullName).join(", ")}
+            </Typography>
+          </Stack>
+          <ChipStack />
+          <ReadingProgress />
+          <ReadingBookStats />
         </Stack>
       </Stack>
     </ReadingBookContext.Provider>

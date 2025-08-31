@@ -11,7 +11,7 @@ export const createAuthorSchema = (isPlLanguage: boolean) =>
           ? "Imię i nazwisko autora jest wymagane"
           : "Author first and last name is required",
       ),
-    photoUrl: z.string().optional(),
+    profilePictureUrl: z.string().optional(),
     description: z.string().optional(),
   });
 
@@ -20,13 +20,13 @@ export type AuthorFormValues = z.infer<ReturnType<typeof createAuthorSchema>>;
 export type AuthorResponse = {
   id: number;
   fullName: string;
-  photoUrl: string | null;
+  profilePictureUrl: string | null;
 };
 
 export type AuthorDetailsResponse = {
   id: number;
   fullName: string;
-  photoUrl: string | null;
+  profilePictureUrl: string | null;
   description: string | null;
   reviewStatistics: ReviewStatistics;
   review: ReviewResponse | null;
