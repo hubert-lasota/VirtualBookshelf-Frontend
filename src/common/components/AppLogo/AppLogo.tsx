@@ -2,12 +2,13 @@ import { Stack, StackProps, Typography } from "@mui/material";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import { useUserContext } from "../../auth/UserContext";
 import { useNavigate } from "react-router-dom";
+import { mergeSx } from "../../utils";
 
 type AppLogoProps = StackProps & {
   navigateTo?: string;
 };
 
-export default function AppLogo({ navigateTo, ...props }: AppLogoProps) {
+export default function AppLogo({ navigateTo, sx, ...props }: AppLogoProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
@@ -26,10 +27,14 @@ export default function AppLogo({ navigateTo, ...props }: AppLogoProps) {
       alignItems="center"
       spacing={1}
       onClick={handleNavigate}
-      sx={{
-        ...(!!navigateTo ? { cursor: "pointer" } : {}),
-        userSelect: "none",
-      }}
+      sx={mergeSx(
+        {
+          ...(!!navigateTo ? { cursor: "pointer" } : {}),
+          userSelect: "none",
+          width: "100%",
+        },
+        sx,
+      )}
       {...props}
     >
       <LocalLibraryIcon color="primary" fontSize="large" />

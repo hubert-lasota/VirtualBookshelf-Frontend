@@ -7,7 +7,7 @@ export default function LoggedInViewContainer() {
     <PageContainer
       sx={{
         display: "grid",
-        gridTemplateColumns: "280px 1fr",
+        gridTemplateColumns: "300px 1fr",
       }}
     >
       <NavSidebar />

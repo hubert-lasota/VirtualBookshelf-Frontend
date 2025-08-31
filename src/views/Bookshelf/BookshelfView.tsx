@@ -20,6 +20,16 @@ import BookshelfToolbar from "./BookshelfToolbar";
 import ViewContainer from "../../common/components/ui/View/ViewContainer";
 import { BookFilter } from "../../common/models/bookModels";
 
+const totalBookSuffix = (totalBooks: number, isPlLanguage: boolean) => {
+  if (totalBooks === 1) {
+    return isPlLanguage ? "książkę" : "book";
+  }
+  if (totalBooks === 0 || totalBooks >= 5) {
+    return isPlLanguage ? "książek" : "books";
+  }
+  return isPlLanguage ? "książki" : "books";
+};
+
 const initFilters: BookFilter = {
   pageCountRange: {
     gte: undefined,
@@ -53,9 +63,11 @@ export default function BookshelfView() {
   const allBooksBookshelf: AllBooksBookshelf = {
     name: isPlLanguage ? "Wszystkie książki" : "All books",
     totalBooks,
-    description: isPlLanguage
-      ? `Posiadasz łącznie ${totalBooks} książek`
-      : `You have ${totalBooks} books in total`,
+    description:
+      (isPlLanguage
+        ? `Posiadasz łącznie ${totalBooks} `
+        : `You have ${totalBooks} `) +
+      totalBookSuffix(totalBooks, isPlLanguage),
   };
 
   const [currentBookshelf, setCurrentBookshelf] =
