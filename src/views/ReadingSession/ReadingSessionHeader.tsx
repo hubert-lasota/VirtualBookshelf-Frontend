@@ -1,7 +1,7 @@
 import { useUserContext } from "../../common/auth/UserContext";
 import { Stack } from "@mui/material";
-import ViewTitle from "../../common/components/ui/View/ViewTitle";
-import ViewSubtitle from "../../common/components/ui/View/ViewSubtitle";
+import ViewTitle from "../ViewLayout/ViewTitle";
+import ViewSubtitle from "../ViewLayout/ViewSubtitle";
 
 export default function ReadingSessionHeader() {
   const {

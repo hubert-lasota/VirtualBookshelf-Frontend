@@ -2,8 +2,8 @@ import { Box, Button, Stack } from "@mui/material";
 import { useUserContext } from "../../common/auth/UserContext";
 import { useBookshelfViewContext } from "./BookshelfViewContext";
 import { BookshelfFormMode } from "./models";
-import ViewSubtitle from "../../common/components/ui/View/ViewSubtitle";
-import ViewTitle from "../../common/components/ui/View/ViewTitle";
+import ViewSubtitle from "../ViewLayout/ViewSubtitle";
+import ViewTitle from "../ViewLayout/ViewTitle";
 
 export default function BookshelfViewHeader() {
   const {

@@ -17,7 +17,7 @@ import BookshelfTabs from "./BookshelfTabs/BookshelfTabs";
 import BookshelfViewHeader from "./BookshelfViewHeader";
 import ReadingBookGrid from "./ReadingBookGrid/ReadingBookGrid";
 import BookshelfToolbar from "./BookshelfToolbar";
-import ViewContainer from "../../common/components/ui/View/ViewContainer";
+import ViewContainer from "../ViewLayout/ViewContainer";
 import { BookFilter } from "../../common/models/bookModels";
 
 const totalBookSuffix = (totalBooks: number, isPlLanguage: boolean) => {

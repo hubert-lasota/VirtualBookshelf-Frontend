@@ -1,5 +1,5 @@
 import { Stack, StackProps, SxProps, Theme } from "@mui/material";
-import { mergeSx } from "../../../utils";
+import { mergeSx } from "../../common/utils";
 
 const viewContainerSx: SxProps<Theme> = (theme) => ({
   width: "100%",

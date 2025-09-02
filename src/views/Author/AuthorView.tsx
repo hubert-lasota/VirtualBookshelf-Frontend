@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useGetAuthorById } from "../../common/api/clients/authorClient";
 import { AuthorDetailsContext } from "./AuthorDetailsContext";
 import AuthorDetailsCard from "./AuthorDetailsCard/AuthorDetailsCard";
-import ViewContainer from "../../common/components/ui/View/ViewContainer";
+import ViewContainer from "../ViewLayout/ViewContainer";
 
 export default function AuthorView() {
   const { id } = useParams();

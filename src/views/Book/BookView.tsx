@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useGetBookById } from "../../common/api/clients/bookClient";
 import BookReviews from "./BookDetailsCard/BookReviews";
 import { BookDetailsContext } from "./BookDetailsContext";
-import ViewContainer from "../../common/components/ui/View/ViewContainer";
+import ViewContainer from "../ViewLayout/ViewContainer";
 
 export default function BookView() {
   const { id } = useParams();

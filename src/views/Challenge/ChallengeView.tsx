@@ -2,7 +2,7 @@ import ChallengeHeader from "./ChallengeHeader/ChallengeHeader";
 
 import ChallengeToolbar from "./ChallengeToolbar";
 import ChallengeGrid from "./ChallengeGrid/ChallengeGrid";
-import ViewContainer from "../../common/components/ui/View/ViewContainer";
+import ViewContainer from "../ViewLayout/ViewContainer";
 
 export default function ChallengeView() {
   return (

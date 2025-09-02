@@ -1,6 +1,6 @@
-import ViewContainer from "../../common/components/ui/View/ViewContainer";
+import ViewContainer from "../ViewLayout/ViewContainer";
 import { useUserContext } from "../../common/auth/UserContext";
-import ViewTitle from "../../common/components/ui/View/ViewTitle";
+import ViewTitle from "../ViewLayout/ViewTitle";
 import { useState } from "react";
 import { useDebounceValue } from "../../common/hooks";
 import ToolbarContainer from "../../common/components/ui/Toolbar/ToolbarContainer";

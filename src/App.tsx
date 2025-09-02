@@ -9,7 +9,7 @@ import theme from "./common/config/theme.js";
 import UserProvider from "./common/auth/UserProvider";
 import { SnackbarProvider } from "notistack";
 import SnackbarAdapter from "./common/components/ui/Snackbar/SnackbarAdapter";
-import LoggedInViewContainer from "./views/LoggedInViewContainer/LoggedInViewContainer";
+import ViewLayout from "./views/ViewLayout/ViewLayout";
 import HomeView from "./views/Home/HomeView";
 import BookshelfView from "./views/Bookshelf/BookshelfView";
 import BookView from "./views/Book/BookView";
@@ -37,7 +37,7 @@ export default function App() {
             <Routes>
               <Route path="" element={<Landing />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route element={<LoggedInViewContainer />}>
+              <Route element={<ViewLayout />}>
                 <Route path="/home" element={<HomeView />} />
                 <Route path="/bookshelves" element={<BookshelfView />} />
                 <Route path="/challenges" element={<ChallengeView />} />

@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import PageContainer from "../../common/components/ui/layout/PageContainer";
 import NavSidebar from "./NavSidebar";
 
-export default function LoggedInViewContainer() {
+export default function ViewLayout() {
   return (
     <PageContainer
       sx={{
