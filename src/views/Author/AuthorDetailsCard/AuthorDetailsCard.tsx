@@ -1,7 +1,7 @@
 import { Paper, Stack, Typography } from "@mui/material";
 import { useAuthorDetailsContext } from "../AuthorDetailsContext";
-import AuthorReplacementPhoto from "./AuthorReplacementPhoto";
 import { useUserContext } from "../../../common/auth/UserContext";
+import AuthorProfilePicture from "../../../common/components/Author/AuthorProfilePicture";
 
 export default function AuthorDetailsCard() {
   const { profilePictureUrl, fullName, description } =
@@ -23,11 +23,10 @@ export default function AuthorDetailsCard() {
         paddingBlock: theme.spacing(3),
       })}
     >
-      {profilePictureUrl ? (
-        <img style={{ width: "30%" }} alt={fullName} />
-      ) : (
-        <AuthorReplacementPhoto sx={{ width: "30%" }} />
-      )}
+      <AuthorProfilePicture
+        profilePictureUrl={profilePictureUrl}
+        sx={{ width: "30%" }}
+      />
       <Stack spacing={3} sx={{ width: "70%" }}>
         <Typography variant="h4" color="textPrimary">
           {fullName}

@@ -13,8 +13,10 @@ export default function UserNavItem() {
         sx={{ height: "40px", width: "40px" }}
       />
       <Stack>
-        <Typography variant="subtitle2">{fullName}</Typography>
-        <Typography variant="body2" color="primary">
+        <Typography variant="subtitle2" color="textPrimary">
+          {fullName}
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
           {user.username}
         </Typography>
       </Stack>
