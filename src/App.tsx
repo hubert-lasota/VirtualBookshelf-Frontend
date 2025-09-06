@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import "./index.css";
 import LoginPage from "./pages/Login/LoginPage";
 import NotFoundPage from "./pages/NotFound/NotFoundPage.js";
-import Landing from "./pages/Landing/Landing.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@mui/material";
 import theme from "./common/config/theme.js";
@@ -21,6 +20,10 @@ import StatisticsView from "./views/Statistics/StatisticsView";
 
 const queryClient = new QueryClient();
 
+function LandingPage() {
+  return null;
+}
+
 export default function App() {
   return (
     <UserProvider>
@@ -36,7 +39,7 @@ export default function App() {
         >
           <QueryClientProvider client={queryClient}>
             <Routes>
-              <Route path="" element={<Landing />} />
+              <Route path="" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route element={<ViewLayout />}>
                 <Route path="/home" element={<HomeView />} />
