@@ -17,6 +17,7 @@ import ChallengeView from "./views/Challenge/ChallengeView";
 import AuthorView from "./views/Author/AuthorView";
 import ReadingSessionView from "./views/ReadingSession/ReadingSessionView";
 import SearchView from "./views/Search/SearchView";
+import StatisticsView from "./views/Statistics/StatisticsView";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ export default function App() {
                   element={<ReadingSessionView />}
                 />
                 <Route path="/search" element={<SearchView />} />
+                <Route path="/statistics" element={<StatisticsView />} />
                 <Route path="/books/:id" element={<BookView />} />
                 <Route path="/authors/:id" element={<AuthorView />} />
               </Route>
