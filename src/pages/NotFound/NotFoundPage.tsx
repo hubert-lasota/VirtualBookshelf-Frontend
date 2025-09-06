@@ -1,7 +1,7 @@
 import PageContainer from "../../common/components/ui/layout/PageContainer.js";
 import { Stack, Typography } from "@mui/material";
 
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
     <PageContainer>
       <Stack

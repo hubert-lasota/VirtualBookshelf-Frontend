@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./index.css";
 import LoginPage from "./pages/Login/LoginPage";
-import NotFound from "./pages/NotFound/NotFound.js";
+import NotFoundPage from "./pages/NotFound/NotFoundPage.js";
 import Landing from "./pages/Landing/Landing.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@mui/material";
@@ -51,7 +51,7 @@ export default function App() {
                 <Route path="/books/:id" element={<BookView />} />
                 <Route path="/authors/:id" element={<AuthorView />} />
               </Route>
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </QueryClientProvider>
         </SnackbarProvider>
