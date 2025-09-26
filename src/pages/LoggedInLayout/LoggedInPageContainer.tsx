@@ -1,0 +1,12 @@
+import { Stack, StackProps, SxProps, Theme } from "@mui/material";
+import { mergeSx } from "../../common/utils";
+
+const viewContainerSx: SxProps<Theme> = (theme) => ({
+  width: "100%",
+  height: "100%",
+  padding: theme.spacing(4),
+});
+
+export default function LoggedInPageContainer({ sx, ...props }: StackProps) {
+  return <Stack sx={mergeSx(viewContainerSx, sx)} {...props} />;
+}

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./index.css";
 import LoginPage from "./pages/Login/LoginPage";
 import NotFoundPage from "./pages/NotFound/NotFoundPage.js";
@@ -8,21 +8,17 @@ import theme from "./common/config/theme.js";
 import UserProvider from "./common/auth/UserProvider";
 import { SnackbarProvider } from "notistack";
 import SnackbarAdapter from "./common/components/ui/Snackbar/SnackbarAdapter";
-import ViewLayout from "./views/ViewLayout/ViewLayout";
-import HomeView from "./views/Home/HomeView";
-import BookshelfView from "./views/Bookshelf/BookshelfView";
-import BookView from "./views/Book/BookView";
-import ChallengeView from "./views/Challenge/ChallengeView";
-import AuthorView from "./views/Author/AuthorView";
-import ReadingSessionView from "./views/ReadingSession/ReadingSessionView";
-import SearchView from "./views/Search/SearchView";
-import StatisticsView from "./views/Statistics/StatisticsView";
+import LoggedInPageLayout from "./pages/LoggedInLayout/LoggedInPageLayout";
+import HomePage from "./pages/Home/HomePage";
+import BookshelfPage from "./pages/Bookshelf/BookshelfPage";
+import BookPage from "./pages/Book/BookPage";
+import ChallengePage from "./pages/Challenge/ChallengePage";
+import AuthorPage from "./pages/Author/AuthorPage";
+import ReadingSessionPage from "./pages/ReadingSession/ReadingSessionPage";
+import SearchPage from "./pages/Search/SearchPage";
+import StatisticsPage from "./pages/Statistics/StatisticsPage";
 
 const queryClient = new QueryClient();
-
-function LandingPage() {
-  return null;
-}
 
 export default function App() {
   return (
@@ -39,20 +35,20 @@ export default function App() {
         >
           <QueryClientProvider client={queryClient}>
             <Routes>
-              <Route path="" element={<LandingPage />} />
+              <Route path="" element={<Navigate to="/login" />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route element={<ViewLayout />}>
-                <Route path="/home" element={<HomeView />} />
-                <Route path="/bookshelves" element={<BookshelfView />} />
-                <Route path="/challenges" element={<ChallengeView />} />
+              <Route element={<LoggedInPageLayout />}>
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/bookshelves" element={<BookshelfPage />} />
+                <Route path="/challenges" element={<ChallengePage />} />
                 <Route
                   path="/reading-sessions"
-                  element={<ReadingSessionView />}
+                  element={<ReadingSessionPage />}
                 />
-                <Route path="/search" element={<SearchView />} />
-                <Route path="/statistics" element={<StatisticsView />} />
-                <Route path="/books/:id" element={<BookView />} />
-                <Route path="/authors/:id" element={<AuthorView />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/statistics" element={<StatisticsPage />} />
+                <Route path="/books/:id" element={<BookPage />} />
+                <Route path="/authors/:id" element={<AuthorPage />} />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

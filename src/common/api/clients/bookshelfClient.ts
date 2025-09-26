@@ -12,7 +12,7 @@ import axiosInstance from "../axiosInstance";
 import { unwrapResponseData } from "../apiUtils";
 import { useSnackbar } from "notistack";
 import { useUserContext } from "../../auth/UserContext";
-import { useBookshelfViewContext } from "../../../views/Bookshelf/BookshelfViewContext";
+import { useBookshelfPageContext } from "../../../pages/Bookshelf/BookshelfPageContext";
 
 const BASE_ENDPOINT = "/v1/bookshelves";
 
@@ -116,7 +116,7 @@ export function useDeleteBookshelf() {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const { selectAllBooksBookshelf } = useBookshelfViewContext();
+  const { selectAllBooksBookshelf } = useBookshelfPageContext();
 
   const {
     preferences: { isPlLanguage },
