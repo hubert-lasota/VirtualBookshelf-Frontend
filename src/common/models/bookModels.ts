@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { BookFormat } from "./bookFormatModels";
 import { GenreResponse } from "./genreModels";
-import { ReviewResponse, ReviewStatistics } from "./reviewModels";
+import { ReviewResponse } from "./reviewModels";
 import { AuthorResponse } from "./authorModels";
 import { PublisherResponse } from "./publisherModels";
 import { RangeFilter } from "./commonModels";
@@ -109,22 +109,17 @@ export type BookResponse = {
   authors: AuthorResponse[];
   coverUrl: string | null;
   pageCount: number;
+  totalReviews: number;
+  averageRating: number;
 };
 
-export type BookDetailsResponse = {
-  id: number;
-  title: string;
-  isbn: string;
-  authors: AuthorResponse[];
+export type BookDetailsResponse = BookResponse & {
   description: string | null;
   publicationYear: number | null;
   languageCode: string;
-  pageCount: number;
   publisher: PublisherResponse | null;
   format: BookFormat | null;
-  coverUrl: string | null;
   genres: GenreResponse[];
-  reviewStatistics: ReviewStatistics;
   review: ReviewResponse | null;
   bookshelf: {
     id: number;

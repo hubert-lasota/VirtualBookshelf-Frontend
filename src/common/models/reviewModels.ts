@@ -28,8 +28,3 @@ export type ReviewResponse = {
   createdAt: string;
   updatedAt: string | null;
 };
-
-export type ReviewStatistics = {
-  average: number;
-  total: number;
-};

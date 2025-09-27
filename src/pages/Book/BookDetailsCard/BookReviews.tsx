@@ -25,7 +25,8 @@ export default function BookReviews() {
   return (
     <ReviewDetailsPaper
       reviews={reviews}
-      reviewStatistics={book.reviewStatistics}
+      totalReviews={book.totalReviews}
+      averageRating={book.averageRating}
       onSubmitNewReview={onSubmit}
       page={page}
       onPageChange={(page) => setPage(page)}

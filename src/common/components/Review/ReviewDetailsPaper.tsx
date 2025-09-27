@@ -1,16 +1,13 @@
 import { Pagination, Paper, Rating, Stack, Typography } from "@mui/material";
-import {
-  ReviewFormValues,
-  ReviewResponse,
-  ReviewStatistics,
-} from "../../models/reviewModels";
+import { ReviewFormValues, ReviewResponse } from "../../models/reviewModels";
 import { useUserContext } from "../../auth/UserContext";
 import ReviewForm from "./ReviewForm";
 import ReviewItem from "./ReviewItem/ReviewItem";
 
 type ReviewDetailsPaperProps = {
   reviews: ReviewResponse[];
-  reviewStatistics: ReviewStatistics;
+  totalReviews: number;
+  averageRating: number;
   onSubmitNewReview: (review: ReviewFormValues) => void;
   page: number;
   onPageChange: (page: number) => void;
@@ -20,7 +17,8 @@ type ReviewDetailsPaperProps = {
 
 export default function ReviewDetailsPaper({
   reviews,
-  reviewStatistics,
+  totalReviews,
+  averageRating,
   onSubmitNewReview,
   page,
   onPageChange,
@@ -46,10 +44,10 @@ export default function ReviewDetailsPaper({
           {isPlLanguage ? "Recenzje" : "Reviews"}
         </Typography>
         <Stack direction="row" spacing={1} alignItems="center">
-          <Rating precision={0.5} value={reviewStatistics.average} readOnly />
+          <Rating precision={0.5} value={averageRating} readOnly />
           <Typography color="textSecondary" variant="subtitle1">
             {"("}
-            {reviewStatistics.total}
+            {totalReviews}
             {` ${isPlLanguage ? "ocen" : "ratings"}`}
             {")"}
           </Typography>
