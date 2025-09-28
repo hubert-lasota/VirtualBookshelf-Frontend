@@ -1,6 +1,6 @@
-import { Button, Divider, Stack, TextField } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useUserContext } from "../../../../../../common/auth/UserContext";
-import SearchIcon from "@mui/icons-material/Search";
+import Toolbar from "../../../../../../common/components/Toolbar/Toolbar";
 
 type NoteToolbarProps = {
   query: string;
@@ -18,26 +18,46 @@ export default function NoteToolbar({
   } = useUserContext();
 
   return (
-    <>
-      <Stack
-        direction="row"
-        sx={{ justifyContent: "space-between", paddingBottom: "1rem" }}
-      >
-        <TextField
-          value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
-          slotProps={{
-            input: { startAdornment: <SearchIcon /> },
-          }}
-          placeholder={
-            isPlLanguage ? "Szukaj w notatkach..." : "Search in notes..."
-          }
-        />
+    <Toolbar
+      filterButtonProps={{
+        onReset: () => {},
+        onApply: () => {},
+        content: "",
+      }}
+      searchTextFieldProps={{
+        value: query,
+        onChange: (e) => onQueryChange(e.target.value),
+        placeholder: isPlLanguage ? "Szukaj notatki..." : "Search notes...",
+      }}
+    >
+      <Stack direction="row" justifyContent="flex-end" sx={{ width: "100%" }}>
         <Button onClick={onAddNote} variant="contained">
           {isPlLanguage ? "Dodaj notatkę" : "Add note"}
         </Button>
       </Stack>
-      <Divider />
-    </>
+    </Toolbar>
   );
+  // return (
+  //   <>
+  //     <Stack
+  //       direction="row"
+  //       sx={{ justifyContent: "space-between", paddingBottom: "1rem" }}
+  //     >
+  //       <TextField
+  //         value={query}
+  //         onChange={(e) => onQueryChange(e.target.value)}
+  //         slotProps={{
+  //           input: { startAdornment: <SearchIcon /> },
+  //         }}
+  //         placeholder={
+  //           isPlLanguage ? "Szukaj w notatkach..." : "Search in notes..."
+  //         }
+  //       />
+  //       <Button onClick={onAddNote} variant="contained">
+  //         {isPlLanguage ? "Dodaj notatkę" : "Add note"}
+  //       </Button>
+  //     </Stack>
+  //     <Divider />
+  //   </>
+  // );
 }

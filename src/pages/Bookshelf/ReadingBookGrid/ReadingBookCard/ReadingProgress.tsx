@@ -26,6 +26,7 @@ export default function ReadingProgress() {
         value={progressPercentage}
         variant="determinate"
         sx={{ borderRadius: "6px" }}
+        color="success"
       />
     </Stack>
   );

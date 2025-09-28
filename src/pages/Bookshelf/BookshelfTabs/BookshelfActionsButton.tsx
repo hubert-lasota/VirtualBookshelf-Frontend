@@ -6,9 +6,11 @@ import React, { useState } from "react";
 import SearchBookDialog from "./SearchBook/SearchBookDialog";
 import DeleteBookshelfDialog from "./DeleteBookshelfDialog";
 import ReadingBookFormDialog from "./ReadingBookForm/ReadingBookFormDialog";
-import MoreActionsButton from "../../../common/components/ui/Button/MoreActionsButton";
+import MoreActionsButton, {
+  MoreActionsButtonItem,
+} from "../../../common/components/Button/MoreActionsButton";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
-import { BookshelfFormMode, isBookshelfResponse } from "../models";
+import { BookshelfFormMode, isBookshelfResponse } from "../shared";
 
 export default function BookshelfActionsButton() {
   const [openCreateBookDialog, setOpenCreateBookDialog] = useState(false);
@@ -29,7 +31,7 @@ export default function BookshelfActionsButton() {
     };
   };
 
-  const items = [
+  const items: MoreActionsButtonItem[] = [
     {
       text: isPlLanguage ? "Edytuj regał" : "Edit bookshelf",
       icon: <Pencil />,
@@ -53,20 +55,22 @@ export default function BookshelfActionsButton() {
       onClick: clickWithStopPropagation(() =>
         setOpenDeleteBookshelfDialog(true),
       ),
+      iconProps: { sx: (theme) => ({ color: theme.palette.error.light }) },
+      props: {
+        sx: (theme) => ({
+          borderTop: `1px solid ${theme.palette.divider}`,
+          color: theme.palette.error.dark,
+          "&:hover": {
+            backgroundColor: theme.palette.error["50"],
+          },
+        }),
+      },
     },
   ];
 
   return (
     <>
-      <MoreActionsButton
-        items={items}
-        iconButtonProps={{
-          size: "small",
-          sx: (theme) => ({
-            color: theme.palette.primary["100"],
-          }),
-        }}
-      />
+      <MoreActionsButton items={items} iconButtonProps={{ size: "small" }} />
       <SearchBookDialog
         open={openSearchBookDialog}
         onClose={() => setOpenSearchBookDialog(false)}

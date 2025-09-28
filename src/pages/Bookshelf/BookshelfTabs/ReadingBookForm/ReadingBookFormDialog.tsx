@@ -4,15 +4,15 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FORM_VALIDATE_MODE } from "../../../../common/config/form";
 import ReadingBookFormFields from "./ReadingBookFormFields";
-import CancelButton from "../../../../common/components/ui/Button/CancelButton";
-import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import CancelButton from "../../../../common/components/Button/CancelButton";
+import DialogTitleWithCloseButton from "../../../../common/components/Dialog/DliagotTitleWithCloseButton";
 import { useCreateReadingBook } from "../../../../common/api/clients/readingBookClient";
 import {
   createReadingBookSchema,
   ReadingBookFormValues,
 } from "../../../../common/models/readingBookModels";
 import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
-import SubmitButton from "../../../../common/components/ui/Button/SubmitButton";
+import SubmitButton from "../../../../common/components/Button/SubmitButton";
 
 type BookFormDialogProps = {
   open: boolean;

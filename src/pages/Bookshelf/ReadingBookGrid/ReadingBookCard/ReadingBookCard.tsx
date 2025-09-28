@@ -1,11 +1,12 @@
-import { Paper, Stack, Typography } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 import { ReadingBookResponse } from "../../../../common/models/readingBookModels";
 import { ReadingBookContext } from "./ReadingBookContext";
 import BookCover from "../../../../common/components/Book/BookCover";
 import ReadingProgress from "./ReadingProgress";
 import ReadingBookStats from "./ReadingBookStats";
 import TitleAndActionsButton from "./TitleAndActionsButton";
-import ChipStack from "./ChipStack";
+import GenreStack from "../../../../common/components/Book/GenreStack";
+import AuthorListTypography from "../../../../common/components/Book/AuthorListTypography";
 
 type ReadingBookCardProps = {
   readingBook: ReadingBookResponse;
@@ -17,6 +18,7 @@ export default function ReadingBookCard({ readingBook }: ReadingBookCardProps) {
       <Stack
         direction="row"
         sx={(theme) => ({
+          width: "100%",
           padding: theme.spacing(2),
           borderRadius: theme.shape.borderRadius,
           boxShadow: theme.shadows[2],
@@ -26,7 +28,6 @@ export default function ReadingBookCard({ readingBook }: ReadingBookCardProps) {
           },
         })}
         component={Paper}
-        spacing={2}
         variant="outlined"
       >
         <BookCover
@@ -37,14 +38,18 @@ export default function ReadingBookCard({ readingBook }: ReadingBookCardProps) {
             objectFit: "fill",
           }}
         />
-        <Stack sx={{ minWidth: "250px" }} spacing={1.5}>
+        <Stack
+          sx={(theme) => ({
+            paddingInline: theme.spacing(2),
+            width: "100%",
+          })}
+          spacing={1.5}
+        >
           <Stack sx={{ width: "100%" }}>
             <TitleAndActionsButton />
-            <Typography color="textSecondary" variant="subtitle1">
-              {readingBook.book.authors.map((a) => a.fullName).join(", ")}
-            </Typography>
+            <AuthorListTypography authors={readingBook.book.authors} />
+            <GenreStack genres={readingBook.book.genres} />
           </Stack>
-          <ChipStack />
           <ReadingProgress />
           <ReadingBookStats />
         </Stack>

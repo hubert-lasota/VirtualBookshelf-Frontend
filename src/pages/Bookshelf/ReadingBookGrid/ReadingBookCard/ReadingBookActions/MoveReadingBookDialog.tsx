@@ -11,8 +11,8 @@ import { FORM_VALIDATE_MODE } from "../../../../../common/config/form";
 import ControlledSelect from "../../../../../common/components/FormInput/ControlledSelect";
 import { BookshelfResponse } from "../../../../../common/models/bookshelfModels";
 import { useMoveReadingBook } from "../../../../../common/api/clients/readingBookClient";
-import CancelButton from "../../../../../common/components/ui/Button/CancelButton";
-import DialogTitleWithCloseButton from "../../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import CancelButton from "../../../../../common/components/Button/CancelButton";
+import DialogTitleWithCloseButton from "../../../../../common/components/Dialog/DliagotTitleWithCloseButton";
 import { ReadingBookResponse } from "../../../../../common/models/readingBookModels";
 import { useBookshelfPageContext } from "../../../BookshelfPageContext";
 

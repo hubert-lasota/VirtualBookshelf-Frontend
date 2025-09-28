@@ -1,4 +1,4 @@
-import DeleteEntityDialog from "../../../../../../../common/components/ui/Dialog/DeleteEntityDialog";
+import DeleteEntityDialog from "../../../../../../../common/components/Dialog/DeleteEntityDialog";
 import { useUserContext } from "../../../../../../../common/auth/UserContext";
 import { useNoteContext } from "./NoteContext";
 import { useDeleteReadingNote } from "../../../../../../../common/api/clients/readingNoteClient";

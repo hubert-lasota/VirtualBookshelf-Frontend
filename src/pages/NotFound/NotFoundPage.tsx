@@ -1,4 +1,4 @@
-import PageContainer from "../../common/components/ui/layout/PageContainer.js";
+import PageContainer from "../../common/components/layout/PageContainer.js";
 import { Stack, Typography } from "@mui/material";
 
 export default function NotFoundPage() {

@@ -1,5 +1,5 @@
-import OptionalLabel from "../../ui/Label/OptionalLabel";
-import RequiredLabel from "../../ui/Label/RequiredLabel";
+import OptionalLabel from "../../Label/OptionalLabel";
+import RequiredLabel from "../../Label/RequiredLabel";
 import ControlledNumberField from "../../FormInput/ControlledNumberField";
 import LanguageAutocomplete from "../../FormInput/LanguageAutocomplete";
 import { Grid } from "@mui/material";

@@ -8,7 +8,7 @@ import {
 import { useGetPublishers } from "../../../api/clients/publisherClient";
 import { PublisherResponse } from "../../../models/publisherModels";
 import { useUserContext } from "../../../auth/UserContext";
-import OptionalLabel from "../../ui/Label/OptionalLabel";
+import OptionalLabel from "../../Label/OptionalLabel";
 
 type PublisherAutocompleteProps = {
   name: string;

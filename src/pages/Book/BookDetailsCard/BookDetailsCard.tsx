@@ -1,10 +1,11 @@
-import { Chip, Paper, Stack, Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 
 import { useUserContext } from "../../../common/auth/UserContext";
 import BookInfoDetails from "./BookInfoDetails";
 import BookAuthorLinks from "./BookAuthorLinks";
 import { useBookDetailsContext } from "../BookDetailsContext";
 import BookCover from "../../../common/components/Book/BookCover";
+import GenreStack from "../../../common/components/Book/GenreStack";
 
 export default function BookDetailsCard() {
   const { coverUrl, title, description, genres } = useBookDetailsContext();
@@ -32,15 +33,7 @@ export default function BookDetailsCard() {
             {title}
           </Typography>
           <BookAuthorLinks />
-          <Stack direction="row" sx={{ paddingBottom: "1.5rem" }}>
-            {genres.map((genre) => (
-              <Chip
-                key={genre.id}
-                label={genre.name}
-                sx={{ borderRadius: "6px", height: "23px" }}
-              />
-            ))}
-          </Stack>
+          <GenreStack genres={genres} sx={{ paddingBottom: "1.5rem" }} />
         </Stack>
         <Stack spacing={1}>
           <Typography variant="h6">

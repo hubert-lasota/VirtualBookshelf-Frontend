@@ -1,6 +1,6 @@
 import { useUserContext } from "../../../common/auth/UserContext";
 import { Dialog, DialogContent } from "@mui/material";
-import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import DialogTitleWithCloseButton from "../../../common/components/Dialog/DliagotTitleWithCloseButton";
 
 type SearchChallengeDialogProps = {
   open: boolean;

@@ -4,7 +4,6 @@ import AppLogo from "../../common/components/AppLogo/AppLogo";
 import { useUserContext } from "../../common/auth/UserContext";
 import NavItem from "./NavItem";
 import {
-  BookOpenText,
   ChartNoAxesCombined,
   House,
   Search,
@@ -32,11 +31,6 @@ export default function NavSidebar() {
       label: isPlLanguage ? "Moje regały" : "My bookshelves",
       icon: SquareLibrary,
       path: "/bookshelves",
-    },
-    {
-      label: isPlLanguage ? "Sesje czytelnicze" : "Reading sessions",
-      icon: BookOpenText,
-      path: "/reading-sessions",
     },
     {
       label: isPlLanguage ? "Wyzwania" : "Challenges",

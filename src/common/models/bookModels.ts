@@ -107,6 +107,7 @@ export type BookResponse = {
   title: string;
   isbn: string;
   authors: AuthorResponse[];
+  genres: GenreResponse[];
   coverUrl: string | null;
   pageCount: number;
   totalReviews: number;
@@ -119,7 +120,6 @@ export type BookDetailsResponse = BookResponse & {
   languageCode: string;
   publisher: PublisherResponse | null;
   format: BookFormat | null;
-  genres: GenreResponse[];
   review: ReviewResponse | null;
   bookshelf: {
     id: number;

@@ -2,7 +2,7 @@ import { useUserContext } from "../../../common/auth/UserContext";
 import { MenuItem } from "@mui/material";
 import { ChallengeType } from "../../../common/models/challengeModels";
 import ControlledSelect from "../../../common/components/FormInput/ControlledSelect";
-import RequiredLabel from "../../../common/components/ui/Label/RequiredLabel";
+import RequiredLabel from "../../../common/components/Label/RequiredLabel";
 
 export default function CChallengeTypeSelect() {
   const {

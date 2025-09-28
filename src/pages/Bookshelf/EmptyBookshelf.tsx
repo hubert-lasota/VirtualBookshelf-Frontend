@@ -3,7 +3,7 @@ import ShelvesIcon from "@mui/icons-material/Shelves";
 import { useUserContext } from "../../common/auth/UserContext";
 import AddIcon from "@mui/icons-material/Add";
 import { useBookshelfPageContext } from "./BookshelfPageContext";
-import { BookshelfFormMode } from "./models";
+import { BookshelfFormMode } from "./shared";
 
 export default function EmptyBookshelf() {
   const {

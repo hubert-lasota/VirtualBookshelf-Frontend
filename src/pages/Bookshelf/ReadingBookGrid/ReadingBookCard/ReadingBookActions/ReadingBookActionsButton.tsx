@@ -1,6 +1,4 @@
-import { ReadingStatus } from "../../../../../common/models/readingBookModels";
 import {
-  BookCheckIcon,
   BookOpenTextIcon,
   BookUp2Icon,
   PanelsTopLeft,
@@ -12,18 +10,19 @@ import { useState } from "react";
 import MoveReadingBookDialog from "./MoveReadingBookDialog";
 import DeleteReadingBookDialog from "./DeleteReadingBookDialog";
 import { useNavigate } from "react-router-dom";
-import { useChangeBookshelfBookStatus } from "../../../../../common/api/clients/readingBookClient";
 import ManageNotesDialog from "./ManageNotes/ManageNotesDialog";
 import { useReadingBookContext } from "../ReadingBookContext";
-import ReadingSessionFormDialog from "../../../../../common/components/ReadingSessionForm/ReadingSessionFormDialog";
-import MoreActionsButton from "../../../../../common/components/ui/Button/MoreActionsButton";
+import MoreActionsButton, {
+  MoreActionsButtonItem,
+} from "../../../../../common/components/Button/MoreActionsButton";
+import ManageSessionsDialog from "./ManageSessions/ManageSessionsDialog";
 
 export default function ReadingBookActionsButton() {
   const [openDialogs, setOpenDialogs] = useState({
     moveBook: false,
     deleteBook: false,
+    manageSessions: false,
     manageNotes: false,
-    readingSessionForm: false,
   });
 
   const handleOpenDialogChange = (
@@ -37,41 +36,18 @@ export default function ReadingBookActionsButton() {
 
   const readingBook = useReadingBookContext();
 
-  const { mutate: changeStatus } = useChangeBookshelfBookStatus();
-
   const navigate = useNavigate();
 
-  const items = [
-    {
-      icon: <BookOpenTextIcon />,
-      text: isPlLanguage ? "Dodaj sesję czytania" : "Add reading session",
-      onClick: () => handleOpenDialogChange("readingSessionForm", true),
-    },
-    readingBook.status == ReadingStatus.READING
-      ? {
-          icon: <BookCheckIcon />,
-          text: isPlLanguage ? 'Oznacz jako "przeczytane"' : 'Mark as "read"',
-          onClick: () =>
-            changeStatus({
-              readingBookId: readingBook.id,
-              status: ReadingStatus.READ,
-            }),
-        }
-      : {
-          icon: <BookOpenTextIcon />,
-          text: isPlLanguage
-            ? 'Oznacz jako "w trakcie czytania"'
-            : 'Mark as "reading"',
-          onClick: () =>
-            changeStatus({
-              readingBookId: readingBook.id,
-              status: ReadingStatus.READING,
-            }),
-        },
+  const items: MoreActionsButtonItem[] = [
     {
       icon: <BookUp2Icon />,
       text: isPlLanguage ? "Przenieś książkę" : "Move book",
       onClick: () => handleOpenDialogChange("moveBook", true),
+    },
+    {
+      icon: <BookOpenTextIcon />,
+      text: isPlLanguage ? "Zarządzaj sesjami" : "Manage sessions",
+      onClick: () => handleOpenDialogChange("manageSessions", true),
     },
     {
       icon: <StickyNote />,
@@ -79,18 +55,26 @@ export default function ReadingBookActionsButton() {
       onClick: () => handleOpenDialogChange("manageNotes", true),
     },
     {
-      icon: <DeleteOutlineIcon />,
-      text: isPlLanguage ? "Usuń książkę" : "Delete book",
-      onClick: () => handleOpenDialogChange("deleteBook", true),
-      divider: true,
-    },
-    {
       icon: <PanelsTopLeft />,
       text: isPlLanguage ? "Przejdź do strony książki" : "See book site",
       onClick: () => navigate(`/books/${readingBook.book.id}`),
     },
+    {
+      icon: <DeleteOutlineIcon />,
+      text: isPlLanguage ? "Usuń książkę" : "Delete book",
+      onClick: () => handleOpenDialogChange("deleteBook", true),
+      iconProps: { sx: (theme) => ({ color: theme.palette.error.light }) },
+      props: {
+        sx: (theme) => ({
+          borderTop: `1px solid ${theme.palette.divider}`,
+          color: theme.palette.error.dark,
+          "&:hover": {
+            backgroundColor: theme.palette.error["50"],
+          },
+        }),
+      },
+    },
   ];
-
   return (
     <>
       <MoreActionsButton items={items} iconButtonProps={{ size: "small" }} />
@@ -109,15 +93,14 @@ export default function ReadingBookActionsButton() {
       />
       {openDialogs.manageNotes && (
         <ManageNotesDialog
-          open={openDialogs.manageNotes}
           onClose={() => handleOpenDialogChange("manageNotes", false)}
         />
       )}
-      <ReadingSessionFormDialog
-        open={openDialogs.readingSessionForm}
-        onClose={() => handleOpenDialogChange("readingSessionForm", false)}
-        readingBookId={readingBook.id}
-      />
+      {openDialogs.manageSessions && (
+        <ManageSessionsDialog
+          onClose={() => handleOpenDialogChange("manageSessions", false)}
+        />
+      )}
     </>
   );
 }

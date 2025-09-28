@@ -1,7 +1,7 @@
 import { Box, Button, Stack } from "@mui/material";
 import { useUserContext } from "../../common/auth/UserContext";
 import { useBookshelfPageContext } from "./BookshelfPageContext";
-import { BookshelfFormMode } from "./models";
+import { BookshelfFormMode } from "./shared";
 import LoggedInPageSubtitle from "../LoggedInLayout/LoggedInPageSubtitle";
 import LoggedInPageTitle from "../LoggedInLayout/LoggedInPageTitle";
 

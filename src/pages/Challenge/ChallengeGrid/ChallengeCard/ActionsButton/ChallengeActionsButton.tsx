@@ -1,4 +1,4 @@
-import MoreActionsButton from "../../../../../common/components/ui/Button/MoreActionsButton";
+import MoreActionsButton from "../../../../../common/components/Button/MoreActionsButton";
 import { useUserContext } from "../../../../../common/auth/UserContext";
 import { Pencil, UserRoundX } from "lucide-react";
 import { useState } from "react";

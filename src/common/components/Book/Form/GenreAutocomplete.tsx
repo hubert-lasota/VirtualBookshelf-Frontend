@@ -3,7 +3,7 @@ import { useUserContext } from "../../../auth/UserContext";
 import { useController } from "react-hook-form";
 import { GenreResponse } from "../../../models/genreModels";
 import { useGetGenres } from "../../../api/clients/genreClient";
-import RequiredLabel from "../../ui/Label/RequiredLabel";
+import RequiredLabel from "../../Label/RequiredLabel";
 
 type GenreAutocompleteProps = {
   name: string;

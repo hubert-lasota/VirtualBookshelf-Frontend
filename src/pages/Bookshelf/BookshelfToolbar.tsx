@@ -1,4 +1,4 @@
-import Toolbar from "../../common/components/ui/Toolbar/Toolbar";
+import Toolbar from "../../common/components/Toolbar/Toolbar";
 import { useBookshelfPageContext } from "./BookshelfPageContext";
 import BookFilterDialogContent from "../../common/components/Book/FilterDialogContent/BookFilterDialogContent";
 import { useEffect, useState } from "react";

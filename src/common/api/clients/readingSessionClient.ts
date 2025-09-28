@@ -2,7 +2,6 @@ import {
   ReadingSessionFormValues,
   ReadingSessionResponse,
 } from "../../models/readingSessionModels";
-import { PageMeta } from "../apiModels";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { unwrapResponseData } from "../apiUtils";
 import axiosInstance from "../axiosInstance";
@@ -12,15 +11,23 @@ import { useSnackbar } from "notistack";
 const BASE_ENDPOINT = "/v1/reading-sessions";
 const QUERY_KEY = ["reading-sessions"];
 
-type ReadingSessionPageResponse = {
+type ReadingSessionListResponse = {
   sessions: ReadingSessionResponse[];
-  pageMeta: PageMeta;
 };
-
-export const useGetReadingSessions = () =>
-  useQuery<unknown, unknown, ReadingSessionPageResponse>({
-    queryKey: QUERY_KEY,
-    queryFn: () => axiosInstance(BASE_ENDPOINT).then(unwrapResponseData),
+type UseGetReadingSessionsParams = {
+  readingBookId: number;
+  query: string;
+};
+export const useGetReadingSessions = ({
+  readingBookId,
+  query,
+}: UseGetReadingSessionsParams) =>
+  useQuery<unknown, unknown, ReadingSessionListResponse>({
+    queryKey: [...QUERY_KEY, readingBookId],
+    queryFn: () =>
+      axiosInstance(BASE_ENDPOINT, {
+        params: { readingBookId, query: query.trim() || undefined },
+      }).then(unwrapResponseData),
   });
 
 type UseCreateReadingSessionParams = {

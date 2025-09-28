@@ -9,8 +9,8 @@ import { useUserContext } from "../../auth/UserContext";
 import { Button, Stack, Typography } from "@mui/material";
 import ControlledRating from "./ControlledRating";
 import ControlledTextField from "../FormInput/ControlledTextField";
-import OptionalLabel from "../ui/Label/OptionalLabel";
-import CancelButton from "../ui/Button/CancelButton";
+import OptionalLabel from "../Label/OptionalLabel";
+import CancelButton from "../Button/CancelButton";
 
 type ReviewFormProps = {
   onSubmit: (values: ReviewFormValues) => void;

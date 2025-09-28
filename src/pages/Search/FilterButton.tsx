@@ -1,4 +1,4 @@
-import ToolbarFilterButton from "../../common/components/ui/Toolbar/ToolbarFilterButton";
+import ToolbarFilterButton from "../../common/components/Toolbar/ToolbarFilterButton";
 
 export default function FilterButton() {
   return (

@@ -6,16 +6,16 @@ import { Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CancelButton from "../../../common/components/ui/Button/CancelButton";
+import CancelButton from "../../../common/components/Button/CancelButton";
 import {
   useCreateBookshelf,
   useUpdateBookshelf,
 } from "../../../common/api/clients/bookshelfClient";
 import BookshelfFormFields from "./BookshelfFormFields";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
-import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
-import { BookshelfFormMode, isBookshelfResponse } from "../models";
-import SubmitButton from "../../../common/components/ui/Button/SubmitButton";
+import DialogTitleWithCloseButton from "../../../common/components/Dialog/DliagotTitleWithCloseButton";
+import { BookshelfFormMode, isBookshelfResponse } from "../shared";
+import SubmitButton from "../../../common/components/Button/SubmitButton";
 import { TITLE_ENTITY_SEPARATOR } from "../../../common/constants";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
 

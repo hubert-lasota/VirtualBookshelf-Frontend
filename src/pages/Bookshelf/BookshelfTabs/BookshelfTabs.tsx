@@ -1,7 +1,8 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
-import BookshelfTab from "./BookshelfTab";
-import { isAllBooksBookshelf, isBookshelfResponse } from "../models";
+import TabStack from "../../../common/components/Tab/TabStack";
+import BookshelfActionsButton from "./BookshelfActionsButton";
+import { isBookshelfResponse } from "../shared";
 
 export default function BookshelfTabs() {
   const {
@@ -12,34 +13,37 @@ export default function BookshelfTabs() {
     selectAllBooksBookshelf,
   } = useBookshelfPageContext();
 
+  const tabs = [allBooksBookshelf, ...bookshelves].map((bookshelf) => ({
+    value: bookshelf.id,
+    label: (
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={1}
+        sx={{ height: "25px" }}
+      >
+        <Typography>
+          {bookshelf.name}
+          {` (${bookshelf.totalBooks})`}
+        </Typography>
+        {currentBookshelf.id === bookshelf.id &&
+          isBookshelfResponse(currentBookshelf) && <BookshelfActionsButton />}
+      </Stack>
+    ),
+  }));
+
   return (
-    <Stack
-      direction="row"
-      spacing={1}
-      sx={(theme) => ({
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: theme.palette.background.secondary,
-        border: `1px solid ${theme.palette.divider}`,
-        padding: theme.spacing(1.5),
-        overflowX: "auto",
-      })}
-    >
-      <BookshelfTab
-        bookshelf={allBooksBookshelf}
-        isSelected={isAllBooksBookshelf(currentBookshelf)}
-        onClick={() => selectAllBooksBookshelf()}
-      />
-      {bookshelves.map((b) => (
-        <BookshelfTab
-          key={b.id}
-          onClick={() => onCurrentBookshelfChange(b)}
-          bookshelf={b}
-          isSelected={
-            isBookshelfResponse(currentBookshelf) &&
-            b.id === currentBookshelf.id
-          }
-        />
-      ))}
-    </Stack>
+    <TabStack
+      tabs={tabs}
+      maxVisibleTabs={4}
+      value={currentBookshelf.id}
+      onChange={(_e, bookshelfId) =>
+        bookshelfId === allBooksBookshelf.id
+          ? selectAllBooksBookshelf()
+          : onCurrentBookshelfChange(
+              bookshelves.find((b) => b.id === bookshelfId)!,
+            )
+      }
+    />
   );
 }

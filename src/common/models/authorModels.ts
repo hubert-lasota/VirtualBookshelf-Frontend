@@ -26,9 +26,6 @@ export type AuthorResponse = {
 };
 
 export type AuthorDetailsResponse = AuthorResponse & {
-  id: number;
-  fullName: string;
-  profilePictureUrl: string | null;
   description: string | null;
   review: ReviewResponse | null;
   createdAt: string;

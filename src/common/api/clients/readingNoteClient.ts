@@ -22,16 +22,20 @@ const getQueryKey = (readingBookId: ReadingBookResponse["id"]) => [
   "reading-notes",
   readingBookId,
 ];
-
-export const useGetReadingBookNotes = (
-  readingBookId: ReadingBookResponse["id"],
-) =>
+type UseGetReadingBookNotesParams = {
+  readingBookId: ReadingBookResponse["id"];
+  query: string;
+};
+export const useGetReadingBookNotes = ({
+  readingBookId,
+  query,
+}: UseGetReadingBookNotesParams) =>
   useQuery<ReadingNoteListResponse>({
     queryKey: getQueryKey(readingBookId),
     queryFn: () =>
       axiosInstance
         .get(BASE_ENDPOINT, {
-          params: { readingBookId },
+          params: { readingBookId, query: query.trim() || undefined },
         })
         .then(unwrapResponseData),
   });

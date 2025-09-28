@@ -3,7 +3,7 @@ import LoggedInPageTitle from "../LoggedInLayout/LoggedInPageTitle";
 import { useUserContext } from "../../common/auth/UserContext";
 import LoggedInPageSubtitle from "../LoggedInLayout/LoggedInPageSubtitle";
 import StatGrid from "./StatGrid";
-import TabList from "./TabList";
+import StatisticsTabs from "./StatisticsTabs";
 import { useState } from "react";
 import { StatTab } from "./models";
 import MonthlyProgressTabView from "./MonthlyProgressTabView";
@@ -40,7 +40,7 @@ export default function StatisticsPage() {
         </LoggedInPageSubtitle>
       </div>
       <StatGrid />
-      <TabList tab={tab} onTabChange={setTab} />
+      <StatisticsTabs tab={tab} onTabChange={setTab} />
       {renderTabView()}
     </LoggedInPageContainer>
   );

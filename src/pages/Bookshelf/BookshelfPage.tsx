@@ -4,12 +4,13 @@ import { useDebounceValue } from "../../common/hooks";
 import { useGetBookshelfBooks } from "../../common/api/clients/readingBookClient";
 import { useUserContext } from "../../common/auth/UserContext";
 import {
+  ALL_BOOKS_BOOKSHELF_ID,
   AllBooksBookshelf,
   BookshelfFormMode,
   CurrentBookshelf,
   isAllBooksBookshelf,
   isBookshelfResponse,
-} from "./models";
+} from "./shared";
 import { ReadingBookResponse } from "../../common/models/readingBookModels";
 import { BookshelfPageContext } from "./BookshelfPageContext";
 import BookshelfFormDialog from "./BookshelfForm/BookshelfFormDialog";
@@ -61,6 +62,7 @@ export default function BookshelfPage() {
     0,
   );
   const allBooksBookshelf: AllBooksBookshelf = {
+    id: ALL_BOOKS_BOOKSHELF_ID,
     name: isPlLanguage ? "Wszystkie książki" : "All books",
     totalBooks,
     description:

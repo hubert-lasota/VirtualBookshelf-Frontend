@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { useUserContext } from "../../common/auth/UserContext";
-import { BookOpenIcon, TrendingUpIcon, Clock4Icon } from "lucide-react";
+import { BookOpenIcon, Clock4Icon, TrendingUpIcon } from "lucide-react";
 import StatCard from "./StatCard";
 
 export default function StatGrid() {

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import PageContainer from "../../common/components/ui/layout/PageContainer";
+import PageContainer from "../../common/components/layout/PageContainer";
 import NavSidebar from "./NavSidebar";
 
 export default function LoggedInPageLayout() {

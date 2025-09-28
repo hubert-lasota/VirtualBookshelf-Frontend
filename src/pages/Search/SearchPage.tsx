@@ -3,7 +3,7 @@ import { useUserContext } from "../../common/auth/UserContext";
 import LoggedInPageTitle from "../LoggedInLayout/LoggedInPageTitle";
 import { useState } from "react";
 import { useDebounceValue } from "../../common/hooks";
-import ToolbarContainer from "../../common/components/ui/Toolbar/ToolbarContainer";
+import ToolbarContainer from "../../common/components/Toolbar/ToolbarContainer";
 import QueryTextFieldWithResourceSelect from "./QueryTextFieldWithResourceSelect";
 import FilterButton from "./FilterButton";
 import { ResourceType } from "./models";

@@ -1,4 +1,4 @@
-import Toolbar from "../../common/components/ui/Toolbar/Toolbar";
+import Toolbar from "../../common/components/Toolbar/Toolbar";
 
 export default function ChallengeToolbar() {
   return (

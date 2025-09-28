@@ -1,4 +1,4 @@
-import MoreActionsButton from "../../../../../../../common/components/ui/Button/MoreActionsButton";
+import MoreActionsButton from "../../../../../../../common/components/Button/MoreActionsButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import { useUserContext } from "../../../../../../../common/auth/UserContext";

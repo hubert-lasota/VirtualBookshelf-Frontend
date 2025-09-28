@@ -1,7 +1,7 @@
 import { DialogActions, Grid, Stack, Typography } from "@mui/material";
-import CancelButton from "../../../../../../common/components/ui/Button/CancelButton";
+import CancelButton from "../../../../../../common/components/Button/CancelButton";
 import { useUserContext } from "../../../../../../common/auth/UserContext";
-import RequiredLabel from "../../../../../../common/components/ui/Label/RequiredLabel";
+import RequiredLabel from "../../../../../../common/components/Label/RequiredLabel";
 import ControlledNumberField from "../../../../../../common/components/FormInput/ControlledNumberField";
 import ControlledTextField from "../../../../../../common/components/FormInput/ControlledTextField";
 import { FormProvider, useForm } from "react-hook-form";
@@ -16,7 +16,7 @@ import {
 } from "../../../../../../common/api/clients/readingNoteClient";
 import { useReadingBookContext } from "../../ReadingBookContext";
 import { TITLE_ENTITY_SEPARATOR } from "../../../../../../common/constants";
-import SubmitButton from "../../../../../../common/components/ui/Button/SubmitButton";
+import SubmitButton from "../../../../../../common/components/Button/SubmitButton";
 
 type NoteFormProps = {
   note?: ReadingNoteFormValues;

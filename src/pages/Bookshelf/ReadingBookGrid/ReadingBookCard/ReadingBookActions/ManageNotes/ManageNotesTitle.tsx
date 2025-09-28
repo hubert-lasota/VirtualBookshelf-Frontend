@@ -1,7 +1,8 @@
-import DialogTitleWithCloseButton from "../../../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import DialogTitleWithCloseButton from "../../../../../../common/components/Dialog/DliagotTitleWithCloseButton";
 import { Divider, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../../../../common/auth/UserContext";
 import { useReadingBookContext } from "../../ReadingBookContext";
+import { TITLE_ENTITY_SEPARATOR } from "../../../../../../common/constants";
 
 type ManageNotesTitleProps = {
   onClose: () => void;
@@ -19,7 +20,8 @@ export default function ManageNotesTitle({ onClose }: ManageNotesTitleProps) {
       <Stack>
         <Typography fontWeight={600} fontSize="1.3rem">
           {isPlLanguage ? "Notatki" : "Notes"}
-          {` - ${readingBook.book.title}`}
+          {TITLE_ENTITY_SEPARATOR}
+          {readingBook.book.title}
         </Typography>
         <Typography color="textSecondary">
           {isPlLanguage

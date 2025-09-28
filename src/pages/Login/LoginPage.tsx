@@ -2,7 +2,7 @@ import LoginForm from "./LoginForm.js";
 import { Stack } from "@mui/material";
 import GlobalNavbar from "../../common/components/GlobalNavbar/GlobalNavbar";
 import LanguageSelect from "../../common/components/GlobalNavbar/LanguageSelect";
-import PageContainer from "../../common/components/ui/layout/PageContainer.js";
+import PageContainer from "../../common/components/layout/PageContainer.js";
 import { GLOBAL_NAVBAR_HEIGHT } from "../../common/components/GlobalNavbar/config";
 
 export default function LoginPage() {

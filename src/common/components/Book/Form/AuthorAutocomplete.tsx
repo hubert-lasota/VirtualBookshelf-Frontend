@@ -7,7 +7,7 @@ import {
 import { AuthorFormValues, AuthorResponse } from "../../../models/authorModels";
 import { useUserContext } from "../../../auth/UserContext";
 import { useGetAuthors } from "../../../api/clients/authorClient";
-import RequiredLabel from "../../ui/Label/RequiredLabel";
+import RequiredLabel from "../../Label/RequiredLabel";
 
 type AuthorAutocompleteProps = {
   name: string;

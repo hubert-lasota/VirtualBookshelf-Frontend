@@ -6,16 +6,16 @@ import {
 import { FormProvider, useForm } from "react-hook-form";
 import { FORM_VALIDATE_MODE } from "../../../common/config/form";
 import { Dialog, DialogActions, DialogContent } from "@mui/material";
-import DialogTitleWithCloseButton from "../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import DialogTitleWithCloseButton from "../../../common/components/Dialog/DliagotTitleWithCloseButton";
 import { useUserContext } from "../../../common/auth/UserContext";
-import CancelButton from "../../../common/components/ui/Button/CancelButton";
+import CancelButton from "../../../common/components/Button/CancelButton";
 import ChallengeFormFields from "./ChallengeFormFields";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useCreateChallenge,
   useUpdateChallenge,
 } from "../../../common/api/clients/challengeClient";
-import SubmitButton from "../../../common/components/ui/Button/SubmitButton";
+import SubmitButton from "../../../common/components/Button/SubmitButton";
 import { TITLE_ENTITY_SEPARATOR } from "../../../common/constants";
 
 type ChallengeFormDialogProps = {

@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import GenreSelect from "./GenreSelect";
 import { useUserContext } from "../../../common/auth/UserContext";
-import RequiredLabel from "../../../common/components/ui/Label/RequiredLabel";
+import RequiredLabel from "../../../common/components/Label/RequiredLabel";
 import ControlledTextField from "../../../common/components/FormInput/ControlledTextField";
 import { useWatch } from "react-hook-form";
 import ChallengeTypeSelect from "./ChallengeTypeSelect";

@@ -7,14 +7,13 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./common/config/theme.js";
 import UserProvider from "./common/auth/UserProvider";
 import { SnackbarProvider } from "notistack";
-import SnackbarAdapter from "./common/components/ui/Snackbar/SnackbarAdapter";
+import SnackbarAdapter from "./common/components/Snackbar/SnackbarAdapter";
 import LoggedInPageLayout from "./pages/LoggedInLayout/LoggedInPageLayout";
 import HomePage from "./pages/Home/HomePage";
 import BookshelfPage from "./pages/Bookshelf/BookshelfPage";
 import BookPage from "./pages/Book/BookPage";
 import ChallengePage from "./pages/Challenge/ChallengePage";
 import AuthorPage from "./pages/Author/AuthorPage";
-import ReadingSessionPage from "./pages/ReadingSession/ReadingSessionPage";
 import SearchPage from "./pages/Search/SearchPage";
 import StatisticsPage from "./pages/Statistics/StatisticsPage";
 
@@ -41,10 +40,6 @@ export default function App() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/bookshelves" element={<BookshelfPage />} />
                 <Route path="/challenges" element={<ChallengePage />} />
-                <Route
-                  path="/reading-sessions"
-                  element={<ReadingSessionPage />}
-                />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/statistics" element={<StatisticsPage />} />
                 <Route path="/books/:id" element={<BookPage />} />

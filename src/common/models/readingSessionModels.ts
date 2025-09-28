@@ -1,4 +1,3 @@
-import { BookResponse } from "./bookModels";
 import { z } from "zod";
 import {
   createPageRangeSchema,
@@ -6,12 +5,15 @@ import {
   PageRange,
   ReadingDurationRange,
 } from "./commonModels";
+import { ReadingNoteResponse } from "./readingNoteModels";
 
 export const createReadingSessionSchema = (isPlLanguage: boolean) =>
   z.object({
     durationRange: createReadingDurationRangeSchema(isPlLanguage),
     pageRange: createPageRangeSchema(isPlLanguage),
-    description: z.string().optional(),
+    notes: z
+      .array(z.object({ title: z.string(), content: z.string() }))
+      .optional(),
   });
 
 export type ReadingSessionFormValues = z.infer<
@@ -22,6 +24,5 @@ export type ReadingSessionResponse = {
   id: number;
   pageRange: PageRange & { readPages: number };
   durationRange: ReadingDurationRange & { readMinutes: number };
-  book: BookResponse;
-  description: string | null;
+  notes: ReadingNoteResponse[];
 };

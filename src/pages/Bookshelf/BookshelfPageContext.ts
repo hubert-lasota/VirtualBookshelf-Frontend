@@ -5,7 +5,7 @@ import {
   AllBooksBookshelf,
   BookshelfFormMode,
   CurrentBookshelf,
-} from "./models";
+} from "./shared";
 import { BookFilter } from "../../common/models/bookModels";
 
 type BookshelfPageContextValue = {

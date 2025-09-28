@@ -2,7 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import BookReadingStatusSelect from "./BookReadingStatusSelect";
 import ControlledDatePicker from "../../../../common/components/FormInput/ControlledDatePicker";
-import RequiredLabel from "../../../../common/components/ui/Label/RequiredLabel";
+import RequiredLabel from "../../../../common/components/Label/RequiredLabel";
 import BookFormFields from "../../../../common/components/Book/Form/BookFormFields";
 import { useWatch } from "react-hook-form";
 import { ReadingStatus } from "../../../../common/models/readingBookModels";

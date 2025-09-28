@@ -6,7 +6,7 @@ import {
   TextField,
 } from "@mui/material";
 
-import DialogTitleWithCloseButton from "../../../../common/components/ui/Dialog/DliagotTitleWithCloseButton";
+import DialogTitleWithCloseButton from "../../../../common/components/Dialog/DliagotTitleWithCloseButton";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import { useState } from "react";
 import { useDebounceValue } from "../../../../common/hooks";

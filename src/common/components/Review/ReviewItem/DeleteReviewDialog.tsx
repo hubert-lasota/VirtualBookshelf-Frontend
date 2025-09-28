@@ -1,4 +1,4 @@
-import DeleteEntityDialog from "../../ui/Dialog/DeleteEntityDialog";
+import DeleteEntityDialog from "../../Dialog/DeleteEntityDialog";
 import { useReviewContext } from "./ReviewContext";
 import { useDeleteBookReview } from "../../../api/clients/bookReviewClient";
 import { useUserContext } from "../../../auth/UserContext";

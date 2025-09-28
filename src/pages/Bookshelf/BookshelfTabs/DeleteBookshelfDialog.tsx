@@ -3,7 +3,7 @@ import { useUserContext } from "../../../common/auth/UserContext";
 import { useDeleteBookshelf } from "../../../common/api/clients/bookshelfClient";
 import { BookshelfResponse } from "../../../common/models/bookshelfModels";
 
-import DeleteEntityDialog from "../../../common/components/ui/Dialog/DeleteEntityDialog";
+import DeleteEntityDialog from "../../../common/components/Dialog/DeleteEntityDialog";
 
 type DeleteBookshelfDialogProps = Pick<DialogProps, "open"> & {
   bookshelf: BookshelfResponse;
