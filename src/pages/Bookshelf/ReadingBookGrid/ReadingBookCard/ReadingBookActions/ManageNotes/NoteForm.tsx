@@ -1,5 +1,4 @@
-import { DialogActions, Grid, Stack, Typography } from "@mui/material";
-import CancelButton from "../../../../../../common/components/Button/CancelButton";
+import { DialogContent, Grid, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../../../../common/auth/UserContext";
 import RequiredLabel from "../../../../../../common/components/Label/RequiredLabel";
 import ControlledNumberField from "../../../../../../common/components/FormInput/ControlledNumberField";
@@ -16,7 +15,8 @@ import {
 } from "../../../../../../common/api/clients/readingNoteClient";
 import { useReadingBookContext } from "../../ReadingBookContext";
 import { TITLE_ENTITY_SEPARATOR } from "../../../../../../common/constants";
-import SubmitButton from "../../../../../../common/components/Button/SubmitButton";
+
+import CommonDialogActions from "../../../../../../common/components/Dialog/CommonDialogActions";
 
 type NoteFormProps = {
   note?: ReadingNoteFormValues;
@@ -99,29 +99,28 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
         component="form"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <Typography variant="h6">
-          {isUpdating
-            ? isPlLanguage
-              ? `Edytujesz notatkę${TITLE_ENTITY_SEPARATOR}${note?.title}`
-              : `You are editing${TITLE_ENTITY_SEPARATOR}${note?.title}`
-            : isPlLanguage
-              ? "Dodaj nową notatkę"
-              : "Add new note"}
-        </Typography>
-        <Grid container spacing={2}>
-          {fields.map(({ component, props, size }) => {
-            const Field = component || ControlledTextField;
-            return (
-              <Grid size={size ?? 6}>
-                <Field {...props} />{" "}
-              </Grid>
-            );
-          })}
-        </Grid>
-        <DialogActions>
-          <CancelButton onClick={onClose} />
-          <SubmitButton isUpdating={isUpdating} />
-        </DialogActions>
+        <DialogContent>
+          <Typography variant="h6">
+            {isUpdating
+              ? isPlLanguage
+                ? `Edytujesz notatkę${TITLE_ENTITY_SEPARATOR}${note?.title}`
+                : `You are editing${TITLE_ENTITY_SEPARATOR}${note?.title}`
+              : isPlLanguage
+                ? "Dodaj nową notatkę"
+                : "Add new note"}
+          </Typography>
+          <Grid container spacing={2}>
+            {fields.map(({ component, props, size }) => {
+              const Field = component || ControlledTextField;
+              return (
+                <Grid size={size ?? 6}>
+                  <Field {...props} />{" "}
+                </Grid>
+              );
+            })}
+          </Grid>
+        </DialogContent>
+        <CommonDialogActions onClickCancel={onClose} />
       </Stack>
     </FormProvider>
   );

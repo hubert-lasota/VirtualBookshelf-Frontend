@@ -1,14 +1,26 @@
-import MoreActionsButton from "../../../../../common/components/Button/MoreActionsButton";
+import MoreActionsButton, {
+  MoreActionsButtonItem,
+} from "../../../../../common/components/Button/MoreActionsButton";
 import { useUserContext } from "../../../../../common/auth/UserContext";
-import { Pencil, UserRoundX } from "lucide-react";
+import { Pencil, UserRoundX, Users } from "lucide-react";
 import { useState } from "react";
 import QuitChallengeDialog from "./QuitChallengeDialog";
 import { useChallengeContext } from "../ChallengeContext";
 import ChallengeFormDialog from "../../../ChallengeForm/ChallengeFormDialog";
+import { getDestructiveMenuItemProps } from "../../../../../common/utils";
+import ChallengeParticipantsDialog from "./ChallengeParticipantsDialog/ChallengeParticipantsDialog";
 
 export default function ChallengeActionsButton() {
-  const [openQuitChallenge, setOpenQuitChallenge] = useState(false);
-  const [openFormChallenge, setOpenFormChallenge] = useState(false);
+  const [openDialogs, setOpenDialogs] = useState({
+    challengeForm: false,
+    quitChallenge: false,
+    participants: false,
+  });
+
+  const handleChangeOpenDialogs = (
+    key: keyof typeof openDialogs,
+    open: boolean,
+  ) => setOpenDialogs((prev) => ({ ...prev, [key]: open }));
 
   const challenge = useChallengeContext();
 
@@ -17,11 +29,20 @@ export default function ChallengeActionsButton() {
     user,
   } = useUserContext();
 
-  let items = [
+  let items: MoreActionsButtonItem[] = [
+    {
+      text: isPlLanguage ? "Uczestnicy" : "Participants",
+      icon: <Users />,
+      onClick: () => handleChangeOpenDialogs("participants", true),
+      props: {
+        divider: true,
+      },
+    },
     {
       text: isPlLanguage ? "Zrezygnuj" : "Quit challenge",
       icon: <UserRoundX />,
-      onClick: () => setOpenQuitChallenge(true),
+      onClick: () => handleChangeOpenDialogs("quitChallenge", true),
+      ...getDestructiveMenuItemProps(),
     },
   ];
 
@@ -30,7 +51,7 @@ export default function ChallengeActionsButton() {
       {
         text: isPlLanguage ? "Edytuj" : "Edit",
         icon: <Pencil />,
-        onClick: () => setOpenFormChallenge(true),
+        onClick: () => handleChangeOpenDialogs("challengeForm", true),
       },
       ...items,
     ];
@@ -40,13 +61,17 @@ export default function ChallengeActionsButton() {
     <>
       <MoreActionsButton items={items} iconButtonProps={{ size: "small" }} />
       <QuitChallengeDialog
-        open={openQuitChallenge}
-        onClose={() => setOpenQuitChallenge(false)}
+        open={openDialogs.quitChallenge}
+        onClose={() => handleChangeOpenDialogs("quitChallenge", false)}
       />
       <ChallengeFormDialog
-        open={openFormChallenge}
-        onClose={() => setOpenFormChallenge(false)}
+        open={openDialogs.challengeForm}
+        onClose={() => handleChangeOpenDialogs("challengeForm", false)}
         challenge={challenge}
+      />
+      <ChallengeParticipantsDialog
+        open={openDialogs.participants}
+        onClose={() => handleChangeOpenDialogs("participants", false)}
       />
     </>
   );

@@ -37,37 +37,35 @@ export default function ManageNotesDialog({ onClose }: ManageNotesDialogProps) {
       }}
     >
       <ManageNotesTitle onClose={onClose} />
-      <DialogContent>
-        {isFormOpen ? (
-          <NoteForm
-            onClose={() => setIsFormOpen(false)}
-            noteId={noteToUpdate?.id}
-            note={noteToUpdate}
+      {isFormOpen ? (
+        <NoteForm
+          onClose={() => setIsFormOpen(false)}
+          noteId={noteToUpdate?.id}
+          note={noteToUpdate}
+        />
+      ) : (
+        <DialogContent>
+          <NoteToolbar
+            query={query}
+            onQueryChange={(query) => setQuery(query)}
+            onAddNote={() => {
+              setNoteToUpdate(undefined);
+              setIsFormOpen(true);
+            }}
           />
-        ) : (
-          <>
-            <NoteToolbar
-              query={query}
-              onQueryChange={(query) => setQuery(query)}
-              onAddNote={() => {
-                setNoteToUpdate(undefined);
-                setIsFormOpen(true);
-              }}
-            />
-            <Stack spacing={2} sx={{ marginTop: "1rem" }}>
-              {notes.map((note) => (
-                <NoteCard
-                  note={note}
-                  onEdit={() => {
-                    setIsFormOpen(true);
-                    setNoteToUpdate(note);
-                  }}
-                />
-              ))}
-            </Stack>
-          </>
-        )}
-      </DialogContent>
+          <Stack spacing={2} sx={{ marginTop: "1rem" }}>
+            {notes.map((note) => (
+              <NoteCard
+                note={note}
+                onEdit={() => {
+                  setIsFormOpen(true);
+                  setNoteToUpdate(note);
+                }}
+              />
+            ))}
+          </Stack>
+        </DialogContent>
+      )}
     </Dialog>
   );
 }

@@ -1,25 +1,24 @@
-import { useUserContext } from "../../../../../../common/auth/UserContext";
-import ControlledNumberField from "../../../../../../common/components/FormInput/ControlledNumberField";
-import RequiredLabel from "../../../../../../common/components/Label/RequiredLabel";
-import ControlledDateTimePicker from "../../../../../../common/components/FormInput/ControlledDateTimePicker";
-import ControlledTextField from "../../../../../../common/components/FormInput/ControlledTextField";
-import OptionalLabel from "../../../../../../common/components/Label/OptionalLabel";
-import { Grid, Stack, Typography } from "@mui/material";
-import SubmitButton from "../../../../../../common/components/Button/SubmitButton";
-import CancelButton from "../../../../../../common/components/Button/CancelButton";
+import { useUserContext } from "../../../../../../../common/auth/UserContext";
+import ControlledNumberField from "../../../../../../../common/components/FormInput/ControlledNumberField";
+import RequiredLabel from "../../../../../../../common/components/Label/RequiredLabel";
+import ControlledDateTimePicker from "../../../../../../../common/components/FormInput/ControlledDateTimePicker";
+import ControlledTextField from "../../../../../../../common/components/FormInput/ControlledTextField";
+import { DialogContent, Grid, Stack, Typography } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import {
   createReadingSessionSchema,
   ReadingSessionFormValues,
   ReadingSessionResponse,
-} from "../../../../../../common/models/readingSessionModels";
-import { FORM_VALIDATE_MODE } from "../../../../../../common/config/form";
+} from "../../../../../../../common/models/readingSessionModels";
+import { FORM_VALIDATE_MODE } from "../../../../../../../common/config/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useCreateReadingSession,
   useUpdateReadingSession,
-} from "../../../../../../common/api/clients/readingSessionClient";
-import { useReadingBookContext } from "../../ReadingBookContext";
+} from "../../../../../../../common/api/clients/readingSessionClient";
+import { useReadingBookContext } from "../../../ReadingBookContext";
+import SessionFormNoteFields from "./SessionFormNoteFields";
+import CommonDialogActions from "../../../../../../../common/components/Dialog/CommonDialogActions";
 
 type SessionFormProps = {
   session?: ReadingSessionResponse;
@@ -65,6 +64,14 @@ export default function SessionForm({
 
   const fields = [
     {
+      component: ControlledTextField,
+      props: {
+        name: "title",
+        label: <RequiredLabel text={isPlLanguage ? "Tytuł" : "Title"} />,
+      },
+      size: 12,
+    },
+    {
       component: ControlledNumberField,
       props: {
         name: "pageRange.from",
@@ -106,15 +113,6 @@ export default function SessionForm({
         ),
       },
     },
-    {
-      component: ControlledTextField,
-      props: {
-        name: "Opis",
-        label: <OptionalLabel text={isPlLanguage ? "Opis" : "Description"} />,
-        multiline: true,
-      },
-      size: 12,
-    },
   ];
   return (
     <FormProvider {...form}>
@@ -123,31 +121,32 @@ export default function SessionForm({
         onSubmit={form.handleSubmit(onSubmit)}
         spacing={3}
       >
-        <Typography variant="h6">
-          {isUpdating
-            ? isPlLanguage
-              ? "Edytujesz sesję"
-              : "Edit session"
-            : isPlLanguage
-              ? "Dodaj nową sesję"
-              : "Add new session"}
-        </Typography>
-        <Grid container spacing={3}>
-          {fields.map(({ size = 6, props, component: FieldComponent }) => (
-            <Grid size={size}>
-              <FieldComponent {...props} />
-            </Grid>
-          ))}
-        </Grid>
-        <Stack
-          spacing={1}
-          direction="row"
-          justifyContent="flex-end"
-          sx={{ width: "100%" }}
+        <DialogContent
+          sx={(theme) => ({
+            display: "flex",
+            flexDirection: "column",
+            gap: theme.spacing(2),
+          })}
         >
-          <CancelButton onClick={onCloseForm} />
-          <SubmitButton />
-        </Stack>
+          <Typography variant="h6">
+            {isUpdating
+              ? isPlLanguage
+                ? "Edytujesz sesję"
+                : "Edit session"
+              : isPlLanguage
+                ? "Dodaj nową sesję"
+                : "Add new session"}
+          </Typography>
+          <Grid container spacing={3}>
+            {fields.map(({ size = 6, props, component: FieldComponent }) => (
+              <Grid size={size}>
+                <FieldComponent {...props} />
+              </Grid>
+            ))}
+          </Grid>
+          <SessionFormNoteFields />
+        </DialogContent>
+        <CommonDialogActions onClickCancel={onCloseForm} />
       </Stack>
     </FormProvider>
   );

@@ -1,9 +1,12 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { useChallengeContext } from "./ChallengeContext";
 import { ChallengeParticipantStatus } from "../../../../common/models/challengePartictipantModels";
 import { CircleCheckBig, CircleSlash2, Play } from "lucide-react";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import React from "react";
+
+type Props = {
+  status: ChallengeParticipantStatus;
+};
 
 const getStyleInfo = (
   status: ChallengeParticipantStatus,
@@ -35,20 +38,16 @@ const getStyleInfo = (
   }
 };
 
-export default function StatusBadge() {
-  const { participation } = useChallengeContext();
+export default function StatusBadge({ status }: Props) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  if (!participation.participates) {
-    return null;
-  }
   const {
     paletteKey,
     icon: Icon,
-    status,
-  } = getStyleInfo(participation.status, isPlLanguage);
+    status: statusText,
+  } = getStyleInfo(status, isPlLanguage);
   return (
     <Box
       sx={(theme) => ({
@@ -68,7 +67,7 @@ export default function StatusBadge() {
         alignItems="center"
       >
         <Icon style={{ width: "0.8rem", height: "0.8rem" }} />
-        <Typography variant="body2">{status}</Typography>
+        <Typography variant="body2">{statusText}</Typography>
       </Stack>
     </Box>
   );

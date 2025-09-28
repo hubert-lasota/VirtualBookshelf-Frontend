@@ -4,10 +4,11 @@ import { ReadingSessionResponse } from "../../../../../../common/models/readingS
 import { useDebounceValue } from "../../../../../../common/hooks";
 import { useReadingBookContext } from "../../ReadingBookContext";
 import SessionToolbar from "./SessionToolbar";
-import SessionForm from "./SessionForm";
+import SessionForm from "./SessionForm/SessionForm";
 import { Dialog, DialogContent, Stack } from "@mui/material";
 import { useGetReadingSessions } from "../../../../../../common/api/clients/readingSessionClient";
 import SessionCard from "./SessionCard/SessionCard";
+import { ManageSessionsContext } from "./ManageSessionsContext";
 
 type ManageSessionsDialogProps = {
   onClose: () => void;
@@ -29,26 +30,33 @@ export default function ManageSessionsDialog({
     useState<ReadingSessionResponse>();
 
   return (
-    <Dialog
-      open
-      onClose={onClose}
-      slotProps={{
-        paper: {
-          sx: {
-            minWidth: "70%",
-          },
+    <ManageSessionsContext.Provider
+      value={{
+        onEditSession: (session) => {
+          setIsFormOpen(true);
+          setSessionToUpdate(session);
         },
       }}
     >
-      <ManageSessionsTitle onClose={onClose} />
-      <DialogContent>
+      <Dialog
+        open
+        onClose={onClose}
+        slotProps={{
+          paper: {
+            sx: {
+              minWidth: "70%",
+            },
+          },
+        }}
+      >
+        <ManageSessionsTitle onClose={onClose} />
         {isFormOpen ? (
           <SessionForm
             session={sessionToUpdate}
             onCloseForm={() => setIsFormOpen(false)}
           />
         ) : (
-          <>
+          <DialogContent>
             <SessionToolbar
               query={query}
               onQueryChange={setQuery}
@@ -62,9 +70,9 @@ export default function ManageSessionsDialog({
                 <SessionCard session={session} />
               ))}
             </Stack>
-          </>
+          </DialogContent>
         )}
-      </DialogContent>
-    </Dialog>
+      </Dialog>
+    </ManageSessionsContext.Provider>
   );
 }

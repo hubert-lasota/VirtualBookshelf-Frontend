@@ -11,6 +11,7 @@ import MoreActionsButton, {
 } from "../../../common/components/Button/MoreActionsButton";
 import { useBookshelfPageContext } from "../BookshelfPageContext";
 import { BookshelfFormMode, isBookshelfResponse } from "../shared";
+import { getDestructiveMenuItemProps } from "../../../common/utils";
 
 export default function BookshelfActionsButton() {
   const [openCreateBookDialog, setOpenCreateBookDialog] = useState(false);
@@ -48,6 +49,9 @@ export default function BookshelfActionsButton() {
       text: isPlLanguage ? "Znajdź książkę" : "Search book",
       icon: <SearchIcon />,
       onClick: clickWithStopPropagation(() => setOpenSearchBookDialog(true)),
+      props: {
+        divider: true,
+      },
     },
     {
       text: isPlLanguage ? "Usuń regał" : "Delete bookshelf",
@@ -55,16 +59,7 @@ export default function BookshelfActionsButton() {
       onClick: clickWithStopPropagation(() =>
         setOpenDeleteBookshelfDialog(true),
       ),
-      iconProps: { sx: (theme) => ({ color: theme.palette.error.light }) },
-      props: {
-        sx: (theme) => ({
-          borderTop: `1px solid ${theme.palette.divider}`,
-          color: theme.palette.error.dark,
-          "&:hover": {
-            backgroundColor: theme.palette.error["50"],
-          },
-        }),
-      },
+      ...getDestructiveMenuItemProps(),
     },
   ];
 

@@ -16,6 +16,7 @@ import MoreActionsButton, {
   MoreActionsButtonItem,
 } from "../../../../../common/components/Button/MoreActionsButton";
 import ManageSessionsDialog from "./ManageSessions/ManageSessionsDialog";
+import { getDestructiveMenuItemProps } from "../../../../../common/utils";
 
 export default function ReadingBookActionsButton() {
   const [openDialogs, setOpenDialogs] = useState({
@@ -58,21 +59,15 @@ export default function ReadingBookActionsButton() {
       icon: <PanelsTopLeft />,
       text: isPlLanguage ? "Przejdź do strony książki" : "See book site",
       onClick: () => navigate(`/books/${readingBook.book.id}`),
+      props: {
+        divider: true,
+      },
     },
     {
       icon: <DeleteOutlineIcon />,
       text: isPlLanguage ? "Usuń książkę" : "Delete book",
       onClick: () => handleOpenDialogChange("deleteBook", true),
-      iconProps: { sx: (theme) => ({ color: theme.palette.error.light }) },
-      props: {
-        sx: (theme) => ({
-          borderTop: `1px solid ${theme.palette.divider}`,
-          color: theme.palette.error.dark,
-          "&:hover": {
-            backgroundColor: theme.palette.error["50"],
-          },
-        }),
-      },
+      ...getDestructiveMenuItemProps(),
     },
   ];
   return (

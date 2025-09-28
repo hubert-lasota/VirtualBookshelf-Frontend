@@ -1,8 +1,9 @@
 import { ReadingSessionResponse } from "../../../../../../../common/models/readingSessionModels";
 import { ReadingSessionContext } from "./ReadingSessionContext";
-import { Paper, Stack } from "@mui/material";
-
+import { Paper, Stack, Typography } from "@mui/material";
 import SessionStats from "./SessionStats";
+import SessionActionsButton from "./SessionActionsButton";
+import SessionNotes from "./SessionNotes";
 
 type ReadingSessionCardProps = {
   session: ReadingSessionResponse;
@@ -25,7 +26,14 @@ export default function SessionCard({ session }: ReadingSessionCardProps) {
           },
         })}
       >
+        <Stack direction="row" justifyContent="space-between">
+          <Typography variant="h6" color="textPrimary">
+            {session.title}
+          </Typography>
+          <SessionActionsButton />
+        </Stack>
         <SessionStats />
+        <SessionNotes />
       </Stack>
     </ReadingSessionContext.Provider>
   );

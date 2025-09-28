@@ -1,10 +1,11 @@
 import MoreActionsButton from "../../../../../../../common/components/Button/MoreActionsButton";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import { useUserContext } from "../../../../../../../common/auth/UserContext";
 import DeleteNoteDialog from "./DeleteNoteDialog";
 import { useNoteContext } from "./NoteContext";
-import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { Pencil } from "lucide-react";
+import { getDestructiveMenuItemProps } from "../../../../../../../common/utils";
 
 export default function NoteActionsButton() {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -18,13 +19,14 @@ export default function NoteActionsButton() {
   const items = [
     {
       text: isPlLanguage ? "Edytuj" : "Edit",
-      icon: <EditIcon />,
+      icon: <Pencil />,
       onClick: onEdit,
     },
     {
       text: isPlLanguage ? "Usuń" : "Delete",
-      icon: <DeleteIcon />,
+      icon: <DeleteOutlineIcon />,
       onClick: () => setOpenDeleteDialog(true),
+      ...getDestructiveMenuItemProps(),
     },
   ];
 

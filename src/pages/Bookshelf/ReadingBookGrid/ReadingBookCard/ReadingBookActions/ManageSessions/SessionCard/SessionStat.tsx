@@ -14,7 +14,7 @@ export default function SessionStat({ value, color, label }: SessionStatProps) {
         justifyContent: "center",
         alignItems: "center",
         borderRadius: theme.shape.borderRadius,
-        padding: theme.spacing(3),
+        padding: theme.spacing(2),
         backgroundColor: theme.palette[color]["50"],
         width: "100%",
       })}

@@ -1,8 +1,7 @@
 import { useUserContext } from "../../../../../../common/auth/UserContext";
 import { useReadingBookContext } from "../../ReadingBookContext";
-import DialogTitleWithCloseButton from "../../../../../../common/components/Dialog/DliagotTitleWithCloseButton";
-import { Divider, Stack, Typography } from "@mui/material";
 import { TITLE_ENTITY_SEPARATOR } from "../../../../../../common/constants";
+import CommonDialogTitle from "../../../../../../common/components/Dialog/CommonDialogTitle";
 
 type ManageSessionsTitleProps = {
   onClose: () => void;
@@ -15,23 +14,18 @@ export default function ManageSessionsTitle({
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const readingBook = useReadingBookContext();
+  const { book } = useReadingBookContext();
 
+  const titlePrefix = isPlLanguage ? "Sesje czytelnicze" : "Reading Sessions";
   return (
-    <DialogTitleWithCloseButton onClose={onClose}>
-      <Stack>
-        <Typography fontWeight={600} fontSize="1.3rem">
-          {isPlLanguage ? "Sesje czytelnicze" : "Reading Sessions"}
-          {TITLE_ENTITY_SEPARATOR}
-          {readingBook.book.title}
-        </Typography>
-        <Typography color="textSecondary">
-          {isPlLanguage
-            ? "Zarządzaj sesjami czytelniczymi tej książki"
-            : "Manage your reading sessions for this book"}
-        </Typography>
-      </Stack>
-      <Divider />
-    </DialogTitleWithCloseButton>
+    <CommonDialogTitle
+      onClose={onClose}
+      title={`${titlePrefix}${TITLE_ENTITY_SEPARATOR}${book.title}`}
+      subtitle={
+        isPlLanguage
+          ? "Zarządzaj sesjami czytelniczymi tej książki"
+          : "Manage your reading sessions for this book"
+      }
+    />
   );
 }

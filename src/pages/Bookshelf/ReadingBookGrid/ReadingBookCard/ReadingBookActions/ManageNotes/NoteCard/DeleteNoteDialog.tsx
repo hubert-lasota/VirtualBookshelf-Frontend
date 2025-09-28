@@ -3,6 +3,7 @@ import { useUserContext } from "../../../../../../../common/auth/UserContext";
 import { useNoteContext } from "./NoteContext";
 import { useDeleteReadingNote } from "../../../../../../../common/api/clients/readingNoteClient";
 import { useReadingBookContext } from "../../../ReadingBookContext";
+import { TITLE_ENTITY_SEPARATOR } from "../../../../../../../common/constants";
 
 type DeleteNoteDialogProps = {
   open: boolean;
@@ -32,8 +33,8 @@ export default function DeleteNoteDialog({
       title={isPlLanguage ? `Usuń notatkę` : "Delete note"}
       contentText={
         isPlLanguage
-          ? `Czy na pewno chcesz usunąć notatkę - ${note.title}?`
-          : `Are you sure you want to delete note - ${note.title}?`
+          ? `Czy na pewno chcesz usunąć notatkę${TITLE_ENTITY_SEPARATOR}${note.title}?`
+          : `Are you sure you want to delete note${TITLE_ENTITY_SEPARATOR}${note.title}?`
       }
     />
   );

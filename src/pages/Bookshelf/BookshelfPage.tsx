@@ -94,7 +94,7 @@ export default function BookshelfPage() {
         ? readingBooks.filter((b) => b.bookshelf.id === currentBookshelf.id)
         : readingBooks,
 
-    [bookshelves, readingBooks, currentBookshelf, query],
+    [bookshelves, readingBooks, currentBookshelf],
   );
   return (
     <BookshelfPageContext.Provider

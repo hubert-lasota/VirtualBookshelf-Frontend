@@ -14,6 +14,7 @@ type ChallengeCardProps = {
 
 export default function ChallengeCard({ challenge }: ChallengeCardProps) {
   const { user } = useUserContext();
+  const status = challenge.participation.status;
   return (
     <ChallengeContext.Provider value={challenge}>
       <Stack
@@ -32,7 +33,7 @@ export default function ChallengeCard({ challenge }: ChallengeCardProps) {
         <Stack spacing={0.5}>
           <ChallengeCardHeader />
           <Stack direction="row" spacing={1}>
-            <StatusBadge />
+            {status && <StatusBadge status={status} />}
             {challenge.user.id === user.id && <ChallengeAuthorBadge />}
           </Stack>
         </Stack>

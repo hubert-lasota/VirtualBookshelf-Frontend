@@ -132,7 +132,6 @@ const theme = createTheme({
     },
     primary: {
       ...primaryColor,
-      contrastText: "#ffff",
       contrastTextOnLight: "hsl(0 0% 95%)",
       main: primaryColor[500],
       dark: primaryColor[700],
@@ -140,7 +139,7 @@ const theme = createTheme({
     },
     success: {
       ...successColor,
-      contrastText: "#ffff",
+      contrastText: "#fff",
       contrastTextOnLight: "hsl(0 0% 95%)",
       main: successColor[500],
       dark: successColor[700],
@@ -148,7 +147,7 @@ const theme = createTheme({
     },
     info: {
       ...infoColor,
-      contrastText: "#ffff",
+      contrastText: "#fff",
       contrastTextOnLight: "hsl(0 0% 95%)",
       main: infoColor[500],
       dark: infoColor[700],
@@ -156,7 +155,7 @@ const theme = createTheme({
     },
     warning: {
       ...warningColor,
-      contrastText: "#ffff",
+      contrastText: "#fff",
       contrastTextOnLight: "hsl(0 0% 95%)",
       main: warningColor[500],
       dark: warningColor[700],
@@ -164,7 +163,7 @@ const theme = createTheme({
     },
     error: {
       ...errorColor,
-      contrastText: "#ffff",
+      contrastText: "#fff",
       main: errorColor[500],
       dark: errorColor[700],
       light: errorColor[300],

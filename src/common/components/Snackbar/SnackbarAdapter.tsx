@@ -4,14 +4,12 @@ import { forwardRef } from "react";
 
 const SnackbarAdapter = forwardRef<HTMLDivElement, CustomContentProps>(
   function SnackbarAdapter({ message, variant }, ref) {
-    const severity = variant === "default" ? "info" : variant;
     return (
       <Alert
         ref={ref}
-        severity={severity}
+        severity={variant === "default" ? "info" : variant}
         variant="filled"
         elevation={6}
-        color={severity}
       >
         {message}
       </Alert>
