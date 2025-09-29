@@ -1,6 +1,5 @@
 import { useGetBookshelves } from "../../common/api/clients/bookshelfClient";
 import { useEffect, useMemo, useState } from "react";
-import { useDebounceValue } from "../../common/hooks";
 import { useGetBookshelfBooks } from "../../common/api/clients/readingBookClient";
 import { useUserContext } from "../../common/auth/UserContext";
 import {
@@ -44,14 +43,9 @@ const initFilters: BookFilter = {
 
 export default function BookshelfPage() {
   const { data: { bookshelves = [] } = {} } = useGetBookshelves();
-
-  const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounceValue(query, 500);
   const [filter, setFilter] = useState<BookFilter>(initFilters);
 
-  const { data: { readingBooks = [] } = {} } = useGetBookshelfBooks({
-    query: debouncedQuery,
-  });
+  const { data: { readingBooks = [] } = {} } = useGetBookshelfBooks(filter);
 
   const {
     preferences: { isPlLanguage },
@@ -105,13 +99,11 @@ export default function BookshelfPage() {
         selectAllBooksBookshelf: () => setCurrentBookshelf(allBooksBookshelf),
         readingBooks: filteredBooks,
         bookshelves,
-        query,
-        onQueryChange: (query) => setQuery(query),
         formMode,
         onFormModeChange: (formMode) => setFormMode(formMode),
         filter,
         setFilter,
-        resetFilter: () => setFilter(initFilters),
+        resetFilter: () => setFilter({ ...initFilters, query: filter.query }),
       }}
     >
       <LoggedInPageContainer spacing={3}>

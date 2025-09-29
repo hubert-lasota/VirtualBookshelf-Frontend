@@ -4,7 +4,7 @@ import { useUserContext } from "../../../common/auth/UserContext";
 import RequiredLabel from "../../../common/components/Label/RequiredLabel";
 import ControlledTextField from "../../../common/components/FormInput/ControlledTextField";
 import { useWatch } from "react-hook-form";
-import ChallengeTypeSelect from "./ChallengeTypeSelect";
+import ControlledChallengeTypeSelect from "./ControlledChallengeTypeSelect";
 import { ChallengeType } from "../../../common/models/challengeModels";
 import ControlledNumberField from "../../../common/components/FormInput/ControlledNumberField";
 import ControlledDatePicker from "../../../common/components/FormInput/ControlledDatePicker";
@@ -31,7 +31,7 @@ export default function ChallengeFormFields() {
       },
     },
     {
-      component: ChallengeTypeSelect,
+      component: ControlledChallengeTypeSelect,
     },
     {
       skip: type !== ChallengeType.GENRE_BOOKS,

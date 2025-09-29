@@ -11,8 +11,6 @@ import { BookFilter } from "../../common/models/bookModels";
 type BookshelfPageContextValue = {
   bookshelves: BookshelfResponse[];
   readingBooks: ReadingBookResponse[];
-  query: string;
-  onQueryChange: (query: string) => void;
   currentBookshelf: CurrentBookshelf;
   onCurrentBookshelfChange: (bookshelf: BookshelfResponse) => void;
   allBooksBookshelf: AllBooksBookshelf;

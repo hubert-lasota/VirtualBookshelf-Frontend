@@ -30,7 +30,6 @@ export default function ToolbarFilterButton({
   } = useUserContext();
 
   const handleClose = () => {
-    onReset();
     setOpen(false);
   };
 
@@ -54,12 +53,23 @@ export default function ToolbarFilterButton({
         </DialogTitleWithCloseButton>
         <DialogContent dividers>{content}</DialogContent>
         <DialogActions sx={{ justifyContent: "space-between" }}>
-          <Button onClick={onReset}>
+          <Button
+            onClick={() => {
+              onReset();
+              handleClose();
+            }}
+          >
             {isPlLanguage ? "Resetuj" : "Reset"}
           </Button>
           <Stack direction="row" spacing={1}>
             <CancelButton onClick={handleClose} />
-            <Button variant="contained" onClick={onApply}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                onApply();
+                handleClose();
+              }}
+            >
               {isPlLanguage ? "Zastosuj" : "Apply"}
             </Button>
           </Stack>

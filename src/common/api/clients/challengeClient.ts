@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../axiosInstance";
 import { unwrapResponseData } from "../apiUtils";
 import {
+  ChallengeFilter,
   ChallengeFormValues,
   ChallengeResponse,
 } from "../../models/challengeModels";
@@ -18,15 +19,13 @@ type ChallengePageResponse = {
   pageMeta: PageMeta;
 };
 
-type UseGetChallengeParams = {
-  participating?: boolean;
-};
-
-export const useGetChallenges = (params: UseGetChallengeParams = {}) =>
+export const useGetChallenges = (filter: ChallengeFilter = {}) =>
   useQuery<ChallengePageResponse>({
-    queryKey: [...QUERY_KEY, params],
+    queryKey: [...QUERY_KEY, filter],
     queryFn: () =>
-      axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),
+      axiosInstance
+        .get(BASE_ENDPOINT, { params: filter })
+        .then(unwrapResponseData),
   });
 
 export const useCreateChallenge = () => {

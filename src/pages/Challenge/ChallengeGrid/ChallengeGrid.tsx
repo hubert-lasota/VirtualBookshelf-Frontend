@@ -1,12 +1,12 @@
-import { useGetChallenges } from "../../../common/api/clients/challengeClient";
 import { Grid } from "@mui/material";
 import ChallengeCard from "./ChallengeCard/ChallengeCard";
+import { ChallengeResponse } from "../../../common/models/challengeModels";
 
-export default function ChallengeGrid() {
-  const { data: { challenges = [] } = {} } = useGetChallenges({
-    participating: true,
-  });
+type Props = {
+  challenges: ChallengeResponse[];
+};
 
+export default function ChallengeGrid({ challenges }: Props) {
   return (
     <Grid container spacing={2}>
       {challenges.map((c) => (

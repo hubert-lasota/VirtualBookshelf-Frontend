@@ -1,6 +1,7 @@
-import { FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { MenuItem } from "@mui/material";
 import { useGetAuthors } from "../../../api/clients/authorClient";
 import { useUserContext } from "../../../auth/UserContext";
+import SimpleSelect from "../../Input/SimpleSelect";
 
 type AuthorFilterSelectProps = {
   authorId?: number;
@@ -19,22 +20,19 @@ export default function AuthorFilterSelect({
   } = useUserContext();
 
   return (
-    <FormControl>
-      <Typography>{isPlLanguage ? "Autor" : "Author"}</Typography>
-      <Select
-        variant="outlined"
-        value={authorId ?? ""}
-        renderValue={(authorId) =>
-          authors.find((a) => a.id === authorId)?.fullName ?? ""
-        }
-        onChange={(e) => onAuthorIdChange(e.target.value)}
-      >
-        {authors.map((a) => (
-          <MenuItem key={a.id} value={a.id}>
-            {a.fullName}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <SimpleSelect
+      value={authorId}
+      renderValue={(authorId) =>
+        authors.find((a) => a.id === authorId)?.fullName ?? ""
+      }
+      onChange={(e) => onAuthorIdChange(Number(e.target.value))}
+      label={isPlLanguage ? "Autor" : "Author"}
+    >
+      {authors.map((a) => (
+        <MenuItem key={a.id} value={a.id}>
+          {a.fullName}
+        </MenuItem>
+      ))}
+    </SimpleSelect>
   );
 }

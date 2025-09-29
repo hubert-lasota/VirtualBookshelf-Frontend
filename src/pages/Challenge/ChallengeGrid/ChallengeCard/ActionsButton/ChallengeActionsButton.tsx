@@ -69,10 +69,11 @@ export default function ChallengeActionsButton() {
         onClose={() => handleChangeOpenDialogs("challengeForm", false)}
         challenge={challenge}
       />
-      <ChallengeParticipantsDialog
-        open={openDialogs.participants}
-        onClose={() => handleChangeOpenDialogs("participants", false)}
-      />
+      {openDialogs.participants && (
+        <ChallengeParticipantsDialog
+          onClose={() => handleChangeOpenDialogs("participants", false)}
+        />
+      )}
     </>
   );
 }

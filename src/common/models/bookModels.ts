@@ -4,7 +4,7 @@ import { GenreResponse } from "./genreModels";
 import { ReviewResponse } from "./reviewModels";
 import { AuthorResponse } from "./authorModels";
 import { PublisherResponse } from "./publisherModels";
-import { RangeFilter } from "./commonModels";
+import { NumberRangeFilter } from "./commonModels";
 
 export function createBookSchema(isPlLanguage: boolean) {
   const authorsRequiredMessage = isPlLanguage
@@ -130,8 +130,9 @@ export type BookDetailsResponse = BookResponse & {
 };
 
 export type BookFilter = {
-  publicationYearRange: RangeFilter;
-  pageCountRange: RangeFilter;
+  query?: string;
+  publicationYearRange: NumberRangeFilter;
+  pageCountRange: NumberRangeFilter;
   authorId?: number;
   genreId?: number;
   formatId?: number;

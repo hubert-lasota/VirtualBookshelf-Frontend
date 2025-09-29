@@ -1,8 +1,11 @@
 import axios from "axios";
 import { UserPreferences, UserSignInResponse } from "../models/userModels";
+import qs from "qs";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api",
+  paramsSerializer: (params) =>
+    qs.stringify(params, { allowDots: true, arrayFormat: "repeat" }),
 });
 
 axiosInstance.interceptors.request.use((config) => {

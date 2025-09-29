@@ -1,5 +1,6 @@
 import { useGetBookFormats } from "../../../api/clients/bookFormatClient";
-import { FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { MenuItem } from "@mui/material";
+import SimpleSelect from "../../Input/SimpleSelect";
 
 type BookFormatSelectProps = {
   formatId?: number;
@@ -15,22 +16,19 @@ export default function BookFormatFilterSelect({
   });
 
   return (
-    <FormControl>
-      <Typography>Format</Typography>
-      <Select
-        variant="outlined"
-        value={formatId ?? ""}
-        renderValue={(formatId) =>
-          formats.find((f) => f.id === formatId)?.name ?? ""
-        }
-        onChange={(e) => onFormatIdChange(e.target.value)}
-      >
-        {formats.map((f) => (
-          <MenuItem key={f.id} value={f.id}>
-            {f.name}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <SimpleSelect
+      value={formatId}
+      renderValue={(formatId) =>
+        formats.find((f) => f.id === formatId)?.name ?? ""
+      }
+      onChange={(e) => onFormatIdChange(Number(e.target.value))}
+      label="Format"
+    >
+      {formats.map((f) => (
+        <MenuItem key={f.id} value={f.id}>
+          {f.name}
+        </MenuItem>
+      ))}
+    </SimpleSelect>
   );
 }

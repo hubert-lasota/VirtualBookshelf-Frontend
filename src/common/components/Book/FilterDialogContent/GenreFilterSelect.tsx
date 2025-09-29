@@ -1,6 +1,7 @@
 import { useUserContext } from "../../../auth/UserContext";
-import { FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { MenuItem } from "@mui/material";
 import { useGetGenres } from "../../../api/clients/genreClient";
+import SimpleSelect from "../../Input/SimpleSelect";
 
 type GenreFilterSelectProps = {
   genreId?: number;
@@ -20,22 +21,19 @@ export default function GenreFilterSelect({
   } = useUserContext();
 
   return (
-    <FormControl>
-      <Typography>{isPlLanguage ? "Gatunek" : "Genre"}</Typography>
-      <Select
-        variant="outlined"
-        value={genreId ?? ""}
-        renderValue={(genreId) =>
-          genres.find((g) => g.id === genreId)?.name ?? ""
-        }
-        onChange={(e) => onGenreIdChange(e.target.value)}
-      >
-        {genres.map((g) => (
-          <MenuItem key={g.id} value={g.id}>
-            {g.name}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <SimpleSelect
+      value={genreId}
+      renderValue={(genreId) =>
+        genres.find((g) => g.id === genreId)?.name ?? ""
+      }
+      onChange={(e) => onGenreIdChange(Number(e.target.value))}
+      label={isPlLanguage ? "Gatunek" : "Genre"}
+    >
+      {genres.map((g) => (
+        <MenuItem key={g.id} value={g.id}>
+          {g.name}
+        </MenuItem>
+      ))}
+    </SimpleSelect>
   );
 }

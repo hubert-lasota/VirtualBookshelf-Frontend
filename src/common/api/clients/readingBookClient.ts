@@ -8,6 +8,7 @@ import {
 import { useSnackbar } from "notistack";
 import { useUserContext } from "../../auth/UserContext";
 import { readingBookFormValuesToFormData } from "../../mappers/bookshelfBookMappers";
+import { BookFilter } from "../../models/bookModels";
 
 const BASE_ENDPOINT = "/v1/reading-books";
 
@@ -18,15 +19,13 @@ type ReadingBookListResponse = {
   readingBooks: ReadingBookResponse[];
 };
 
-type UseGetReadingBooksParams = {
-  query: string;
-};
-
-export const useGetBookshelfBooks = (params: UseGetReadingBooksParams) =>
+export const useGetBookshelfBooks = (filter: BookFilter) =>
   useQuery<ReadingBookListResponse>({
-    queryKey: [KEY_NAME, params],
+    queryKey: [KEY_NAME, filter],
     queryFn: () =>
-      axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),
+      axiosInstance
+        .get(BASE_ENDPOINT, { params: filter })
+        .then(unwrapResponseData),
   });
 
 export type CreateReadingBookParams = ReadingBookFormValues & {

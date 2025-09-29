@@ -85,7 +85,12 @@ export type ReadingDurationRange = {
   finishedAt: string;
 };
 
-export type RangeFilter = {
+export type NumberRangeFilter = {
   lte?: number;
   gte?: number;
+};
+
+export type DateRangeFilter = {
+  lte?: string;
+  gte?: string;
 };

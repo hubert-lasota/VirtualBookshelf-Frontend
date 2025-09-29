@@ -7,18 +7,17 @@ import { useGetChallengeParticipants } from "../../../../../../common/api/client
 import ParticipantListItem from "./ParticipantListItem";
 
 type Props = {
-  open: boolean;
   onClose: () => void;
 };
 
-export default function ChallengeParticipantsDialog({ open, onClose }: Props) {
+export default function ChallengeParticipantsDialog({ onClose }: Props) {
   const [page, setPage] = useState(0);
   const { id } = useChallengeContext();
   const { data: { participants = [], pageMeta } = {} } =
     useGetChallengeParticipants({ challengeId: id, page });
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+    <Dialog open onClose={onClose} maxWidth="sm" fullWidth>
       <ParticipantsHeader onClose={onClose} />
       <DialogContent dividers sx={{ padding: 0 }}>
         <List sx={{ padding: 0 }}>

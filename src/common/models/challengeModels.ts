@@ -2,6 +2,7 @@ import { GenreResponse } from "./genreModels";
 import { z } from "zod";
 import { ChallengeParticipantStatus } from "./challengePartictipantModels";
 import { UserResponse } from "./userModels";
+import { DateRangeFilter } from "./commonModels";
 
 export enum ChallengeType {
   BOOK_COUNT = "BOOK_COUNT",
@@ -119,4 +120,11 @@ export type ChallengeResponse = {
   totalParticipants: number;
   participation: Participation;
   user: UserResponse;
+};
+
+export type ChallengeFilter = {
+  participating?: boolean;
+  query?: string;
+  durationRange?: DateRangeFilter;
+  type?: ChallengeType;
 };

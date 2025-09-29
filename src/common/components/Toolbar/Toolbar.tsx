@@ -1,14 +1,15 @@
 import ToolbarContainer from "./ToolbarContainer";
-import ToolbarSearchTextField from "./ToolbarSearchTextField";
+import ToolbarSearchTextField, {
+  ToolbarSearchTextFieldProps,
+} from "./ToolbarSearchTextField";
 import ToolbarFilterButton, {
   ToolbarFilterButtonProps,
 } from "./ToolbarFilterButton";
-import { TextFieldProps } from "@mui/material";
 import React from "react";
 
 type ToolbarProps = {
   filterButtonProps: ToolbarFilterButtonProps;
-  searchTextFieldProps?: TextFieldProps;
+  searchTextFieldProps?: ToolbarSearchTextFieldProps;
   children?: React.ReactNode;
 };
 
