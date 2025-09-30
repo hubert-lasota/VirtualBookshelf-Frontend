@@ -9,6 +9,7 @@ import { Dialog, DialogContent, Stack } from "@mui/material";
 import { useGetReadingSessions } from "../../../../../../common/api/clients/readingSessionClient";
 import SessionCard from "./SessionCard/SessionCard";
 import { ManageSessionsContext } from "./ManageSessionsContext";
+import { DialogContext } from "../../../../../../common/context/DialogContext";
 
 type ManageSessionsDialogProps = {
   onClose: () => void;
@@ -30,49 +31,51 @@ export default function ManageSessionsDialog({
     useState<ReadingSessionResponse>();
 
   return (
-    <ManageSessionsContext.Provider
-      value={{
-        onEditSession: (session) => {
-          setIsFormOpen(true);
-          setSessionToUpdate(session);
-        },
-      }}
-    >
-      <Dialog
-        open
-        onClose={onClose}
-        slotProps={{
-          paper: {
-            sx: {
-              minWidth: "70%",
-            },
+    <DialogContext.Provider value={{ onClose }}>
+      <ManageSessionsContext.Provider
+        value={{
+          onEditSession: (session) => {
+            setIsFormOpen(true);
+            setSessionToUpdate(session);
           },
         }}
       >
-        <ManageSessionsTitle onClose={onClose} />
-        {isFormOpen ? (
-          <SessionForm
-            session={sessionToUpdate}
-            onCloseForm={() => setIsFormOpen(false)}
-          />
-        ) : (
-          <DialogContent>
-            <SessionToolbar
-              query={query}
-              onQueryChange={setQuery}
-              onAddSession={() => {
-                setIsFormOpen(true);
-                setSessionToUpdate(undefined);
-              }}
+        <Dialog
+          open
+          onClose={onClose}
+          slotProps={{
+            paper: {
+              sx: {
+                minWidth: "70%",
+              },
+            },
+          }}
+        >
+          <ManageSessionsTitle />
+          {isFormOpen ? (
+            <SessionForm
+              session={sessionToUpdate}
+              onCloseForm={() => setIsFormOpen(false)}
             />
-            <Stack spacing={2} sx={{ marginTop: "1rem" }}>
-              {sessions.map((session) => (
-                <SessionCard session={session} />
-              ))}
-            </Stack>
-          </DialogContent>
-        )}
-      </Dialog>
-    </ManageSessionsContext.Provider>
+          ) : (
+            <DialogContent>
+              <SessionToolbar
+                query={query}
+                onQueryChange={setQuery}
+                onAddSession={() => {
+                  setIsFormOpen(true);
+                  setSessionToUpdate(undefined);
+                }}
+              />
+              <Stack spacing={2} sx={{ marginTop: "1rem" }}>
+                {sessions.map((session) => (
+                  <SessionCard session={session} />
+                ))}
+              </Stack>
+            </DialogContent>
+          )}
+        </Dialog>
+      </ManageSessionsContext.Provider>
+    </DialogContext.Provider>
   );
 }

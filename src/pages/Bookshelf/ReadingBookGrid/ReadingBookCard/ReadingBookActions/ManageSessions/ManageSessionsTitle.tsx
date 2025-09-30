@@ -3,13 +3,7 @@ import { useReadingBookContext } from "../../ReadingBookContext";
 import { TITLE_ENTITY_SEPARATOR } from "../../../../../../common/constants";
 import CommonDialogTitle from "../../../../../../common/components/Dialog/CommonDialogTitle";
 
-type ManageSessionsTitleProps = {
-  onClose: () => void;
-};
-
-export default function ManageSessionsTitle({
-  onClose,
-}: ManageSessionsTitleProps) {
+export default function ManageSessionsTitle() {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
@@ -19,7 +13,6 @@ export default function ManageSessionsTitle({
   const titlePrefix = isPlLanguage ? "Sesje czytelnicze" : "Reading Sessions";
   return (
     <CommonDialogTitle
-      onClose={onClose}
       title={`${titlePrefix}${TITLE_ENTITY_SEPARATOR}${book.title}`}
       subtitle={
         isPlLanguage

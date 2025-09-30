@@ -8,6 +8,7 @@ import NoteToolbar from "./NoteToolbar";
 import NoteCard from "./NoteCard/NoteCard";
 import { useReadingBookContext } from "../../ReadingBookContext";
 import { useDebounceValue } from "../../../../../../common/hooks";
+import { DialogContext } from "../../../../../../common/context/DialogContext";
 
 type ManageNotesDialogProps = {
   onClose: () => void;
@@ -25,47 +26,49 @@ export default function ManageNotesDialog({ onClose }: ManageNotesDialogProps) {
   const [noteToUpdate, setNoteToUpdate] = useState<ReadingNoteResponse>();
 
   return (
-    <Dialog
-      open
-      onClose={onClose}
-      slotProps={{
-        paper: {
-          sx: {
-            minWidth: "70%",
+    <DialogContext.Provider value={{ onClose }}>
+      <Dialog
+        open
+        onClose={onClose}
+        slotProps={{
+          paper: {
+            sx: {
+              minWidth: "70%",
+            },
           },
-        },
-      }}
-    >
-      <ManageNotesTitle />
-      {isFormOpen ? (
-        <NoteForm
-          onCloseForm={() => setIsFormOpen(false)}
-          noteId={noteToUpdate?.id}
-          note={noteToUpdate}
-        />
-      ) : (
-        <DialogContent>
-          <NoteToolbar
-            query={query}
-            onQueryChange={(query) => setQuery(query)}
-            onAddNote={() => {
-              setNoteToUpdate(undefined);
-              setIsFormOpen(true);
-            }}
+        }}
+      >
+        <ManageNotesTitle />
+        {isFormOpen ? (
+          <NoteForm
+            onCloseForm={() => setIsFormOpen(false)}
+            noteId={noteToUpdate?.id}
+            note={noteToUpdate}
           />
-          <Stack spacing={2} sx={{ marginTop: "1rem" }}>
-            {notes.map((note) => (
-              <NoteCard
-                note={note}
-                onEdit={() => {
-                  setIsFormOpen(true);
-                  setNoteToUpdate(note);
-                }}
-              />
-            ))}
-          </Stack>
-        </DialogContent>
-      )}
-    </Dialog>
+        ) : (
+          <DialogContent>
+            <NoteToolbar
+              query={query}
+              onQueryChange={(query) => setQuery(query)}
+              onAddNote={() => {
+                setNoteToUpdate(undefined);
+                setIsFormOpen(true);
+              }}
+            />
+            <Stack spacing={2} sx={{ marginTop: "1rem" }}>
+              {notes.map((note) => (
+                <NoteCard
+                  note={note}
+                  onEdit={() => {
+                    setIsFormOpen(true);
+                    setNoteToUpdate(note);
+                  }}
+                />
+              ))}
+            </Stack>
+          </DialogContent>
+        )}
+      </Dialog>
+    </DialogContext.Provider>
   );
 }
