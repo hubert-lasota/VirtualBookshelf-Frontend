@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import BookReadingStatusSelect from "./BookReadingStatusSelect";
-import ControlledDatePicker from "../../../../common/components/FormInput/ControlledDatePicker";
+import ControlledDatePicker from "../../../../common/components/Form/Input/ControlledDatePicker";
 import RequiredLabel from "../../../../common/components/Label/RequiredLabel";
 import BookFormFields from "../../../../common/components/Book/Form/BookFormFields";
 import { useWatch } from "react-hook-form";
@@ -55,7 +55,7 @@ export default function ReadingBookFormFields({
   }
 
   return (
-    <Grid container spacing={2} sx={{ mt: 3 }}>
+    <Grid container spacing={2}>
       <BookFormFields
         namePrefix={`${namePrefix}book.`}
         disableFields={disableBookFields}

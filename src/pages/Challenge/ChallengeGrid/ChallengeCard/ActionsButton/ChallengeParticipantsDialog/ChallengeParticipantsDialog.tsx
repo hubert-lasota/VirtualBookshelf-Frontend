@@ -1,10 +1,11 @@
 import { Dialog, DialogContent, List } from "@mui/material";
-import { useChallengeContext } from "../../ChallengeContext";
+import { useChallengeContext } from "../../../../ChallengeContext";
 import ParticipantsHeader from "./ParticipantsHeader";
 import ParticipantsPagination from "./ParticipantsPagination";
 import { useState } from "react";
 import { useGetChallengeParticipants } from "../../../../../../common/api/clients/challengeParticipantClient";
 import ParticipantListItem from "./ParticipantListItem";
+import { DialogContext } from "../../../../../../common/context/DialogContext";
 
 type Props = {
   onClose: () => void;
@@ -17,20 +18,22 @@ export default function ChallengeParticipantsDialog({ onClose }: Props) {
     useGetChallengeParticipants({ challengeId: id, page });
 
   return (
-    <Dialog open onClose={onClose} maxWidth="sm" fullWidth>
-      <ParticipantsHeader onClose={onClose} />
-      <DialogContent dividers sx={{ padding: 0 }}>
-        <List sx={{ padding: 0 }}>
-          {participants.map((participant) => (
-            <ParticipantListItem participant={participant} />
-          ))}
-        </List>
-      </DialogContent>
-      <ParticipantsPagination
-        page={page}
-        onPageChange={setPage}
-        totalPages={pageMeta?.totalPages ?? 0}
-      />
-    </Dialog>
+    <DialogContext.Provider value={{ onClose }}>
+      <Dialog open onClose={onClose} maxWidth="sm" fullWidth>
+        <ParticipantsHeader />
+        <DialogContent dividers sx={{ padding: 0 }}>
+          <List sx={{ padding: 0 }}>
+            {participants.map((participant) => (
+              <ParticipantListItem participant={participant} />
+            ))}
+          </List>
+        </DialogContent>
+        <ParticipantsPagination
+          page={page}
+          onPageChange={setPage}
+          totalPages={pageMeta?.totalPages ?? 0}
+        />
+      </Dialog>
+    </DialogContext.Provider>
   );
 }

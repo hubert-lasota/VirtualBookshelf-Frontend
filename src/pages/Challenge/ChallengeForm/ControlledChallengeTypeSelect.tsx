@@ -1,6 +1,6 @@
 import { useUserContext } from "../../../common/auth/UserContext";
 import { MenuItem } from "@mui/material";
-import ControlledSelect from "../../../common/components/FormInput/ControlledSelect";
+import ControlledSelect from "../../../common/components/Form/Input/ControlledSelect";
 import RequiredLabel from "../../../common/components/Label/RequiredLabel";
 import { getChallengeTypeMenuItems } from "../shared";
 

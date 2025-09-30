@@ -5,7 +5,7 @@ import { useUserContext } from "../../../../../common/auth/UserContext";
 import { Pencil, UserRoundX, Users } from "lucide-react";
 import { useState } from "react";
 import QuitChallengeDialog from "./QuitChallengeDialog";
-import { useChallengeContext } from "../ChallengeContext";
+import { useChallengeContext } from "../../../ChallengeContext";
 import ChallengeFormDialog from "../../../ChallengeForm/ChallengeFormDialog";
 import { getDestructiveMenuItemProps } from "../../../../../common/utils";
 import ChallengeParticipantsDialog from "./ChallengeParticipantsDialog/ChallengeParticipantsDialog";

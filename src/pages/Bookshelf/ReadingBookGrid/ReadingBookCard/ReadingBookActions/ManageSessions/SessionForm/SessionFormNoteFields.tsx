@@ -1,7 +1,7 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../../../../../common/auth/UserContext";
 import { useFieldArray } from "react-hook-form";
-import ControlledTextField from "../../../../../../../common/components/FormInput/ControlledTextField";
+import ControlledTextField from "../../../../../../../common/components/Form/Input/ControlledTextField";
 import RequiredLabel from "../../../../../../../common/components/Label/RequiredLabel";
 import { TITLE_ENTITY_SEPARATOR } from "../../../../../../../common/constants";
 

@@ -1,12 +1,8 @@
-import { useChallengeContext } from "../../ChallengeContext";
+import { useChallengeContext } from "../../../../ChallengeContext";
 import { useUserContext } from "../../../../../../common/auth/UserContext";
 import CommonDialogTitle from "../../../../../../common/components/Dialog/CommonDialogTitle";
 
-type Props = {
-  onClose: () => void;
-};
-
-export default function ParticipantsHeader({ onClose }: Props) {
+export default function ParticipantsHeader() {
   const { title, totalParticipants } = useChallengeContext();
   const {
     preferences: { isPlLanguage },
@@ -14,7 +10,6 @@ export default function ParticipantsHeader({ onClose }: Props) {
 
   return (
     <CommonDialogTitle
-      onClose={onClose}
       title={isPlLanguage ? "Uczestnicy wyzwania" : "Challenge participants"}
       subtitle={`${title} • ${totalParticipants}${isPlLanguage ? "uczestników" : "participants"}`}
       showDivider={false}

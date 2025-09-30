@@ -2,7 +2,7 @@ import { Button, ButtonProps } from "@mui/material";
 import { useUserContext } from "../../auth/UserContext";
 import { useFormContext } from "react-hook-form";
 
-type SubmitButtonProps = { isUpdating?: boolean } & ButtonProps;
+export type SubmitButtonProps = { isUpdating?: boolean } & ButtonProps;
 
 export default function SubmitButton({
   isUpdating = false,

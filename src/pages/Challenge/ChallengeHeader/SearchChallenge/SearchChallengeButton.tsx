@@ -1,4 +1,4 @@
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../../../common/auth/UserContext";
 import { Button } from "@mui/material";
 import SearchChallengeDialog from "./SearchChallengeDialog";
 import { useState } from "react";
@@ -20,7 +20,7 @@ export default function SearchChallengeButton() {
       >
         {isPlLanguage ? "Dołącz do wyzwania" : "Join challenge"}
       </Button>
-      <SearchChallengeDialog open={open} onClose={() => setOpen(false)} />
+      {open && <SearchChallengeDialog onClose={() => setOpen(false)} />}
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { useController } from "react-hook-form";
-import { useUserContext } from "../../auth/UserContext";
+import { useUserContext } from "../../../auth/UserContext";
 import {
   IconButton,
   Stack,
@@ -7,7 +7,7 @@ import {
   TextFieldProps,
   Tooltip,
 } from "@mui/material";
-import OptionalLabel from "../Label/OptionalLabel";
+import OptionalLabel from "../../Label/OptionalLabel";
 import ImageSelector from "./ImageSelector";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";

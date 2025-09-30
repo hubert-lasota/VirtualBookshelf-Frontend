@@ -127,4 +127,6 @@ export type ChallengeFilter = {
   query?: string;
   durationRange?: DateRangeFilter;
   type?: ChallengeType;
+  page?: number;
+  size?: number;
 };

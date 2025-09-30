@@ -1,10 +1,10 @@
 import OptionalLabel from "../../Label/OptionalLabel";
 import RequiredLabel from "../../Label/RequiredLabel";
-import ControlledNumberField from "../../FormInput/ControlledNumberField";
-import LanguageAutocomplete from "../../FormInput/LanguageAutocomplete";
+import ControlledNumberField from "../../Form/Input/ControlledNumberField";
+import LanguageAutocomplete from "../../Form/Input/LanguageAutocomplete";
 import { Grid } from "@mui/material";
-import ControlledTextField from "../../FormInput/ControlledTextField";
-import ImageTextFieldWithSelector from "../../FormInput/ImageTextFieldWithSelector";
+import ControlledTextField from "../../Form/Input/ControlledTextField";
+import ImageTextFieldWithSelector from "../../Form/Input/ImageTextFieldWithSelector";
 import { useUserContext } from "../../../auth/UserContext";
 import AuthorAutocomplete from "./AuthorAutocomplete";
 import GenreAutocomplete from "./GenreAutocomplete";

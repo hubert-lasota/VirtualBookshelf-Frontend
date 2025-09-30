@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import ControlledTextField from "../../../common/components/FormInput/ControlledTextField";
+import ControlledTextField from "../../../common/components/Form/Input/ControlledTextField";
 import RequiredLabel from "../../../common/components/Label/RequiredLabel";
 import BookshelfTypeSelect from "./BookshelfTypeSelect";
 import OptionalLabel from "../../../common/components/Label/OptionalLabel";

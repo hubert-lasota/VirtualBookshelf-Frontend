@@ -1,6 +1,6 @@
 import { ChallengeResponse } from "../../../../common/models/challengeModels";
 import { Paper, Stack, Typography } from "@mui/material";
-import { ChallengeContext } from "./ChallengeContext";
+import { ChallengeContext } from "../../ChallengeContext";
 import ChallengeCardHeader from "./ChallengeCardHeader";
 import ChallengeCardFooter from "./ChallengeCardFooter";
 import StatusBadge from "./StatusBadge";

@@ -36,10 +36,10 @@ export default function ManageNotesDialog({ onClose }: ManageNotesDialogProps) {
         },
       }}
     >
-      <ManageNotesTitle onClose={onClose} />
+      <ManageNotesTitle />
       {isFormOpen ? (
         <NoteForm
-          onClose={() => setIsFormOpen(false)}
+          onCloseForm={() => setIsFormOpen(false)}
           noteId={noteToUpdate?.id}
           note={noteToUpdate}
         />

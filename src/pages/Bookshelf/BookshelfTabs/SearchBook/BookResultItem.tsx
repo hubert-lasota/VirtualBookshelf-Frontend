@@ -1,10 +1,13 @@
-import { BookResponse } from "../../../../common/models/bookModels";
 import { Stack, Typography } from "@mui/material";
 import AddBookButton from "./AddBookButton";
+import BookCover from "../../../../common/components/Book/BookCover";
+import AuthorListTypography from "../../../../common/components/Book/AuthorListTypography";
+import GenreStack from "../../../../common/components/Book/GenreStack";
+import { useBookContext } from "./BookContext";
 
-type BookResultItemProps = { book: BookResponse };
+export default function BookResultItem() {
+  const { title, coverUrl, authors, genres } = useBookContext();
 
-export default function BookResultItem({ book }: BookResultItemProps) {
   return (
     <Stack
       direction="row"
@@ -17,18 +20,19 @@ export default function BookResultItem({ book }: BookResultItemProps) {
         backgroundColor: theme.palette.background.default,
       })}
     >
-      <Stack direction="row" spacing={2}>
-        <img alt={book.title} src={book.coverUrl} width={70} height={90} />
+      <Stack direction="row" spacing={2.5}>
+        <BookCover coverUrl={coverUrl} sx={{ width: 70, height: "100%" }} />
         <div>
           <Typography variant="h6" color="textPrimary">
-            {book.title}
+            {title}
           </Typography>
-          <Typography variant="body1" color="textSecondary">
-            {book.authors.map((a) => a.fullName).join(", ")}
-          </Typography>
+          <AuthorListTypography authors={authors} />
+          <GenreStack genres={genres} />
         </div>
       </Stack>
-      <AddBookButton />
+      <Stack alignItems="center" justifyContent="center">
+        <AddBookButton />
+      </Stack>
     </Stack>
   );
 }

@@ -2,8 +2,8 @@ import ISO6391 from "iso-639-1";
 import { useController } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
 import { useMemo } from "react";
-import { useUserContext } from "../../auth/UserContext";
-import RequiredLabel from "../Label/RequiredLabel";
+import { useUserContext } from "../../../auth/UserContext";
+import RequiredLabel from "../../Label/RequiredLabel";
 
 type LanguageAutocompleteProps = {
   name: string;

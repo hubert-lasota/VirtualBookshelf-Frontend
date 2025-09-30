@@ -3,11 +3,7 @@ import { useReadingBookContext } from "../../ReadingBookContext";
 import { TITLE_ENTITY_SEPARATOR } from "../../../../../../common/constants";
 import CommonDialogTitle from "../../../../../../common/components/Dialog/CommonDialogTitle";
 
-type ManageNotesTitleProps = {
-  onClose: () => void;
-};
-
-export default function ManageNotesTitle({ onClose }: ManageNotesTitleProps) {
+export default function ManageNotesTitle() {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
@@ -16,7 +12,6 @@ export default function ManageNotesTitle({ onClose }: ManageNotesTitleProps) {
   const titlePrefix = isPlLanguage ? "Notatki" : "Notes";
   return (
     <CommonDialogTitle
-      onClose={onClose}
       title={`${titlePrefix}${TITLE_ENTITY_SEPARATOR}${book.title}`}
       subtitle={
         isPlLanguage

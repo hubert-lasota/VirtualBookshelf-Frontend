@@ -6,5 +6,9 @@ export default function AddBookButton() {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  return <Button size="small">{isPlLanguage ? "Dodaj" : "Add"}</Button>;
+  return (
+    <Button size="small" variant="contained">
+      {isPlLanguage ? "Dodaj" : "Add"}
+    </Button>
+  );
 }

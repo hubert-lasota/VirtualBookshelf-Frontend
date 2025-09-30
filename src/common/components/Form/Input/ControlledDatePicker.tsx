@@ -1,23 +1,27 @@
-import {
-  DateTimePicker,
-  DateTimePickerProps,
-  LocalizationProvider,
-} from "@mui/x-date-pickers";
-import { useUserContext } from "../../auth/UserContext";
-import dayjs from "dayjs";
 import { useController } from "react-hook-form";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import {
+  DatePicker,
+  DatePickerProps,
+  LocalizationProvider,
+} from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import "dayjs/locale/pl";
+import { useUserContext } from "../../../auth/UserContext";
+import "dayjs/locale/en";
 
-type ControlledDateTimePickerProps = {
+type ControlledDatePickerProps = {
   name: string;
-} & DateTimePickerProps;
+  shouldUnregister?: boolean;
+} & DatePickerProps;
 
-export default function ControlledDateTimePicker({
+export default function ControlledDatePicker({
   name,
+  shouldUnregister,
   ...props
-}: ControlledDateTimePickerProps) {
+}: ControlledDatePickerProps) {
   const {
-    preferences: { languageCode, isPlLanguage },
+    preferences: { languageCode },
   } = useUserContext();
 
   dayjs.locale(languageCode);
@@ -25,15 +29,14 @@ export default function ControlledDateTimePicker({
   const {
     field: { value, onChange, onBlur, ref, ...restFieldProps },
     fieldState: { invalid, error },
-  } = useController({ name });
+  } = useController({ name, shouldUnregister });
 
   return (
     <LocalizationProvider
       dateAdapter={AdapterDayjs}
       adapterLocale={languageCode}
-      localeText={{ cancelButtonLabel: isPlLanguage ? "Anuluj" : "Cancel" }}
     >
-      <DateTimePicker
+      <DatePicker
         value={value ? dayjs(value) : null}
         onChange={(value) => onChange(value?.toISOString())}
         inputRef={ref}

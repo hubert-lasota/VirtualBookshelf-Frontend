@@ -1,7 +1,7 @@
 import { useUserContext } from "../../../common/auth/UserContext";
 import { Stack } from "@mui/material";
 import AddChallengeButton from "./AddChallengeButton";
-import SearchChallengeButton from "./SearchChallengeButton";
+import SearchChallengeButton from "./SearchChallenge/SearchChallengeButton";
 import LoggedInPageTitle from "../../LoggedInLayout/LoggedInPageTitle";
 import LoggedInPageSubtitle from "../../LoggedInLayout/LoggedInPageSubtitle";
 

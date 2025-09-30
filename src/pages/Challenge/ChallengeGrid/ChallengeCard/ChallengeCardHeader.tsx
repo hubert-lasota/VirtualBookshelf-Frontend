@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import ChallengeActionsButton from "./ActionsButton/ChallengeActionsButton";
-import { useChallengeContext } from "./ChallengeContext";
+import { useChallengeContext } from "../../ChallengeContext";
 
 export default function ChallengeCardHeader() {
   const { title } = useChallengeContext();

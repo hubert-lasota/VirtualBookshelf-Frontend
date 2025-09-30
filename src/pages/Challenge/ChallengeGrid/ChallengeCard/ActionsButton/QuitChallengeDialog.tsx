@@ -1,6 +1,6 @@
 import DeleteEntityDialog from "../../../../../common/components/Dialog/DeleteEntityDialog";
 import { useUserContext } from "../../../../../common/auth/UserContext";
-import { useChallengeContext } from "../ChallengeContext";
+import { useChallengeContext } from "../../../ChallengeContext";
 import { useQuitChallenge } from "../../../../../common/api/clients/challengeClient";
 
 type QuitChallengeDialogProps = {

@@ -1,4 +1,4 @@
-import ControlledSelect from "../../../../common/components/FormInput/ControlledSelect";
+import ControlledSelect from "../../../../common/components/Form/Input/ControlledSelect";
 import RequiredLabel from "../../../../common/components/Label/RequiredLabel";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import { ReadingStatus } from "../../../../common/models/readingBookModels";

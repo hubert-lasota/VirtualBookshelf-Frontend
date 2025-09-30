@@ -1,8 +1,8 @@
 import { DialogContent, Grid, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../../../../common/auth/UserContext";
 import RequiredLabel from "../../../../../../common/components/Label/RequiredLabel";
-import ControlledNumberField from "../../../../../../common/components/FormInput/ControlledNumberField";
-import ControlledTextField from "../../../../../../common/components/FormInput/ControlledTextField";
+import ControlledNumberField from "../../../../../../common/components/Form/Input/ControlledNumberField";
+import ControlledTextField from "../../../../../../common/components/Form/Input/ControlledTextField";
 import { FormProvider, useForm } from "react-hook-form";
 import {
   ReadingNoteFormValues,
@@ -16,15 +16,16 @@ import {
 import { useReadingBookContext } from "../../ReadingBookContext";
 import { TITLE_ENTITY_SEPARATOR } from "../../../../../../common/constants";
 
-import CommonDialogActions from "../../../../../../common/components/Dialog/CommonDialogActions";
+import FormDialogActions from "../../../../../../common/components/Form/FormDialogActions";
+import { DialogContext } from "../../../../../../common/context/DialogContext";
 
 type NoteFormProps = {
   note?: ReadingNoteFormValues;
   noteId?: ReadingNoteResponse["id"];
-  onClose: () => void;
+  onCloseForm: () => void;
 };
 
-export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
+export default function NoteForm({ note, noteId, onCloseForm }: NoteFormProps) {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
@@ -49,7 +50,7 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
       createNote({ note, readingBookId });
     }
 
-    onClose();
+    onCloseForm();
   };
 
   const fields = [
@@ -93,35 +94,37 @@ export default function NoteForm({ note, noteId, onClose }: NoteFormProps) {
   ];
 
   return (
-    <FormProvider {...form}>
-      <Stack
-        spacing={2}
-        component="form"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <DialogContent>
-          <Typography variant="h6">
-            {isUpdating
-              ? isPlLanguage
-                ? `Edytujesz notatkę${TITLE_ENTITY_SEPARATOR}${note?.title}`
-                : `You are editing${TITLE_ENTITY_SEPARATOR}${note?.title}`
-              : isPlLanguage
-                ? "Dodaj nową notatkę"
-                : "Add new note"}
-          </Typography>
-          <Grid container spacing={2}>
-            {fields.map(({ component, props, size }) => {
-              const Field = component || ControlledTextField;
-              return (
-                <Grid size={size ?? 6}>
-                  <Field {...props} />{" "}
-                </Grid>
-              );
-            })}
-          </Grid>
-        </DialogContent>
-        <CommonDialogActions onClickCancel={onClose} />
-      </Stack>
-    </FormProvider>
+    <DialogContext.Provider value={{ onClose: onCloseForm }}>
+      <FormProvider {...form}>
+        <Stack
+          spacing={2}
+          component="form"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <DialogContent>
+            <Typography variant="h6">
+              {isUpdating
+                ? isPlLanguage
+                  ? `Edytujesz notatkę${TITLE_ENTITY_SEPARATOR}${note?.title}`
+                  : `You are editing${TITLE_ENTITY_SEPARATOR}${note?.title}`
+                : isPlLanguage
+                  ? "Dodaj nową notatkę"
+                  : "Add new note"}
+            </Typography>
+            <Grid container spacing={2}>
+              {fields.map(({ component, props, size }) => {
+                const Field = component || ControlledTextField;
+                return (
+                  <Grid size={size ?? 6}>
+                    <Field {...props} />{" "}
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </DialogContent>
+          <FormDialogActions />
+        </Stack>
+      </FormProvider>
+    </DialogContext.Provider>
   );
 }

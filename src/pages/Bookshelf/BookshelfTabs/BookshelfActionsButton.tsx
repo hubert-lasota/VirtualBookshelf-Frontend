@@ -2,7 +2,7 @@ import { useUserContext } from "../../../common/auth/UserContext";
 import { BookPlusIcon, Pencil } from "lucide-react";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import React, { useState } from "react";
+import { useState } from "react";
 import SearchBookDialog from "./SearchBook/SearchBookDialog";
 import DeleteBookshelfDialog from "./DeleteBookshelfDialog";
 import ReadingBookFormDialog from "./ReadingBookForm/ReadingBookFormDialog";
@@ -14,10 +14,16 @@ import { BookshelfFormMode, isBookshelfResponse } from "../shared";
 import { getDestructiveMenuItemProps } from "../../../common/utils";
 
 export default function BookshelfActionsButton() {
-  const [openCreateBookDialog, setOpenCreateBookDialog] = useState(false);
-  const [openSearchBookDialog, setOpenSearchBookDialog] = useState(false);
-  const [openDeleteBookshelfDialog, setOpenDeleteBookshelfDialog] =
-    useState(false);
+  const [openDialogs, setOpenDialogs] = useState({
+    createBook: false,
+    searchBook: false,
+    deleteBookshelf: false,
+  });
+
+  const handleChangeOpenDialog = (
+    key: keyof typeof openDialogs,
+    open: boolean,
+  ) => setOpenDialogs((prev) => ({ ...prev, [key]: open }));
 
   const {
     preferences: { isPlLanguage },
@@ -25,30 +31,21 @@ export default function BookshelfActionsButton() {
 
   const { currentBookshelf, onFormModeChange } = useBookshelfPageContext();
 
-  const clickWithStopPropagation = (callback: () => void) => {
-    return (e: React.MouseEvent<HTMLElement>) => {
-      e.stopPropagation();
-      callback();
-    };
-  };
-
   const items: MoreActionsButtonItem[] = [
     {
       text: isPlLanguage ? "Edytuj regał" : "Edit bookshelf",
       icon: <Pencil />,
-      onClick: clickWithStopPropagation(() =>
-        onFormModeChange(BookshelfFormMode.UPDATE),
-      ),
+      onClick: () => onFormModeChange(BookshelfFormMode.UPDATE),
     },
     {
       text: isPlLanguage ? "Dodaj książkę" : "Add book",
       icon: <BookPlusIcon />,
-      onClick: clickWithStopPropagation(() => setOpenCreateBookDialog(true)),
+      onClick: () => handleChangeOpenDialog("createBook", true),
     },
     {
       text: isPlLanguage ? "Znajdź książkę" : "Search book",
       icon: <SearchIcon />,
-      onClick: clickWithStopPropagation(() => setOpenSearchBookDialog(true)),
+      onClick: () => handleChangeOpenDialog("searchBook", true),
       props: {
         divider: true,
       },
@@ -56,9 +53,7 @@ export default function BookshelfActionsButton() {
     {
       text: isPlLanguage ? "Usuń regał" : "Delete bookshelf",
       icon: <DeleteOutlineIcon />,
-      onClick: clickWithStopPropagation(() =>
-        setOpenDeleteBookshelfDialog(true),
-      ),
+      onClick: () => handleChangeOpenDialog("deleteBookshelf", true),
       ...getDestructiveMenuItemProps(),
     },
   ];
@@ -66,20 +61,21 @@ export default function BookshelfActionsButton() {
   return (
     <>
       <MoreActionsButton items={items} iconButtonProps={{ size: "small" }} />
-      <SearchBookDialog
-        open={openSearchBookDialog}
-        onClose={() => setOpenSearchBookDialog(false)}
-      />
+      {openDialogs.searchBook && (
+        <SearchBookDialog
+          onClose={() => handleChangeOpenDialog("searchBook", false)}
+        />
+      )}
       {isBookshelfResponse(currentBookshelf) && (
         <>
           <DeleteBookshelfDialog
-            open={openDeleteBookshelfDialog}
-            onClose={() => setOpenDeleteBookshelfDialog(false)}
+            open={openDialogs.deleteBookshelf}
+            onClose={() => handleChangeOpenDialog("deleteBookshelf", false)}
             bookshelf={currentBookshelf}
           />
           <ReadingBookFormDialog
-            open={openCreateBookDialog}
-            onClose={() => setOpenCreateBookDialog(false)}
+            open={openDialogs.createBook}
+            onClose={() => handleChangeOpenDialog("createBook", false)}
             bookshelf={currentBookshelf}
           />
         </>

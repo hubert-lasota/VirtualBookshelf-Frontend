@@ -1,8 +1,8 @@
 import { useUserContext } from "../../../../../../../common/auth/UserContext";
-import ControlledNumberField from "../../../../../../../common/components/FormInput/ControlledNumberField";
+import ControlledNumberField from "../../../../../../../common/components/Form/Input/ControlledNumberField";
 import RequiredLabel from "../../../../../../../common/components/Label/RequiredLabel";
-import ControlledDateTimePicker from "../../../../../../../common/components/FormInput/ControlledDateTimePicker";
-import ControlledTextField from "../../../../../../../common/components/FormInput/ControlledTextField";
+import ControlledDateTimePicker from "../../../../../../../common/components/Form/Input/ControlledDateTimePicker";
+import ControlledTextField from "../../../../../../../common/components/Form/Input/ControlledTextField";
 import { DialogContent, Grid, Stack, Typography } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import {
@@ -18,7 +18,8 @@ import {
 } from "../../../../../../../common/api/clients/readingSessionClient";
 import { useReadingBookContext } from "../../../ReadingBookContext";
 import SessionFormNoteFields from "./SessionFormNoteFields";
-import CommonDialogActions from "../../../../../../../common/components/Dialog/CommonDialogActions";
+import FormDialogActions from "../../../../../../../common/components/Form/FormDialogActions";
+import { DialogContext } from "../../../../../../../common/context/DialogContext";
 
 type SessionFormProps = {
   session?: ReadingSessionResponse;
@@ -114,40 +115,43 @@ export default function SessionForm({
       },
     },
   ];
+
   return (
-    <FormProvider {...form}>
-      <Stack
-        component="form"
-        onSubmit={form.handleSubmit(onSubmit)}
-        spacing={3}
-      >
-        <DialogContent
-          sx={(theme) => ({
-            display: "flex",
-            flexDirection: "column",
-            gap: theme.spacing(2),
-          })}
+    <DialogContext.Provider value={{ onClose: onCloseForm }}>
+      <FormProvider {...form}>
+        <Stack
+          component="form"
+          onSubmit={form.handleSubmit(onSubmit)}
+          spacing={3}
         >
-          <Typography variant="h6">
-            {isUpdating
-              ? isPlLanguage
-                ? "Edytujesz sesję"
-                : "Edit session"
-              : isPlLanguage
-                ? "Dodaj nową sesję"
-                : "Add new session"}
-          </Typography>
-          <Grid container spacing={3}>
-            {fields.map(({ size = 6, props, component: FieldComponent }) => (
-              <Grid size={size}>
-                <FieldComponent {...props} />
-              </Grid>
-            ))}
-          </Grid>
-          <SessionFormNoteFields />
-        </DialogContent>
-        <CommonDialogActions onClickCancel={onCloseForm} />
-      </Stack>
-    </FormProvider>
+          <DialogContent
+            sx={(theme) => ({
+              display: "flex",
+              flexDirection: "column",
+              gap: theme.spacing(2),
+            })}
+          >
+            <Typography variant="h6">
+              {isUpdating
+                ? isPlLanguage
+                  ? "Edytujesz sesję"
+                  : "Edit session"
+                : isPlLanguage
+                  ? "Dodaj nową sesję"
+                  : "Add new session"}
+            </Typography>
+            <Grid container spacing={3}>
+              {fields.map(({ size = 6, props, component: FieldComponent }) => (
+                <Grid size={size}>
+                  <FieldComponent {...props} />
+                </Grid>
+              ))}
+            </Grid>
+            <SessionFormNoteFields />
+          </DialogContent>
+          <FormDialogActions />
+        </Stack>
+      </FormProvider>
+    </DialogContext.Provider>
   );
 }

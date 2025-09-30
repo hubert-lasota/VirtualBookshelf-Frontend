@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { ChallengeResponse } from "../../../../common/models/challengeModels";
+import { ChallengeResponse } from "../../common/models/challengeModels";
 
 export const ChallengeContext = createContext<ChallengeResponse | null>(null);
 

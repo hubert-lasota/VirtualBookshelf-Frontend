@@ -28,7 +28,6 @@ export default function ParticipantsPagination({
         count={totalPages}
         page={page + 1}
         onChange={(_e, page) => onPageChange(page - 1)}
-        color="primary"
         size="small"
       />
     </Stack>

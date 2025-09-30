@@ -10,7 +10,7 @@ import { useSnackbar } from "notistack";
 import { useUserContext } from "../../auth/UserContext";
 import { PageMeta } from "../apiModels";
 
-const QUERY_KEY = ["challenges"];
+export const CHALLENGE_QUERY_KEY = ["challenges"];
 
 const BASE_ENDPOINT = "/v1/challenges";
 
@@ -21,10 +21,12 @@ type ChallengePageResponse = {
 
 export const useGetChallenges = (filter: ChallengeFilter = {}) =>
   useQuery<ChallengePageResponse>({
-    queryKey: [...QUERY_KEY, filter],
+    queryKey: [...CHALLENGE_QUERY_KEY, filter],
     queryFn: () =>
       axiosInstance
-        .get(BASE_ENDPOINT, { params: filter })
+        .get(BASE_ENDPOINT, {
+          params: filter, // TODO add -> sort: apiSortToString({ field: "joinedAt", direction: "desc" }) -> handle that in backend, custom sort in specification,
+        })
         .then(unwrapResponseData),
   });
 
@@ -38,7 +40,10 @@ export const useCreateChallenge = () => {
     mutationFn: (challenge: ChallengeFormValues) =>
       axiosInstance.post(BASE_ENDPOINT, challenge),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY, exact: false });
+      queryClient.invalidateQueries({
+        queryKey: CHALLENGE_QUERY_KEY,
+        exact: false,
+      });
       enqueueSnackbar({
         message: isPlLanguage
           ? "Poprawnie utworzono wyzwanie"
@@ -72,7 +77,10 @@ export const useUpdateChallenge = () => {
     mutationFn: ({ challengeId, challenge }: UseUpdateChallengeParams) =>
       axiosInstance.patch(BASE_ENDPOINT + `/${challengeId}`, challenge),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY, exact: false });
+      queryClient.invalidateQueries({
+        queryKey: CHALLENGE_QUERY_KEY,
+        exact: false,
+      });
       enqueueSnackbar({
         message: isPlLanguage
           ? "Poprawnie zaktualizowano wyzwanie"
@@ -92,6 +100,28 @@ export const useUpdateChallenge = () => {
   });
 };
 
+export const useJoinChallenge = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const {
+    preferences: { isPlLanguage },
+  } = useUserContext();
+
+  return useMutation({
+    mutationFn: (challengeId: number) =>
+      axiosInstance.post(`${BASE_ENDPOINT}/${challengeId}/join`),
+    onSuccess: () => {},
+    onError: (error, challenge) => {
+      enqueueSnackbar({
+        message: isPlLanguage
+          ? "Wystąpił błąd podczas dołączania do wyzwania"
+          : "Error occurred while joining challenge",
+        variant: "error",
+      });
+      console.error("Error in joining challenge", error, challenge);
+    },
+  });
+};
+
 export const useQuitChallenge = () => {
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
@@ -103,7 +133,10 @@ export const useQuitChallenge = () => {
     mutationFn: (challengeId: number) =>
       axiosInstance.delete(`${BASE_ENDPOINT}/${challengeId}/quit`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY, exact: false });
+      queryClient.invalidateQueries({
+        queryKey: CHALLENGE_QUERY_KEY,
+        exact: false,
+      });
       enqueueSnackbar({
         message: isPlLanguage
           ? "Poprawnie zrezygnowano z wyzwania"
@@ -115,10 +148,10 @@ export const useQuitChallenge = () => {
       enqueueSnackbar({
         message: isPlLanguage
           ? "Wystąpił błąd podczas rezygnacji wyzwania"
-          : "Error occurred while quting challenge",
+          : "Error occurred while quiting challenge",
         variant: "error",
       });
-      console.error("Error in quting challenge", error, challenge);
+      console.error("Error in quiting challenge", error, challenge);
     },
   });
 };

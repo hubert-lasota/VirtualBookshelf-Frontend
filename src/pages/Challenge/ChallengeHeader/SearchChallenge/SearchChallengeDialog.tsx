@@ -1,28 +1,28 @@
-import { Dialog, DialogContent, Pagination } from "@mui/material";
 import { useUserContext } from "../../../../common/auth/UserContext";
-import { useState } from "react";
-import { useDebounceValue } from "../../../../common/hooks";
-import { useGetBooks } from "../../../../common/api/clients/bookClient";
-import SearchBookResult from "./SearchBookResult";
+import { Dialog, DialogContent, Pagination } from "@mui/material";
 import CommonDialogTitle from "../../../../common/components/Dialog/CommonDialogTitle";
-import CommonDialogActions from "../../../../common/components/Dialog/CommonDialogActions";
 import ToolbarSearchTextField from "../../../../common/components/Toolbar/ToolbarSearchTextField";
+import { useGetChallenges } from "../../../../common/api/clients/challengeClient";
+import { useState } from "react";
+import ChallengeResult from "./ChallengeResult";
 import { DialogContext } from "../../../../common/context/DialogContext";
+import CommonDialogActions from "../../../../common/components/Dialog/CommonDialogActions";
 
-type SearchBookDialogProps = {
+type SearchChallengeDialogProps = {
   onClose: () => void;
 };
 
-export default function SearchBookDialog({ onClose }: SearchBookDialogProps) {
+export default function SearchChallengeDialog({
+  onClose,
+}: SearchChallengeDialogProps) {
   const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounceValue(query);
   const [page, setPage] = useState(1);
-
-  const { data: { books = [], pageMeta: { totalPages = 0 } = {} } = {} } =
-    useGetBooks({
-      query: debouncedQuery,
-      size: 10,
+  const { data: { challenges = [], pageMeta: { totalPages = 0 } = {} } = {} } =
+    useGetChallenges({
+      participating: false,
+      query: query || undefined,
       page: page - 1,
+      size: 10,
     });
 
   const {
@@ -41,23 +41,22 @@ export default function SearchBookDialog({ onClose }: SearchBookDialogProps) {
         }}
       >
         <CommonDialogTitle
-          title={isPlLanguage ? "Szukaj książki" : "Search book"}
-          showDivider={false}
+          title={isPlLanguage ? "Szukaj wyzwania" : "Search challenge"}
         />
-        <DialogContent sx={{ width: "100%", overflowY: "auto" }} dividers>
+        <DialogContent>
           <ToolbarSearchTextField
             fullWidth
-            onDebounceValueChange={setQuery}
             sx={(theme) => ({ marginBottom: theme.spacing(2) })}
+            onDebounceValueChange={setQuery}
           />
-          <SearchBookResult books={books} />
+          <ChallengeResult challenges={challenges} />
         </DialogContent>
         {totalPages > 1 && (
           <CommonDialogActions sx={{ justifyContent: "center" }}>
             <Pagination
+              count={totalPages}
               page={page}
               onChange={(_e, page) => setPage(page)}
-              count={totalPages}
             />
           </CommonDialogActions>
         )}

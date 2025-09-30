@@ -1,6 +1,6 @@
 import { useUserContext } from "../../../../common/auth/UserContext";
 import { LinearProgress, Stack, Typography } from "@mui/material";
-import { useChallengeContext } from "./ChallengeContext";
+import { useChallengeContext } from "../../ChallengeContext";
 import { ChallengeType } from "../../../../common/models/challengeModels";
 
 const getChallengeTypeLabel = (type: ChallengeType, isPlLanguage: boolean) => {

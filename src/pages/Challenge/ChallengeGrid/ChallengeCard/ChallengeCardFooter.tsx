@@ -1,30 +1,13 @@
-import { useChallengeContext } from "./ChallengeContext";
+import { useChallengeContext } from "../../ChallengeContext";
 import { Stack, Typography } from "@mui/material";
-import { Calendar as CalendarIcon, Users as UsersIcon } from "lucide-react";
+import { getChallengeInfoItems } from "../../shared";
 
 export default function ChallengeCardFooter() {
-  const {
-    durationRange: { startAt, endAt },
-    totalParticipants,
-  } = useChallengeContext();
-
-  const items = [
-    {
-      icon: CalendarIcon,
-      text:
-        new Date(startAt).toLocaleDateString() +
-        " - " +
-        new Date(endAt).toLocaleDateString(),
-    },
-    {
-      icon: UsersIcon,
-      text: totalParticipants,
-    },
-  ];
+  const challenge = useChallengeContext();
 
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
-      {items.map(({ icon: Icon, text }) => (
+      {getChallengeInfoItems(challenge).map(({ icon: Icon, text }) => (
         <Stack
           direction="row"
           alignItems="center"

@@ -1,4 +1,8 @@
-import { ChallengeType } from "../../common/models/challengeModels";
+import {
+  ChallengeResponse,
+  ChallengeType,
+} from "../../common/models/challengeModels";
+import { Calendar as CalendarIcon, Users as UsersIcon } from "lucide-react";
 
 export const getChallengeTypeMenuItems = (isPlLanguage: boolean) => [
   {
@@ -26,5 +30,22 @@ export const getChallengeTypeMenuItems = (isPlLanguage: boolean) => [
     label: isPlLanguage
       ? "Ilość książek różnych autorów"
       : "Number of books of different authors",
+  },
+];
+
+export const getChallengeInfoItems = ({
+  durationRange,
+  totalParticipants,
+}: ChallengeResponse) => [
+  {
+    icon: CalendarIcon,
+    text:
+      new Date(durationRange.startAt).toLocaleDateString() +
+      " - " +
+      new Date(durationRange.endAt).toLocaleDateString(),
+  },
+  {
+    icon: UsersIcon,
+    text: totalParticipants,
   },
 ];
