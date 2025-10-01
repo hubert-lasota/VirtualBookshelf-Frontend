@@ -1,27 +1,18 @@
 import { useGetBookFormats } from "../../../api/clients/bookFormatClient";
 import { MenuItem } from "@mui/material";
-import SimpleSelect from "../../Input/SimpleSelect";
+import ControlledSelect from "../../Form/Input/ControlledSelect";
 
-type BookFormatSelectProps = {
-  formatId?: number;
-  onFormatIdChange: (formatId: number) => void;
-};
-
-export default function BookFormatFilterSelect({
-  formatId,
-  onFormatIdChange,
-}: BookFormatSelectProps) {
+export default function BookFormatFilterSelect() {
   const { data: { formats = [] } = {} } = useGetBookFormats({
     availableInBookshelf: true,
   });
 
   return (
-    <SimpleSelect
-      value={formatId}
+    <ControlledSelect
+      name="formatId"
       renderValue={(formatId) =>
         formats.find((f) => f.id === formatId)?.name ?? ""
       }
-      onChange={(e) => onFormatIdChange(Number(e.target.value))}
       label="Format"
     >
       {formats.map((f) => (
@@ -29,6 +20,6 @@ export default function BookFormatFilterSelect({
           {f.name}
         </MenuItem>
       ))}
-    </SimpleSelect>
+    </ControlledSelect>
   );
 }

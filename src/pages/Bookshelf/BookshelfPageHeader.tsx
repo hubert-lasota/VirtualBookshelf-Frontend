@@ -1,16 +1,11 @@
-import { Box, Button, Stack } from "@mui/material";
-import { useUserContext } from "../../common/auth/UserContext";
+import { Box, Stack } from "@mui/material";
 import { useBookshelfPageContext } from "./BookshelfPageContext";
-import { BookshelfFormMode } from "./shared";
 import LoggedInPageSubtitle from "../LoggedInLayout/LoggedInPageSubtitle";
 import LoggedInPageTitle from "../LoggedInLayout/LoggedInPageTitle";
+import BookshelfActionsButton from "./BookshelfActions/BookshelfActionsButton";
 
 export default function BookshelfPageHeader() {
-  const {
-    preferences: { isPlLanguage },
-  } = useUserContext();
-
-  const { currentBookshelf, onFormModeChange } = useBookshelfPageContext();
+  const { currentBookshelf } = useBookshelfPageContext();
 
   return (
     <Box>
@@ -19,14 +14,7 @@ export default function BookshelfPageHeader() {
         sx={{ justifyContent: "space-between", width: "100%" }}
       >
         <LoggedInPageTitle>{currentBookshelf.name}</LoggedInPageTitle>
-
-        <Button
-          onClick={() => onFormModeChange(BookshelfFormMode.CREATE)}
-          size="small"
-          variant="contained"
-        >
-          {isPlLanguage ? "Dodaj regał" : "Add bookshelf"}
-        </Button>
+        <BookshelfActionsButton />
       </Stack>
       <LoggedInPageSubtitle>
         {currentBookshelf.description}

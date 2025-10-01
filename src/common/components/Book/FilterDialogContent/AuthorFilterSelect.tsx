@@ -1,16 +1,9 @@
 import { MenuItem } from "@mui/material";
 import { useGetAuthors } from "../../../api/clients/authorClient";
 import { useUserContext } from "../../../auth/UserContext";
-import SimpleSelect from "../../Input/SimpleSelect";
+import ControlledSelect from "../../Form/Input/ControlledSelect";
 
-type AuthorFilterSelectProps = {
-  authorId?: number;
-  onAuthorIdChange: (authorId: number) => void;
-};
-export default function AuthorFilterSelect({
-  authorId,
-  onAuthorIdChange,
-}: AuthorFilterSelectProps) {
+export default function AuthorFilterSelect() {
   const { data: { authors = [] } = {} } = useGetAuthors({
     availableInBookshelf: true,
   });
@@ -20,12 +13,11 @@ export default function AuthorFilterSelect({
   } = useUserContext();
 
   return (
-    <SimpleSelect
-      value={authorId}
+    <ControlledSelect
+      name="authorId"
       renderValue={(authorId) =>
         authors.find((a) => a.id === authorId)?.fullName ?? ""
       }
-      onChange={(e) => onAuthorIdChange(Number(e.target.value))}
       label={isPlLanguage ? "Autor" : "Author"}
     >
       {authors.map((a) => (
@@ -33,6 +25,6 @@ export default function AuthorFilterSelect({
           {a.fullName}
         </MenuItem>
       ))}
-    </SimpleSelect>
+    </ControlledSelect>
   );
 }

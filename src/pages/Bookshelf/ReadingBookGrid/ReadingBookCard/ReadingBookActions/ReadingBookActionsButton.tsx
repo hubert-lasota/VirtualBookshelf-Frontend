@@ -12,11 +12,10 @@ import DeleteReadingBookDialog from "./DeleteReadingBookDialog";
 import { useNavigate } from "react-router-dom";
 import ManageNotesDialog from "./ManageNotes/ManageNotesDialog";
 import { useReadingBookContext } from "../ReadingBookContext";
-import MoreActionsButton, {
-  MoreActionsButtonItem,
-} from "../../../../../common/components/Button/MoreActionsButton";
+import MoreActionsIconButton from "../../../../../common/components/Button/MoreActionsIconButton";
 import ManageSessionsDialog from "./ManageSessions/ManageSessionsDialog";
 import { getDestructiveMenuItemProps } from "../../../../../common/utils";
+import { ActionItem } from "../../../../../common/components/Button/types";
 
 export default function ReadingBookActionsButton() {
   const [openDialogs, setOpenDialogs] = useState({
@@ -39,7 +38,7 @@ export default function ReadingBookActionsButton() {
 
   const navigate = useNavigate();
 
-  const items: MoreActionsButtonItem[] = [
+  const items: ActionItem[] = [
     {
       icon: <BookUp2Icon />,
       text: isPlLanguage ? "Przenieś książkę" : "Move book",
@@ -72,7 +71,10 @@ export default function ReadingBookActionsButton() {
   ];
   return (
     <>
-      <MoreActionsButton items={items} iconButtonProps={{ size: "small" }} />
+      <MoreActionsIconButton
+        items={items}
+        iconButtonProps={{ size: "small" }}
+      />
 
       {openDialogs.moveBook && (
         <MoveReadingBookDialog

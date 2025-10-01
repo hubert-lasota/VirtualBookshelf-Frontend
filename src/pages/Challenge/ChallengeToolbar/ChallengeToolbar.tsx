@@ -1,35 +1,26 @@
 import Toolbar from "../../../common/components/Toolbar/Toolbar";
 import { ChallengeFilter } from "../../../common/models/challengeModels";
-import { useEffect, useState } from "react";
-import ChallengeFilterDialogContent from "./ChallengeFilterDialogContent";
+import { useChallengePageContext } from "../ChallengeContext";
+import ChallengeFilterFormContent from "./ChallengeFilterFormContent";
+import { ApiSort } from "../../../common/api/apiModels";
 
-type Props = {
-  filter: ChallengeFilter;
-  onFilterChange: (filter: ChallengeFilter) => void;
-};
-
-export default function ChallengeToolbar({ filter, onFilterChange }: Props) {
-  const [unsavedFilter, setUnsavedFilter] = useState<ChallengeFilter>(filter);
-
-  useEffect(() => {
-    setUnsavedFilter(filter);
-  }, [filter]);
+export default function ChallengeToolbar() {
+  const { filter, onFilterChange } = useChallengePageContext();
 
   return (
-    <Toolbar
+    <Toolbar<ChallengeFilter>
       searchTextFieldProps={{
         onDebounceValueChange: (value) =>
-          setUnsavedFilter((prev) => ({ ...prev, query: value })),
+          onFilterChange({ ...filter, query: value }),
       }}
       filterButtonProps={{
-        onReset: () => onFilterChange({ query: filter.query }),
-        onApply: () => onFilterChange(unsavedFilter),
-        content: (
-          <ChallengeFilterDialogContent
-            filter={unsavedFilter}
-            onFilterChange={setUnsavedFilter}
-          />
-        ),
+        onSubmit: (newFilter: ChallengeFilter) =>
+          onFilterChange({ ...filter, ...newFilter }),
+        content: <ChallengeFilterFormContent />,
+      }}
+      sortButtonProps={{
+        onSubmit: (sort: ApiSort) => onFilterChange({ ...filter, sort }),
+        fields: [],
       }}
     />
   );

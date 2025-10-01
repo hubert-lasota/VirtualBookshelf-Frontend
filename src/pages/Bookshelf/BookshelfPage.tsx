@@ -5,14 +5,12 @@ import { useUserContext } from "../../common/auth/UserContext";
 import {
   ALL_BOOKS_BOOKSHELF_ID,
   AllBooksBookshelf,
-  BookshelfFormMode,
   CurrentBookshelf,
   isAllBooksBookshelf,
   isBookshelfResponse,
 } from "./shared";
 import { ReadingBookResponse } from "../../common/models/readingBookModels";
 import { BookshelfPageContext } from "./BookshelfPageContext";
-import BookshelfFormDialog from "./BookshelfForm/BookshelfFormDialog";
 import BookshelfTabs from "./BookshelfTabs/BookshelfTabs";
 import BookshelfPageHeader from "./BookshelfPageHeader";
 import ReadingBookGrid from "./ReadingBookGrid/ReadingBookGrid";
@@ -30,20 +28,9 @@ const totalBookSuffix = (totalBooks: number, isPlLanguage: boolean) => {
   return isPlLanguage ? "książki" : "books";
 };
 
-const initFilters: BookFilter = {
-  pageCountRange: {
-    gte: undefined,
-    lte: undefined,
-  },
-  publicationYearRange: {
-    gte: undefined,
-    lte: undefined,
-  },
-};
-
 export default function BookshelfPage() {
   const { data: { bookshelves = [] } = {} } = useGetBookshelves();
-  const [filter, setFilter] = useState<BookFilter>(initFilters);
+  const [filter, setFilter] = useState<BookFilter>({});
 
   const { data: { readingBooks = [] } = {} } = useGetBookshelfBooks(filter);
 
@@ -78,10 +65,6 @@ export default function BookshelfPage() {
     }
   }, [bookshelves]);
 
-  const [formMode, setFormMode] = useState<BookshelfFormMode>(
-    BookshelfFormMode.CLOSED,
-  );
-
   const filteredBooks: ReadingBookResponse[] = useMemo(
     () =>
       isBookshelfResponse(currentBookshelf)
@@ -99,11 +82,8 @@ export default function BookshelfPage() {
         selectAllBooksBookshelf: () => setCurrentBookshelf(allBooksBookshelf),
         readingBooks: filteredBooks,
         bookshelves,
-        formMode,
-        onFormModeChange: (formMode) => setFormMode(formMode),
         filter,
         setFilter,
-        resetFilter: () => setFilter({ ...initFilters, query: filter.query }),
       }}
     >
       <LoggedInPageContainer spacing={3}>
@@ -112,7 +92,6 @@ export default function BookshelfPage() {
         <BookshelfToolbar />
         <ReadingBookGrid />
       </LoggedInPageContainer>
-      {formMode !== BookshelfFormMode.CLOSED && <BookshelfFormDialog />}
     </BookshelfPageContext.Provider>
   );
 }

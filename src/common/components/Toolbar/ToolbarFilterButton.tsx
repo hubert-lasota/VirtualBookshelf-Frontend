@@ -1,41 +1,41 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Stack,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { useUserContext } from "../../auth/UserContext";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { ReactNode, useState } from "react";
-import CancelButton from "../Button/CancelButton";
-import { DialogContext } from "../../context/DialogContext";
-import CommonDialogTitle from "../Dialog/CommonDialogTitle";
+import React, { ReactNode, useState } from "react";
+import FormDialog, { FormDialogProps } from "../Form/FormDialog";
+import { FieldValues } from "react-hook-form";
 
-export type ToolbarFilterButtonProps = {
+export type ToolbarFilterButtonProps<FilterValues extends FieldValues> = {
   title?: ReactNode;
   content: ReactNode;
-  onReset: () => void;
-  onApply: () => void;
+  onSubmit: FormDialogProps<FilterValues>["onSubmit"];
+  defaultValues?: FormDialogProps<FilterValues>["defaultValues"];
+  resolver?: FormDialogProps<FilterValues>["resolver"];
 };
-export default function ToolbarFilterButton({
+
+export default function ToolbarFilterButton<FilterValues extends FieldValues>({
   title,
   content,
-  onReset,
-  onApply,
-}: ToolbarFilterButtonProps) {
+  onSubmit,
+  defaultValues,
+  resolver,
+}: ToolbarFilterButtonProps<FilterValues>) {
   const [open, setOpen] = useState(false);
 
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
 
-  const handleClose = () => {
+  const handleSubmit = async (
+    formValues: FilterValues,
+    event: React.BaseSyntheticEvent | undefined,
+  ) => {
+    await onSubmit(formValues, event);
     setOpen(false);
   };
 
   return (
-    <DialogContext.Provider value={{ onClose: handleClose }}>
+    <>
       <Button
         variant="outlined"
         startIcon={<FilterAltIcon />}
@@ -44,39 +44,21 @@ export default function ToolbarFilterButton({
       >
         {isPlLanguage ? "Filtry" : "Filters"}
       </Button>
-      <Dialog
+      <FormDialog<FilterValues>
         open={open}
-        onClose={handleClose}
-        slotProps={{ paper: { sx: { minWidth: "55%" } } }}
+        onClose={() => setOpen(false)}
+        onSubmit={handleSubmit}
+        defaultValues={defaultValues}
+        actionProps={{
+          submitButtonProps: { children: isPlLanguage ? "Zastosuj" : "Apply" },
+          showResetButton: true,
+        }}
+        title={title ?? (isPlLanguage ? "Filtry" : "Filters")}
+        resolver={resolver}
+        paper={{ sx: { minWidth: "55%" } }}
       >
-        <CommonDialogTitle
-          title={title ?? (isPlLanguage ? "Filtry" : "Filters")}
-          showDivider={false}
-        />
-        <DialogContent dividers>{content}</DialogContent>
-        <DialogActions sx={{ justifyContent: "space-between" }}>
-          <Button
-            onClick={() => {
-              onReset();
-              handleClose();
-            }}
-          >
-            {isPlLanguage ? "Resetuj" : "Reset"}
-          </Button>
-          <Stack direction="row" spacing={1}>
-            <CancelButton onClick={handleClose} />
-            <Button
-              variant="contained"
-              onClick={() => {
-                onApply();
-                handleClose();
-              }}
-            >
-              {isPlLanguage ? "Zastosuj" : "Apply"}
-            </Button>
-          </Stack>
-        </DialogActions>
-      </Dialog>
-    </DialogContext.Provider>
+        {content}
+      </FormDialog>
+    </>
   );
 }

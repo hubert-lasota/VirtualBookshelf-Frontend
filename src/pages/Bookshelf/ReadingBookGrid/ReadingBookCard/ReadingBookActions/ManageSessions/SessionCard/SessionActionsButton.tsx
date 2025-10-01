@@ -1,4 +1,4 @@
-import MoreActionsButton from "../../../../../../../common/components/Button/MoreActionsButton";
+import MoreActionsIconButton from "../../../../../../../common/components/Button/MoreActionsIconButton";
 import { getDestructiveMenuItemProps } from "../../../../../../../common/utils";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useUserContext } from "../../../../../../../common/auth/UserContext";
@@ -34,7 +34,7 @@ export default function SessionActionsButton() {
 
   return (
     <>
-      <MoreActionsButton items={items} />
+      <MoreActionsIconButton items={items} />
       <DeleteSessionDialog
         open={openDeleteDialog}
         onClose={() => setOpenDeleteDialog(false)}

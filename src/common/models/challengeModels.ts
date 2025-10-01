@@ -3,6 +3,7 @@ import { z } from "zod";
 import { ChallengeParticipantStatus } from "./challengePartictipantModels";
 import { UserResponse } from "./userModels";
 import { DateRangeFilter } from "./commonModels";
+import { ApiSort } from "../api/apiModels";
 
 export enum ChallengeType {
   BOOK_COUNT = "BOOK_COUNT",
@@ -129,4 +130,5 @@ export type ChallengeFilter = {
   type?: ChallengeType;
   page?: number;
   size?: number;
+  sort?: ApiSort;
 };

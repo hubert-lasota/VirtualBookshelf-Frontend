@@ -1,9 +1,8 @@
-import { useUserContext } from "../../../common/auth/UserContext";
+import { useUserContext } from "../../common/auth/UserContext";
 import { Stack } from "@mui/material";
-import AddChallengeButton from "./AddChallengeButton";
-import SearchChallengeButton from "./SearchChallenge/SearchChallengeButton";
-import LoggedInPageTitle from "../../LoggedInLayout/LoggedInPageTitle";
-import LoggedInPageSubtitle from "../../LoggedInLayout/LoggedInPageSubtitle";
+import ChallengeActionsButton from "./ChallengeActions/ChallengeActionsButton";
+import LoggedInPageTitle from "../LoggedInLayout/LoggedInPageTitle";
+import LoggedInPageSubtitle from "../LoggedInLayout/LoggedInPageSubtitle";
 
 export default function ChallengeHeader() {
   const {
@@ -22,9 +21,8 @@ export default function ChallengeHeader() {
             : "Track your reading progress and achieve your goals"}
         </LoggedInPageSubtitle>
       </div>
-      <Stack spacing={1}>
-        <AddChallengeButton />
-        <SearchChallengeButton />
+      <Stack>
+        <ChallengeActionsButton />
       </Stack>
     </Stack>
   );

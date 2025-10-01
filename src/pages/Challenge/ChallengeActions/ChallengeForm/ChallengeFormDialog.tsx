@@ -2,26 +2,23 @@ import {
   ChallengeFormValues,
   ChallengeResponse,
   createChallengeSchema,
-} from "../../../common/models/challengeModels";
-import { DialogContent } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
+} from "../../../../common/models/challengeModels";
+import { useUserContext } from "../../../../common/auth/UserContext";
 import ChallengeFormFields from "./ChallengeFormFields";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useCreateChallenge,
   useUpdateChallenge,
-} from "../../../common/api/clients/challengeClient";
-import { TITLE_ENTITY_SEPARATOR } from "../../../common/constants";
-import FormDialog from "../../../common/components/Form/FormDialog";
+} from "../../../../common/api/clients/challengeClient";
+import { TITLE_ENTITY_SEPARATOR } from "../../../../common/constants";
+import FormDialog from "../../../../common/components/Form/FormDialog";
 
 type ChallengeFormDialogProps = {
-  open: boolean;
   onClose: () => void;
   challenge?: ChallengeResponse;
 };
 
 export default function ChallengeFormDialog({
-  open,
   onClose,
   challenge,
 }: ChallengeFormDialogProps) {
@@ -61,7 +58,7 @@ export default function ChallengeFormDialog({
 
   return (
     <FormDialog<ChallengeFormValues>
-      open={open}
+      open
       onClose={onClose}
       onSubmit={onSubmit}
       resolver={zodResolver(createChallengeSchema(isPlLanguage))}
@@ -69,9 +66,7 @@ export default function ChallengeFormDialog({
       paper={{ sx: { minWidth: "60%" } }}
       defaultValues={challengeFormValues}
     >
-      <DialogContent dividers>
-        <ChallengeFormFields />
-      </DialogContent>
+      <ChallengeFormFields />
     </FormDialog>
   );
 }

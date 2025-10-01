@@ -1,17 +1,16 @@
-import { DialogProps, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import { useDeleteBookshelf } from "../../../common/api/clients/bookshelfClient";
 import { BookshelfResponse } from "../../../common/models/bookshelfModels";
 
 import DeleteEntityDialog from "../../../common/components/Dialog/DeleteEntityDialog";
 
-type DeleteBookshelfDialogProps = Pick<DialogProps, "open"> & {
+type DeleteBookshelfDialogProps = {
   bookshelf: BookshelfResponse;
   onClose: () => void;
 };
 
 export default function DeleteBookshelfDialog({
-  open,
   onClose,
   bookshelf,
 }: DeleteBookshelfDialogProps) {
@@ -23,7 +22,7 @@ export default function DeleteBookshelfDialog({
 
   return (
     <DeleteEntityDialog
-      open={open}
+      open
       onClose={onClose}
       onDelete={() => {
         mutate(bookshelf.id);

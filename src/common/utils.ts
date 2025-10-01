@@ -1,5 +1,6 @@
 import { SxProps, Theme } from "@mui/material";
-import { MoreActionsButtonItem } from "./components/Button/MoreActionsButton";
+
+import { ActionItem } from "./components/Button/types";
 
 export function mergeSx(
   ...styles: Array<SxProps<Theme> | undefined>
@@ -10,7 +11,7 @@ export function mergeSx(
 }
 
 type GetDestructiveMenuItemPropsParams = Pick<
-  MoreActionsButtonItem,
+  ActionItem,
   "iconProps" | "props"
 >;
 
@@ -18,7 +19,7 @@ export const getDestructiveMenuItemProps = ({
   iconProps: { sx: iconSx, ...iconProps } = {},
   props: { sx: propsSx, ...props } = {},
 }: GetDestructiveMenuItemPropsParams = {}): Pick<
-  MoreActionsButtonItem,
+  ActionItem,
   "iconProps" | "props"
 > => ({
   iconProps: {

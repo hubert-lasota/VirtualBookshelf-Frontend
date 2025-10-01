@@ -1,18 +1,17 @@
-import MoreActionsButton, {
-  MoreActionsButtonItem,
-} from "../../../../../common/components/Button/MoreActionsButton";
+import MoreActionsIconButton from "../../../../../common/components/Button/MoreActionsIconButton";
 import { useUserContext } from "../../../../../common/auth/UserContext";
 import { Pencil, UserRoundX, Users } from "lucide-react";
 import { useState } from "react";
 import QuitChallengeDialog from "./QuitChallengeDialog";
 import { useChallengeContext } from "../../../ChallengeContext";
-import ChallengeFormDialog from "../../../ChallengeForm/ChallengeFormDialog";
+import ChallengeFormDialog from "../../../ChallengeActions/ChallengeForm/ChallengeFormDialog";
 import { getDestructiveMenuItemProps } from "../../../../../common/utils";
 import ChallengeParticipantsDialog from "./ChallengeParticipantsDialog/ChallengeParticipantsDialog";
+import { ActionItem } from "../../../../../common/components/Button/types";
 
 export default function ChallengeActionsButton() {
   const [openDialogs, setOpenDialogs] = useState({
-    challengeForm: false,
+    updateChallenge: false,
     quitChallenge: false,
     participants: false,
   });
@@ -29,7 +28,7 @@ export default function ChallengeActionsButton() {
     user,
   } = useUserContext();
 
-  let items: MoreActionsButtonItem[] = [
+  let items: ActionItem[] = [
     {
       text: isPlLanguage ? "Uczestnicy" : "Participants",
       icon: <Users />,
@@ -51,7 +50,7 @@ export default function ChallengeActionsButton() {
       {
         text: isPlLanguage ? "Edytuj" : "Edit",
         icon: <Pencil />,
-        onClick: () => handleChangeOpenDialogs("challengeForm", true),
+        onClick: () => handleChangeOpenDialogs("updateChallenge", true),
       },
       ...items,
     ];
@@ -59,16 +58,20 @@ export default function ChallengeActionsButton() {
 
   return (
     <>
-      <MoreActionsButton items={items} iconButtonProps={{ size: "small" }} />
+      <MoreActionsIconButton
+        items={items}
+        iconButtonProps={{ size: "small" }}
+      />
       <QuitChallengeDialog
         open={openDialogs.quitChallenge}
         onClose={() => handleChangeOpenDialogs("quitChallenge", false)}
       />
-      <ChallengeFormDialog
-        open={openDialogs.challengeForm}
-        onClose={() => handleChangeOpenDialogs("challengeForm", false)}
-        challenge={challenge}
-      />
+      {openDialogs.updateChallenge && (
+        <ChallengeFormDialog
+          onClose={() => handleChangeOpenDialogs("updateChallenge", false)}
+          challenge={challenge}
+        />
+      )}
       {openDialogs.participants && (
         <ChallengeParticipantsDialog
           onClose={() => handleChangeOpenDialogs("participants", false)}

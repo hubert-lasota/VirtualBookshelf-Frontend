@@ -1,13 +1,13 @@
 import { Grid } from "@mui/material";
 import GenreSelect from "./GenreSelect";
-import { useUserContext } from "../../../common/auth/UserContext";
-import RequiredLabel from "../../../common/components/Label/RequiredLabel";
-import ControlledTextField from "../../../common/components/Form/Input/ControlledTextField";
+import { useUserContext } from "../../../../common/auth/UserContext";
+import RequiredLabel from "../../../../common/components/Label/RequiredLabel";
+import ControlledTextField from "../../../../common/components/Form/Input/ControlledTextField";
 import { useWatch } from "react-hook-form";
-import ControlledChallengeTypeSelect from "./ControlledChallengeTypeSelect";
-import { ChallengeType } from "../../../common/models/challengeModels";
-import ControlledNumberField from "../../../common/components/Form/Input/ControlledNumberField";
-import ControlledDatePicker from "../../../common/components/Form/Input/ControlledDatePicker";
+import ChallengeTypeSelect from "../../ChallengeTypeSelect";
+import { ChallengeType } from "../../../../common/models/challengeModels";
+import ControlledNumberField from "../../../../common/components/Form/Input/ControlledNumberField";
+import ControlledDatePicker from "../../../../common/components/Form/Input/ControlledDatePicker";
 
 export default function ChallengeFormFields() {
   const {
@@ -31,7 +31,7 @@ export default function ChallengeFormFields() {
       },
     },
     {
-      component: ControlledChallengeTypeSelect,
+      component: ChallengeTypeSelect,
     },
     {
       skip: type !== ChallengeType.GENRE_BOOKS,

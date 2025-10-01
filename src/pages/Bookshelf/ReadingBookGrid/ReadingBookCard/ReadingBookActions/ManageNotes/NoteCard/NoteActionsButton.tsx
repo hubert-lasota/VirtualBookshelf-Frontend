@@ -1,4 +1,4 @@
-import MoreActionsButton from "../../../../../../../common/components/Button/MoreActionsButton";
+import MoreActionsIconButton from "../../../../../../../common/components/Button/MoreActionsIconButton";
 import { useState } from "react";
 import { useUserContext } from "../../../../../../../common/auth/UserContext";
 import DeleteNoteDialog from "./DeleteNoteDialog";
@@ -32,7 +32,7 @@ export default function NoteActionsButton() {
 
   return (
     <>
-      <MoreActionsButton items={items} />
+      <MoreActionsIconButton items={items} />
       <DeleteNoteDialog
         open={openDeleteDialog}
         onClose={() => setOpenDeleteDialog(false)}

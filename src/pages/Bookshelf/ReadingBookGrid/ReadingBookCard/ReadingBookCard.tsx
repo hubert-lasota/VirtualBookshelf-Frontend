@@ -35,6 +35,7 @@ export default function ReadingBookCard({ readingBook }: ReadingBookCardProps) {
           sx={{
             height: "300px",
             width: "200px",
+            minWidth: "200px",
             objectFit: "fill",
           }}
         />

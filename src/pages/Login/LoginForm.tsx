@@ -25,7 +25,7 @@ export default function LoginForm() {
     register,
     formState: { errors },
   } = useForm<UserCredentials>({
-    mode: "all",
+    mode: "onBlur",
     resolver: zodResolver(createUserCredentialsSchema(messages)),
   });
 

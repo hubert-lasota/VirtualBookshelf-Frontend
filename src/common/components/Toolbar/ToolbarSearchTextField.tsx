@@ -8,7 +8,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { useUserContext } from "../../auth/UserContext";
 import { mergeSx } from "../../utils";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDebounceValue } from "../../hooks";
 
 const searchTextFieldSx: SxProps<Theme> = (theme) => ({
@@ -20,12 +20,14 @@ export type ToolbarSearchTextFieldProps = Omit<
   TextFieldProps,
   "value" | "onChange"
 > & {
+  endAdornment?: React.ReactNode;
   onDebounceValueChange?: (value: string) => void;
 };
 
 export default function ToolbarSearchTextField({
   sx,
   onDebounceValueChange,
+  endAdornment,
   ...props
 }: ToolbarSearchTextFieldProps) {
   const {
@@ -55,6 +57,9 @@ export default function ToolbarSearchTextField({
               <SearchIcon />
             </InputAdornment>
           ),
+          endAdornment: endAdornment ? (
+            <InputAdornment position="end">{endAdornment}</InputAdornment>
+          ) : undefined,
         },
       }}
       placeholder={isPlLanguage ? "Szukaj..." : "Search..."}

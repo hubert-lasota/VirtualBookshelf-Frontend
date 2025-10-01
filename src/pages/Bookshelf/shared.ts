@@ -11,12 +11,6 @@ export type AllBooksBookshelf = {
 
 export type CurrentBookshelf = BookshelfResponse | AllBooksBookshelf;
 
-export enum BookshelfFormMode {
-  CREATE = "create",
-  UPDATE = "update",
-  CLOSED = "closed",
-}
-
 export const isBookshelfResponse = (
   bookshelf: CurrentBookshelf,
 ): bookshelf is BookshelfResponse => !isAllBooksBookshelf(bookshelf);

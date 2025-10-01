@@ -8,13 +8,11 @@ import ChallengeResult from "./ChallengeResult";
 import { DialogContext } from "../../../../common/context/DialogContext";
 import CommonDialogActions from "../../../../common/components/Dialog/CommonDialogActions";
 
-type SearchChallengeDialogProps = {
+type Props = {
   onClose: () => void;
 };
 
-export default function SearchChallengeDialog({
-  onClose,
-}: SearchChallengeDialogProps) {
+export default function JoinChallengeDialog({ onClose }: Props) {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const { data: { challenges = [], pageMeta: { totalPages = 0 } = {} } = {} } =

@@ -8,38 +8,30 @@ import {
 } from "../../models/bookModels";
 import { PageMeta } from "../apiModels";
 
+const QUERY_KEY_NAME = "books";
 const BASE_ENDPOINT = "/v1/books";
 
 export const useGetBookById = (id: number) =>
   useQuery<BookDetailsResponse>({
-    queryKey: ["books", id],
+    queryKey: [QUERY_KEY_NAME, id],
     queryFn: () =>
       axiosInstance.get(`${BASE_ENDPOINT}/${id}`).then(unwrapResponseData),
   });
 
-type UseGetBooksParams = {
-  page: number;
-  size: number;
-  query: string;
-  filter?: BookFilter;
-  enabled?: boolean;
-};
+type UseGetBooksParams = BookFilter & { enabled?: boolean };
 
 type BookPageResponse = {
   books: BookResponse[];
   pageMeta: PageMeta;
 };
 
-export const useGetBooks = ({
-  filter,
-  enabled,
-  ...restParams
-}: UseGetBooksParams) => {
-  const params = { ...filter, ...restParams };
+export const useGetBooks = ({ enabled, ...filter }: UseGetBooksParams) => {
   return useQuery<unknown, unknown, BookPageResponse>({
-    queryKey: ["books", params],
+    queryKey: [QUERY_KEY_NAME, filter],
     queryFn: () =>
-      axiosInstance.get(BASE_ENDPOINT, { params }).then(unwrapResponseData),
-    enabled: enabled !== undefined ? enabled : !!params.query,
+      axiosInstance
+        .get(BASE_ENDPOINT, { params: filter })
+        .then(unwrapResponseData),
+    enabled: enabled !== undefined ? enabled : !!filter.query,
   });
 };

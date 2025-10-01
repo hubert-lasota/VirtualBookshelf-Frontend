@@ -1,21 +1,26 @@
+import { useState } from "react";
 import {
-  Button,
+  IconButton,
+  IconButtonProps,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
+  Tooltip,
 } from "@mui/material";
-import { useState } from "react";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useUserContext } from "../../auth/UserContext";
 import { ActionItem } from "./types";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 type Props = {
   items: ActionItem[];
+  iconButtonProps?: IconButtonProps;
 };
 
-export default function MoreActionsButton({ items }: Props) {
+export default function MoreActionsIconButton({
+  items,
+  iconButtonProps = {},
+}: Props) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const {
@@ -24,13 +29,14 @@ export default function MoreActionsButton({ items }: Props) {
 
   return (
     <>
-      <Button
-        variant="contained"
-        endIcon={!!anchorEl ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-        onClick={(e) => setAnchorEl(e.currentTarget)}
-      >
-        {isPlLanguage ? "Akcje" : "Actions"}
-      </Button>
+      <Tooltip title={isPlLanguage ? "Więcej akcji" : "More actions"}>
+        <IconButton
+          {...iconButtonProps}
+          onClick={(e) => setAnchorEl(e.currentTarget)}
+        >
+          <MoreVertIcon />
+        </IconButton>
+      </Tooltip>
       <Menu
         open={!!anchorEl}
         onClose={() => setAnchorEl(null)}

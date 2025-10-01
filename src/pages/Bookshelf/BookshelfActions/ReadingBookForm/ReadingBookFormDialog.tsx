@@ -1,4 +1,3 @@
-import { DialogContent, Grid } from "@mui/material";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ReadingBookFormFields from "./ReadingBookFormFields";
@@ -9,8 +8,7 @@ import {
 } from "../../../../common/models/readingBookModels";
 import { BookshelfResponse } from "../../../../common/models/bookshelfModels";
 import FormDialog from "../../../../common/components/Form/FormDialog";
-import CommonDialogTitle from "../../../../common/components/Dialog/CommonDialogTitle";
-import FormDialogActions from "../../../../common/components/Form/FormDialogActions";
+import { TITLE_ENTITY_SEPARATOR } from "../../../../common/constants";
 
 type BookFormDialogProps = {
   open: boolean;
@@ -41,20 +39,13 @@ export default function ReadingBookFormDialog({
       onSubmit={onSubmit}
       resolver={zodResolver(createReadingBookSchema(isPlLanguage))}
       paper={{ sx: { minWidth: "70%", maxHeight: "93%" } }}
+      title={
+        (isPlLanguage ? "Dodaj książkę do regału" : "Add book to bookshelf") +
+        TITLE_ENTITY_SEPARATOR +
+        bookshelf.name
+      }
     >
-      <CommonDialogTitle
-        title={
-          (isPlLanguage
-            ? "Dodaj książkę do regału "
-            : "Add book to bookshelf ") + bookshelf.name
-        }
-      />
-      <DialogContent>
-        <Grid container spacing={2}>
-          <ReadingBookFormFields />
-        </Grid>
-      </DialogContent>
-      <FormDialogActions />
+      <ReadingBookFormFields />
     </FormDialog>
   );
 }

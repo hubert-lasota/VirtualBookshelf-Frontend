@@ -8,6 +8,7 @@ import BookCover from "../../common/components/Book/BookCover";
 import AuthorProfilePicture from "../../common/components/Author/AuthorProfilePicture";
 import UserProfilePicture from "./UserProfilePicture";
 import { Grid } from "@mui/material";
+import { useSearchPageContext } from "./SearchPageContext";
 
 const getResourceProps = (
   resource: BookResponse | AuthorResponse | UserResponse,
@@ -48,19 +49,14 @@ const getResourceProps = (
   }
 };
 
-type ResourceGridProps = {
-  resources: (BookResponse | AuthorResponse | UserResponse)[];
-  resourceType: ResourceType;
-};
-export default function ResourceGrid({
-  resources,
-  resourceType,
-}: ResourceGridProps) {
+export default function ResourceGrid() {
+  const { resourceType, books } = useSearchPageContext();
   const navigate = useNavigate();
 
+  // TODO fix
   return (
     <Grid container spacing={5}>
-      {resources.map((resource) => (
+      {books.map((resource) => (
         <ResourceCard {...getResourceProps(resource, resourceType, navigate)} />
       ))}
     </Grid>

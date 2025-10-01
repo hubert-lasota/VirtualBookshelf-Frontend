@@ -1,17 +1,9 @@
 import { useUserContext } from "../../../auth/UserContext";
 import { MenuItem } from "@mui/material";
 import { useGetGenres } from "../../../api/clients/genreClient";
-import SimpleSelect from "../../Input/SimpleSelect";
+import ControlledSelect from "../../Form/Input/ControlledSelect";
 
-type GenreFilterSelectProps = {
-  genreId?: number;
-  onGenreIdChange: (genreId: number) => void;
-};
-
-export default function GenreFilterSelect({
-  genreId,
-  onGenreIdChange,
-}: GenreFilterSelectProps) {
+export default function GenreFilterSelect() {
   const { data: { genres = [] } = {} } = useGetGenres({
     availableInBookshelf: true,
   });
@@ -21,12 +13,11 @@ export default function GenreFilterSelect({
   } = useUserContext();
 
   return (
-    <SimpleSelect
-      value={genreId}
+    <ControlledSelect
+      name="genreId"
       renderValue={(genreId) =>
         genres.find((g) => g.id === genreId)?.name ?? ""
       }
-      onChange={(e) => onGenreIdChange(Number(e.target.value))}
       label={isPlLanguage ? "Gatunek" : "Genre"}
     >
       {genres.map((g) => (
@@ -34,6 +25,6 @@ export default function GenreFilterSelect({
           {g.name}
         </MenuItem>
       ))}
-    </SimpleSelect>
+    </ControlledSelect>
   );
 }

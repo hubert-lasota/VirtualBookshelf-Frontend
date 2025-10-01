@@ -1,16 +1,11 @@
 import Toolbar from "../../common/components/Toolbar/Toolbar";
 import { useBookshelfPageContext } from "./BookshelfPageContext";
-import BookFilterDialogContent from "../../common/components/Book/FilterDialogContent/BookFilterDialogContent";
-import { useEffect, useState } from "react";
-import { BookFilter } from "../../common/models/bookModels";
+import BookFilterFields from "../../common/components/Book/FilterDialogContent/BookFilterFields";
+import { ChallengeFilter } from "../../common/models/challengeModels";
+import { ApiSort } from "../../common/api/apiModels";
 
 export default function BookshelfToolbar() {
-  const { filter, setFilter, resetFilter } = useBookshelfPageContext();
-  const [unsavedFilter, setUnsavedFilter] = useState<BookFilter>(filter);
-
-  useEffect(() => {
-    setUnsavedFilter(filter);
-  }, [filter]);
+  const { filter, setFilter } = useBookshelfPageContext();
 
   return (
     <Toolbar
@@ -19,14 +14,14 @@ export default function BookshelfToolbar() {
           setFilter((prev) => ({ ...prev, query: value })),
       }}
       filterButtonProps={{
-        onApply: () => setFilter(unsavedFilter),
-        onReset: resetFilter,
-        content: (
-          <BookFilterDialogContent
-            filter={unsavedFilter}
-            setFilter={setUnsavedFilter}
-          />
-        ),
+        defaultValues: filter,
+        onSubmit: (newFilter: ChallengeFilter) =>
+          setFilter((prev) => ({ ...prev, ...newFilter })),
+        content: <BookFilterFields />,
+      }}
+      sortButtonProps={{
+        onSubmit: (sort: ApiSort) => setFilter((prev) => ({ ...prev, sort })),
+        fields: [],
       }}
     />
   );

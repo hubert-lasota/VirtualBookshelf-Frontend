@@ -1,6 +1,8 @@
 import { DialogContext } from "../../context/DialogContext";
 import {
   Dialog,
+  DialogContent,
+  DialogContentProps,
   DialogOwnerState,
   DialogPaperSlotPropsOverrides,
   PaperProps,
@@ -29,6 +31,7 @@ export type FormDialogProps<TFormValues extends FieldValues> = {
   title?: React.ReactNode;
   showActions?: boolean;
   actionProps?: FormDialogActionsProps;
+  dialogContentProps?: DialogContentProps;
   defaultValues?: DefaultValues<TFormValues>;
   mode?: Mode;
   paper?:
@@ -51,6 +54,7 @@ export default function FormDialog<TFormValues extends FieldValues>({
   paper,
   title,
   showActions = true,
+  dialogContentProps,
   actionProps,
 }: FormDialogProps<TFormValues>) {
   const form = useForm<TFormValues>({
@@ -74,7 +78,7 @@ export default function FormDialog<TFormValues extends FieldValues>({
           }}
         >
           {title ? <CommonDialogTitle title={title} /> : null}
-          {children}
+          <DialogContent {...dialogContentProps}>{children}</DialogContent>
           {showActions ? <FormDialogActions {...actionProps} /> : null}
         </Dialog>
       </FormProvider>

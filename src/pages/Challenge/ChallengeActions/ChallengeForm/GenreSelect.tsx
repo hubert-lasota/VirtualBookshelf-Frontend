@@ -1,8 +1,8 @@
-import { useGetGenres } from "../../../common/api/clients/genreClient";
+import { useGetGenres } from "../../../../common/api/clients/genreClient";
 import { MenuItem } from "@mui/material";
-import { useUserContext } from "../../../common/auth/UserContext";
-import RequiredLabel from "../../../common/components/Label/RequiredLabel";
-import ControlledSelect from "../../../common/components/Form/Input/ControlledSelect";
+import { useUserContext } from "../../../../common/auth/UserContext";
+import RequiredLabel from "../../../../common/components/Label/RequiredLabel";
+import ControlledSelect from "../../../../common/components/Form/Input/ControlledSelect";
 
 export default function GenreSelect() {
   const { data: { genres = [] } = {} } = useGetGenres();
