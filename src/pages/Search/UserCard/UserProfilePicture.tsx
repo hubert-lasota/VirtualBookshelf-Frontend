@@ -1,8 +1,8 @@
 import { Stack, StackProps } from "@mui/material";
-import ResourceReplacementImage from "../../common/components/Resource/ResourceReplacementImage";
+import ResourceReplacementImage from "../../../common/components/Resource/ResourceReplacementImage";
 import { User } from "lucide-react";
 
-type UserProfilePictureProps = {
+export type UserProfilePictureProps = {
   profilePictureUrl: string | null;
 } & StackProps;
 

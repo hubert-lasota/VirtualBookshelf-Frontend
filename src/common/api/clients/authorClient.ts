@@ -1,51 +1,49 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../axiosInstance";
-import { ApiSort, PageMeta } from "../apiModels";
+import { PageMeta } from "../apiModels";
 import {
   AuthorDetailsResponse,
+  AuthorFilter,
   AuthorResponse,
 } from "../../models/authorModels";
 import { apiSortToString, unwrapResponseData } from "../apiUtils";
 
 const BASE_ENDPOINT = "/v1/authors";
-const QUERY_KEY = ["authors"];
+const QUERY_KEY_NAME = "authors";
 
-type UseGetAuthorsParams = {
-  availableInBookshelf?: boolean;
-  page?: number;
-  size?: number;
-  sort?: ApiSort;
-};
-
-type AuthorPageResponse = {
+export type AuthorPageResponse = {
   authors: AuthorResponse[];
   pageMeta: PageMeta;
 };
 
+type UseGetAuthorsParams = AuthorFilter & { enabled?: boolean };
+
 export const useGetAuthors = ({
-  availableInBookshelf,
   page = 0,
   size = 100,
   sort = { field: "fullName", direction: "asc" },
+  enabled = true,
+  ...filter
 }: UseGetAuthorsParams = {}) =>
   useQuery<AuthorPageResponse>({
-    queryKey: QUERY_KEY,
+    queryKey: [QUERY_KEY_NAME, filter, page, size, sort],
     queryFn: () =>
       axiosInstance
         .get(BASE_ENDPOINT, {
           params: {
-            availableInBookshelf,
+            ...filter,
             size,
             page,
             sort: apiSortToString(sort),
           },
         })
         .then(unwrapResponseData),
+    enabled,
   });
 
 export const useGetAuthorById = (id: number) =>
   useQuery<AuthorDetailsResponse>({
-    queryKey: [...QUERY_KEY, id],
+    queryKey: [QUERY_KEY_NAME, id],
     enabled: !!id,
     queryFn: () =>
       axiosInstance.get(`${BASE_ENDPOINT}/${id}`).then(unwrapResponseData),

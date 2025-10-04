@@ -1,9 +1,9 @@
-import { DialogContent, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useUserContext } from "../../../common/auth/UserContext";
 import ControlledDatePicker from "../../../common/components/Form/Input/ControlledDatePicker";
 import ChallengeTypeSelect from "../ChallengeTypeSelect";
 
-export default function ChallengeFilterFormContent() {
+export default function ChallengeFilterFields() {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
@@ -21,12 +21,10 @@ export default function ChallengeFilterFormContent() {
   ];
 
   return (
-    <DialogContent>
-      <Grid container spacing={2}>
-        {components.map((c) => (
-          <Grid size={6}>{c}</Grid>
-        ))}
-      </Grid>
-    </DialogContent>
+    <Grid container spacing={2}>
+      {components.map((c) => (
+        <Grid size={6}>{c}</Grid>
+      ))}
+    </Grid>
   );
 }

@@ -2,6 +2,7 @@ import { useReadingBookContext } from "./ReadingBookContext";
 import { Stack, Typography } from "@mui/material";
 import { BookOpenTextIcon, CalendarIcon, StickyNoteIcon } from "lucide-react";
 import { useUserContext } from "../../../../common/auth/UserContext";
+import ReviewStatsStack from "../../../../common/components/Review/ReviewStatsStack";
 
 const noteSuffix = (totalNotes: number, isPlLanguage: boolean) => {
   if (totalNotes === 1) {
@@ -27,7 +28,8 @@ export default function ReadingBookStats() {
   const {
     preferences: { isPlLanguage },
   } = useUserContext();
-  const { durationRange, totalNotes, totalSessions } = useReadingBookContext();
+  const { durationRange, totalNotes, totalSessions, book } =
+    useReadingBookContext();
 
   const items = [
     {
@@ -46,6 +48,11 @@ export default function ReadingBookStats() {
   const finishedAtText = durationRange?.finishedAt
     ? new Date(durationRange.finishedAt).toLocaleDateString()
     : "";
+  const finalDurationText =
+    startAtText + (finishedAtText ? " - " + finishedAtText : "");
+  const didntStartReadingText = isPlLanguage
+    ? "Nie rozpoczęto czytania"
+    : "Didn't start reading";
   return (
     <Stack spacing={0.5}>
       <Stack
@@ -56,7 +63,7 @@ export default function ReadingBookStats() {
       >
         <CalendarIcon style={{ width: "16px" }} />
         <Typography variant="overline">
-          {startAtText + (finishedAtText ? " - " + finishedAtText : "")}
+          {startAtText ? finalDurationText : didntStartReadingText}
         </Typography>
       </Stack>
       <Stack direction="row" justifyContent="space-between">
@@ -73,6 +80,10 @@ export default function ReadingBookStats() {
           </Stack>
         ))}
       </Stack>
+      <ReviewStatsStack
+        averageRating={book.averageRating}
+        totalReviews={book.totalReviews}
+      />
     </Stack>
   );
 }

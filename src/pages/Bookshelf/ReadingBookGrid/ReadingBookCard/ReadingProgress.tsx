@@ -1,6 +1,6 @@
-import { LinearProgress, Stack, Typography } from "@mui/material";
 import { useUserContext } from "../../../../common/auth/UserContext";
 import { useReadingBookContext } from "./ReadingBookContext";
+import CommonLinearProgress from "../../../../common/components/Progress/CommonLinearProgress";
 
 export default function ReadingProgress() {
   const {
@@ -10,24 +10,11 @@ export default function ReadingProgress() {
   const { progressPercentage, currentPage, book } = useReadingBookContext();
 
   return (
-    <Stack>
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography variant="subtitle2" color="textPrimary">
-          {isPlLanguage ? "Postęp " : "Progress "}
-        </Typography>
-        <Typography variant="subtitle2" color="textPrimary">
-          {currentPage}
-          {" / "}
-          {book.pageCount}
-          {isPlLanguage ? " str." : " pages"}
-        </Typography>
-      </Stack>
-      <LinearProgress
-        value={progressPercentage}
-        variant="determinate"
-        sx={{ borderRadius: "6px" }}
-        color="success"
-      />
-    </Stack>
+    <CommonLinearProgress
+      progressPercentage={progressPercentage}
+      value={currentPage}
+      maxValue={book.pageCount}
+      valueSuffix={isPlLanguage ? " str." : " pages"}
+    />
   );
 }

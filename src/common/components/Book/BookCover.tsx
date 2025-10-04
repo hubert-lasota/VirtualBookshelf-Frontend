@@ -2,7 +2,7 @@ import { Stack, StackProps } from "@mui/material";
 
 import BookReplacementCover from "./BookReplacementCover";
 
-type BookCoverProps = {
+export type BookCoverProps = {
   coverUrl: string | null;
 } & StackProps;
 

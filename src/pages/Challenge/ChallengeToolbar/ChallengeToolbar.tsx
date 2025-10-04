@@ -1,7 +1,7 @@
 import Toolbar from "../../../common/components/Toolbar/Toolbar";
 import { ChallengeFilter } from "../../../common/models/challengeModels";
 import { useChallengePageContext } from "../ChallengeContext";
-import ChallengeFilterFormContent from "./ChallengeFilterFormContent";
+import ChallengeFilterFields from "./ChallengeFilterFields";
 import { ApiSort } from "../../../common/api/apiModels";
 
 export default function ChallengeToolbar() {
@@ -16,7 +16,7 @@ export default function ChallengeToolbar() {
       filterButtonProps={{
         onSubmit: (newFilter: ChallengeFilter) =>
           onFilterChange({ ...filter, ...newFilter }),
-        content: <ChallengeFilterFormContent />,
+        content: <ChallengeFilterFields />,
       }}
       sortButtonProps={{
         onSubmit: (sort: ApiSort) => onFilterChange({ ...filter, sort }),

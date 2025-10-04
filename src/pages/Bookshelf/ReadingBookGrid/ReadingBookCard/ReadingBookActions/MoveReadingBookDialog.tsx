@@ -1,4 +1,4 @@
-import { DialogContent, MenuItem } from "@mui/material";
+import { MenuItem } from "@mui/material";
 import { useUserContext } from "../../../../../common/auth/UserContext";
 import ControlledSelect from "../../../../../common/components/Form/Input/ControlledSelect";
 import { BookshelfResponse } from "../../../../../common/models/bookshelfModels";
@@ -44,20 +44,18 @@ export default function MoveReadingBookDialog({
         submitButtonProps: { children: isPlLanguage ? "Potwierdź" : "Confirm" },
       }}
     >
-      <DialogContent>
-        <ControlledSelect
-          name="bookshelf"
-          renderValue={(bookshelf) =>
-            (bookshelf as BookshelfResponse)?.name ?? ""
-          }
-        >
-          {bookshelves.map((bookshelf) => (
-            <MenuItem key={bookshelf.id} value={bookshelf as any}>
-              {bookshelf.name}
-            </MenuItem>
-          ))}
-        </ControlledSelect>
-      </DialogContent>
+      <ControlledSelect
+        name="bookshelf"
+        renderValue={(bookshelf) =>
+          (bookshelf as BookshelfResponse)?.name ?? ""
+        }
+      >
+        {bookshelves.map((bookshelf) => (
+          <MenuItem key={bookshelf.id} value={bookshelf as any}>
+            {bookshelf.name}
+          </MenuItem>
+        ))}
+      </ControlledSelect>
     </FormDialog>
   );
 }

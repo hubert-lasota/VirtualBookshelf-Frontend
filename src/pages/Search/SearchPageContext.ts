@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
 import { ResourceType } from "./models";
 import { BookFilter, BookResponse } from "../../common/models/bookModels";
-import { AuthorResponse } from "../../common/models/authorModels";
-import { UserResponse } from "../../common/models/userModels";
+import { AuthorFilter, AuthorResponse } from "../../common/models/authorModels";
+import { UserFilter, UserResponse } from "../../common/models/userModels";
 
 type SearchPageContextValue = {
   resourceType: ResourceType;
@@ -14,6 +14,10 @@ type SearchPageContextValue = {
   users: UserResponse[];
   bookFilter: BookFilter;
   onBookFilterChange: (filter: BookFilter) => void;
+  authorFilter: AuthorFilter;
+  onAuthorFilterChange: (filter: AuthorFilter) => void;
+  userFilter: UserFilter;
+  onUserFilterChange: (filter: UserFilter) => void;
 };
 
 export const SearchPageContext = createContext<SearchPageContextValue | null>(

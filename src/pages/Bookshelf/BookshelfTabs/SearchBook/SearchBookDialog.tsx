@@ -42,9 +42,8 @@ export default function SearchBookDialog({ onClose }: SearchBookDialogProps) {
       >
         <CommonDialogTitle
           title={isPlLanguage ? "Szukaj książki" : "Search book"}
-          showDivider={false}
         />
-        <DialogContent sx={{ width: "100%", overflowY: "auto" }} dividers>
+        <DialogContent sx={{ width: "100%", overflowY: "auto" }}>
           <ToolbarSearchTextField
             fullWidth
             onDebounceValueChange={setQuery}

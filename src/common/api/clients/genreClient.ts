@@ -1,24 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { GenreResponse } from "../../models/genreModels";
+import { GenreFilter, GenreResponse } from "../../models/genreModels";
 import axiosInstance from "../axiosInstance";
 import { unwrapResponseData } from "../apiUtils";
 
 const BASE_ENDPOINT = "/v1/genres";
 
-type GenreListResponse = {
+export type GenreListResponse = {
   genres: GenreResponse[];
 };
 
-type UseGetGenresParams = {
-  availableInBookshelf?: boolean;
-};
-export const useGetGenres = ({
-  availableInBookshelf,
-}: UseGetGenresParams = {}) =>
+export const useGetGenres = (filter: GenreFilter = {}) =>
   useQuery<GenreListResponse>({
-    queryKey: ["genres"],
+    queryKey: ["genres", filter],
     queryFn: () =>
       axiosInstance
-        .get(BASE_ENDPOINT, { params: { availableInBookshelf } })
+        .get(BASE_ENDPOINT, { params: filter })
         .then(unwrapResponseData),
   });

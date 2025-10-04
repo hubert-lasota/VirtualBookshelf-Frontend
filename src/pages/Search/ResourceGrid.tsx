@@ -1,63 +1,45 @@
-import { BookResponse } from "../../common/models/bookModels";
-import { AuthorResponse } from "../../common/models/authorModels";
-import { UserResponse } from "../../common/models/userModels";
-import ResourceCard, { ResourceCardProps } from "./ResourceCard";
-import { ResourceType } from "./models";
-import { NavigateFunction, useNavigate } from "react-router-dom";
-import BookCover from "../../common/components/Book/BookCover";
-import AuthorProfilePicture from "../../common/components/Author/AuthorProfilePicture";
-import UserProfilePicture from "./UserProfilePicture";
 import { Grid } from "@mui/material";
 import { useSearchPageContext } from "./SearchPageContext";
-
-const getResourceProps = (
-  resource: BookResponse | AuthorResponse | UserResponse,
-  resourceType: ResourceType,
-  navigate: NavigateFunction,
-): ResourceCardProps => {
-  const imgSx = { width: "250px", height: "300px" };
-  switch (resourceType) {
-    case "book":
-      const book = resource as BookResponse;
-      return {
-        title: book.title,
-        subtitle: book.authors.map((author) => author.fullName).join(", "),
-        image: <BookCover coverUrl={book.coverUrl} sx={imgSx} />,
-        onClick: () => navigate(`/books/${book.id}`),
-      };
-    case "author":
-      const author = resource as AuthorResponse;
-      return {
-        title: author.fullName,
-        image: (
-          <AuthorProfilePicture
-            profilePictureUrl={author.profilePictureUrl}
-            sx={imgSx}
-          />
-        ),
-        onClick: () => navigate(`/authors/${author.id}`),
-      };
-    case "user":
-      const user = resource as UserResponse;
-      const { firstName, lastName, pictureUrl } = user.profile;
-      return {
-        title: firstName + " " + lastName,
-        subtitle: user.username,
-        image: <UserProfilePicture profilePictureUrl={pictureUrl} sx={imgSx} />,
-        onClick: () => {},
-      };
-  }
-};
+import BookCard from "../../common/components/Book/BookCard";
+import AuthorCard from "../../common/components/Author/AuthorCard";
+import { RESOURCE_IMG_SX } from "./config";
+import UserCard from "./UserCard/UserCard";
 
 export default function ResourceGrid() {
-  const { resourceType, books } = useSearchPageContext();
-  const navigate = useNavigate();
+  const { resourceType, books, authors, users } = useSearchPageContext();
 
-  // TODO fix
+  const resourceCards = (() => {
+    switch (resourceType) {
+      case "book":
+        return books.map((book) => (
+          <BookCard
+            key={book.id}
+            book={book}
+            bookCoverProps={{ sx: RESOURCE_IMG_SX }}
+          />
+        ));
+      case "author":
+        return authors.map((author) => (
+          <AuthorCard
+            key={author.id}
+            author={author}
+            authorProfilePictureProps={{ sx: RESOURCE_IMG_SX }}
+          />
+        ));
+      case "user":
+        return users.map((user) => (
+          <UserCard
+            key={user.id}
+            user={user}
+            userProfilePictureProps={{ sx: RESOURCE_IMG_SX }}
+          />
+        ));
+    }
+  })();
   return (
-    <Grid container spacing={5}>
-      {books.map((resource) => (
-        <ResourceCard {...getResourceProps(resource, resourceType, navigate)} />
+    <Grid container spacing={2}>
+      {resourceCards.map((resourceCard) => (
+        <Grid size={2}>{resourceCard}</Grid>
       ))}
     </Grid>
   );

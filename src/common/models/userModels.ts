@@ -1,6 +1,7 @@
 import { PaletteMode } from "@mui/material";
 import { z } from "zod";
 import { LoginFormMessages } from "../../pages/Login/useGetLoginFormMessages";
+import { ApiSort } from "../api/apiModels";
 
 export type UserProfile = {
   firstName: string;
@@ -43,3 +44,10 @@ export const createUserCredentialsSchema = ({
 export type UserCredentials = z.infer<
   ReturnType<typeof createUserCredentialsSchema>
 >;
+
+export type UserFilter = {
+  query?: string;
+  page?: number;
+  size?: number;
+  sort?: ApiSort;
+};

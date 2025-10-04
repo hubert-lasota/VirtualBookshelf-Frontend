@@ -16,6 +16,10 @@ import ChallengePage from "./pages/Challenge/ChallengePage";
 import AuthorPage from "./pages/Author/AuthorPage";
 import SearchPage from "./pages/Search/SearchPage";
 import StatisticsPage from "./pages/Statistics/StatisticsPage";
+import GenrePage from "./pages/Genre/GenrePage";
+import RecommendedBooksPage from "./pages/RecommendedBooks/RecommendedBooksPage";
+import RecommendedAuthorsPage from "./pages/RecommendedAuthors/RecommendedAuthorsPage";
+import RecommendedGenresPage from "./pages/RecommendedGenres/RecommendedGenresPage";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +48,19 @@ export default function App() {
                 <Route path="/statistics" element={<StatisticsPage />} />
                 <Route path="/books/:id" element={<BookPage />} />
                 <Route path="/authors/:id" element={<AuthorPage />} />
+                <Route path="/genres/:id" element={<GenrePage />} />
+                <Route
+                  path="/recommended-books"
+                  element={<RecommendedBooksPage />}
+                />
+                <Route
+                  path="/recommended-authors"
+                  element={<RecommendedAuthorsPage />}
+                />
+                <Route
+                  path="/recommended-genres"
+                  element={<RecommendedGenresPage />}
+                />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

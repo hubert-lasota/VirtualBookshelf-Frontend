@@ -2,7 +2,7 @@ import ResourceReplacementImage from "../Resource/ResourceReplacementImage";
 import { Stack, StackProps } from "@mui/material";
 import { UserCheck } from "lucide-react";
 
-type AuthorProfilePictureProps = {
+export type AuthorProfilePictureProps = {
   profilePictureUrl: string | null;
 } & StackProps;
 

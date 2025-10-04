@@ -36,7 +36,7 @@ const tabsSx: SxProps<Theme> = (theme) => ({
 const tabSx: SxProps<Theme> = (theme) => ({
   textTransform: "none",
   fontWeight: 500,
-  fontSize: "14px",
+  fontSize: "1rem",
   minHeight: "40px",
   minWidth: "120px",
   padding: theme.spacing(1, 3),

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ReviewResponse } from "./reviewModels";
+import { ApiSort } from "../api/apiModels";
 
 export const createAuthorSchema = (isPlLanguage: boolean) =>
   z.object({
@@ -30,4 +31,12 @@ export type AuthorDetailsResponse = AuthorResponse & {
   review: ReviewResponse | null;
   createdAt: string;
   updatedAt: string | null;
+};
+
+export type AuthorFilter = {
+  availableInBookshelf?: boolean;
+  query?: string;
+  sort?: ApiSort;
+  page?: number;
+  size?: number;
 };

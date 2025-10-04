@@ -26,6 +26,7 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<UserCredentials>({
     mode: "onBlur",
+    reValidateMode: "onChange",
     resolver: zodResolver(createUserCredentialsSchema(messages)),
   });
 

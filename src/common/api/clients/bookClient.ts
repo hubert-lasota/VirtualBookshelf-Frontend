@@ -20,7 +20,7 @@ export const useGetBookById = (id: number) =>
 
 type UseGetBooksParams = BookFilter & { enabled?: boolean };
 
-type BookPageResponse = {
+export type BookPageResponse = {
   books: BookResponse[];
   pageMeta: PageMeta;
 };

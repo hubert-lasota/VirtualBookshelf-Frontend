@@ -1,4 +1,7 @@
 export type GenreResponse = {
-  name: string;
   id: number;
+  name: string;
+  totalBooks: number;
 };
+
+export type GenreFilter = { query?: string; availableInBookshelf?: boolean };

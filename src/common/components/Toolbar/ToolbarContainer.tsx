@@ -7,6 +7,7 @@ const toolbarSx: SxProps<Theme> = (theme) => ({
   border: `1px solid ${theme.palette.divider}`,
   padding: theme.spacing(1.5),
   overflowX: "auto",
+  boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
 });
 
 export default function ToolbarContainer({

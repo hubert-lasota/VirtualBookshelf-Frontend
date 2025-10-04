@@ -1,7 +1,7 @@
 import { useUserContext } from "../../../../common/auth/UserContext";
-import { LinearProgress, Stack, Typography } from "@mui/material";
 import { useChallengeContext } from "../../ChallengeContext";
 import { ChallengeType } from "../../../../common/models/challengeModels";
+import CommonLinearProgress from "../../../../common/components/Progress/CommonLinearProgress";
 
 const getChallengeTypeLabel = (type: ChallengeType, isPlLanguage: boolean) => {
   switch (type) {
@@ -32,25 +32,11 @@ export default function ChallengeProgress() {
     return null;
   }
   return (
-    <Stack sx={{ width: "100%" }}>
-      <Stack direction="row" justifyContent="space-between">
-        <Typography variant="body2" color="textSecondary">
-          {isPlLanguage ? "Postęp " : "Progress "}
-          {progressPercentage}
-          {"%"}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {currentGoalValue}
-          {" / "}
-          {goalValue}
-          {" " + getChallengeTypeLabel(type, isPlLanguage)}
-        </Typography>
-      </Stack>
-      <LinearProgress
-        value={progressPercentage}
-        variant="determinate"
-        sx={{ borderRadius: "6px" }}
-      />
-    </Stack>
+    <CommonLinearProgress
+      progressPercentage={progressPercentage}
+      value={currentGoalValue}
+      maxValue={goalValue}
+      valueSuffix={" " + getChallengeTypeLabel(type, isPlLanguage)}
+    />
   );
 }

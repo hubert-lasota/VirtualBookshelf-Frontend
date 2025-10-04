@@ -13,7 +13,6 @@ export default function BookshelfTabs() {
   const tabs = [allBooksBookshelf, ...bookshelves].map((bookshelf) => ({
     value: bookshelf.id,
     label: bookshelf.name + ` (${bookshelf.totalBooks})`,
-    sx: { fontSize: "1rem" },
   }));
 
   return (
